@@ -2,7 +2,7 @@ name: flutter_lint_check
 on:
   pull_request:
     branches:
-      - main
+      - develop
 jobs:
   test:
     name: Check the source code
