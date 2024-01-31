@@ -1,5 +1,8 @@
 name: flutter_lint_check
 on:
+  push:
+    branches:
+      - develop
   pull_request:
     branches:
       - develop
