@@ -1,5 +1,5 @@
 class Test {
   void testFun() {
-    print("lint test");
+    // print("lint test");
   }
 }

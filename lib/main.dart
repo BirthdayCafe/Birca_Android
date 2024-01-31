@@ -1,4 +1,4 @@
-import 'package:birca/view/onboarding/onboardingView.dart';
+import 'package:birca/view/onboarding/onboardingview.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,13 +14,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        textTheme: TextTheme(
-          bodyText2: TextStyle(color: Color(0xff303031))
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(color: Color(0xff303031))
         ),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: OnBoardingView(),
+      home: const OnBoardingView(),
     );
   }
 }

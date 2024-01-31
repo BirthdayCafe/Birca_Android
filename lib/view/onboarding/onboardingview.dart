@@ -1,4 +1,4 @@
-import 'package:birca/colors/mainColors.dart';
+import 'package:birca/colors/main_colors.dart';
 import 'package:flutter/material.dart';
 
 //팬, 사장님 선택
@@ -15,11 +15,12 @@ class _OnBoardingView extends State<OnBoardingView> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
         body: Container(
-            margin: EdgeInsets.only(top: 87),
+            margin: const EdgeInsets.only(top: 87),
             child: Center(
               child: Column(
                 children: [
@@ -57,7 +58,7 @@ class _OnBoardingView extends State<OnBoardingView> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OnboardingView2()));
+                                  builder: (context) => const OnboardingView2()));
                         },
                         child: Image.asset('lib/assets/image/img_fan.png'),
                       ),
@@ -70,7 +71,7 @@ class _OnBoardingView extends State<OnBoardingView> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      OnboardingCafeOwnerView()));
+                                      const OnboardingCafeOwnerView()));
                         },
                         child:
                             Image.asset('lib/assets/image/img_cafe_owner.png'),
@@ -92,14 +93,14 @@ class OnboardingView2 extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
         ),
         body: Container(
-            margin: EdgeInsets.only(top: 87),
+            margin: const EdgeInsets.only(top: 87),
             child: Center(
               child: Column(
                 children: [
@@ -134,7 +135,7 @@ class OnboardingView2 extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          print("fan_visitor");
+                          // print("fan_visitor");
                         },
                         child:
                             Image.asset('lib/assets/image/img_fan_visitor.png'),
@@ -144,7 +145,7 @@ class OnboardingView2 extends StatelessWidget {
                       ),
                       GestureDetector(
                         onTap: () {
-                          print("fan_host");
+                          // print("fan_host");
                         },
                         child: Image.asset('lib/assets/image/img_fan_host.png'),
                       ),
@@ -170,7 +171,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -178,7 +179,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
         ),
         body: SingleChildScrollView(
             child: Container(
-          margin: EdgeInsets.only(left: 30, right: 30),
+          margin: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -204,33 +205,32 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                       ),
                     ]),
               ),
-              Padding(padding: EdgeInsets.only(top: 52)),
-              Text(
+              const Padding(padding: EdgeInsets.only(top: 52)),
+              const Text(
                 "사업자등록증",
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 16),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               OutlinedButton(
                 onPressed: () {},
-                child: Text(
-                  '파일 업로드',
-                ),
                 style: OutlinedButton.styleFrom(
-                    textStyle:
-                        TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
-                    primary: MainColors.main03,
-                    side: BorderSide(color: MainColors.main03),
+                    foregroundColor: MainColors.main03, textStyle:
+                        const TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
+                    side: const BorderSide(color: MainColors.main03),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6))),
+                child: const Text(
+                  '파일 업로드',
+                ),
               ),
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+              const Text(
                 '카페 이름',
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 11,
               ),
               const TextField(
@@ -245,12 +245,12 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                   // )
                 ),
               ),
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+              const Text(
                 '사장님 이름',
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 11,
               ),
               const TextField(
@@ -265,12 +265,12 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                   // )
                 ),
               ),
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+              const Text(
                 '사업자등록증 번호',
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 11,
               ),
               const TextField(
@@ -285,12 +285,12 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                   // )
                 ),
               ),
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+              const Text(
                 '카페 주소',
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 11,
               ),
               const TextField(
@@ -305,24 +305,24 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                   // )
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                       width: 300,
                       child: FilledButton(
                         onPressed: () {},
-                        child: Text('계정 요청하기'),
                         style: FilledButton.styleFrom(
-                          backgroundColor: Color(0xffBFC0C4),
+                          backgroundColor: const Color(0xffBFC0C4),
                         ),
+                        child: const Text('계정 요청하기'),
                       ))
                 ],
               ),
-              SizedBox(height: 100,)
+              const SizedBox(height: 100,)
             ],
           ),
         )));
