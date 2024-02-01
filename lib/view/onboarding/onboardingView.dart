@@ -1,4 +1,6 @@
 import 'package:birca/colors/mainColors.dart';
+import 'package:birca/designSystem/button.dart';
+import 'package:birca/designSystem/text.dart';
 import 'package:flutter/material.dart';
 
 //팬, 사장님 선택
@@ -15,11 +17,12 @@ class _OnBoardingView extends State<OnBoardingView> {
     super.initState();
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(),
         body: Container(
-            margin: EdgeInsets.only(top: 87),
+            margin: const EdgeInsets.only(top: 87),
             child: Center(
               child: Column(
                 children: [
@@ -57,7 +60,7 @@ class _OnBoardingView extends State<OnBoardingView> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => OnboardingView2()));
+                                  builder: (context) => const OnboardingView2()));
                         },
                         child: Image.asset('lib/assets/image/img_fan.png'),
                       ),
@@ -70,7 +73,7 @@ class _OnBoardingView extends State<OnBoardingView> {
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      OnboardingCafeOwnerView()));
+                                      const OnboardingCafeOwnerView()));
                         },
                         child:
                             Image.asset('lib/assets/image/img_cafe_owner.png'),
@@ -92,14 +95,14 @@ class OnboardingView2 extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.pop(context);
             },
           ),
         ),
         body: Container(
-            margin: EdgeInsets.only(top: 87),
+            margin: const EdgeInsets.only(top: 87),
             child: Center(
               child: Column(
                 children: [
@@ -170,7 +173,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: const Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -204,33 +207,34 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                       ),
                     ]),
               ),
-              Padding(padding: EdgeInsets.only(top: 52)),
-              Text(
+              const Padding(padding: EdgeInsets.only(top: 52)),
+              const Text(
                 "사업자등록증",
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 16),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 18,
               ),
               OutlinedButton(
                 onPressed: () {},
-                child: Text(
-                  '파일 업로드',
-                ),
                 style: OutlinedButton.styleFrom(
                     textStyle:
-                        TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
+                        const TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
                     primary: MainColors.main03,
-                    side: BorderSide(color: MainColors.main03),
+                    side: const BorderSide(color: MainColors.main03),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(6))),
+                child: const Text(
+                  '파일 업로드',
+                ),
               ),
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+              const Text(
                 '카페 이름',
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
               ),
-              SizedBox(
+
+              const SizedBox(
                 height: 11,
               ),
               const TextField(
@@ -245,13 +249,17 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                   // )
                 ),
               ),
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+
+              const Text(
                 '사장님 이름',
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
+
               ),
-              SizedBox(
+              const SizedBox(
                 height: 11,
+
+
               ),
               const TextField(
                 decoration: InputDecoration(
@@ -265,12 +273,12 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                   // )
                 ),
               ),
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+              const Text(
                 '사업자등록증 번호',
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 11,
               ),
               const TextField(
@@ -285,12 +293,12 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                   // )
                 ),
               ),
-              SizedBox(height: 40),
-              Text(
+              const SizedBox(height: 40),
+              const Text(
                 '카페 주소',
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 11,
               ),
               const TextField(
@@ -305,26 +313,74 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                   // )
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
+                  SizedBox(
                       width: 300,
                       child: FilledButton(
-                        onPressed: () {},
-                        child: Text('계정 요청하기'),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>  OnboardingCafeOwnerCompleteView()));
+                        },
                         style: FilledButton.styleFrom(
                           backgroundColor: Color(0xffBFC0C4),
                         ),
+                        child: const Text('계정 요청하기'),
                       ))
                 ],
               ),
-              SizedBox(height: 100,)
-            ],
+              const SizedBox(
+                height: 100,
+              ),
+                ],
           ),
         )));
   }
+}
+class OnboardingCafeOwnerCompleteView extends StatelessWidget{
+  @override
+  Widget build(BuildContext context) {
+
+    return Scaffold(
+      body:
+          Center(
+            child:Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 60,),
+                BircaText(text: '곧 버카에서 만나요!', textSize: 20, textColor: MainColors.main03, fontFamily: 'PretendardBold'),
+                SizedBox(height: 20,),
+                Image.asset('lib/assets/image/img_complete.png'),
+                SizedBox(height: 70,),
+                BircaText(text: '계정 생성 요청이 정상적으로 완료되었습니다', textSize: 18, textColor: MainColors.main03, fontFamily: 'PretendardSemiBold'),
+                BircaText(text: '빠르게 검토 후 알람으로 알려드릴게요 (최대 1~2일 소요)', textSize: 14, textColor: Color(0xff8F9093), fontFamily: 'PretendardRegular'),
+                SizedBox(height: 158,),
+                SizedBox(
+                    width: 300,
+                    child: FilledButton(
+                      onPressed: () {
+
+                      },
+                      style: FilledButton.styleFrom(
+                        backgroundColor: MainColors.main03,
+                      ),
+                      child: const Text('계정 요청하기'),
+                    ))
+
+              ],
+            ),
+          )
+
+    );
+
+  }
+
+
 }
