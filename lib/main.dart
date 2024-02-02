@@ -8,24 +8,18 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        textTheme: TextTheme(
-          bodyText2: TextStyle(color: Color(0xff303031))
-        ),
+        appBarTheme: const AppBarTheme(color: Colors.transparent),
+        textTheme:
+            const TextTheme(bodyText2: TextStyle(color: Color(0xff303031))),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: OnBoardingView(),
+      home: const OnBoardingView(),
     );
   }
 }
-
-
-
-
-
