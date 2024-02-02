@@ -1,7 +1,7 @@
-import 'package:birca/colors/mainColors.dart';
-import 'package:birca/designSystem/button.dart';
-import 'package:birca/designSystem/text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import '../../assets/colors/mainColors.dart';
+import '../../assets/designSystem/text.dart';
 
 //팬, 사장님 선택
 class OnBoardingView extends StatefulWidget {
@@ -56,28 +56,28 @@ class _OnBoardingView extends State<OnBoardingView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const OnboardingView2()));
-                        },
-                        child: Image.asset('lib/assets/image/img_fan.png'),
-                      ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OnboardingView2()));
+                          },
+                          child:
+                              SvgPicture.asset('lib/assets/image/img_fan.svg')),
                       const SizedBox(
                         width: 10,
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const OnboardingCafeOwnerView()));
-                        },
-                        child:
-                            Image.asset('lib/assets/image/img_cafe_owner.png'),
-                      ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OnboardingCafeOwnerView()));
+                          },
+                          child: SvgPicture.asset(
+                              'lib/assets/image/img_cafe_owner.svg')),
                     ],
                   )
                 ],
@@ -136,21 +136,16 @@ class OnboardingView2 extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          print("fan_visitor");
-                        },
-                        child:
-                            Image.asset('lib/assets/image/img_fan_visitor.png'),
-                      ),
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'lib/assets/image/img_fan_visitor.svg')),
                       const SizedBox(
                         width: 10,
                       ),
                       GestureDetector(
-                        onTap: () {
-                          print("fan_host");
-                        },
-                        child: Image.asset('lib/assets/image/img_fan_host.png'),
-                      ),
+                          onTap: () {},
+                          child: SvgPicture.asset(
+                              'lib/assets/image/img_fan_host.svg')),
                     ],
                   )
                 ],
@@ -218,8 +213,8 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
               OutlinedButton(
                 onPressed: () {},
                 style: OutlinedButton.styleFrom(
-                    textStyle:
-                        const TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
+                    textStyle: const TextStyle(
+                        fontFamily: 'PretendardMedium', fontSize: 14),
                     primary: MainColors.main03,
                     side: const BorderSide(color: MainColors.main03),
                     shape: RoundedRectangleBorder(
@@ -233,7 +228,6 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                 '카페 이름',
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
               ),
-
               const SizedBox(
                 height: 11,
               ),
@@ -250,16 +244,12 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                 ),
               ),
               const SizedBox(height: 40),
-
               const Text(
                 '사장님 이름',
                 style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
-
               ),
               const SizedBox(
                 height: 11,
-
-
               ),
               const TextField(
                 decoration: InputDecoration(
@@ -326,7 +316,8 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) =>  OnboardingCafeOwnerCompleteView()));
+                                  builder: (context) =>
+                                      OnboardingCafeOwnerCompleteView()));
                         },
                         style: FilledButton.styleFrom(
                           backgroundColor: Color(0xffBFC0C4),
@@ -338,49 +329,64 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
               const SizedBox(
                 height: 100,
               ),
-                ],
+            ],
           ),
         )));
   }
 }
-class OnboardingCafeOwnerCompleteView extends StatelessWidget{
+
+class OnboardingCafeOwnerCompleteView extends StatelessWidget {
+  const OnboardingCafeOwnerCompleteView({super.key});
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body:
-          Center(
-            child:Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 60,),
-                BircaText(text: '곧 버카에서 만나요!', textSize: 20, textColor: MainColors.main03, fontFamily: 'PretendardBold'),
-                SizedBox(height: 20,),
-                Image.asset('lib/assets/image/img_complete.png'),
-                SizedBox(height: 70,),
-                BircaText(text: '계정 생성 요청이 정상적으로 완료되었습니다', textSize: 18, textColor: MainColors.main03, fontFamily: 'PretendardSemiBold'),
-                BircaText(text: '빠르게 검토 후 알람으로 알려드릴게요 (최대 1~2일 소요)', textSize: 14, textColor: Color(0xff8F9093), fontFamily: 'PretendardRegular'),
-                SizedBox(height: 158,),
-                SizedBox(
-                    width: 300,
-                    child: FilledButton(
-                      onPressed: () {
-
-                      },
-                      style: FilledButton.styleFrom(
-                        backgroundColor: MainColors.main03,
-                      ),
-                      child: const Text('계정 요청하기'),
-                    ))
-
-              ],
-            ),
-          )
-
-    );
-
+        body: Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const SizedBox(
+            height: 60,
+          ),
+          const BircaText(
+              text: '곧 버카에서 만나요!',
+              textSize: 20,
+              textColor: MainColors.main03,
+              fontFamily: 'PretendardBold'),
+          const SizedBox(
+            height: 20,
+          ),
+          SvgPicture.asset('lib/assets/image/img_complete.svg'),
+          const SizedBox(
+            height: 70,
+          ),
+          const BircaText(
+              text: '계정 생성 요청이 정상적으로 완료되었습니다',
+              textSize: 18,
+              textColor: MainColors.main03,
+              fontFamily: 'PretendardSemiBold'),
+          const BircaText(
+              text: '빠르게 검토 후 알람으로 알려드릴게요 (최대 1~2일 소요)',
+              textSize: 14,
+              textColor: Color(0xff8F9093),
+              fontFamily: 'PretendardRegular'),
+          const SizedBox(
+            height: 158,
+          ),
+          SizedBox(
+              width: 300,
+              child: FilledButton(
+                onPressed: () {},
+                style: FilledButton.styleFrom(
+                  backgroundColor: MainColors.main03,
+                ),
+                child: const Text(
+                  '계정 요청하기',
+                  style: TextStyle(color: Colors.white),
+                ),
+              )),
+        ],
+      ),
+    ));
   }
-
-
 }
