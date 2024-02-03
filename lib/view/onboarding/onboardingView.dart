@@ -15,6 +15,7 @@ class _OnBoardingView extends State<OnBoardingView> {
   @override
   void initState() {
     super.initState();
+    print('온보딩 시작');
   }
 
   @override
@@ -176,7 +177,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
         ),
         body: SingleChildScrollView(
             child: Container(
-          margin: EdgeInsets.only(left: 30, right: 30),
+          margin: const EdgeInsets.only(left: 30, right: 30),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

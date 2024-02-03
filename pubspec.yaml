@@ -35,7 +35,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+
+  # svg
   flutter_svg: ^2.0.8
+
+  # 카카오 전체 추가
+  kakao_flutter_sdk: ^1.8.0
 
 dev_dependencies:
   flutter_test:
