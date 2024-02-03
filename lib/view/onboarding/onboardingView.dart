@@ -64,7 +64,7 @@ class _OnBoardingView extends State<OnBoardingView> {
                                         const OnboardingView2()));
                           },
                           child:
-                              SvgPicture.asset('lib/assets/image/img_fan.svg')),
+                              Image.asset('lib/assets/image/img_fan.png')),
                       const SizedBox(
                         width: 10,
                       ),
@@ -76,8 +76,8 @@ class _OnBoardingView extends State<OnBoardingView> {
                                     builder: (context) =>
                                         const OnboardingCafeOwnerView()));
                           },
-                          child: SvgPicture.asset(
-                              'lib/assets/image/img_cafe_owner.svg')),
+                          child: Image.asset(
+                              'lib/assets/image/img_cafe_owner.png')),
                     ],
                   )
                 ],
@@ -137,15 +137,15 @@ class OnboardingView2 extends StatelessWidget {
                     children: [
                       GestureDetector(
                           onTap: () {},
-                          child: SvgPicture.asset(
-                              'lib/assets/image/img_fan_visitor.svg')),
+                          child: Image.asset(
+                              'lib/assets/image/img_fan_visitor.png')),
                       const SizedBox(
                         width: 10,
                       ),
                       GestureDetector(
                           onTap: () {},
-                          child: SvgPicture.asset(
-                              'lib/assets/image/img_fan_host.svg')),
+                          child: Image.asset(
+                              'lib/assets/image/img_fan_host.png')),
                     ],
                   )
                 ],
