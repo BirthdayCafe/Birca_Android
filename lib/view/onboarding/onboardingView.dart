@@ -1,4 +1,5 @@
 import 'package:birca/assets/designSystem/button.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../assets/colors/mainColors.dart';
@@ -170,6 +171,27 @@ class OnboardingCafeOwnerView extends StatefulWidget {
 }
 
 class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
+  String? _filePath;
+
+  String? _fileName;
+
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png', 'pdf'],
+    );
+
+    if (result != null) {
+      setState(() {
+        _filePath = result.files.single.path;
+        _fileName = result.files.single.name;
+      });
+    } else {
+      // 사용자가 선택을 취소한 경우
+      print("파일 선택이 취소되었습니다.");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -217,18 +239,36 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
               const SizedBox(
                 height: 18,
               ),
-              OutlinedButton(
-                onPressed: () {},
-                style: OutlinedButton.styleFrom(
-                    textStyle: const TextStyle(
-                        fontFamily: 'PretendardMedium', fontSize: 14),
-                    primary: MainColors.main03,
-                    side: const BorderSide(color: MainColors.main03),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(6))),
-                child: const Text(
-                  '파일 업로드',
-                ),
+              Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: () {
+                      _pickFile();
+                    },
+                    style: OutlinedButton.styleFrom(
+                        textStyle: const TextStyle(
+                            fontFamily: 'PretendardMedium', fontSize: 14),
+                        primary: MainColors.main03,
+                        side: const BorderSide(color: MainColors.main03),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(6))),
+                    child: const Text(
+                      '파일 업로드',
+                    ),
+                  ),
+                  SizedBox(
+                    width: 14,
+                  ),
+                  _fileName != null
+                      ? Expanded(child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Text(
+                      "$_fileName",
+                      maxLines: 1,
+                    ),
+                  ))
+                      : Text("파일을 선택해주세요."),
+                ],
               ),
               const SizedBox(height: 40),
               const Text(
@@ -685,12 +725,12 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
               ),
               Container(
                   alignment: Alignment.center,
-                  child: BircaFilledButton(
+                  child: const BircaFilledButton(
                       text: '버카 시작하기',
                       color: Color(0xffbfc0c4),
                       width: 300,
                       height: 46)),
-              SizedBox(
+              const SizedBox(
                 height: 100,
               )
             ],
