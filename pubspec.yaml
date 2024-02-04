@@ -72,12 +72,15 @@ flutter:
     - family: PretendardRegular
       fonts:
         - asset: lib/assets/fonts/Pretendard-Regular.ttf
-    - family: PretendardMedium경
+    - family: PretendardMedium
       fonts:
         - asset: lib/assets/fonts/Pretendard-Medium.ttf
     - family: PretendardSemiBold
       fonts:
         - asset: lib/assets/fonts/Pretendard-SemiBold.ttf
+    - family: PretendardLight
+      fonts:
+        - asset: lib/assets/fonts/Pretendard-Light.ttf
 
   assets:
     - lib/assets/image/
