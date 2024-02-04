@@ -110,6 +110,7 @@ class BircaOutLinedButton extends StatelessWidget{
   final int width;
   final int height;
   final int radius;
+  final int textSize;
 
   const BircaOutLinedButton({super.key,
     required this.text,
@@ -118,6 +119,7 @@ class BircaOutLinedButton extends StatelessWidget{
     required this.height,
     required this.radius,
     required this.textColor,
+    required this.textSize,
     this.onPressed,
   }
 
@@ -133,13 +135,17 @@ class BircaOutLinedButton extends StatelessWidget{
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
             side: BorderSide(color: radiusColor),
+            padding: EdgeInsets.zero,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(radius.toDouble())
             )
           ),
           child:Text(text,
+          textAlign: TextAlign.center,
+          maxLines: 1,
           style: TextStyle(
-            color: textColor
+            color: textColor,
+            fontSize: textSize.toDouble(),
           ),)
 
       ),
