@@ -497,15 +497,15 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                       ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 48,
               ),
-              BircaText(
+              const BircaText(
                   text: '생일카페 주최 일정',
                   textSize: 16,
                   textColor: MainColors.grey10,
                   fontFamily: 'PretendardMedium'),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(children: [
@@ -518,10 +518,10 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                   ),
                   child: Text(''),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 11,
                 ),
-                BircaOutLinedButton(
+                const BircaOutLinedButton(
                   text: '날짜 선택',
                   radiusColor: MainColors.main03,
                   width: 80,
@@ -535,41 +535,41 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                 children: [
                   Checkbox(
                     value: isDateChecked,
-                    side: BorderSide(color: Color(0xffD7D8DC)),
+                    side: const BorderSide(color: Color(0xffD7D8DC)),
                     onChanged: (bool? value) {
                       setState(() {
                         isDateChecked = value ?? false;
                       });
                     },
                   ),
-                  BircaText(
+                  const BircaText(
                       text: '날짜 미정',
                       textSize: 12,
                       textColor: Color(0xff8f9093),
                       fontFamily: 'PretendardRegular')
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 48,
               ),
-              BircaText(
+              const BircaText(
                   text: '예상 방문자 수',
                   textSize: 16,
                   textColor: MainColors.grey10,
                   fontFamily: 'PretendardMedium'),
-              SizedBox(
+              const SizedBox(
                 height: 24,
               ),
               Row(
                 children: [
-                  BircaText(
+                  const BircaText(
                       text: '최소',
                       textSize: 14,
                       textColor: MainColors.grey10,
                       fontFamily: 'PretendardLight'),
                   Container(
                     width: 60,
-                    child: TextField(
+                    child: const TextField(
                       textAlign: TextAlign.end,
                       style: TextStyle(fontSize: 14),
                       decoration: InputDecoration(
@@ -577,7 +577,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
 
                         contentPadding: EdgeInsets.zero,
                         //비활성화
-                        enabledBorder: const UnderlineInputBorder(
+                        enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(color: Color(0xffD7D8DC))),
                         hintText: '',
 
@@ -588,12 +588,12 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                       ),
                     ),
                   ),
-                  BircaText(
+                  const BircaText(
                       text: '명, ',
                       textSize: 14,
                       textColor: MainColors.grey10,
                       fontFamily: 'PretendardLight'),
-                  BircaText(
+                  const BircaText(
                       text: '최대',
                       textSize: 14,
                       textColor: MainColors.grey10,
@@ -609,10 +609,8 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
 
                         //비활성화
                         enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide
-                            (
+                          borderSide: BorderSide(
                             color: Color(0xffD7D8DC),
-
                           ),
                         ),
 
@@ -625,73 +623,76 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                       ),
                     ),
                   ),
-                  BircaText(
+                  const BircaText(
                       text: '명',
                       textSize: 14,
                       textColor: MainColors.grey10,
                       fontFamily: 'PretendardLight'),
                 ],
               ),
-
               Row(
                 children: [
                   Checkbox(
                     value: isCountChecked,
-                    side: BorderSide(color: Color(0xffD7D8DC)),
+                    side: const BorderSide(color: Color(0xffD7D8DC)),
                     onChanged: (bool? value) {
                       setState(() {
                         isCountChecked = value ?? false;
                       });
                     },
                   ),
-                  BircaText(
+                  const BircaText(
                       text: '예상 방문자 수 미정',
                       textSize: 12,
                       textColor: Color(0xff8f9093),
                       fontFamily: 'PretendardRegular')
                 ],
               ),
-              SizedBox(height: 48,),
-              BircaText(
+              const SizedBox(
+                height: 48,
+              ),
+              const BircaText(
                   text: '생일카페 트위터 계정',
                   textSize: 16,
                   textColor: MainColors.grey10,
                   fontFamily: 'PretendardMedium'),
-
-
-                  SizedBox(height: 10,),
-                  Container(
-                    width: 200,
-                    child: TextField(
-                      style: TextStyle(
-                          fontSize: 16
-                      ),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: EdgeInsets.zero,
-                        prefixIcon: Icon(Icons.alternate_email),
-                        prefixIconColor: Color(0xff8f9093),
-                        prefixIconConstraints: BoxConstraints(),
-                        //비활성화
-                        enabledBorder: const UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xffD7D8DC))),
-
-                        //활성화
-                        // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(color: MainColors.main03)
-                        // )
-                      ),
-                    ),
-                  ),
-              SizedBox(height: 72,),
-
-              Container(
-                alignment: Alignment.center,
-                child:           BircaFilledButton(text: '버카 시작하기', color: Color(0xffbfc0c4), width: 300, height: 46)
-
+              const SizedBox(
+                height: 10,
               ),
+              const SizedBox(
+                width: 200,
+                child: TextField(
+                  style: TextStyle(fontSize: 16),
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: EdgeInsets.zero,
+                    prefixIcon: Icon(Icons.alternate_email),
+                    prefixIconColor: Color(0xff8f9093),
+                    prefixIconConstraints: BoxConstraints(),
+                    //비활성화
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
-              SizedBox(height: 100,)
+                    //활성화
+                    // focusedBorder: UnderlineInputBorder(
+                    //   borderSide: BorderSide(color: MainColors.main03)
+                    // )
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 72,
+              ),
+              Container(
+                  alignment: Alignment.center,
+                  child: BircaFilledButton(
+                      text: '버카 시작하기',
+                      color: Color(0xffbfc0c4),
+                      width: 300,
+                      height: 46)),
+              SizedBox(
+                height: 100,
+              )
             ],
           ),
         ),
