@@ -1,14 +1,20 @@
 import 'package:birca/view/login/login.dart';
 import 'package:birca/view/onboarding/onboardingView.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:intl/date_symbol_data_file.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: "lib/.env");	// 추가
 
   KakaoSdk.init(
-    nativeAppKey: '93a2601f6913f5b218bdc3d16ee0a3a8',
+    nativeAppKey: dotenv.env['KAKAO_APP_KEY'],
 
   );
+
+
   runApp(const MyApp());
 }
 
