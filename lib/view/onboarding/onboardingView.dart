@@ -2,6 +2,7 @@ import 'package:birca/assets/designSystem/button.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../../assets/colors/mainColors.dart';
 import '../../assets/designSystem/text.dart';
 
@@ -260,13 +261,14 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                     width: 14,
                   ),
                   _fileName != null
-                      ? Expanded(child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Text(
-                      "$_fileName",
-                      maxLines: 1,
-                    ),
-                  ))
+                      ? Expanded(
+                          child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Text(
+                            "$_fileName",
+                            maxLines: 1,
+                          ),
+                        ))
                       : const Text("파일을 선택해주세요."),
                 ],
               ),
@@ -561,15 +563,17 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                 const SizedBox(
                   width: 11,
                 ),
-                const BircaOutLinedButton(
-                  text: '날짜 선택',
-                  radiusColor: MainColors.main03,
-                  width: 80,
-                  height: 36,
-                  radius: 6,
-                  textColor: MainColors.main03,
-                  textSize: 14,
-                )
+                BircaOutLinedButton(
+                    text: '날짜 선택',
+                    radiusColor: MainColors.main03,
+                    width: 80,
+                    height: 36,
+                    radius: 6,
+                    textColor: MainColors.main03,
+                    textSize: 14,
+                    onPressed: () {
+                      _showBottomDialogCalendar(context);
+                    })
               ]),
               Row(
                 children: [
@@ -739,4 +743,51 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
       ),
     );
   }
+
+  void _showBottomDialogCalendar(BuildContext context) {
+
+    var _selectedDay;
+    var _focusedDay = DateTime.now();
+    var _calendarFormat = CalendarFormat.month;
+
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return Column(
+            children: [
+              Container(
+                padding: EdgeInsets.only(left: 25,right: 25,top: 20,bottom: 13),
+                child: TableCalendar(
+                  focusedDay: _focusedDay,
+                  firstDay: DateTime.now(),
+                  lastDay: DateTime.utc(DateTime.now().year + 1),
+
+
+                  headerStyle: HeaderStyle(
+                    formatButtonVisible: false,
+                    titleCentered: true
+                  ),
+
+
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDay, day);
+                  },
+
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      _focusedDay = focusedDay; // update `_focusedDay` here as well
+                    });
+                  },
+
+                ),
+              ),
+              BircaFilledButton(text: '적용하기', color: Color(0xffBFC0C4), width: 300, height: 46, onPressed: (){},),
+
+            ],
+          );
+        });
+  }
 }
+
+
