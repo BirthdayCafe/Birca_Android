@@ -67,7 +67,11 @@ Future<void> kakaoLogin() async {
 
       //token
       OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
-
+      User user = await UserApi.instance.me();
+      print('사용자 정보 요청 성공'
+          '\n회원번호: ${user.id}'
+          '\n닉네임: ${user.kakaoAccount?.profile?.nickname}'
+          '\n이메일: ${user.kakaoAccount?.email}');
       print('카카오톡으로 로그인 성공 \n 토큰: ${token.accessToken}');
     } catch (error) {
       print('카카오톡으로 로그인 실패 $error');
@@ -82,7 +86,11 @@ Future<void> kakaoLogin() async {
 
         //token
         OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-
+        User user = await UserApi.instance.me();
+        print('사용자 정보 요청 성공'
+            '\n회원번호: ${user.id}'
+            '\n닉네임: ${user.kakaoAccount?.profile?.nickname}'
+            '\n이메일: ${user.kakaoAccount?.email}');
         print('카카오계정으로 로그인 성공  \n 토큰: ${token.accessToken}');
       } catch (error) {
         print('카카오계정으로 로그인 실패 $error');
@@ -93,7 +101,11 @@ Future<void> kakaoLogin() async {
 
       //token
       OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-
+      User user = await UserApi.instance.me();
+      print('사용자 정보 요청 성공'
+          '\n회원번호: ${user.id}'
+          '\n닉네임: ${user.kakaoAccount?.profile?.nickname}'
+          '\n이메일: ${user.kakaoAccount?.email}');
       print('카카오계정으로 로그인 성공  \n 토큰: ${token.accessToken}');
 
 

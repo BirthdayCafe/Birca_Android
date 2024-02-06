@@ -256,7 +256,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                       '파일 업로드',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 14,
                   ),
                   _fileName != null
@@ -267,7 +267,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                       maxLines: 1,
                     ),
                   ))
-                      : Text("파일을 선택해주세요."),
+                      : const Text("파일을 선택해주세요."),
                 ],
               ),
               const SizedBox(height: 40),
