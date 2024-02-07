@@ -149,7 +149,7 @@ class OnboardingView2 extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        OnboardingFanHostView()));
+                                        const OnboardingFanHostView()));
                           },
                           child:
                           Image.asset('lib/assets/image/img_fan_host.png')),
@@ -240,9 +240,8 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                           _pickFile();
                         },
                         style: OutlinedButton.styleFrom(
-                            textStyle: const TextStyle(
+                            foregroundColor: Palette.primary, textStyle: const TextStyle(
                                 fontFamily: 'PretendardMedium', fontSize: 14),
-                            primary: Palette.primary,
                             side: const BorderSide(color: Palette.primary),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(6))),
@@ -359,10 +358,10 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          OnboardingCafeOwnerCompleteView()));
+                                          const OnboardingCafeOwnerCompleteView()));
                             },
                             style: FilledButton.styleFrom(
-                              backgroundColor: Color(0xffBFC0C4),
+                              backgroundColor: const Color(0xffBFC0C4),
                             ),
                             child: const Text('계정 요청하기'),
                           ))
@@ -436,6 +435,8 @@ class OnboardingCafeOwnerCompleteView extends StatelessWidget {
 
 //주최자 온보딩
 class OnboardingFanHostView extends StatefulWidget {
+  const OnboardingFanHostView({super.key});
+
   @override
   State<StatefulWidget> createState() => _OnboardingFanHostView();
 }
@@ -508,7 +509,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                   )
                 ],
               ),
-              Container(
+              SizedBox(
                 width: 332,
                 child: TextField(
                   decoration: InputDecoration(
@@ -543,10 +544,10 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                   width: 238,
                   height: 36,
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color(0xffD7D8DC)),
+                    border: Border.all(color: const Color(0xffD7D8DC)),
                     borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
                   ),
-                  child: Text(''),
+                  child: const Text(''),
                 ),
                 const SizedBox(
                   width: 11,
@@ -592,16 +593,16 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
               const SizedBox(
                 height: 24,
               ),
-              Row(
+              const Row(
                 children: [
-                  const BircaText(
+                  BircaText(
                       text: '최소',
                       textSize: 14,
                       textColor: Palette.gray10,
                       fontFamily: 'PretendardLight'),
-                  Container(
+                  SizedBox(
                     width: 60,
-                    child: const TextField(
+                    child: TextField(
                       textAlign: TextAlign.end,
                       style: TextStyle(fontSize: 14),
                       decoration: InputDecoration(
@@ -620,19 +621,19 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                       ),
                     ),
                   ),
-                  const BircaText(
+                  BircaText(
                       text: '명, ',
                       textSize: 14,
                       textColor: Palette.gray10,
                       fontFamily: 'PretendardLight'),
-                  const BircaText(
+                  BircaText(
                       text: '최대',
                       textSize: 14,
                       textColor: Palette.gray10,
                       fontFamily: 'PretendardLight'),
-                  Container(
+                  SizedBox(
                     width: 60,
-                    child: const TextField(
+                    child: TextField(
                       textAlign: TextAlign.end,
                       style: TextStyle(fontSize: 14),
                       decoration: InputDecoration(
@@ -655,7 +656,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                       ),
                     ),
                   ),
-                  const BircaText(
+                  BircaText(
                       text: '명',
                       textSize: 14,
                       textColor: Palette.gray10,
@@ -734,9 +735,9 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
 
   void _showBottomDialogCalendar(BuildContext context) {
 
-    var _selectedDay;
-    var _focusedDay = DateTime.now();
-    var _calendarFormat = CalendarFormat.month;
+    var selectedDay = DateTime.now();
+    var focusedDay = DateTime.now();
+    var calendarFormat = CalendarFormat.month;
 
     showModalBottomSheet(
         context: context,
@@ -744,33 +745,33 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
           return Column(
             children: [
               Container(
-                padding: EdgeInsets.only(left: 25,right: 25,top: 20,bottom: 13),
+                padding: const EdgeInsets.only(left: 25,right: 25,top: 20,bottom: 13),
                 child: TableCalendar(
-                  focusedDay: _focusedDay,
+                  focusedDay: focusedDay,
                   firstDay: DateTime.now(),
                   lastDay: DateTime.utc(DateTime.now().year + 1),
 
 
-                  headerStyle: HeaderStyle(
+                  headerStyle: const HeaderStyle(
                       formatButtonVisible: false,
                       titleCentered: true
                   ),
 
 
                   selectedDayPredicate: (day) {
-                    return isSameDay(_selectedDay, day);
+                    return isSameDay(selectedDay, day);
                   },
 
                   onDaySelected: (selectedDay, focusedDay) {
                     setState(() {
-                      _selectedDay = selectedDay;
-                      _focusedDay = focusedDay; // update `_focusedDay` here as well
+                      selectedDay = selectedDay;
+                      focusedDay = focusedDay; // update `_focusedDay` here as well
                     });
                   },
 
                 ),
               ),
-              BircaFilledButton(text: '적용하기', color: Color(0xffBFC0C4), width: 300, height: 46, onPressed: (){},),
+              BircaFilledButton(text: '적용하기', color: const Color(0xffBFC0C4), width: 300, height: 46, onPressed: (){},),
 
             ],
           );

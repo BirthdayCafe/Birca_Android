@@ -1,5 +1,4 @@
 import 'package:birca/view/login/login.dart';
-import 'package:birca/view/onboarding/onboardingview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -13,7 +12,7 @@ void main() async {
   KakaoSdk.init(
     nativeAppKey: dotenv.env['KAKAO_APP_KEY'],
   );
-  runApp(Birca());
+  runApp(const Birca());
 }
 
 class Birca extends StatelessWidget {

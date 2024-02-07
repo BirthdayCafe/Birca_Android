@@ -35,7 +35,7 @@ class _Login extends State<Login> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            OnBoardingView()));
+                            const OnBoardingView()));
               },
               child:
               Image.asset('lib/assets/image/kakao_login_medium_wide.png'),
