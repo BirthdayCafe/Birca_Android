@@ -1,3 +1,4 @@
+import 'package:birca/widgets/appbar.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,7 +25,9 @@ class _OnBoardingView extends State<OnBoardingView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: bircaAppBar(() {
+          Navigator.pop(context);
+        }),
         body: Container(
             margin: const EdgeInsets.only(top: 87),
             child: Center(
@@ -96,14 +99,9 @@ class OnboardingView2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
+        appBar: bircaAppBar(() {
+          Navigator.pop(context);
+        }),
         body: Container(
             margin: const EdgeInsets.only(top: 87),
             child: Center(
@@ -196,14 +194,9 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-        ),
+        appBar: bircaAppBar(() {
+          Navigator.pop(context);
+        }),
         body: SingleChildScrollView(
             child: Container(
               margin: const EdgeInsets.only(left: 30, right: 30),
@@ -454,14 +447,9 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
+      appBar: bircaAppBar(() {
+        Navigator.pop(context);
+      }),
       body: SingleChildScrollView(
         child: Container(
           margin: const EdgeInsets.only(left: 30, right: 30),
