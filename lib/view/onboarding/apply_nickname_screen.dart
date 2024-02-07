@@ -88,11 +88,11 @@ class ApplyNickNameScreen extends StatelessWidget {
                         margin: const EdgeInsets.only(right: 30),
                         child: const BircaOutLinedButton(
                             text: "중복 검사",
-                            borderColor: Palette.primary,
+                            radiusColor: Palette.primary,
                             width: 86,
                             height: 36,
                             radius: 6,
-                            textColor: Palette.primary),
+                            textColor: Palette.primary, textSize: 14,),
                       )
                     ],
                   ),

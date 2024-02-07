@@ -94,41 +94,55 @@ class BircaFilledButton extends StatelessWidget {
   }
 }
 
-class BircaOutLinedButton extends StatelessWidget {
+class BircaOutLinedButton extends StatelessWidget{
+
   final String text;
   final VoidCallback? onPressed;
-  final Color borderColor;
+  final Color radiusColor;
   final Color textColor;
   final int width;
   final int height;
   final int radius;
+  final int textSize;
 
-  const BircaOutLinedButton({
-    super.key,
+  const BircaOutLinedButton({super.key,
     required this.text,
-    required this.borderColor,
+    required this.radiusColor,
     required this.width,
     required this.height,
     required this.radius,
     required this.textColor,
+    required this.textSize,
     this.onPressed,
-  });
+  }
+
+      );
 
   @override
   Widget build(BuildContext context) {
+
     return SizedBox(
       width: width.toDouble(),
       height: height.toDouble(),
       child: OutlinedButton(
           onPressed: onPressed,
           style: OutlinedButton.styleFrom(
-            side: BorderSide(color: borderColor),
-            padding: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radius.toDouble()),
-            ),
+              side: BorderSide(color: radiusColor),
+              padding: EdgeInsets.zero,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(radius.toDouble())
+              )
           ),
-          child: Text(text, style: TextStyle(color: textColor))),
+          child:Text(text,
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            style: TextStyle(
+              color: textColor,
+              fontSize: textSize.toDouble(),
+            ),)
+
+      ),
     );
   }
+
 }
