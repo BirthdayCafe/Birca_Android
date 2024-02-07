@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class BircaButton extends StatelessWidget {
-  final String? label;
+class BircaElevatedButton extends StatelessWidget {
+  final String text;
   final VoidCallback? onPressed;
   final Color color;
   final int width;
   final int height;
 
-  const BircaButton(
+  const BircaElevatedButton(
       {super.key,
-      this.label,
+      required this.text,
       this.onPressed,
       required this.color,
       required this.height,
@@ -24,7 +24,7 @@ class BircaButton extends StatelessWidget {
           style: ButtonStyle(
               backgroundColor: MaterialStateProperty.all<Color>(color)),
           onPressed: onPressed,
-          child: Text(label!),
+          child: Text(text),
         ));
   }
 }
@@ -55,5 +55,74 @@ class BircaIconButton extends StatelessWidget {
           onPressed: onPressed,
           icon: icon,
         ));
+  }
+}
+
+class BircaFilledButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+  final Color color;
+  final int width;
+  final int height;
+
+  const BircaFilledButton({
+    super.key,
+    required this.text,
+    required this.color,
+    required this.width,
+    required this.height,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width.toDouble(),
+      height: height.toDouble(),
+      child: FilledButton(
+          onPressed: onPressed,
+          style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all<Color>(color)),
+          child: Text(text)),
+    );
+  }
+}
+
+class BircaOutLinedButton extends StatelessWidget {
+  final String text;
+  final VoidCallback? onPressed;
+  final Color radiusColor;
+  final Color textColor;
+  final int width;
+  final int height;
+  final int radius;
+
+  const BircaOutLinedButton({
+    super.key,
+    required this.text,
+    required this.radiusColor,
+    required this.width,
+    required this.height,
+    required this.radius,
+    required this.textColor,
+    this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: width.toDouble(),
+      height: height.toDouble(),
+      child: OutlinedButton(
+          onPressed: onPressed,
+          style: OutlinedButton.styleFrom(
+              side: BorderSide(color: radiusColor),
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(radius.toDouble()))),
+          child: Text(
+            text,
+            style: TextStyle(color: textColor),
+          )),
+    );
   }
 }
