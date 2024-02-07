@@ -170,7 +170,7 @@ class OnboardingCafeOwnerView extends StatefulWidget {
 }
 
 class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
-  String? _filePath;
+  // String? _filePath;
 
   String? _fileName;
 
@@ -182,7 +182,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
 
     if (result != null) {
       setState(() {
-        _filePath = result.files.single.path;
+        // _filePath = result.files.single.path;
         _fileName = result.files.single.name;
       });
     } else {
@@ -737,7 +737,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
 
     var selectedDay = DateTime.now();
     var focusedDay = DateTime.now();
-    var calendarFormat = CalendarFormat.month;
+    // var calendarFormat = CalendarFormat.month;
 
     showModalBottomSheet(
         context: context,
