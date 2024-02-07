@@ -82,14 +82,14 @@ class BircaFilledButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: width.toDouble(),
       height: height.toDouble(),
       child: FilledButton(
           onPressed: onPressed,
-          child: Text(text),
           style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(color))),
+              backgroundColor: MaterialStateProperty.all<Color>(color)),
+          child: Text(text)),
     );
   }
 }

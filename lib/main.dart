@@ -1,3 +1,4 @@
+import 'package:birca/view/onboarding/onboardingview.dart';
 import 'package:flutter/material.dart';
 
 import 'assets/designsystem/palette.dart';
@@ -21,7 +22,7 @@ class Birca extends StatelessWidget {
             seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: const SelectFavoriteArtistScreen(),
+      home: const OnBoardingView(),
     );
   }
 }
