@@ -38,6 +38,21 @@ dependencies:
   flutter_svg: ^2.0.0
   percent_indicator: ^4.2.3
 
+  # 카카오 전체 추가
+  kakao_flutter_sdk: ^1.8.0
+
+  #file picker
+  file_picker: ^6.1.1
+
+  #tavle calendar
+  table_calendar: ^3.0.9
+
+  #locale
+  intl: ^0.18.0
+
+  #경로 숨기기
+  flutter_dotenv: ^5.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -73,6 +88,7 @@ flutter:
 
   assets:
     - lib/assets/image/
+    - lib/.env
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

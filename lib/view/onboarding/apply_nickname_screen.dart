@@ -2,7 +2,7 @@ import 'package:birca/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:birca/widgets/progressbar.dart';
 
-import '../../assets/designsystem/palette.dart';
+import '../../designSystem/palette.dart';
 import '../../widgets/button.dart';
 
 class ApplyNickNameScreen extends StatelessWidget {
@@ -88,11 +88,11 @@ class ApplyNickNameScreen extends StatelessWidget {
                         margin: const EdgeInsets.only(right: 30),
                         child: const BircaOutLinedButton(
                             text: "중복 검사",
-                            borderColor: Palette.primary,
+                            radiusColor: Palette.primary,
                             width: 86,
                             height: 36,
                             radius: 6,
-                            textColor: Palette.primary),
+                            textColor: Palette.primary, textSize: 14,),
                       )
                     ],
                   ),

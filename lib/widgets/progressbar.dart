@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../assets/designsystem/palette.dart';
+import '../designSystem/palette.dart';
 
 ClipRRect progressBar(double value) => ClipRRect(
     borderRadius: const BorderRadius.all(Radius.circular(10)),
