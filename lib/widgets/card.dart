@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-import '../assets/designsystem/palette.dart';
+import '../designSystem/palette.dart';
+
 
 class BubblePainter extends CustomPainter {
   final int idx;

@@ -3,8 +3,10 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:table_calendar/table_calendar.dart';
-import '../../assets/colors/mainColors.dart';
 import '../../assets/designSystem/text.dart';
+import '../../designSystem/palette.dart';
+import '../../designSystem/text.dart';
+import '../../widgets/button.dart';
 
 //팬, 사장님 선택
 class OnBoardingView extends StatefulWidget {
@@ -37,7 +39,7 @@ class _OnBoardingView extends State<OnBoardingView> {
                           TextSpan(
                             text: '버카',
                             style: TextStyle(
-                                color: MainColors.main03,
+                                color: Palette.primary,
                                 fontSize: 30,
                                 decoration: TextDecoration.none,
                                 fontFamily: 'PretendardBold'),
@@ -116,7 +118,7 @@ class OnboardingView2 extends StatelessWidget {
                           TextSpan(
                             text: '생일 카페',
                             style: TextStyle(
-                                color: MainColors.main03,
+                                color: Palette.primary,
                                 fontSize: 30,
                                 decoration: TextDecoration.none,
                                 fontFamily: 'PretendardBold'),
@@ -217,7 +219,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                           TextSpan(
                             text: '카페 정보',
                             style: TextStyle(
-                                color: MainColors.main03,
+                                color: Palette.primary,
                                 fontSize: 30,
                                 decoration: TextDecoration.none,
                                 fontFamily: 'PretendardBold'),
@@ -249,8 +251,8 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
                         style: OutlinedButton.styleFrom(
                             textStyle: const TextStyle(
                                 fontFamily: 'PretendardMedium', fontSize: 14),
-                            primary: MainColors.main03,
-                            side: const BorderSide(color: MainColors.main03),
+                            primary: Palette.primary,
+                            side: const BorderSide(color: Palette.primary),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(6))),
                         child: const Text(
@@ -288,7 +290,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
 
                       //활성화
                       // focusedBorder: UnderlineInputBorder(
-                      //   borderSide: BorderSide(color: MainColors.main03)
+                      //   borderSide: BorderSide(color: Palette.primary)
                       // )
                     ),
                   ),
@@ -308,7 +310,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
 
                       //활성화
                       // focusedBorder: UnderlineInputBorder(
-                      //   borderSide: BorderSide(color: MainColors.main03)
+                      //   borderSide: BorderSide(color: Palette.primary)
                       // )
                     ),
                   ),
@@ -328,7 +330,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
 
                       //활성화
                       // focusedBorder: UnderlineInputBorder(
-                      //   borderSide: BorderSide(color: MainColors.main03)
+                      //   borderSide: BorderSide(color: Palette.primary)
                       // )
                     ),
                   ),
@@ -348,7 +350,7 @@ class _OnboardingCafeOwnerView extends State<OnboardingCafeOwnerView> {
 
                       //활성화
                       // focusedBorder: UnderlineInputBorder(
-                      //   borderSide: BorderSide(color: MainColors.main03)
+                      //   borderSide: BorderSide(color: Palette.primary)
                       // )
                     ),
                   ),
@@ -401,7 +403,7 @@ class OnboardingCafeOwnerCompleteView extends StatelessWidget {
               const BircaText(
                   text: '곧 버카에서 만나요!',
                   textSize: 20,
-                  textColor: MainColors.main03,
+                  textColor: Palette.primary,
                   fontFamily: 'PretendardBold'),
               const SizedBox(
                 height: 20,
@@ -413,7 +415,7 @@ class OnboardingCafeOwnerCompleteView extends StatelessWidget {
               const BircaText(
                   text: '계정 생성 요청이 정상적으로 완료되었습니다',
                   textSize: 18,
-                  textColor: MainColors.main03,
+                  textColor: Palette.primary,
                   fontFamily: 'PretendardSemiBold'),
               const BircaText(
                   text: '빠르게 검토 후 알람으로 알려드릴게요 (최대 1~2일 소요)',
@@ -428,7 +430,7 @@ class OnboardingCafeOwnerCompleteView extends StatelessWidget {
                   child: FilledButton(
                     onPressed: () {},
                     style: FilledButton.styleFrom(
-                      backgroundColor: MainColors.main03,
+                      backgroundColor: Palette.primary,
                     ),
                     child: const Text(
                       '계정 요청하기',
@@ -478,7 +480,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                       TextSpan(
                         text: '어떤 생일 카페를\n',
                         style: TextStyle(
-                            color: MainColors.grey10,
+                            color: Palette.gray10,
                             fontSize: 24,
                             decoration: TextDecoration.none,
                             fontFamily: 'PretendardMedium'),
@@ -486,7 +488,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                       TextSpan(
                         text: '준비',
                         style: TextStyle(
-                            color: MainColors.main03,
+                            color: Palette.primary,
                             fontSize: 30,
                             decoration: TextDecoration.none,
                             fontFamily: 'PretendardBold'),
@@ -494,7 +496,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                       TextSpan(
                         text: '하고 있나요?',
                         style: TextStyle(
-                            color: MainColors.grey10,
+                            color: Palette.gray10,
                             fontSize: 24,
                             decoration: TextDecoration.none,
                             fontFamily: 'PretendardMedium'),
@@ -509,7 +511,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                   BircaText(
                       text: '아티스트',
                       textSize: 16,
-                      textColor: MainColors.grey10,
+                      textColor: Palette.gray10,
                       fontFamily: 'PretendardMedium'),
                   SizedBox(
                     width: 2,
@@ -534,7 +536,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                       )
                     //활성화
                     // focusedBorder: UnderlineInputBorder(
-                    //   borderSide: BorderSide(color: MainColors.main03)
+                    //   borderSide: BorderSide(color: Palette.primary)
                     // )
                   ),
                 ),
@@ -545,7 +547,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
               const BircaText(
                   text: '생일카페 주최 일정',
                   textSize: 16,
-                  textColor: MainColors.grey10,
+                  textColor: Palette.gray10,
                   fontFamily: 'PretendardMedium'),
               const SizedBox(
                 height: 20,
@@ -565,11 +567,11 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                 ),
                 BircaOutLinedButton(
                     text: '날짜 선택',
-                    radiusColor: MainColors.main03,
+                    radiusColor: Palette.primary,
                     width: 80,
                     height: 36,
                     radius: 6,
-                    textColor: MainColors.main03,
+                    textColor: Palette.primary,
                     textSize: 14,
                     onPressed: () {
                       _showBottomDialogCalendar(context);
@@ -599,7 +601,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
               const BircaText(
                   text: '예상 방문자 수',
                   textSize: 16,
-                  textColor: MainColors.grey10,
+                  textColor: Palette.gray10,
                   fontFamily: 'PretendardMedium'),
               const SizedBox(
                 height: 24,
@@ -609,7 +611,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                   const BircaText(
                       text: '최소',
                       textSize: 14,
-                      textColor: MainColors.grey10,
+                      textColor: Palette.gray10,
                       fontFamily: 'PretendardLight'),
                   Container(
                     width: 60,
@@ -627,7 +629,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
 
                         //활성화
                         // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(color: MainColors.main03)
+                        //   borderSide: BorderSide(color: Palette.primary)
                         // )
                       ),
                     ),
@@ -635,12 +637,12 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                   const BircaText(
                       text: '명, ',
                       textSize: 14,
-                      textColor: MainColors.grey10,
+                      textColor: Palette.gray10,
                       fontFamily: 'PretendardLight'),
                   const BircaText(
                       text: '최대',
                       textSize: 14,
-                      textColor: MainColors.grey10,
+                      textColor: Palette.gray10,
                       fontFamily: 'PretendardLight'),
                   Container(
                     width: 60,
@@ -662,7 +664,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
 
                         //활성화
                         // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(color: MainColors.main03)
+                        //   borderSide: BorderSide(color: Palette.primary)
                         // )
                       ),
                     ),
@@ -670,7 +672,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
                   const BircaText(
                       text: '명',
                       textSize: 14,
-                      textColor: MainColors.grey10,
+                      textColor: Palette.gray10,
                       fontFamily: 'PretendardLight'),
                 ],
               ),
@@ -698,7 +700,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
               const BircaText(
                   text: '생일카페 트위터 계정',
                   textSize: 16,
-                  textColor: MainColors.grey10,
+                  textColor: Palette.gray10,
                   fontFamily: 'PretendardMedium'),
               const SizedBox(
                 height: 10,
@@ -719,7 +721,7 @@ class _OnboardingFanHostView extends State<OnboardingFanHostView> {
 
                     //활성화
                     // focusedBorder: UnderlineInputBorder(
-                    //   borderSide: BorderSide(color: MainColors.main03)
+                    //   borderSide: BorderSide(color: Palette.primary)
                     // )
                   ),
                 ),

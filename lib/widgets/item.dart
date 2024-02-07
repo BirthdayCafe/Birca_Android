@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../assets/designsystem/palette.dart';
+import '../designSystem/palette.dart';
+
 
 Widget artistItem(String path, String artistName) => Column(
       mainAxisAlignment: MainAxisAlignment.center,

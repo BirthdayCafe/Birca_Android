@@ -2,7 +2,7 @@ import 'package:birca/widgets/appbar.dart';
 import 'package:birca/widgets/item.dart';
 import 'package:flutter/material.dart';
 
-import '../../assets/designsystem/palette.dart';
+import '../../designSystem/palette.dart';
 import '../../widgets/button.dart';
 import '../../widgets/card.dart';
 import '../../widgets/progressbar.dart';
