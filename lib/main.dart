@@ -1,31 +1,27 @@
-import 'package:birca/view/onboarding/onboardingview.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+import 'assets/designsystem/palette.dart';
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+void main() => runApp(const Birca());
 
-  // This widget is the root of your application.
+class Birca extends StatelessWidget {
+  const Birca({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Birca',
       theme: ThemeData(
+        primaryColor: Palette.primary,
         textTheme: const TextTheme(
-          bodyMedium: TextStyle(color: Color(0xff303031))
+            bodyMedium: TextStyle(color: Color(0xff303031))
         ),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: const OnBoardingView(),
+      home: const SelectFavoriteArtistScreen(),
     );
   }
 }
-
-
-
-
-
