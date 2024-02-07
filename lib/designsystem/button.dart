@@ -7,13 +7,14 @@ class BircaElevatedButton extends StatelessWidget {
   final int width;
   final int height;
 
-  const BircaElevatedButton(
-      {super.key,
-      required this.text,
-      this.onPressed,
-      required this.color,
-      required this.height,
-      required this.width});
+  const BircaElevatedButton({
+    super.key,
+    required this.text,
+    this.onPressed,
+    required this.color,
+    required this.height,
+    required this.width
+  });
 
   @override
   Widget build(BuildContext context) {
