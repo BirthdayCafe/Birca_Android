@@ -53,6 +53,9 @@ dependencies:
   #경로 숨기기
   flutter_dotenv: ^5.0.2
 
+  #toast message
+  fluttertoast: ^8.2.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
