@@ -21,7 +21,9 @@ class SelectFavoriteArtistScreenState extends State<SelectFavoriteArtistScreen> 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: bircaAppBar(() {}),
+        appBar: bircaAppBar(() {
+          Navigator.pop(context);
+        }),
         body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
