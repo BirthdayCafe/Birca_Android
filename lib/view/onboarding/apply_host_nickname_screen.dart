@@ -1,3 +1,4 @@
+import 'package:birca/view/onboarding/onboarding_host.dart';
 import 'package:birca/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:birca/widgets/progressbar.dart';
@@ -5,8 +6,8 @@ import 'package:birca/widgets/progressbar.dart';
 import '../../designSystem/palette.dart';
 import '../../widgets/button.dart';
 
-class ApplyNickNameScreen extends StatelessWidget {
-  const ApplyNickNameScreen({super.key});
+class ApplyHostNickNameScreen extends StatelessWidget {
+  const ApplyHostNickNameScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,9 @@ class ApplyNickNameScreen extends StatelessWidget {
           FocusScope.of(context).unfocus();
         },
         child: Scaffold(
-            appBar: bircaAppBar(() {}),
+            appBar: bircaAppBar(() {
+              Navigator.pop(context);
+            }),
             body: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
@@ -67,7 +70,7 @@ class ApplyNickNameScreen extends StatelessWidget {
                       Expanded(
                           child: Container(
                               margin:
-                                  const EdgeInsets.only(left: 30, right: 11),
+                              const EdgeInsets.only(left: 30, right: 11),
                               height: 36,
                               child: const TextField(
                                 decoration: InputDecoration(
@@ -76,23 +79,23 @@ class ApplyNickNameScreen extends StatelessWidget {
                                   labelStyle: TextStyle(color: Colors.grey),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Palette.gray03),
+                                    BorderSide(color: Palette.gray03),
                                   ),
                                   focusedBorder: UnderlineInputBorder(
                                     borderSide:
-                                        BorderSide(color: Palette.primary),
+                                    BorderSide(color: Palette.primary),
                                   ),
                                 ),
                               ))),
                       Container(
                         margin: const EdgeInsets.only(right: 30),
                         child: const BircaOutLinedButton(
-                            text: "중복 검사",
-                            radiusColor: Palette.primary,
-                            width: 86,
-                            height: 36,
-                            radius: 6,
-                            textColor: Palette.primary, textSize: 14,),
+                          text: "중복 검사",
+                          radiusColor: Palette.primary,
+                          width: 86,
+                          height: 36,
+                          radius: 6,
+                          textColor: Palette.primary, textSize: 14,),
                       )
                     ],
                   ),
@@ -102,12 +105,22 @@ class ApplyNickNameScreen extends StatelessWidget {
                           left: 30, right: 30, bottom: 40),
                       width: double.infinity,
                       height: 46,
-                      child: const BircaElevatedButton(
+                      child:  BircaElevatedButton(
                           text: "다음으로",
                           color: Palette.gray04,
                           fontSize: 18,
                           textColor: Colors.white,
-                          fontWeight: FontWeight.w500))
-                ])));
+                          fontWeight: FontWeight.w500,
+                        onPressed: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const OnboardingHost()));
+                        },
+               )
+                  )
+                ]
+            )));
   }
 }
