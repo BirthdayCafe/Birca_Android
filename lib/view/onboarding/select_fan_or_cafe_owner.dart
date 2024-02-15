@@ -1,9 +1,8 @@
-//팬, 사장님 선택
+import 'dart:developer';
+
 import 'package:birca/view/onboarding/onboarding_cafe_owner.dart';
 import 'package:birca/view/onboarding/select_visitor_or_host.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../designSystem/palette.dart';
 import '../../widgets/appbar.dart';
 
@@ -18,7 +17,7 @@ class _SelectFanOrCafeOwner extends State<SelectFanOrCafeOwner> {
   @override
   void initState() {
     super.initState();
-    print('온보딩 시작');
+    log('온보딩 시작');
   }
 
   @override

@@ -1,11 +1,8 @@
 import 'package:birca/view/onboarding/apply_visitor_nickname_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../designSystem/palette.dart';
 import '../../widgets/appbar.dart';
 import 'apply_host_nickname_screen.dart';
-import 'onboarding_host.dart';
 
 class SelectVisitorOrHost extends StatelessWidget {
   const SelectVisitorOrHost({super.key});
