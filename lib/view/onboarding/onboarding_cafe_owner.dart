@@ -1,12 +1,9 @@
 import 'dart:developer';
-
 import 'package:birca/designSystem/text.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import '../../designSystem/palette.dart';
 import '../../widgets/appbar.dart';
 import 'onboarding_cafe_owner_complete.dart';
@@ -32,18 +29,21 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
   TextEditingController owner = TextEditingController();
   TextEditingController address = TextEditingController();
   bool isButtonOk = false;
-  Color buttonColor = Color(0xff59595A);
+  Color buttonColor = const Color(0xff59595A);
 
   void _updateButtonState() {
     setState(() {
       // 텍스트 필드에 값이 있으면 버튼을 활성화합니다.
-      if(cafeName!=null&&businessLicenseNumber!=null&&owner!=null&&address!=null&&isFileUpload==true){
+      if (cafeName.text.isNotEmpty &&
+          businessLicenseNumber.text.isNotEmpty &&
+          owner.text.isNotEmpty&&
+          address.text.isNotEmpty &&
+          isFileUpload == true) {
         isButtonOk = true;
         buttonColor = Palette.primary;
       }
     });
   }
-
 
   @override
   void dispose() {
@@ -54,7 +54,6 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
     address.dispose();
     super.dispose();
   }
-
 
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -182,21 +181,19 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
               const SizedBox(
                 height: 11,
               ),
-               TextField(
+              TextField(
                 controller: cafeName,
-                onChanged: (text){
+                onChanged: (text) {
                   _updateButtonState();
                 },
                 decoration: const InputDecoration(
-                  //비활성화
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffD7D8DC))),
+                    //비활성화
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
-                  //활성화
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Palette.primary)
-                  )
-                ),
+                    //활성화
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Palette.primary))),
               ),
               const SizedBox(height: 40),
               const Text(
@@ -206,21 +203,19 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
               const SizedBox(
                 height: 11,
               ),
-               TextField(
-                 controller: owner,
-                 onChanged: (text){
-                   _updateButtonState();
-                 },
+              TextField(
+                controller: owner,
+                onChanged: (text) {
+                  _updateButtonState();
+                },
                 decoration: const InputDecoration(
-                  //비활성화
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffD7D8DC))),
+                    //비활성화
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
-                  //활성화
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Palette.primary)
-                  )
-                ),
+                    //활성화
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Palette.primary))),
               ),
               const SizedBox(height: 40),
               const Text(
@@ -230,21 +225,19 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
               const SizedBox(
                 height: 11,
               ),
-               TextField(
+              TextField(
                 controller: businessLicenseNumber,
-                 onChanged: (text){
-                   _updateButtonState();
-                 },
+                onChanged: (text) {
+                  _updateButtonState();
+                },
                 decoration: const InputDecoration(
-                  //비활성화
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffD7D8DC))),
+                    //비활성화
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
-                  //활성화
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Palette.primary)
-                  )
-                ),
+                    //활성화
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Palette.primary))),
               ),
               const SizedBox(height: 40),
               const Text(
@@ -254,21 +247,19 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
               const SizedBox(
                 height: 11,
               ),
-               TextField(
+              TextField(
                 controller: address,
-                 onChanged: (text){
-                   _updateButtonState();
-                 },
+                onChanged: (text) {
+                  _updateButtonState();
+                },
                 decoration: const InputDecoration(
-                  //비활성화
-                  enabledBorder: UnderlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffD7D8DC))),
+                    //비활성화
+                    enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
-                  //활성화
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Palette.primary)
-                  )
-                ),
+                    //활성화
+                    focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(color: Palette.primary))),
               ),
               const SizedBox(
                 height: 100,
@@ -279,15 +270,17 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                   SizedBox(
                       width: 300,
                       child: FilledButton(
-                        onPressed: isButtonOk ? () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const OnboardingCafeOwnerComplete()));
-                        }: null,
+                        onPressed: isButtonOk
+                            ? () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const OnboardingCafeOwnerComplete()));
+                              }
+                            : null,
                         style: FilledButton.styleFrom(
-                          backgroundColor:  buttonColor,
+                          backgroundColor: buttonColor,
                         ),
                         child: const Text('계정 요청하기'),
                       ))
@@ -301,16 +294,14 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
         )));
   }
 
-  void showChat(BuildContext context){
-
-    Fluttertoast.showToast(msg: '카페의 사업자등록증을 업로드하면 아래의 정보가 자동으로 기입됩니다.\n사업자 등록증은 5회까지 업로드 가능합니다.\n5회를 초과할 시 업로드 제한되니 신중하게 진행해주세요.',
-      gravity: ToastGravity.CENTER,
-      textColor: Colors.white,
-      timeInSecForIosWeb: 3,
-      backgroundColor: const Color(0xff59595A),
-        fontSize: 12
-    );
-
+  void showChat(BuildContext context) {
+    Fluttertoast.showToast(
+        msg:
+            '카페의 사업자등록증을 업로드하면 아래의 정보가 자동으로 기입됩니다.\n사업자 등록증은 5회까지 업로드 가능합니다.\n5회를 초과할 시 업로드 제한되니 신중하게 진행해주세요.',
+        gravity: ToastGravity.CENTER,
+        textColor: Colors.white,
+        timeInSecForIosWeb: 3,
+        backgroundColor: const Color(0xff59595A),
+        fontSize: 12);
   }
 }
-

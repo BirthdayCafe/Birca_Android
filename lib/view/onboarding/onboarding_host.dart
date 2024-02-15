@@ -1,9 +1,5 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
 import '../../widgets/appbar.dart';
@@ -17,8 +13,14 @@ class OnboardingHost extends StatefulWidget {
 }
 
 class _OnboardingHost extends State<OnboardingHost> {
+
+  int? artistId;
+  int? minimumVisitant;
+  int? maximumVisitant;
+  String? twitterAcount;
   bool isDateChecked = false;
   bool isCountChecked = false;
+
 
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
   DateTime? _selectedDay;
@@ -321,75 +323,73 @@ class _OnboardingHost extends State<OnboardingHost> {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
             //
-            return Container(
-              child: Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 25, right: 25, top: 10, bottom: 13),
-                    child: TableCalendar(
-                      //오늘 날짜
-                      focusedDay: _focusedDay,
-                      firstDay: DateTime.now(),
-                      lastDay: DateTime.utc(DateTime.now().year + 1),
+            return Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                      left: 25, right: 25, top: 10, bottom: 13),
+                  child: TableCalendar(
+                    //오늘 날짜
+                    focusedDay: _focusedDay,
+                    firstDay: DateTime.now(),
+                    lastDay: DateTime.utc(DateTime.now().year + 1),
 
-                      headerStyle: const HeaderStyle(
-                          formatButtonVisible: false, titleCentered: true),
+                    headerStyle: const HeaderStyle(
+                        formatButtonVisible: false, titleCentered: true),
 
-                      rangeStartDay: _rangeStart,
-                      rangeEndDay: _rangeEnd,
-                      rangeSelectionMode: _rangeSelectionMode,
+                    rangeStartDay: _rangeStart,
+                    rangeEndDay: _rangeEnd,
+                    rangeSelectionMode: _rangeSelectionMode,
 
-                      selectedDayPredicate: (day) {
-                        return isSameDay(_selectedDay, day);
-                      },
+                    selectedDayPredicate: (day) {
+                      return isSameDay(_selectedDay, day);
+                    },
 
-                      onDaySelected: (selectedDay, focusedDay) {
-                        if (!isSameDay(_selectedDay, selectedDay)) {
-                          setState(() {
-                            _selectedDay = selectedDay;
-                            _focusedDay =
-                                focusedDay; // update `_focusedDay` here as well
-                            _rangeStart = null; // Important to clean those
-                            _rangeEnd = null;
-                            _rangeSelectionMode = RangeSelectionMode.toggledOff;
-                          });
-                        }
-                      },
-
-                      //달력 날짜 범위 선택
-                      onRangeSelected: (start, end, focusedDay) {
+                    onDaySelected: (selectedDay, focusedDay) {
+                      if (!isSameDay(_selectedDay, selectedDay)) {
                         setState(() {
-                          _selectedDay = null;
-                          _focusedDay = focusedDay;
-                          _rangeStart = start;
-                          _rangeEnd = end;
-                          _rangeSelectionMode = RangeSelectionMode.toggledOn;
-                          print('start : $_rangeStart / end : $_rangeEnd ');
+                          _selectedDay = selectedDay;
+                          _focusedDay =
+                              focusedDay; // update `_focusedDay` here as well
+                          _rangeStart = null; // Important to clean those
+                          _rangeEnd = null;
+                          _rangeSelectionMode = RangeSelectionMode.toggledOff;
                         });
-                      },
-                    ),
-                  ),
-                  BircaFilledButton(
-                    text: '적용하기',
-                    color: const Color(0xffBFC0C4),
-                    width: 300,
-                    height: 46,
-                    onPressed: () {
-                      //날짜를 하나만 선택 했을 시
-                      _rangeEnd ??= _rangeStart;
-                      setState(() {
-                        hostDate =
-                            '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
-                        print(hostDate);
-                        print(hostDate);
-                      });
+                      }
+                    },
 
-                      Navigator.pop(context);
+                    //달력 날짜 범위 선택
+                    onRangeSelected: (start, end, focusedDay) {
+                      setState(() {
+                        _selectedDay = null;
+                        _focusedDay = focusedDay;
+                        _rangeStart = start;
+                        _rangeEnd = end;
+                        _rangeSelectionMode = RangeSelectionMode.toggledOn;
+                        print('start : $_rangeStart / end : $_rangeEnd ');
+                      });
                     },
                   ),
-                ],
-              ),
+                ),
+                BircaFilledButton(
+                  text: '적용하기',
+                  color: const Color(0xffBFC0C4),
+                  width: 300,
+                  height: 46,
+                  onPressed: () {
+                    //날짜를 하나만 선택 했을 시
+                    _rangeEnd ??= _rangeStart;
+                    setState(() {
+                      hostDate =
+                          '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
+                      print(hostDate);
+                      print(hostDate);
+                    });
+
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
             );
           });
         });
