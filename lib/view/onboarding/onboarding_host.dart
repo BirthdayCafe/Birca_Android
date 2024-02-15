@@ -103,12 +103,10 @@ class _OnboardingHost extends State<OnboardingHost> {
                       suffixIcon: IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.search),
-                      )
-                      //활성화
-                      // focusedBorder: UnderlineInputBorder(
-                      //   borderSide: BorderSide(color: Palette.primary)
-                      // )
                       ),
+                      //활성화
+                      focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.primary))),
                 ),
               ),
               const SizedBox(
@@ -130,7 +128,8 @@ class _OnboardingHost extends State<OnboardingHost> {
                     border: Border.all(color: const Color(0xffD7D8DC)),
                     borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
                   ),
-                  child:  Text(hostDate),
+                  child: Text(hostDate
+                 ),
                 ),
                 const SizedBox(
                   width: 11,
@@ -189,19 +188,16 @@ class _OnboardingHost extends State<OnboardingHost> {
                       textAlign: TextAlign.end,
                       style: TextStyle(fontSize: 14),
                       decoration: InputDecoration(
-                        isDense: true,
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
+                          //비활성화
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xffD7D8DC))),
+                          hintText: '',
 
-                        contentPadding: EdgeInsets.zero,
-                        //비활성화
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xffD7D8DC))),
-                        hintText: '',
-
-                        //활성화
-                        // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(color: Palette.primary)
-                        // )
-                      ),
+                          //활성화
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Palette.primary))),
                     ),
                   ),
                   BircaText(
@@ -220,23 +216,20 @@ class _OnboardingHost extends State<OnboardingHost> {
                       textAlign: TextAlign.end,
                       style: TextStyle(fontSize: 14),
                       decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: EdgeInsets.zero,
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
 
-                        //비활성화
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xffD7D8DC),
+                          //비활성화
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xffD7D8DC),
+                            ),
                           ),
-                        ),
+                          hintText: '',
 
-                        hintText: '',
-
-                        //활성화
-                        // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(color: Palette.primary)
-                        // )
-                      ),
+                          //활성화
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Palette.primary))),
                     ),
                   ),
                   BircaText(
@@ -280,20 +273,18 @@ class _OnboardingHost extends State<OnboardingHost> {
                 child: TextField(
                   style: TextStyle(fontSize: 16),
                   decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: EdgeInsets.zero,
-                    prefixIcon: Icon(Icons.alternate_email),
-                    prefixIconColor: Color(0xff8f9093),
-                    prefixIconConstraints: BoxConstraints(),
-                    //비활성화
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                      prefixIcon: Icon(Icons.alternate_email),
+                      prefixIconColor: Color(0xff8f9093),
+                      prefixIconConstraints: BoxConstraints(),
+                      //비활성화
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
-                    //활성화
-                    // focusedBorder: UnderlineInputBorder(
-                    //   borderSide: BorderSide(color: Palette.primary)
-                    // )
-                  ),
+                      //활성화
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.primary))),
                 ),
               ),
               const SizedBox(
@@ -353,16 +344,15 @@ class _OnboardingHost extends State<OnboardingHost> {
                         return isSameDay(_selectedDay, day);
                       },
 
-
                       onDaySelected: (selectedDay, focusedDay) {
                         if (!isSameDay(_selectedDay, selectedDay)) {
                           setState(() {
                             _selectedDay = selectedDay;
-                            _focusedDay = focusedDay; // update `_focusedDay` here as well
+                            _focusedDay =
+                                focusedDay; // update `_focusedDay` here as well
                             _rangeStart = null; // Important to clean those
                             _rangeEnd = null;
                             _rangeSelectionMode = RangeSelectionMode.toggledOff;
-
                           });
                         }
                       },
@@ -375,10 +365,7 @@ class _OnboardingHost extends State<OnboardingHost> {
                           _rangeStart = start;
                           _rangeEnd = end;
                           _rangeSelectionMode = RangeSelectionMode.toggledOn;
-                         print('start : $_rangeStart / end : $_rangeEnd ');
-
-
-
+                          print('start : $_rangeStart / end : $_rangeEnd ');
                         });
                       },
                     ),
@@ -389,20 +376,16 @@ class _OnboardingHost extends State<OnboardingHost> {
                     width: 300,
                     height: 46,
                     onPressed: () {
-
-
                       //날짜를 하나만 선택 했을 시
                       _rangeEnd ??= _rangeStart;
-                      setState((){
-                        hostDate = '$_rangeStart ~ $_rangeEnd';
-                        print('object');
-
-
-                        print('object');
+                      setState(() {
+                        hostDate =
+                            '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
+                        print(hostDate);
+                        print(hostDate);
                       });
 
-                        Navigator.pop(context);
-
+                      Navigator.pop(context);
                     },
                   ),
                 ],

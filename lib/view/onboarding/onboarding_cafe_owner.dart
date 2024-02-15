@@ -24,6 +24,38 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
   String? _fileName;
   int upload = 0;
 
+  //계정 요청 data
+  bool isFileUpload = false;
+  String? businessLicense;
+  TextEditingController cafeName = TextEditingController();
+  TextEditingController businessLicenseNumber = TextEditingController();
+  TextEditingController owner = TextEditingController();
+  TextEditingController address = TextEditingController();
+  bool isButtonOk = false;
+  Color buttonColor = Color(0xff59595A);
+
+  void _updateButtonState() {
+    setState(() {
+      // 텍스트 필드에 값이 있으면 버튼을 활성화합니다.
+      if(cafeName!=null&&businessLicenseNumber!=null&&owner!=null&&address!=null&&isFileUpload==true){
+        isButtonOk = true;
+        buttonColor = Palette.primary;
+      }
+    });
+  }
+
+
+  @override
+  void dispose() {
+    // 페이지가 dispose될 때 컨트롤러도 함께 dispose 해줍니다.
+    cafeName.dispose();
+    businessLicenseNumber.dispose();
+    owner.dispose();
+    address.dispose();
+    super.dispose();
+  }
+
+
   Future<void> _pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
@@ -35,6 +67,8 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
         // _filePath = result.files.single.path;
         _fileName = result.files.single.name;
         upload++;
+        isFileUpload = true;
+        _updateButtonState();
       });
     } else {
       // 사용자가 선택을 취소한 경우
@@ -148,16 +182,20 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
               const SizedBox(
                 height: 11,
               ),
-              const TextField(
-                decoration: InputDecoration(
+               TextField(
+                controller: cafeName,
+                onChanged: (text){
+                  _updateButtonState();
+                },
+                decoration: const InputDecoration(
                   //비활성화
                   enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
                   //활성화
-                  // focusedBorder: UnderlineInputBorder(
-                  //   borderSide: BorderSide(color: Palette.primary)
-                  // )
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Palette.primary)
+                  )
                 ),
               ),
               const SizedBox(height: 40),
@@ -168,16 +206,20 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
               const SizedBox(
                 height: 11,
               ),
-              const TextField(
-                decoration: InputDecoration(
+               TextField(
+                 controller: owner,
+                 onChanged: (text){
+                   _updateButtonState();
+                 },
+                decoration: const InputDecoration(
                   //비활성화
                   enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
                   //활성화
-                  // focusedBorder: UnderlineInputBorder(
-                  //   borderSide: BorderSide(color: Palette.primary)
-                  // )
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Palette.primary)
+                  )
                 ),
               ),
               const SizedBox(height: 40),
@@ -188,16 +230,20 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
               const SizedBox(
                 height: 11,
               ),
-              const TextField(
-                decoration: InputDecoration(
+               TextField(
+                controller: businessLicenseNumber,
+                 onChanged: (text){
+                   _updateButtonState();
+                 },
+                decoration: const InputDecoration(
                   //비활성화
                   enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
                   //활성화
-                  // focusedBorder: UnderlineInputBorder(
-                  //   borderSide: BorderSide(color: Palette.primary)
-                  // )
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Palette.primary)
+                  )
                 ),
               ),
               const SizedBox(height: 40),
@@ -208,16 +254,20 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
               const SizedBox(
                 height: 11,
               ),
-              const TextField(
-                decoration: InputDecoration(
+               TextField(
+                controller: address,
+                 onChanged: (text){
+                   _updateButtonState();
+                 },
+                decoration: const InputDecoration(
                   //비활성화
                   enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
                   //활성화
-                  // focusedBorder: UnderlineInputBorder(
-                  //   borderSide: BorderSide(color: Palette.primary)
-                  // )
+                  focusedBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Palette.primary)
+                  )
                 ),
               ),
               const SizedBox(
@@ -229,15 +279,15 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                   SizedBox(
                       width: 300,
                       child: FilledButton(
-                        onPressed: () {
+                        onPressed: isButtonOk ? () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
                                       const OnboardingCafeOwnerComplete()));
-                        },
+                        }: null,
                         style: FilledButton.styleFrom(
-                          backgroundColor: const Color(0xffBFC0C4),
+                          backgroundColor:  buttonColor,
                         ),
                         child: const Text('계정 요청하기'),
                       ))
