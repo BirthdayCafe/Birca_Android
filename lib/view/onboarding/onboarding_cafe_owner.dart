@@ -2,8 +2,10 @@ import 'dart:developer';
 
 import 'package:birca/designSystem/text.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../designSystem/palette.dart';
 import '../../widgets/appbar.dart';
@@ -83,7 +85,9 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                         TextStyle(fontFamily: 'PretendardMedium', fontSize: 16),
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showChat(context);
+                      },
                       icon: SvgPicture.asset(
                           'lib/assets/image/img_ri_question.svg'))
                 ],
@@ -246,4 +250,17 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
           ),
         )));
   }
+
+  void showChat(BuildContext context){
+
+    Fluttertoast.showToast(msg: '카페의 사업자등록증을 업로드하면 아래의 정보가 자동으로 기입됩니다.\n사업자 등록증은 5회까지 업로드 가능합니다.\n5회를 초과할 시 업로드 제한되니 신중하게 진행해주세요.',
+      gravity: ToastGravity.CENTER,
+      textColor: Colors.white,
+      timeInSecForIosWeb: 3,
+      backgroundColor: const Color(0xff59595A),
+        fontSize: 12
+    );
+
+  }
 }
+
