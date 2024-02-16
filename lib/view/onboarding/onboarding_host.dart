@@ -130,8 +130,8 @@ class _OnboardingHost extends State<OnboardingHost> {
                     border: Border.all(color: const Color(0xffD7D8DC)),
                     borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
                   ),
-                  child: Text(hostDate
-                 ),
+                  alignment: Alignment.center,
+                  child: Text(hostDate,),
                 ),
                 const SizedBox(
                   width: 11,
@@ -145,7 +145,10 @@ class _OnboardingHost extends State<OnboardingHost> {
                     textColor: Palette.primary,
                     textSize: 14,
                     onPressed: () {
-                      _showBottomDialogCalendar(context);
+
+                        _showBottomDialogCalendar(context);
+
+
                     })
               ]),
               Row(
@@ -309,7 +312,7 @@ class _OnboardingHost extends State<OnboardingHost> {
     );
   }
 
-  void _showBottomDialogCalendar(BuildContext context) {
+  void _showBottomDialogCalendar(BuildContext context) async {
     // var calendarFormat = CalendarFormat.month;
     // DateTime? _selectedDay;
     // DateTime _focusedDay = DateTime.now();
@@ -317,6 +320,7 @@ class _OnboardingHost extends State<OnboardingHost> {
     // DateTime? _rangeEnd;
     // RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
 
+    var hostDate1 = await
     showModalBottomSheet(
         context: context,
         builder: (context) {
@@ -383,15 +387,24 @@ class _OnboardingHost extends State<OnboardingHost> {
                       hostDate =
                           '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
                       print(hostDate);
-                      print(hostDate);
+
                     });
 
-                    Navigator.pop(context);
+
+                    Navigator.of(context).pop(hostDate);
                   },
                 ),
               ],
             );
-          });
-        });
+          }
+          );
+        }
+        );
+
+    if(hostDate1!=null){
+      setState(() {
+        hostDate = hostDate1;
+      });
+    }
   }
 }
