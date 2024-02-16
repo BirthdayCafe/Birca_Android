@@ -370,14 +370,14 @@ class _OnboardingHost extends State<OnboardingHost> {
                         _rangeStart = start;
                         _rangeEnd = end;
                         _rangeSelectionMode = RangeSelectionMode.toggledOn;
-                        print('start : $_rangeStart / end : $_rangeEnd ');
+                        // print('start : $_rangeStart / end : $_rangeEnd ');
                       });
                     },
                   ),
                 ),
                 BircaFilledButton(
                   text: '적용하기',
-                  color: const Color(0xffBFC0C4),
+                  color: Palette.primary,
                   width: 300,
                   height: 46,
                   onPressed: () {
@@ -386,7 +386,7 @@ class _OnboardingHost extends State<OnboardingHost> {
                     setState(() {
                       hostDate =
                           '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
-                      print(hostDate);
+                      // print(hostDate);
 
                     });
 
