@@ -155,8 +155,6 @@ Future<void> postKakaoToken(String token) async {
       data:{'accessToken' : token}
       // options: Options(headers: {'Authorization': 'Bearer $token'})
     );
-    log('url :${baseUrl}api/v1/oauth/login/kakao ');
-    // log(response.data);
 
     var kakaoLoginInfo = jsonEncode(response.data);
     log('kakaoLoginInfo : $kakaoLoginInfo');

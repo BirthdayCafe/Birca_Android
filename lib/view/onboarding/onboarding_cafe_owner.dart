@@ -1,7 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/designSystem/text.dart';
+import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../../designSystem/palette.dart';
@@ -16,7 +20,7 @@ class OnboardingCafeOwner extends StatefulWidget {
 }
 
 class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
-  // String? _filePath;
+  String? _filePath;
 
   String? _fileName;
   int upload = 0;
@@ -30,6 +34,9 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
   TextEditingController address = TextEditingController();
   bool isButtonOk = false;
   Color buttonColor = const Color(0xff59595A);
+
+
+
 
   void _updateButtonState() {
     setState(() {
@@ -62,13 +69,59 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
     );
 
     if (result != null) {
-      setState(() {
-        // _filePath = result.files.single.path;
-        _fileName = result.files.single.name;
-        upload++;
-        isFileUpload = true;
-        _updateButtonState();
+
+      //post business license
+      const storage = FlutterSecureStorage();
+      var baseUrl = dotenv.env['BASE_URL'];
+
+      var token = '';
+      var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+      //토큰 가져오기
+      if (kakaoLoginInfo != null) {
+        Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+        token = loginData['accessToken'].toString();
+      }
+
+      Dio dio = Dio();
+
+      _filePath = result.files.single.path;
+      _fileName = result.files.single.name;
+
+      // FormData 생성
+      FormData businessLicense = FormData.fromMap({
+        'businessLicense': await MultipartFile.fromFile(_filePath!, filename: _fileName),
       });
+
+      try {
+        // API 엔드포인트 및 업로드
+        Response response = await dio.post(
+            '${baseUrl}api/v1/cafes/license-read',
+            data: businessLicense,
+            options: Options(headers: {'Authorization': 'Bearer $token'})
+        );
+
+        // 서버 응답 출력
+        log('Response: ${response.data}');
+        setState(()  {
+
+
+          upload++;
+          isFileUpload = true;
+          cafeName.text = response.data['cafeName'];
+          businessLicenseNumber.text = response.data['businessLicenseNumber'];
+          owner.text = response.data['owner'];
+          address.text = response.data['address'];
+          // upload = response.data['uploadCount'];
+          _updateButtonState();
+
+
+        });
+
+      } catch (e) {
+        log('Error: $e');
+      }
+
     } else {
       // 사용자가 선택을 취소한 경우
       log("파일 선택이 취소되었습니다.");
