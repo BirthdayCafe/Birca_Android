@@ -59,6 +59,10 @@ dependencies:
   #dio
   dio: ^5.4.0
 
+  #flutter secure storage
+  flutter_secure_storage: ^9.0.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
