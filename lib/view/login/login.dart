@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import '../onboarding/select_fan_or_cafe_owner.dart';
@@ -16,6 +17,9 @@ class Login extends StatefulWidget {
 }
 
 class _Login extends State<Login> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -138,6 +142,9 @@ Future<void> kakaoLogin(BuildContext context) async {
 
 //post token
 Future<void> postKakaoToken(String token) async {
+
+  const storage = FlutterSecureStorage();
+
   Dio dio = Dio();
   Response response;
   var baseUrl = dotenv.env['BASE_URL'];
@@ -150,6 +157,10 @@ Future<void> postKakaoToken(String token) async {
     );
     log('url :${baseUrl}api/v1/oauth/login/kakao ');
     log(response.data.toString());
+
+    await storage.write(key: 'kakaoLoginInfo', value: response.data.toString()).then((value) => log('storage 저장완료'));
+
+
   } catch (e){
     log(e.toString());
     // if(context.mounted){
