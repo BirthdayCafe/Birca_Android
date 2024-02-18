@@ -156,9 +156,12 @@ Future<void> postKakaoToken(String token) async {
       // options: Options(headers: {'Authorization': 'Bearer $token'})
     );
     log('url :${baseUrl}api/v1/oauth/login/kakao ');
-    log(response.data.toString());
+    // log(response.data);
 
-    await storage.write(key: 'kakaoLoginInfo', value: response.data.toString()).then((value) => log('storage 저장완료'));
+    var kakaoLoginInfo = jsonEncode(response.data);
+    log('kakaoLoginInfo : $kakaoLoginInfo');
+
+    await storage.write(key: 'kakaoLoginInfo', value: kakaoLoginInfo).then((value) => log('storage 저장완료'));
 
 
   } catch (e){
