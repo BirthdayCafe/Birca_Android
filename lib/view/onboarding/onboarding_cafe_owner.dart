@@ -62,71 +62,7 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
     super.dispose();
   }
 
-  Future<void> _pickFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'png', 'pdf'],
-    );
 
-    if (result != null) {
-
-      //post business license
-      const storage = FlutterSecureStorage();
-      var baseUrl = dotenv.env['BASE_URL'];
-
-      var token = '';
-      var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-
-      //토큰 가져오기
-      if (kakaoLoginInfo != null) {
-        Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-        token = loginData['accessToken'].toString();
-      }
-
-      Dio dio = Dio();
-
-      _filePath = result.files.single.path;
-      _fileName = result.files.single.name;
-
-      // FormData 생성
-      FormData businessLicense = FormData.fromMap({
-        'businessLicense': await MultipartFile.fromFile(_filePath!, filename: _fileName),
-      });
-
-      try {
-        // API 엔드포인트 및 업로드
-        Response response = await dio.post(
-            '${baseUrl}api/v1/cafes/license-read',
-            data: businessLicense,
-            options: Options(headers: {'Authorization': 'Bearer $token'})
-        );
-
-        // 서버 응답 출력
-        log('Response: ${response.data}');
-        setState(()  {
-
-
-          upload++;
-          isFileUpload = true;
-          cafeName.text = response.data['cafeName'];
-          businessLicenseNumber.text = response.data['businessLicenseNumber'];
-          owner.text = response.data['owner'];
-          address.text = response.data['address'];
-          // upload = response.data['uploadCount'];
-          _updateButtonState();
-
-
-        });
-
-      } catch (e) {
-        log('Error: $e');
-      }
-
-    } else {
-      // 사용자가 선택을 취소한 경우
-      log("파일 선택이 취소되었습니다.");
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -324,12 +260,24 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                       width: 300,
                       child: FilledButton(
                         onPressed: isButtonOk
-                            ? () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const OnboardingCafeOwnerComplete()));
+                            ? ()async {
+
+                          FormData applyData = FormData.fromMap({
+                            'businessLicense': await MultipartFile.fromFile(_filePath!,filename: _fileName),
+                            'cafeName' : cafeName.text,
+                            'businessLicenseNumber' : businessLicenseNumber.text,
+                            'owner' : owner.text,
+                            'address' : address.text
+                          });
+
+                         await postCafeApply(applyData);
+
+                          if(context.mounted){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const OnboardingCafeOwnerComplete()));
+                          }
                               }
                             : null,
                         style: FilledButton.styleFrom(
@@ -347,14 +295,165 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
         )));
   }
 
-  void showChat(BuildContext context) {
-    Fluttertoast.showToast(
-        msg:
-            '카페의 사업자등록증을 업로드하면 아래의 정보가 자동으로 기입됩니다.\n사업자 등록증은 5회까지 업로드 가능합니다.\n5회를 초과할 시 업로드 제한되니 신중하게 진행해주세요.',
-        gravity: ToastGravity.CENTER,
-        textColor: Colors.white,
-        timeInSecForIosWeb: 3,
-        backgroundColor: const Color(0xff59595A),
-        fontSize: 12);
+
+
+
+
+  //사업자 등록증 제출
+  Future<void> _pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png', 'pdf'],
+    );
+
+    if (result != null) {
+
+      //post business license
+      const storage = FlutterSecureStorage();
+      var baseUrl = dotenv.env['BASE_URL'];
+
+      var token = '';
+      var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+      //토큰 가져오기
+      if (kakaoLoginInfo != null) {
+        Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+        token = loginData['accessToken'].toString();
+      }
+
+      Dio dio = Dio();
+
+      _filePath = result.files.single.path;
+      _fileName = result.files.single.name;
+
+      // FormData 생성
+      FormData businessLicense = FormData.fromMap({
+        'businessLicense': await MultipartFile.fromFile(_filePath!,filename: _fileName),
+      });
+
+      //파일 전송 api
+      try {
+        // API 엔드포인트 및 업로드
+        Response response = await dio.post(
+            '${baseUrl}api/v1/cafes/license-read',
+            data: businessLicense,
+            options: Options(headers: {'Authorization': 'Bearer $token'})
+            // options: Options(headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzA4MzE1MTk4LCJleHAiOjE3MDg0OTUxOTh9.5XD5tY3q0-PBH9nkPCFEOnrONM6xVR8wcLuoTX8idk8'})
+        );
+
+        // 서버 응답 출력
+        log('Response: ${response.data}');
+        setState(()  {
+
+
+          // upload++;
+          isFileUpload = true;
+          cafeName.text = response.data['cafeName'];
+          businessLicenseNumber.text = response.data['businessLicenseNumber'];
+          owner.text = response.data['owner'];
+          address.text = response.data['address'];
+          upload = response.data['uploadCount'];
+          _updateButtonState();
+
+
+        });
+
+      } catch (e) {
+        if (e is DioException) {
+          // Dio exception handling
+          if (e.response != null) {
+            // Server responded with an error
+            if (e.response!.statusCode == 400) {
+              // Handle HTTP 400 Bad Request error
+              log('Bad Request - Server returned 400 status code');
+              log('Response data: ${e.response!.data}');
+              // Additional error handling logic here if needed
+            } else {
+              // Handle other HTTP status codes
+              log('Server error - Status code: ${e.response!.statusCode}');
+              log('Response data: ${e.response!.data}');
+              // Additional error handling logic here if needed
+            }
+          } else {
+            // No response from the server (network error, timeout, etc.)
+            log('Dio error: ${e.message}');
+          }
+        } else {
+          // Handle other exceptions if necessary
+          log('Error: $e');
+        }
+
+      }
+
+    } else {
+      // 사용자가 선택을 취소한 경우
+      log("파일 선택이 취소되었습니다.");
+    }
+  }
+}
+
+void showChat(BuildContext context) {
+  Fluttertoast.showToast(
+      msg:
+      '카페의 사업자등록증을 업로드하면 아래의 정보가 자동으로 기입됩니다.\n사업자 등록증은 5회까지 업로드 가능합니다.\n5회를 초과할 시 업로드 제한되니 신중하게 진행해주세요.',
+      gravity: ToastGravity.CENTER,
+      textColor: Colors.white,
+      timeInSecForIosWeb: 3,
+      backgroundColor: const Color(0xff59595A),
+      fontSize: 12);
+}
+
+
+//카페 요청하기
+Future<void> postCafeApply(FormData applyData) async {
+  const storage = FlutterSecureStorage();
+
+  Dio dio = Dio();
+  Response response;
+  var baseUrl = dotenv.env['BASE_URL'];
+
+  var token = '';
+  var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+  //토큰 가져오기
+  if (kakaoLoginInfo != null) {
+    Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    token = loginData['accessToken'].toString();
+  }
+
+  try {
+    response = await dio.post('${baseUrl}api/v1/members/role-change',
+        data: applyData,
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+
+    log(response.data.toString());
+
+
+  } catch (e) {
+    if (e is DioException) {
+      // Dio exception handling
+      if (e.response != null) {
+        // Server responded with an error
+        if (e.response!.statusCode == 400) {
+          // Handle HTTP 400 Bad Request error
+          log('Bad Request - Server returned 400 status code');
+          log('Response data: ${e.response!.data}');
+          // Additional error handling logic here if needed
+        } else {
+          // Handle other HTTP status codes
+          log('Server error - Status code: ${e.response!.statusCode}');
+          log('Response data: ${e.response!.data}');
+          // Additional error handling logic here if needed
+        }
+      } else {
+        // No response from the server (network error, timeout, etc.)
+        log('Dio error: ${e.message}');
+      }
+    } else {
+      // Handle other exceptions if necessary
+      log('Error: $e');
+    }
+
   }
 }
