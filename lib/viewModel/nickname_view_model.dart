@@ -114,13 +114,13 @@ Future<void> registerNickName(String nickname) async {
     // API 엔드포인트 및 업로드
     Response response = await dio.post(
         '${baseUrl}api/v1/join/register-nickname',
-        queryParameters: {'nickname' : nickname },
+        data: {'nickname' : nickname},
         options: Options(headers: {'Authorization': 'Bearer $token'})
     );
 
     log(response.toString());
 
-    isNickNameCheckOk = true;
+
 
     notifyListeners();
 
