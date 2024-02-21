@@ -1,11 +1,12 @@
-
+import 'dart:convert';
 import 'dart:developer';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
-
 import '../onboarding/select_fan_or_cafe_owner.dart';
 
 class Login extends StatefulWidget {
@@ -16,6 +17,9 @@ class Login extends StatefulWidget {
 }
 
 class _Login extends State<Login> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,10 +38,9 @@ class _Login extends State<Login> {
             GestureDetector(
               onTap: () async {
                 await kakaoLogin(context);
-
               },
               child:
-              Image.asset('lib/assets/image/kakao_login_medium_wide.png'),
+                  Image.asset('lib/assets/image/kakao_login_medium_wide.png'),
             ),
             const SizedBox(
               height: 40,
@@ -63,7 +66,6 @@ Future<void> kakaoLogin(BuildContext context) async {
 // 카카오톡 실행이 가능하면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
   if (await isKakaoTalkInstalled()) {
     try {
-
       //token
       OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
       User user = await UserApi.instance.me();
@@ -73,12 +75,14 @@ Future<void> kakaoLogin(BuildContext context) async {
           '\n이메일: ${user.kakaoAccount?.email}');
       log('카카오톡으로 로그인 성공 \n 토큰: ${token.accessToken}');
 
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-              const SelectFanOrCafeOwner()));
+      await postKakaoToken(token.accessToken);
 
+      if(context.mounted){
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const SelectFanOrCafeOwner()));
+      }
     } catch (error) {
       log('카카오톡으로 로그인 실패 $error');
 
@@ -89,7 +93,6 @@ Future<void> kakaoLogin(BuildContext context) async {
       }
       // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
       try {
-
         //token
         OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
         User user = await UserApi.instance.me();
@@ -98,19 +101,21 @@ Future<void> kakaoLogin(BuildContext context) async {
             '\n닉네임: ${user.kakaoAccount?.profile?.nickname}'
             '\n이메일: ${user.kakaoAccount?.email}');
         log('카카오계정으로 로그인 성공  \n 토큰: ${token.accessToken}');
+        await postKakaoToken(token.accessToken);
 
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                const SelectFanOrCafeOwner()));
+        if(context.mounted){
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => const SelectFanOrCafeOwner()));
+        }
+
       } catch (error) {
         log('카카오계정으로 로그인 실패 $error');
       }
     }
   } else {
     try {
-
       //token
       OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
       User user = await UserApi.instance.me();
@@ -119,14 +124,52 @@ Future<void> kakaoLogin(BuildContext context) async {
           '\n닉네임: ${user.kakaoAccount?.profile?.nickname}'
           '\n이메일: ${user.kakaoAccount?.email}');
       log('카카오계정으로 로그인 성공  \n 토큰: ${token.accessToken}');
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-              const SelectFanOrCafeOwner()));
+
+      await postKakaoToken(token.accessToken);
+
+      if(context.mounted){
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => const SelectFanOrCafeOwner()));
+      }
 
     } catch (error) {
       log('카카오계정으로 로그인 실패 $error');
     }
   }
+}
+
+//post token
+Future<void> postKakaoToken(String token) async {
+
+  const storage = FlutterSecureStorage();
+
+  Dio dio = Dio();
+  Response response;
+  var baseUrl = dotenv.env['BASE_URL'];
+  log('token : $token');
+
+  try{
+    response = await dio.post('${baseUrl}api/v1/oauth/login/kakao',
+      data:{'accessToken' : token}
+      // options: Options(headers: {'Authorization': 'Bearer $token'})
+    );
+
+    var kakaoLoginInfo = jsonEncode(response.data);
+    log('kakaoLoginInfo : $kakaoLoginInfo');
+
+    await storage.write(key: 'kakaoLoginInfo', value: kakaoLoginInfo).then((value) => log('storage 저장완료'));
+
+
+  } catch (e){
+    log(e.toString());
+    // if(context.mounted){
+    //   Navigator.push(
+    //       context,
+    //       MaterialPageRoute(
+    //           builder: (context) => const SelectFanOrCafeOwner()));
+    // }
+  }
+
 }

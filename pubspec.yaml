@@ -53,6 +53,18 @@ dependencies:
   #경로 숨기기
   flutter_dotenv: ^5.0.2
 
+  #toast message
+  fluttertoast: ^8.2.4
+
+  #dio
+  dio: ^5.4.0
+
+  #flutter secure storage
+  flutter_secure_storage: ^9.0.0
+
+  #provider
+  provider: ^6.1.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

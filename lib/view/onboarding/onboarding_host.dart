@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
 import '../../widgets/appbar.dart';
@@ -15,8 +13,22 @@ class OnboardingHost extends StatefulWidget {
 }
 
 class _OnboardingHost extends State<OnboardingHost> {
+
+  int? artistId;
+  int? minimumVisitant;
+  int? maximumVisitant;
+  String? twitterAcount;
   bool isDateChecked = false;
   bool isCountChecked = false;
+
+
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
+  DateTime? _selectedDay;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
+
+  String hostDate = '';
 
   @override
   Widget build(BuildContext context) {
@@ -86,19 +98,17 @@ class _OnboardingHost extends State<OnboardingHost> {
                 width: 332,
                 child: TextField(
                   decoration: InputDecoration(
-                    //비활성화
+                      //비활성화
                       enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: Color(0xffD7D8DC))),
                       hintText: '아티스트',
                       suffixIcon: IconButton(
                         onPressed: () {},
                         icon: const Icon(Icons.search),
-                      )
-                    //활성화
-                    // focusedBorder: UnderlineInputBorder(
-                    //   borderSide: BorderSide(color: Palette.primary)
-                    // )
-                  ),
+                      ),
+                      //활성화
+                      focusedBorder: const UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.primary))),
                 ),
               ),
               const SizedBox(
@@ -120,7 +130,8 @@ class _OnboardingHost extends State<OnboardingHost> {
                     border: Border.all(color: const Color(0xffD7D8DC)),
                     borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
                   ),
-                  child: const Text(''),
+                  alignment: Alignment.center,
+                  child: Text(hostDate,),
                 ),
                 const SizedBox(
                   width: 11,
@@ -134,7 +145,10 @@ class _OnboardingHost extends State<OnboardingHost> {
                     textColor: Palette.primary,
                     textSize: 14,
                     onPressed: () {
-                      _showBottomDialogCalendar(context);
+
+                        _showBottomDialogCalendar(context);
+
+
                     })
               ]),
               Row(
@@ -179,19 +193,16 @@ class _OnboardingHost extends State<OnboardingHost> {
                       textAlign: TextAlign.end,
                       style: TextStyle(fontSize: 14),
                       decoration: InputDecoration(
-                        isDense: true,
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
+                          //비활성화
+                          enabledBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xffD7D8DC))),
+                          hintText: '',
 
-                        contentPadding: EdgeInsets.zero,
-                        //비활성화
-                        enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xffD7D8DC))),
-                        hintText: '',
-
-                        //활성화
-                        // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(color: Palette.primary)
-                        // )
-                      ),
+                          //활성화
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Palette.primary))),
                     ),
                   ),
                   BircaText(
@@ -210,23 +221,20 @@ class _OnboardingHost extends State<OnboardingHost> {
                       textAlign: TextAlign.end,
                       style: TextStyle(fontSize: 14),
                       decoration: InputDecoration(
-                        isDense: true,
-                        contentPadding: EdgeInsets.zero,
+                          isDense: true,
+                          contentPadding: EdgeInsets.zero,
 
-                        //비활성화
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Color(0xffD7D8DC),
+                          //비활성화
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xffD7D8DC),
+                            ),
                           ),
-                        ),
+                          hintText: '',
 
-                        hintText: '',
-
-                        //활성화
-                        // focusedBorder: UnderlineInputBorder(
-                        //   borderSide: BorderSide(color: Palette.primary)
-                        // )
-                      ),
+                          //활성화
+                          focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Palette.primary))),
                     ),
                   ),
                   BircaText(
@@ -270,20 +278,18 @@ class _OnboardingHost extends State<OnboardingHost> {
                 child: TextField(
                   style: TextStyle(fontSize: 16),
                   decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: EdgeInsets.zero,
-                    prefixIcon: Icon(Icons.alternate_email),
-                    prefixIconColor: Color(0xff8f9093),
-                    prefixIconConstraints: BoxConstraints(),
-                    //비활성화
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
+                      isDense: true,
+                      contentPadding: EdgeInsets.zero,
+                      prefixIcon: Icon(Icons.alternate_email),
+                      prefixIconColor: Color(0xff8f9093),
+                      prefixIconConstraints: BoxConstraints(),
+                      //비활성화
+                      enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Color(0xffD7D8DC))),
 
-                    //활성화
-                    // focusedBorder: UnderlineInputBorder(
-                    //   borderSide: BorderSide(color: Palette.primary)
-                    // )
-                  ),
+                      //활성화
+                      focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Palette.primary))),
                 ),
               ),
               const SizedBox(
@@ -306,48 +312,99 @@ class _OnboardingHost extends State<OnboardingHost> {
     );
   }
 
-  void _showBottomDialogCalendar(BuildContext context) {
-
-    var selectedDay = DateTime.now();
-    var focusedDay = DateTime.now();
+  void _showBottomDialogCalendar(BuildContext context) async {
     // var calendarFormat = CalendarFormat.month;
+    // DateTime? _selectedDay;
+    // DateTime _focusedDay = DateTime.now();
+    // DateTime? _rangeStart;
+    // DateTime? _rangeEnd;
+    // RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
 
+    var hostDate1 = await
     showModalBottomSheet(
         context: context,
-        builder: (BuildContext context) {
-          return Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(left: 25,right: 25,top: 20,bottom: 13),
-                child: TableCalendar(
-                  focusedDay: focusedDay,
-                  firstDay: DateTime.now(),
-                  lastDay: DateTime.utc(DateTime.now().year + 1),
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            //
+            return Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                      left: 25, right: 25, top: 10, bottom: 13),
+                  child: TableCalendar(
+                    //오늘 날짜
+                    focusedDay: _focusedDay,
+                    firstDay: DateTime.now(),
+                    lastDay: DateTime.utc(DateTime.now().year + 1),
 
+                    headerStyle: const HeaderStyle(
+                        formatButtonVisible: false, titleCentered: true),
 
-                  headerStyle: const HeaderStyle(
-                      formatButtonVisible: false,
-                      titleCentered: true
+                    rangeStartDay: _rangeStart,
+                    rangeEndDay: _rangeEnd,
+                    rangeSelectionMode: _rangeSelectionMode,
+
+                    selectedDayPredicate: (day) {
+                      return isSameDay(_selectedDay, day);
+                    },
+
+                    onDaySelected: (selectedDay, focusedDay) {
+                      if (!isSameDay(_selectedDay, selectedDay)) {
+                        setState(() {
+                          _selectedDay = selectedDay;
+                          _focusedDay =
+                              focusedDay; // update `_focusedDay` here as well
+                          _rangeStart = null; // Important to clean those
+                          _rangeEnd = null;
+                          _rangeSelectionMode = RangeSelectionMode.toggledOff;
+                        });
+                      }
+                    },
+
+                    //달력 날짜 범위 선택
+                    onRangeSelected: (start, end, focusedDay) {
+                      setState(() {
+                        _selectedDay = null;
+                        _focusedDay = focusedDay;
+                        _rangeStart = start;
+                        _rangeEnd = end;
+                        _rangeSelectionMode = RangeSelectionMode.toggledOn;
+                        // print('start : $_rangeStart / end : $_rangeEnd ');
+                      });
+                    },
                   ),
-
-
-                  selectedDayPredicate: (day) {
-                    return isSameDay(selectedDay, day);
-                  },
-
-                  onDaySelected: (selectedDay, focusedDay) {
-                    setState(() {
-                      selectedDay = selectedDay;
-                      focusedDay = focusedDay; // update `_focusedDay` here as well
-                    });
-                  },
-
                 ),
-              ),
-              BircaFilledButton(text: '적용하기', color: const Color(0xffBFC0C4), width: 300, height: 46, onPressed: (){},),
+                BircaFilledButton(
+                  text: '적용하기',
+                  color: Palette.primary,
+                  width: 300,
+                  height: 46,
+                  onPressed: () {
+                    //날짜를 하나만 선택 했을 시
+                    _rangeEnd ??= _rangeStart;
+                    setState(() {
+                      hostDate =
+                          '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
+                      // print(hostDate);
 
-            ],
+                    });
+
+
+                    Navigator.of(context).pop(hostDate);
+                  },
+                ),
+              ],
+            );
+          }
           );
-        });
+        }
+        );
+
+    if(hostDate1!=null){
+      setState(() {
+        hostDate = hostDate1;
+      });
+    }
   }
 }

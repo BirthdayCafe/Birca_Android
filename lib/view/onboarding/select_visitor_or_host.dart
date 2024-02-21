@@ -1,11 +1,14 @@
-import 'package:birca/view/onboarding/apply_visitor_nickname_screen.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'dart:developer';
 
+import 'package:birca/view/onboarding/apply_visitor_nickname_screen.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../designSystem/palette.dart';
 import '../../widgets/appbar.dart';
 import 'apply_host_nickname_screen.dart';
-import 'onboarding_host.dart';
 
 class SelectVisitorOrHost extends StatelessWidget {
   const SelectVisitorOrHost({super.key});
@@ -51,12 +54,15 @@ class SelectVisitorOrHost extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    const ApplyVisitorNickNameScreen()));
+                          onTap: () async {
+                           await postRoleChange('VISITANT');
+                            if(context.mounted){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const ApplyVisitorNickNameScreen()));
+                            }
+
                           },
                           child: Image.asset(
                               'lib/assets/image/img_fan_visitor.png')),
@@ -64,12 +70,14 @@ class SelectVisitorOrHost extends StatelessWidget {
                         width: 10,
                       ),
                       GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                    const ApplyHostNickNameScreen()));
+                          onTap: () async {
+                           await postRoleChange('HOST');
+                            if(context.mounted){
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const ApplyHostNickNameScreen()));
+                            }
                           },
                           child:
                           Image.asset('lib/assets/image/img_fan_host.png')),
@@ -78,5 +86,39 @@ class SelectVisitorOrHost extends StatelessWidget {
                 ],
               ),
             )));
+  }
+}
+
+
+//post role change
+Future<void> postRoleChange(String role) async {
+  const storage = FlutterSecureStorage();
+
+  Dio dio = Dio();
+  Response response;
+  var baseUrl = dotenv.env['BASE_URL'];
+
+  var token = '';
+  var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+  //토큰 가져오기
+  if (kakaoLoginInfo != null) {
+    Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    token = loginData['accessToken'].toString();
+  }
+
+  try {
+    response = await dio.post('${baseUrl}api/v1/members/role-change',
+        data: {'role': role},
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+    log('kakaoLoginInfo : $kakaoLoginInfo');
+
+
+    log(response.data.toString());
+
+
+  } catch (e) {
+    log(e.toString());
+
   }
 }
