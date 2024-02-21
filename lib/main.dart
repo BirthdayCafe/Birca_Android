@@ -1,7 +1,9 @@
 import 'package:birca/view/login/login.dart';
+import 'package:birca/viewModel/businessLicenseViewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:provider/provider.dart';
 
 import 'designSystem/palette.dart';
 
@@ -12,7 +14,10 @@ void main() async {
   KakaoSdk.init(
     nativeAppKey: dotenv.env['KAKAO_APP_KEY'],
   );
-  runApp(const Birca());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(create: (context)=> BusinessLicenseViewModel())
+  ],
+  child: const Birca(),) );
 }
 
 class Birca extends StatelessWidget {
