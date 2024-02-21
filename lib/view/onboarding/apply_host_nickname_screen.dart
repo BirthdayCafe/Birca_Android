@@ -7,12 +7,29 @@ import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../widgets/button.dart';
 
-class ApplyHostNickNameScreen extends StatelessWidget {
-  ApplyHostNickNameScreen({super.key});
+class ApplyHostNickNameScreen extends StatefulWidget {
+  const ApplyHostNickNameScreen({super.key});
+  @override
+  State<StatefulWidget> createState() => _ApplyHostNickNameScreen();}
 
-  TextEditingController nickNameController = TextEditingController();
+class _ApplyHostNickNameScreen extends State<ApplyHostNickNameScreen>{
 
+  final TextEditingController nickNameController = TextEditingController();
 
+  Color btnColor = Palette.gray04;
+
+  void isBtnOk(bool isBtnOk){
+    log('isBtnOk $isBtnOk');
+    setState((){
+      if(isBtnOk==true){
+        btnColor = Palette.primary;
+      } else {
+        btnColor = Palette.gray04;
+      }
+
+    });
+
+  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -83,7 +100,7 @@ class ApplyHostNickNameScreen extends StatelessWidget {
                             onChanged: (text) {
                               viewModel.isNickNameCheckOk = false;
                               log(viewModel.isNickNameCheckOk.toString());
-
+                              isBtnOk(viewModel.isNickNameCheckOk);
                             },
                             decoration: const InputDecoration(
                               hintText: '최대 10자',
@@ -100,21 +117,27 @@ class ApplyHostNickNameScreen extends StatelessWidget {
                             ),
                           );
                         }))),
-            Container(
-              margin: const EdgeInsets.only(right: 30),
-              child: BircaOutLinedButton(
-                  text: "중복 검사",
-                  radiusColor: Palette.primary,
-                  width: 86,
-                  height: 36,
-                  radius: 6,
-                  textColor: Palette.primary,
-                  textSize: 14,
-                  onPressed: () {
-                    Provider.of<NickNameViewModel>(context, listen: false)
-                        .nickNameCheck(nickNameController.text);
-                  }),
-            )
+            Consumer<NickNameViewModel>(builder: (context,viewModel,widget){
+
+              return Container(
+                margin: const EdgeInsets.only(right: 30),
+                child: BircaOutLinedButton(
+                    text: "중복 검사",
+                    radiusColor: Palette.primary,
+                    width: 86,
+                    height: 36,
+                    radius: 6,
+                    textColor: Palette.primary,
+                    textSize: 14,
+                    onPressed: () async {
+                     await Provider.of<NickNameViewModel>(context, listen: false)
+                          .nickNameCheck(nickNameController.text);
+
+                      isBtnOk(viewModel.isNickNameCheckOk);
+                    }),
+              );
+            })
+
           ],
         ),
         const Expanded(child: SizedBox()),
@@ -127,13 +150,22 @@ class ApplyHostNickNameScreen extends StatelessWidget {
                 builder: (context, viewModel, child) {
                   return BircaElevatedButton(
                     text: "다음으로",
-                    color: Palette.gray04,
+                    color: btnColor,
                     fontSize: 18,
                     textColor: Colors.white,
                     fontWeight: FontWeight.w500,
                     onPressed: () {
 
                       log('isNickNameCheckOk : ${viewModel.isNickNameCheckOk.toString()}');
+
+                      if(viewModel.isNickNameCheckOk==true){
+
+                        Provider.of<NickNameViewModel>(context,listen: false).registerNickName(nickNameController.text).then((_) {
+                         log('registerNickName success');
+                        }).catchError((error) {
+                          log('registerNickName fail');
+                        });
+                      }
                       // Navigator.push(
                       //     context,
                       //     MaterialPageRoute(
@@ -146,4 +178,6 @@ class ApplyHostNickNameScreen extends StatelessWidget {
             ]
         )));
   }
+
+
 }
