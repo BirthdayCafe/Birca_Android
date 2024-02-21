@@ -125,14 +125,16 @@ Future<void> kakaoLogin(BuildContext context) async {
           '\n이메일: ${user.kakaoAccount?.email}');
       log('카카오계정으로 로그인 성공  \n 토큰: ${token.accessToken}');
 
-      await postKakaoToken(token.accessToken);
+      await postKakaoToken(token.accessToken).then((_) {
+        // Navigate on success
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) =>
+            const SelectFanOrCafeOwner()));
+      }).catchError((error) {
+        log('fail');
+      });
 
-      if(context.mounted){
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const SelectFanOrCafeOwner()));
-      }
+
 
     } catch (error) {
       log('카카오계정으로 로그인 실패 $error');
@@ -170,6 +172,8 @@ Future<void> postKakaoToken(String token) async {
     //       MaterialPageRoute(
     //           builder: (context) => const SelectFanOrCafeOwner()));
     // }
+    throw Exception('Failed to login.');
+
   }
 
 }
