@@ -72,227 +72,236 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
         }),
         body: SingleChildScrollView(
             child: Container(
-          margin: const EdgeInsets.only(left: 30, right: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              RichText(
-                text: TextSpan(
-                    style: DefaultTextStyle.of(context).style,
-                    children: const [
-                      TextSpan(
-                        text: '카페 정보',
-                        style: TextStyle(
-                            color: Palette.primary,
-                            fontSize: 30,
-                            decoration: TextDecoration.none,
-                            fontFamily: 'PretendardBold'),
-                      ),
-                      TextSpan(
-                        text: '를 등록해주세요',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 24,
-                            decoration: TextDecoration.none,
-                            fontFamily: 'PretendardMedium'),
-                      ),
-                    ]),
-              ),
-              const Padding(padding: EdgeInsets.only(top: 52)),
-              Row(
+              margin: const EdgeInsets.only(left: 30, right: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    "사업자등록증",
-                    style:
-                        TextStyle(fontFamily: 'PretendardMedium', fontSize: 16),
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        showChat(context);
-                      },
-                      icon: SvgPicture.asset(
-                          'lib/assets/image/img_ri_question.svg'))
-                ],
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                      width: 96,
-                      height: 36,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          if (upload < 5) {
-                            _pickFile();
-                          } else {
-                            log('사용 횟수 종료');
-                          }
-                        },
-                        style: OutlinedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            foregroundColor: Palette.primary,
-                            textStyle: const TextStyle(
-                                fontFamily: 'PretendardMedium', fontSize: 14),
-                            side: const BorderSide(color: Palette.primary),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(6))),
-                        child: const Text(
-                          '파일 업로드',
-                        ),
-                      )),
-                  const SizedBox(
-                    width: 14,
-                  ),
-                  _fileName != null
-                      ? Expanded(
-                          child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Text(
-                            "$_fileName",
-                            maxLines: 1,
+                  RichText(
+                    text: TextSpan(
+                        style: DefaultTextStyle.of(context).style,
+                        children: const [
+                          TextSpan(
+                            text: '카페 정보',
+                            style: TextStyle(
+                                color: Palette.primary,
+                                fontSize: 30,
+                                decoration: TextDecoration.none,
+                                fontFamily: 'PretendardBold'),
                           ),
-                        ))
-                      : const Text("파일을 선택해주세요."),
-                ],
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              BircaText(
-                  text: '파일을 $upload회 업로드 하셨습니다. ($upload/5) ',
-                  textSize: 12,
-                  textColor: const Color(0xffFE2E2E),
-                  fontFamily: 'PretendardRegular'),
-              const SizedBox(height: 40),
-              const Text(
-                '카페 이름',
-                style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
-              ),
-              const SizedBox(
-                height: 11,
-              ),
-              TextField(
-                controller: cafeName,
-                onChanged: (text) {
-                  _updateButtonState();
-                },
-                decoration: const InputDecoration(
-                    //비활성화
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
-
-                    //활성화
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Palette.primary))),
-              ),
-              const SizedBox(height: 40),
-              const Text(
-                '사장님 이름',
-                style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
-              ),
-              const SizedBox(
-                height: 11,
-              ),
-              TextField(
-                controller: owner,
-                onChanged: (text) {
-                  _updateButtonState();
-                },
-                decoration: const InputDecoration(
-                    //비활성화
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
-
-                    //활성화
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Palette.primary))),
-              ),
-              const SizedBox(height: 40),
-              const Text(
-                '사업자등록증 번호',
-                style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
-              ),
-              const SizedBox(
-                height: 11,
-              ),
-              TextField(
-                controller: businessLicenseNumber,
-                onChanged: (text) {
-                  _updateButtonState();
-                },
-                decoration: const InputDecoration(
-                    //비활성화
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
-
-                    //활성화
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Palette.primary))),
-              ),
-              const SizedBox(height: 40),
-              const Text(
-                '카페 주소',
-                style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
-              ),
-              const SizedBox(
-                height: 11,
-              ),
-              TextField(
-                controller: address,
-                onChanged: (text) {
-                  _updateButtonState();
-                },
-                decoration: const InputDecoration(
-                    //비활성화
-                    enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Color(0xffD7D8DC))),
-
-                    //활성화
-                    focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Palette.primary))),
-              ),
-              const SizedBox(
-                height: 100,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                      width: 300,
-                      child: FilledButton(
-                        onPressed: isButtonOk
-                            ? ()async {
-
-                          FormData applyData = FormData.fromMap({
-                            'businessLicense': await MultipartFile.fromFile(_filePath!,filename: _fileName),
-                            'cafeName' : cafeName.text,
-                            'businessLicenseNumber' : businessLicenseNumber.text,
-                            'owner' : owner.text,
-                            'address' : address.text
-                          });
-
-                         await postCafeApply(applyData);
-
-                          if(context.mounted){
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const OnboardingCafeOwnerComplete()));
-                          }
+                          TextSpan(
+                            text: '를 등록해주세요',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 24,
+                                decoration: TextDecoration.none,
+                                fontFamily: 'PretendardMedium'),
+                          ),
+                        ]),
+                  ),
+                  const Padding(padding: EdgeInsets.only(top: 52)),
+                  Row(
+                    children: [
+                      const Text(
+                        "사업자등록증",
+                        style:
+                        TextStyle(fontFamily: 'PretendardMedium', fontSize: 16),
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            showChat(context);
+                          },
+                          icon: SvgPicture.asset(
+                              'lib/assets/image/img_ri_question.svg'))
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                          width: 96,
+                          height: 36,
+                          child: OutlinedButton(
+                            onPressed: () {
+                              if (upload < 5) {
+                                _pickFile();
+                              } else {
+                                log('사용 횟수 종료');
                               }
-                            : null,
-                        style: FilledButton.styleFrom(
-                          backgroundColor: buttonColor,
-                        ),
-                        child: const Text('계정 요청하기'),
-                      ))
+                            },
+                            style: OutlinedButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                foregroundColor: Palette.primary,
+                                textStyle: const TextStyle(
+                                    fontFamily: 'PretendardMedium', fontSize: 14),
+                                side: const BorderSide(color: Palette.primary),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(6))),
+                            child: const Text(
+                              '파일 업로드',
+                            ),
+                          )),
+                      const SizedBox(
+                        width: 14,
+                      ),
+                      _fileName != null
+                          ? Expanded(
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Text(
+                              "$_fileName",
+                              maxLines: 1,
+                            ),
+                          ))
+                          : const Text("파일을 선택해주세요."),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  BircaText(
+                      text: '파일을 $upload회 업로드 하셨습니다. ($upload/5) ',
+                      textSize: 12,
+                      textColor: const Color(0xffFE2E2E),
+                      fontFamily: 'PretendardRegular'),
+                  const SizedBox(height: 40),
+                  const Text(
+                    '카페 이름',
+                    style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
+                  ),
+                  const SizedBox(
+                    height: 11,
+                  ),
+                  TextField(
+                    controller: cafeName,
+                    onChanged: (text) {
+                      _updateButtonState();
+                    },
+                    decoration: const InputDecoration(
+                      //비활성화
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xffD7D8DC))),
+
+                        //활성화
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Palette.primary))),
+                  ),
+                  const SizedBox(height: 40),
+                  const Text(
+                    '사장님 이름',
+                    style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
+                  ),
+                  const SizedBox(
+                    height: 11,
+                  ),
+                  TextField(
+                    controller: owner,
+                    onChanged: (text) {
+                      _updateButtonState();
+                    },
+                    decoration: const InputDecoration(
+                      //비활성화
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xffD7D8DC))),
+
+                        //활성화
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Palette.primary))),
+                  ),
+                  const SizedBox(height: 40),
+                  const Text(
+                    '사업자등록증 번호',
+                    style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
+                  ),
+                  const SizedBox(
+                    height: 11,
+                  ),
+                  TextField(
+                    controller: businessLicenseNumber,
+                    onChanged: (text) {
+                      _updateButtonState();
+                    },
+                    decoration: const InputDecoration(
+                      //비활성화
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xffD7D8DC))),
+
+                        //활성화
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Palette.primary))),
+                  ),
+                  const SizedBox(height: 40),
+                  const Text(
+                    '카페 주소',
+                    style: TextStyle(fontFamily: 'PretendardMedium', fontSize: 14),
+                  ),
+                  const SizedBox(
+                    height: 11,
+                  ),
+                  TextField(
+                    controller: address,
+                    onChanged: (text) {
+                      _updateButtonState();
+                    },
+                    decoration: const InputDecoration(
+                      //비활성화
+                        enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Color(0xffD7D8DC))),
+
+                        //활성화
+                        focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Palette.primary))),
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                          width: 300,
+                          child: FilledButton(
+                            onPressed: isButtonOk
+                                ? ()async {
+
+                              log(cafeName.text);
+
+                              FormData applyData = FormData.fromMap({
+                                'businessLicense': await MultipartFile.fromFile(_filePath!,filename: _fileName),
+                                'cafeName' : cafeName.text,
+                                'businessLicenseNumber' : businessLicenseNumber.text,
+                                'owner' : owner.text.toString(),
+                                'address' : address.text
+                              });
+
+
+                              postCafeApply(applyData).then((_) {
+                                // Navigate on success
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => const OnboardingCafeOwnerComplete()));
+                              }).catchError((error){
+                                log('fail');
+                              }
+                              );
+
+                              // if(context.mounted){
+                              //   Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //           builder: (context) => const OnboardingCafeOwnerComplete()));
+                              // }
+                            }
+                                : null,
+                            style: FilledButton.styleFrom(
+                              backgroundColor: buttonColor,
+                            ),
+                            child: const Text('계정 요청하기'),
+                          ))
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 100,
+                  ),
                 ],
               ),
-              const SizedBox(
-                height: 100,
-              ),
-            ],
-          ),
-        )));
+            )));
   }
 
 
@@ -338,7 +347,7 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
             '${baseUrl}api/v1/cafes/license-read',
             data: businessLicense,
             options: Options(headers: {'Authorization': 'Bearer $token'})
-            // options: Options(headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzA4MzE1MTk4LCJleHAiOjE3MDg0OTUxOTh9.5XD5tY3q0-PBH9nkPCFEOnrONM6xVR8wcLuoTX8idk8'})
+          // options: Options(headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzA4MzE1MTk4LCJleHAiOjE3MDg0OTUxOTh9.5XD5tY3q0-PBH9nkPCFEOnrONM6xVR8wcLuoTX8idk8'})
         );
 
         // 서버 응답 출력
@@ -367,20 +376,28 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
               // Handle HTTP 400 Bad Request error
               log('Bad Request - Server returned 400 status code');
               log('Response data: ${e.response!.data}');
+              // throw Exception('Failed to apply cafe.');
               // Additional error handling logic here if needed
+              throw Exception('Failed to apply cafe.');
             } else {
               // Handle other HTTP status codes
               log('Server error - Status code: ${e.response!.statusCode}');
               log('Response data: ${e.response!.data}');
+              // throw Exception('Failed to apply cafe.');
               // Additional error handling logic here if needed
+              throw Exception('Failed to apply cafe.');
             }
           } else {
             // No response from the server (network error, timeout, etc.)
             log('Dio error: ${e.message}');
+            // throw Exception('Failed to apply cafe.');
+            throw Exception('Failed to apply cafe.');
           }
         } else {
           // Handle other exceptions if necessary
           log('Error: $e');
+          // throw Exception('Failed to apply cafe.');
+          throw Exception('Failed to apply cafe.');
         }
 
       }
@@ -409,11 +426,19 @@ Future<void> postCafeApply(FormData applyData) async {
   const storage = FlutterSecureStorage();
 
   Dio dio = Dio();
+
+  // LogInterceptor 추가
+  dio.interceptors.add(LogInterceptor(
+    requestBody: true,
+    responseBody: true,
+  ));
+
   Response response;
   var baseUrl = dotenv.env['BASE_URL'];
 
   var token = '';
   var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
 
   //토큰 가져오기
   if (kakaoLoginInfo != null) {
@@ -422,12 +447,12 @@ Future<void> postCafeApply(FormData applyData) async {
   }
 
   try {
-    response = await dio.post('${baseUrl}api/v1/members/role-change',
+    response = await dio.post('${baseUrl}api/v1/cafes/apply',
         data: applyData,
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
+    log(response.data);
 
-    log(response.data.toString());
 
 
   } catch (e) {
@@ -439,20 +464,24 @@ Future<void> postCafeApply(FormData applyData) async {
           // Handle HTTP 400 Bad Request error
           log('Bad Request - Server returned 400 status code');
           log('Response data: ${e.response!.data}');
+          throw Exception('Failed to apply cafe.');
           // Additional error handling logic here if needed
         } else {
           // Handle other HTTP status codes
           log('Server error - Status code: ${e.response!.statusCode}');
           log('Response data: ${e.response!.data}');
+          throw Exception('Failed to apply cafe.');
           // Additional error handling logic here if needed
         }
       } else {
         // No response from the server (network error, timeout, etc.)
         log('Dio error: ${e.message}');
+        throw Exception('Failed to apply cafe.');
       }
     } else {
       // Handle other exceptions if necessary
       log('Error: $e');
+      throw Exception('Failed to apply cafe.');
     }
 
   }
