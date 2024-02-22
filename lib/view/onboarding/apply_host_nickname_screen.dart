@@ -16,20 +16,7 @@ class _ApplyHostNickNameScreen extends State<ApplyHostNickNameScreen>{
 
   final TextEditingController nickNameController = TextEditingController();
 
-  Color btnColor = Palette.gray04;
 
-  void isBtnOk(bool isBtnOk){
-    log('isBtnOk $isBtnOk');
-    setState((){
-      if(isBtnOk==true){
-        btnColor = Palette.primary;
-      } else {
-        btnColor = Palette.gray04;
-      }
-
-    });
-
-  }
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -100,7 +87,7 @@ class _ApplyHostNickNameScreen extends State<ApplyHostNickNameScreen>{
                             onChanged: (text) {
                               viewModel.isNickNameCheckOk = false;
                               log(viewModel.isNickNameCheckOk.toString());
-                              isBtnOk(viewModel.isNickNameCheckOk);
+                              viewModel.isBtnOk(viewModel.isNickNameCheckOk);
                             },
                             decoration: const InputDecoration(
                               hintText: '최대 10자',
@@ -133,7 +120,7 @@ class _ApplyHostNickNameScreen extends State<ApplyHostNickNameScreen>{
                      await Provider.of<NickNameViewModel>(context, listen: false)
                           .nickNameCheck(nickNameController.text);
 
-                      isBtnOk(viewModel.isNickNameCheckOk);
+                      viewModel.isBtnOk(viewModel.isNickNameCheckOk);
                     }),
               );
             })
@@ -150,7 +137,7 @@ class _ApplyHostNickNameScreen extends State<ApplyHostNickNameScreen>{
                 builder: (context, viewModel, child) {
                   return BircaElevatedButton(
                     text: "다음으로",
-                    color: btnColor,
+                    color: viewModel.btnColor,
                     fontSize: 18,
                     textColor: Colors.white,
                     fontWeight: FontWeight.w500,
