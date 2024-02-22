@@ -1,5 +1,5 @@
 import 'package:birca/view/login/login.dart';
-import 'package:birca/viewModel/businessLicenseViewModel.dart';
+import 'package:birca/viewModel/business_license_view_model.dart';
 import 'package:birca/viewModel/nickname_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
