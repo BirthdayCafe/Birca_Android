@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:birca/view/onboarding/onboarding_fan_complete.dart';
 import 'package:birca/viewModel/nickname_view_model.dart';
 import 'package:birca/widgets/appbar.dart';
 import 'package:flutter/material.dart';
@@ -148,6 +149,9 @@ class _ApplyHostNickNameScreen extends State<ApplyHostNickNameScreen>{
                       if(viewModel.isNickNameCheckOk==true){
 
                         Provider.of<NickNameViewModel>(context,listen: false).registerNickName(nickNameController.text).then((_) {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) =>
+                              const OnboardingFanComplete()));
                          log('registerNickName success');
                         }).catchError((error) {
                           log('registerNickName fail');
