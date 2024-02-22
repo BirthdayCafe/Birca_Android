@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ui';
 
+import 'package:birca/designSystem/palette.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -15,11 +17,9 @@ class NickNameViewModel extends ChangeNotifier{
   //닉네임 중복 확인
   bool isNickNameCheckOk = false;
 
-  //닉네임
-  // String? _nickName;
-  // String? get nickName => _nickName;
+  Color btnColor = Palette.gray04;
 
-
+  //닉네임 중복 확인 api
   Future<void> nickNameCheck(String nickname) async {
 
     var token = '';
@@ -92,6 +92,8 @@ class NickNameViewModel extends ChangeNotifier{
 
 }
 
+
+//닉네임 등록 api
 Future<void> registerNickName(String nickname) async {
   var token = '';
   var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
@@ -150,4 +152,16 @@ Future<void> registerNickName(String nickname) async {
     }
   }
 }
+
+  void isBtnOk(bool isBtnOk){
+    log('isBtnOk $isBtnOk');
+      if(isBtnOk==true){
+        btnColor = Palette.primary;
+      } else {
+        btnColor = Palette.gray04;
+      }
+
+      notifyListeners();
+
+  }
 }
