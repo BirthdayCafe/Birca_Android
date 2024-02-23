@@ -10,11 +10,12 @@ import '../../widgets/button.dart';
 
 class ApplyVisitorNickNameScreen extends StatefulWidget {
   const ApplyVisitorNickNameScreen({super.key});
+
   @override
-  State<StatefulWidget> createState() => _ApplyVisitorNickNameScreen();}
+  State<StatefulWidget> createState() => _ApplyVisitorNickNameScreen();
+}
 
-class _ApplyVisitorNickNameScreen extends State<ApplyVisitorNickNameScreen>{
-
+class _ApplyVisitorNickNameScreen extends State<ApplyVisitorNickNameScreen> {
   final TextEditingController nickNameController = TextEditingController();
 
   @override
@@ -78,34 +79,35 @@ class _ApplyVisitorNickNameScreen extends State<ApplyVisitorNickNameScreen>{
                       Expanded(
                           child: Container(
                               margin:
-                              const EdgeInsets.only(left: 30, right: 11),
+                                  const EdgeInsets.only(left: 30, right: 11),
                               height: 36,
                               child: Consumer<NickNameViewModel>(
                                   builder: (context, viewModel, child) {
-                                    return TextField(
-                                      controller: nickNameController,
-                                      onChanged: (text) {
-                                        viewModel.isNickNameCheckOk = false;
-                                        log(viewModel.isNickNameCheckOk.toString());
-                                        viewModel.isBtnOk(viewModel.isNickNameCheckOk);
-                                      },
-                                      decoration: const InputDecoration(
-                                        hintText: '최대 10자',
-                                        hintStyle: TextStyle(color: Colors.grey),
-                                        labelStyle: TextStyle(color: Colors.grey),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide:
+                                return TextField(
+                                  controller: nickNameController,
+                                  onChanged: (text) {
+                                    viewModel.isNickNameCheckOk = false;
+                                    log(viewModel.isNickNameCheckOk.toString());
+                                    viewModel
+                                        .isBtnOk(viewModel.isNickNameCheckOk);
+                                  },
+                                  decoration: const InputDecoration(
+                                    hintText: '최대 10자',
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
                                           BorderSide(color: Palette.gray03),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide:
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
                                           BorderSide(color: Palette.primary),
-                                        ),
-                                      ),
-                                    );
-                                  }))),
-                      Consumer<NickNameViewModel>(builder: (context,viewModel,widget){
-
+                                    ),
+                                  ),
+                                );
+                              }))),
+                      Consumer<NickNameViewModel>(
+                          builder: (context, viewModel, widget) {
                         return Container(
                           margin: const EdgeInsets.only(right: 30),
                           child: BircaOutLinedButton(
@@ -117,14 +119,14 @@ class _ApplyVisitorNickNameScreen extends State<ApplyVisitorNickNameScreen>{
                               textColor: Palette.primary,
                               textSize: 14,
                               onPressed: () async {
-                                await Provider.of<NickNameViewModel>(context, listen: false)
+                                await Provider.of<NickNameViewModel>(context,
+                                        listen: false)
                                     .nickNameCheck(nickNameController.text);
 
                                 viewModel.isBtnOk(viewModel.isNickNameCheckOk);
                               }),
                         );
                       })
-
                     ],
                   ),
                   const Expanded(child: SizedBox()),
@@ -135,34 +137,30 @@ class _ApplyVisitorNickNameScreen extends State<ApplyVisitorNickNameScreen>{
                       height: 46,
                       child: Consumer<NickNameViewModel>(
                           builder: (context, viewModel, child) {
-                            return BircaElevatedButton(
-                              text: "다음으로",
-                              color: viewModel.btnColor,
-                              fontSize: 18,
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              onPressed: () {
+                        return BircaElevatedButton(
+                          text: "다음으로",
+                          color: viewModel.btnColor,
+                          fontSize: 18,
+                          textColor: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          onPressed: () {
+                            log('isNickNameCheckOk : ${viewModel.isNickNameCheckOk.toString()}');
 
-                                log('isNickNameCheckOk : ${viewModel.isNickNameCheckOk.toString()}');
-
-                                if(viewModel.isNickNameCheckOk==true){
-
-                                  Provider.of<NickNameViewModel>(context,listen: false).registerNickName(nickNameController.text).then((_) {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) =>
+                            if (viewModel.isNickNameCheckOk == true) {
+                              Provider.of<NickNameViewModel>(context,
+                                      listen: false)
+                                  .registerNickName(nickNameController.text)
+                                  .then((_) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
                                         const SelectFavoriteArtistScreen()));
-                                  }).catchError((error) {
-                                    log('registerNickName fail');
-                                  });
-                                }
-
-                              },
-                            );
-                          }
-                      ))
-                ]
-            )));
+                              }).catchError((error) {
+                                log('registerNickName fail');
+                              });
+                            }
+                          },
+                        );
+                      }))
+                ])));
   }
-
-
 }
