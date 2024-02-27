@@ -76,7 +76,7 @@ class SelectVisitorOrHost extends StatelessWidget {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const ApplyHostNickNameScreen()));
+                                      builder: (context) =>  ApplyHostNickNameScreen()));
                             }
                           },
                           child:
@@ -111,8 +111,9 @@ Future<void> postRoleChange(String role) async {
     response = await dio.post('${baseUrl}api/v1/members/role-change',
         data: {'role': role},
         options: Options(headers: {'Authorization': 'Bearer $token'}));
-    log('kakaoLoginInfo : $kakaoLoginInfo');
+    // log('kakaoLoginInfo : $kakaoLoginInfo');
 
+    log('$role 변경 ');
 
     log(response.data.toString());
 
