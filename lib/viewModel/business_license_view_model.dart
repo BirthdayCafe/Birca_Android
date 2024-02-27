@@ -20,9 +20,7 @@ class BusinessLicenseViewModel extends ChangeNotifier {
   BusinessLicenseModel? _businessLicenseModel;
   BusinessLicenseModel? get businessLicenseModel => _businessLicenseModel;
 
-  TextEditingController _cafeName = TextEditingController();
-  TextEditingController get cafeName => _cafeName;
-
+  TextEditingController cafeName = TextEditingController();
   TextEditingController businessLicenseNumber= TextEditingController();
   TextEditingController owner= TextEditingController();
   TextEditingController address = TextEditingController();
