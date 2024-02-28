@@ -3,8 +3,8 @@ import 'package:birca/designSystem/text.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
 
-class OnboardingFanComplete extends StatelessWidget{
-  const OnboardingFanComplete({super.key});
+class OnboardingHostComplete extends StatelessWidget{
+  const OnboardingHostComplete({super.key});
 
 
   @override
