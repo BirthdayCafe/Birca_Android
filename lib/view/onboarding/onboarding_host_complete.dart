@@ -1,4 +1,5 @@
 import 'package:birca/designSystem/palette.dart';
+import 'package:birca/widgets/bottom_nav_host.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -68,14 +69,21 @@ class OnboardingHostComplete extends StatelessWidget {
           const SizedBox(
             height: 100,
           ),
-          const SizedBox(
+          SizedBox(
             width: 300,
             child: BircaElevatedButton(
-                text: '시작하기',
-                color: Palette.primary,
-                fontSize: 18,
-                textColor: Colors.white,
-                fontWeight: FontWeight.normal),
+              text: '시작하기',
+              color: Palette.primary,
+              fontSize: 18,
+              textColor: Colors.white,
+              fontWeight: FontWeight.normal,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const BottomNavHost()));
+              },
+            ),
           )
         ],
       ),
