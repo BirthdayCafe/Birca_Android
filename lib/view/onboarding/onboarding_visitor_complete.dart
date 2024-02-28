@@ -24,7 +24,7 @@ class OnboardingVisitorComplete extends StatelessWidget {
                     style: DefaultTextStyle.of(context).style,
                     children: const [
                       TextSpan(
-                        text: '생일 카페를 방문할 때는 ',
+                        text: '생일 카페를 주최할 때는 ',
                         style: TextStyle(
                             color: Palette.gray06,
                             fontSize: 12,
