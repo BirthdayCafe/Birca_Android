@@ -1,6 +1,6 @@
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/view/visitor/visitor_cafe_tour.dart';
-import 'package:birca/view/visitor/visitor_heart.dart';
+import 'package:birca/view/visitor/visitor_favorite.dart';
 import 'package:birca/view/visitor/visitor_home.dart';
 import 'package:birca/view/visitor/visitor_mypage.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class _BottomNavVisitor extends State<BottomNavVisitor> {
 
   final List<Widget> _widgetOptions = <Widget>[
     const VisitorHome(),
-    const VisitorHeart(),
+    const VisitorFavorite(),
     const VisitorCafeTour(),
     const VisitorMyPage()
   ];

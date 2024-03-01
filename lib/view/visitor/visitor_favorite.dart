@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class VisitorHeart extends StatelessWidget{
-  const VisitorHeart({super.key});
+class VisitorFavorite extends StatelessWidget{
+  const VisitorFavorite({super.key});
 
   @override
   Widget build(BuildContext context) {
