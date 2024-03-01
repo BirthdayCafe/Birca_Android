@@ -1,5 +1,6 @@
 import 'package:birca/view/login/login.dart';
 import 'package:birca/viewModel/businessLicenseViewModel.dart';
+import 'package:birca/viewmodel/select_artist_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -15,7 +16,8 @@ void main() async {
     nativeAppKey: dotenv.env['KAKAO_APP_KEY'],
   );
   runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context)=> BusinessLicenseViewModel())
+    ChangeNotifierProvider(create: (context)=> BusinessLicenseViewModel()),
+    ChangeNotifierProvider(create: (context) => SelectArtistViewModel())
   ],
   child: const Birca(),) );
 }
