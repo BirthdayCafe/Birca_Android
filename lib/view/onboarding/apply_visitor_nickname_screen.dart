@@ -95,7 +95,8 @@ class ApplyVisitorNickNameScreen extends StatelessWidget {
                             width: 86,
                             height: 36,
                             radius: 6,
-                            textColor: Palette.primary, textSize: 14,),
+                            textColor: Palette.primary, textSize: 14, backgroundColor: Palette.gray02,
+                        ),
                       )
                     ],
                   ),
