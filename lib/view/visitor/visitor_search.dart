@@ -2,7 +2,10 @@ import 'package:birca/view/visitor/visitor_cafe_tour.dart';
 import 'package:birca/view/visitor/visitor_favorite.dart';
 import 'package:birca/view/visitor/visitor_home.dart';
 import 'package:birca/view/visitor/visitor_mypage.dart';
+import 'package:birca/view/visitor/visitor_search_result.dart';
+import 'package:birca/viewModel/visitor_search_result_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 
 class VisitorSearch extends StatefulWidget {
@@ -76,14 +79,23 @@ class _VisitorSearch extends State<VisitorSearch> {
                             const SizedBox(
                               width: 5,
                             ),
-                            IconButton(
-                              onPressed: () {},
-                              icon: const Icon(
-                                Icons.search,
-                                color: Palette.primary,
-                                size: 25,
-                              ),
-                            )
+                            Consumer<VisitorSearchResultViewModel>(builder: (context,viewModel,child){
+                              return IconButton(
+                                onPressed: () {
+
+                                  viewModel.search = searchController.text.toString();
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) =>
+                                      const VisitorSearchResult()));
+                                },
+                                icon: const Icon(
+                                  Icons.search,
+                                  color: Palette.primary,
+                                  size: 25,
+                                ),
+                              );
+                            })
+
                           ],
                         ))
                   ],
