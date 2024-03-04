@@ -1,4 +1,5 @@
 import 'package:birca/designSystem/text.dart';
+import 'package:birca/view/visitor/visitor_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -16,6 +17,7 @@ class _VisitorHome extends State<VisitorHome> {
   var cafeList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
 
   bool isSwitched = false;
+  // String selectedValue = 'Option 1';
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,11 @@ class _VisitorHome extends State<VisitorHome> {
           title: SvgPicture.asset('lib/assets/image/birca.svg'),
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) =>
+                      const VisitorSearch()));
+                },
                 icon: SvgPicture.asset('lib/assets/image/img_search.svg'))
           ],
         ),
@@ -56,7 +62,7 @@ class _VisitorHome extends State<VisitorHome> {
                               color: Colors.black,
                               fontSize: 18,
                               decoration: TextDecoration.none,
-                              fontFamily: 'PretendardMedium'),
+                              fontFamily: 'Pretendard'),
                         ),
                       ]),
                 ),
@@ -126,10 +132,18 @@ class _VisitorHome extends State<VisitorHome> {
                               ]),
                         ),
                         IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () {},
-                            icon: SvgPicture.asset(
-                                'lib/assets/image/img_filter.svg')),
+                          onPressed: () {
+                            showModalBottomSheet(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Container(
+
+                                  );
+                                });
+                          },
+                          icon: SvgPicture.asset(
+                              'lib/assets/image/img_filter.svg'),
+                        )
                       ],
                     ),
                     Row(
@@ -175,7 +189,7 @@ class _VisitorHome extends State<VisitorHome> {
                         borderRadius: BorderRadius.circular(3),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(0.5), // 그림자 색상
+                            color: Colors.grey.withOpacity(0.1), // 그림자 색상
                             spreadRadius: 1, // 그림자 확산 정도
                             blurRadius: 1, // 그림자의 흐림 정도
                             // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
