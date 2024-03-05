@@ -65,6 +65,8 @@ dependencies:
   #provider
   provider: ^6.1.1
 
+  #swiper
+  card_swiper: ^3.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
