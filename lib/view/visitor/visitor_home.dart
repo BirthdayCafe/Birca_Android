@@ -17,6 +17,7 @@ class _VisitorHome extends State<VisitorHome> {
   var cafeList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
 
   bool isSwitched = false;
+
   // String selectedValue = 'Option 1';
 
   @override
@@ -29,8 +30,7 @@ class _VisitorHome extends State<VisitorHome> {
             IconButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) =>
-                      const VisitorSearch()));
+                      builder: (context) => const VisitorSearch()));
                 },
                 icon: SvgPicture.asset('lib/assets/image/img_search.svg'))
           ],
@@ -131,45 +131,44 @@ class _VisitorHome extends State<VisitorHome> {
                                 ),
                               ]),
                         ),
+                        SizedBox(
+                            width: 30,
+                            child: IconButton(
+                              onPressed: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Container();
+                                    });
+                              },
+                              icon: SvgPicture.asset(
+                                'lib/assets/image/img_filter.svg',
+                              ),
+                            )),
                         Container(
-                          width: 30,
-                          child:IconButton(
-                            onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Container(
+                          padding: const EdgeInsets.only(left: 12, right: 12),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Palette.gray06,
+                              ),
+                              borderRadius:
+                                  BorderRadius.circular(20)), // 원하는 패딩 값 설정
 
-                                    );
-                                  });
-                            },
-                            icon: SvgPicture.asset(
-                              'lib/assets/image/img_filter.svg',),
-
-                          )
-
-                        ),
-
-                        Container(
-                          padding: EdgeInsets.only(left: 12,right: 12), // 원하는 패딩 값 설정
-
-                          child: Row(
-
+                          child: const Row(
                             children: [
-
-
-                              Icon(Icons.location_on_outlined,color: Palette.gray10,size: 12,),
-                              BircaText(text: '전체', textSize: 12, textColor: Palette.gray10, fontFamily: 'Pretendard')
+                              Icon(
+                                Icons.location_on_outlined,
+                                color: Palette.gray10,
+                                size: 12,
+                              ),
+                              BircaText(
+                                  text: '전체',
+                                  textSize: 12,
+                                  textColor: Palette.gray10,
+                                  fontFamily: 'Pretendard')
                             ],
                           ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Palette.gray06,),
-                            borderRadius: BorderRadius.circular(20)
-                          ),
                         )
-
-
-
                       ],
                     ),
                     Row(
