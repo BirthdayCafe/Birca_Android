@@ -1,15 +1,15 @@
-class ArtistModel {
+class SoloArtistModel {
   final int groupId;
   final String groupName;
   final String groupImage;
 
-  ArtistModel({
+  SoloArtistModel({
     required this.groupId,
     required this.groupName,
     required this.groupImage,
   });
-  factory ArtistModel.fromJson(Map<String, dynamic> json) {
-    return ArtistModel(
+  factory SoloArtistModel.fromJson(Map<String, dynamic> json) {
+    return SoloArtistModel(
       groupId: json['artistId'],
       groupName: json['artistName'],
       groupImage: json['artistImage'],
