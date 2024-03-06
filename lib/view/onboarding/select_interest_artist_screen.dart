@@ -10,6 +10,7 @@ import '../../designSystem/palette.dart';
 import '../../widgets/button.dart';
 import '../../widgets/card.dart';
 import '../../widgets/progressbar.dart';
+import 'onboarding_visitor_complete.dart';
 
 class SelectInterestArtistScreen extends StatefulWidget {
   const SelectInterestArtistScreen({super.key});
@@ -35,12 +36,12 @@ class SelectInterestArtistScreenState
             margin: const EdgeInsets.symmetric(horizontal: 30),
             width: double.infinity,
             height: 6,
-            child: progressBar(2 / 3)),
+            child: progressBar(3 / 3)),
         const SizedBox(height: 10),
         const Row(
           children: [
             Expanded(child: SizedBox()),
-            Text("2/3"),
+            Text("3/3"),
             SizedBox(
               width: 30,
             )
@@ -71,7 +72,7 @@ class SelectInterestArtistScreenState
         Container(
             margin: const EdgeInsets.only(left: 30),
             child: const Text(
-              "* 관심 아티스트는 10명 선택할 수 있어요",
+              "* 관심 아티스트는 10명까지 선택할 수 있어요",
               style: TextStyle(
                   color: Palette.gray06,
                   fontFamily: 'Pretendard',
@@ -192,7 +193,7 @@ class SelectInterestArtistScreenState
                                 onTap: () {
                                   model.updateSelectedArtist(model.groupMember![index]);
                                 },
-                                child: artistItem('lib/assets/image/artist.svg', model.groupMember![index].groupName),
+                                child: artistItem(model.groupMember![index].groupImage, model.groupMember![index].groupName),
                               ),
                             ),
                           )
@@ -233,7 +234,7 @@ class SelectInterestArtistScreenState
                 }
               });
             },
-            child: artistItem('lib/assets/image/artist.svg',
+            child: artistItem(model.groupArtist![(index * 4 + location) - 1].groupImage,
                 model.groupArtist![(index * 4 + location) - 1].groupName),
           ));
 
@@ -251,7 +252,7 @@ class SelectInterestArtistScreenState
               onTap: () {
                 model.updateSelectedArtist(model.soloArtist![index]);
               },
-              child: artistItem('lib/assets/image/artist.svg',
+              child: artistItem(model.soloArtist![index].groupImage,
                   model.soloArtist![index].groupName),
             );
           },
@@ -281,17 +282,29 @@ class SelectInterestArtistScreenState
                       onPressed: () {
                         if(model.selectedArtist.isNotEmpty) {
                           model.postInterestArtist();
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const OnboardingVisitorComplete()));
                         }
                       },
                     )),
                 const SizedBox(height: 20),
-                const Text(
-                  "다음에 결정하기",
-                  style: TextStyle(
-                    color: Palette.gray06,
-                    fontFamily: 'Pretendard',
-                    decoration: TextDecoration.underline,
-                    decorationColor: Palette.gray06,
+                GestureDetector(
+                  onTap: () {
+                    MaterialPageRoute(
+                        builder: (context) =>
+                        const OnboardingVisitorComplete());
+                  },
+                  child: const Text(
+                    "다음에 결정하기",
+                    style: TextStyle(
+                      color: Palette.gray06,
+                      fontFamily: 'Pretendard',
+                      decoration: TextDecoration.underline,
+                      decorationColor: Palette.gray06,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 66),
@@ -316,7 +329,7 @@ class SelectInterestArtistScreenState
                             model.removeSelectedArtist(
                                 model.selectedArtist[index]);
                           },
-                          child: artistItem('lib/assets/image/artist.svg',
+                          child: artistItem(model.selectedArtist[index].groupImage,
                               model.selectedArtist[index].groupName),
                         ));
                   },
