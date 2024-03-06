@@ -1,6 +1,7 @@
 import 'package:birca/view/login/login.dart';
 import 'package:birca/viewModel/businessLicenseViewModel.dart';
-import 'package:birca/viewmodel/select_artist_viewmodel.dart';
+import 'package:birca/viewmodel/select_favorite_artist_viewmodel.dart';
+import 'package:birca/viewmodel/select_interest_artist_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -17,7 +18,8 @@ void main() async {
   );
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context)=> BusinessLicenseViewModel()),
-    ChangeNotifierProvider(create: (context) => SelectArtistViewModel())
+    ChangeNotifierProvider(create: (context) => SelectFavoriteArtistViewModel()),
+    ChangeNotifierProvider(create: (context) => SelectInterestArtistViewModel()),
   ],
   child: const Birca(),) );
 }
