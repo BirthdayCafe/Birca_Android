@@ -103,6 +103,7 @@ class BircaOutLinedButton extends StatelessWidget{
   final int height;
   final int radius;
   final int textSize;
+  final FontWeight fontWeight;
   final Color backgroundColor;
 
   const BircaOutLinedButton({super.key,
@@ -114,6 +115,7 @@ class BircaOutLinedButton extends StatelessWidget{
     required this.radius,
     required this.textColor,
     required this.textSize,
+    this.fontWeight = FontWeight.w500,
     this.onPressed,
   });
 
@@ -138,6 +140,7 @@ class BircaOutLinedButton extends StatelessWidget{
             style: TextStyle(
               color: textColor,
               fontSize: textSize.toDouble(),
+              fontWeight: fontWeight
             ),)
       ),
     );
