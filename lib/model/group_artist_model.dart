@@ -8,6 +8,7 @@ class GroupArtistModel {
     required this.groupName,
     required this.groupImage,
   });
+
   factory GroupArtistModel.fromJson(Map<String, dynamic> json) {
     return GroupArtistModel(
       groupId: json['groupId'],
