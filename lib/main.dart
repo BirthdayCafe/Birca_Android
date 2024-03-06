@@ -1,5 +1,4 @@
 import 'package:birca/view/login/login.dart';
-import 'package:birca/viewModel/businessLicenseViewModel.dart';
 import 'package:birca/viewmodel/select_favorite_artist_viewmodel.dart';
 import 'package:birca/viewmodel/select_interest_artist_viewmodel.dart';
 import 'package:birca/viewModel/business_license_view_model.dart';
