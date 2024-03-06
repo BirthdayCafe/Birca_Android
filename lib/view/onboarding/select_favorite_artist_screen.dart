@@ -11,6 +11,7 @@ import '../../viewmodel/select_favorite_artist_viewmodel.dart';
 import '../../widgets/button.dart';
 import '../../widgets/card.dart';
 import '../../widgets/progressbar.dart';
+import 'onboarding_visitor_complete.dart';
 
 class SelectFavoriteArtistScreen extends StatefulWidget {
   const SelectFavoriteArtistScreen({super.key});
@@ -184,21 +185,31 @@ class SelectFavoriteArtistScreenState
                     child: CustomPaint(
                       painter: BubblePainter(idx: location),
                       child: Container(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Consumer<SelectFavoriteArtistViewModel>(
-                          builder: (context, model, _) => ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: List.generate(model.groupMemberCount, (index) =>
-                              GestureDetector(
-                                onTap: () {
-                                  model.updateSelectedArtist(model.groupMember![index]);
-                                },
-                                child: artistItem('lib/assets/image/artist.svg', model.groupMember![index].groupName),
-                              ),
-                            ),
-                          )
-                        )
-                      ),
+                          padding: const EdgeInsets.only(left: 20, right: 20),
+                          child: Consumer<SelectFavoriteArtistViewModel>(
+                              builder: (context, model, _) =>
+                                  ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: model.groupMemberCount,
+                                    separatorBuilder:
+                                        (BuildContext context, int index) {
+                                      return const SizedBox(
+                                          width: 20); // 각 아이템 사이의 간격 설정
+                                    },
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          model.updateSelectedArtist(
+                                              model.groupMember![index]);
+                                        },
+                                        child: artistItem(
+                                          model.groupMember![index].groupImage,
+                                          model.groupMember![index].groupName,
+                                        ),
+                                      );
+                                    },
+                                  ))),
                     ),
                   ),
                 )
@@ -220,23 +231,25 @@ class SelectFavoriteArtistScreenState
                   child: _groupArtistItem(index, itemIndex + 1),
                 )));
 
-  _groupArtistItem(int index, int location) => Consumer<SelectFavoriteArtistViewModel>(
-      builder: (context, model, _) => GestureDetector(
-            onTap: () {
-              model.getGroupMember(model.groupArtist![(index * 4 + location) - 1].groupId);
-              log("test: ${model.getGroupMember(model.groupArtist![(index * 4 + location) - 1].groupId)}");
-              setState(() {
-                if (expandedIndex == index) {
-                  expandedIndex = -1;
-                } else {
-                  expandedIndex = index;
-                  this.location = location;
-                }
-              });
-            },
-            child: artistItem('lib/assets/image/artist.svg',
-                model.groupArtist![(index * 4 + location) - 1].groupName),
-          ));
+  _groupArtistItem(int index, int location) =>
+      Consumer<SelectFavoriteArtistViewModel>(
+          builder: (context, model, _) => GestureDetector(
+                onTap: () {
+                  model.getGroupMember(
+                      model.groupArtist![(index * 4 + location) - 1].groupId);
+                  setState(() {
+                    if (expandedIndex == index) {
+                      expandedIndex = -1;
+                    } else {
+                      expandedIndex = index;
+                      this.location = location;
+                    }
+                  });
+                },
+                child: artistItem(
+                    model.groupArtist![(index * 4 + location) - 1].groupImage,
+                    model.groupArtist![(index * 4 + location) - 1].groupName),
+              ));
 
   _soloArtistBuilder() => Consumer<SelectFavoriteArtistViewModel>(
         builder: (context, model, _) => GridView.builder(
@@ -252,7 +265,7 @@ class SelectFavoriteArtistScreenState
               onTap: () {
                 model.updateSelectedArtist(model.soloArtist![index]);
               },
-              child: artistItem('lib/assets/image/artist.svg',
+              child: artistItem(model.soloArtist![index].groupImage,
                   model.soloArtist![index].groupName),
             );
           },
@@ -261,37 +274,42 @@ class SelectFavoriteArtistScreenState
 
   _bottomBar() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
-            color: Colors.white,
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _selectedArtist(),
-                Container(
-                    width: double.infinity,
-                    height: 46,
-                    margin: const EdgeInsets.symmetric(horizontal: 30),
-                    child: BircaElevatedButton(
-                      text: "최애 아티스트 결정하기",
-                      color: (model.selectedArtist.isEmpty)
-                          ? Palette.gray04
-                          : Palette.primary,
-                      fontSize: 18,
-                      textColor: Colors.white,
-                      fontWeight: FontWeight.w500,
-                      onPressed: () {
-                        if(model.selectedArtist.isNotEmpty) {
-                          model.postFavoriteArtist();
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                  const SelectInterestArtistScreen()));
-                        }
-                      },
-                    )),
-                const SizedBox(height: 20),
-                const Text(
+          color: Colors.white,
+          width: double.infinity,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _selectedArtist(),
+              Container(
+                  width: double.infinity,
+                  height: 46,
+                  margin: const EdgeInsets.symmetric(horizontal: 30),
+                  child: BircaElevatedButton(
+                    text: "최애 아티스트 결정하기",
+                    color: (model.selectedArtist.isEmpty)
+                        ? Palette.gray04
+                        : Palette.primary,
+                    fontSize: 18,
+                    textColor: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    onPressed: () {
+                      if (model.selectedArtist.isNotEmpty) {
+                        model.postFavoriteArtist();
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const SelectInterestArtistScreen()));
+                      }
+                    },
+                  )),
+              const SizedBox(height: 20),
+              GestureDetector(
+                onTap: () {
+                  MaterialPageRoute(
+                      builder: (context) => const SelectInterestArtistScreen());
+                },
+                child: const Text(
                   "다음에 결정하기",
                   style: TextStyle(
                     color: Palette.gray06,
@@ -300,10 +318,10 @@ class SelectFavoriteArtistScreenState
                     decorationColor: Palette.gray06,
                   ),
                 ),
-                const SizedBox(height: 66),
-              ],
-            ),
-          ));
+              ),
+              const SizedBox(height: 66),
+            ],
+          )));
 
   _selectedArtist() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
@@ -322,7 +340,8 @@ class SelectFavoriteArtistScreenState
                             model.removeSelectedArtist(
                                 model.selectedArtist[index]);
                           },
-                          child: artistItem('lib/assets/image/artist.svg',
+                          child: artistItem(
+                              model.selectedArtist[index].groupImage,
                               model.selectedArtist[index].groupName),
                         ));
                   },

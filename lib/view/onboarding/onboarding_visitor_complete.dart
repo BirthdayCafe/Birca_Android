@@ -78,10 +78,11 @@ class OnboardingVisitorComplete extends StatelessWidget {
               textColor: Colors.white,
               fontWeight: FontWeight.normal,
               onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const BottomNavVisitor()));
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const BottomNavVisitor()),
+                      (Route<dynamic> route) => false,
+                );
               },
             ),
           )
