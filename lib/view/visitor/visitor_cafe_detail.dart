@@ -21,10 +21,19 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
     'lib/assets/image/img_cafe_test.png'
   ];
 
+  List<String> cafeDetailImage = [
+    'lib/assets/image/img_cafe_test.png',
+    'lib/assets/image/img_cafe_test.png',
+    'lib/assets/image/img_cafe_test.png',
+    'lib/assets/image/img_cafe_test.png',
+    'lib/assets/image/img_cafe_test.png'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0,
         title: const Text(
           '생일 카페 이름',
           style: TextStyle(
@@ -93,7 +102,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                     height: 18,
                   ),
                   Text(
-                    '날짜',
+                    '날짜 및 운영 시간',
                     style: TextStyle(
                         color: Palette.gray10,
                         fontWeight: FontWeight.bold,
@@ -105,6 +114,17 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                   ),
                   Text(
                     '2024.02.01 ~ 2024.02.01',
+                    style: TextStyle(
+                        color: Palette.gray10,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Pretendard',
+                        fontSize: 14),
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    '12:00 ~ 18:00',
                     style: TextStyle(
                         color: Palette.gray10,
                         fontWeight: FontWeight.w500,
@@ -278,6 +298,27 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                   const SizedBox(
                     height: 18,
                   ),
+                  const Text(
+                    '사진',
+                    style: TextStyle(
+                        color: Palette.gray10,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Pretendard',
+                        fontSize: 16),
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+
+                  // SizedBox(
+                  //   height:90,
+                  //   child: ListView.builder(
+                  //       scrollDirection: Axis.horizontal,
+                  //       itemCount : cafeDetailImage.length,
+                  //       itemBuilder: (context, index){
+                  //
+                  //       })
+                  // )
                 ],
               ),
             ),

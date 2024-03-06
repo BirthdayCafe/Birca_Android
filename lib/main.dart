@@ -1,8 +1,8 @@
+import 'package:birca/view/login/login.dart';
 import 'package:birca/viewModel/business_license_view_model.dart';
 import 'package:birca/viewModel/nickname_view_model.dart';
 import 'package:birca/viewModel/visitor_home_view_model.dart';
 import 'package:birca/viewModel/visitor_search_result_view_model.dart';
-import 'package:birca/widgets/bottom_nav_visitor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -43,7 +43,7 @@ class Birca extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home:  const BottomNavVisitor(),
+      home:  const Login(),
     );
   }
 }
