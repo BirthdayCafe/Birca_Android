@@ -118,6 +118,7 @@ class _ApplyVisitorNickNameScreen extends State<ApplyVisitorNickNameScreen> {
                               radius: 6,
                               textColor: Palette.primary,
                               textSize: 14,
+                              backgroundColor: Palette.white,
                               onPressed: () async {
                                 await Provider.of<NickNameViewModel>(context,
                                         listen: false)

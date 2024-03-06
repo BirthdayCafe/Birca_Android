@@ -1,4 +1,7 @@
 import 'package:birca/view/login/login.dart';
+import 'package:birca/viewModel/businessLicenseViewModel.dart';
+import 'package:birca/viewmodel/select_favorite_artist_viewmodel.dart';
+import 'package:birca/viewmodel/select_interest_artist_viewmodel.dart';
 import 'package:birca/viewModel/business_license_view_model.dart';
 import 'package:birca/viewModel/nickname_view_model.dart';
 import 'package:birca/viewModel/visitor_home_view_model.dart';
@@ -22,7 +25,9 @@ void main() async {
       ChangeNotifierProvider(create: (context) => BusinessLicenseViewModel()),
       ChangeNotifierProvider(create: (context) => NickNameViewModel()),
       ChangeNotifierProvider(create: (context) => VisitorSearchResultViewModel()),
-      ChangeNotifierProvider(create: (context)=> VisitorHomeViewModel())
+      ChangeNotifierProvider(create: (context)=> VisitorHomeViewModel()),
+      ChangeNotifierProvider(create: (context) => SelectFavoriteArtistViewModel()),
+      ChangeNotifierProvider(create: (context) => SelectInterestArtistViewModel()),
     ],
     child: const Birca(),
   ));

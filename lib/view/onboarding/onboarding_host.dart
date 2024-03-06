@@ -145,11 +145,10 @@ class _OnboardingHost extends State<OnboardingHost> {
                     textColor: Palette.primary,
                     textSize: 14,
                     onPressed: () {
-
                         _showBottomDialogCalendar(context);
-
-
-                    })
+                    },
+                  backgroundColor: Palette.gray02,
+                )
               ]),
               Row(
                 children: [

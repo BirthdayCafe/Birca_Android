@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../designSystem/palette.dart';
 
-
 Widget artistItem(String path, String artistName) => Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
