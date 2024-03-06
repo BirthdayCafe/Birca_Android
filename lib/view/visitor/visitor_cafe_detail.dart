@@ -29,6 +29,23 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
     'lib/assets/image/img_cafe_test.png'
   ];
 
+  List<String> goods = [
+    '특전1',
+    '특전2',
+        '특전3',
+        '특전4',
+        '특전5'
+
+  ];
+
+  List<String> luckyDraw = [
+    '럭키1',
+    '럭키2',
+    '럭키3',
+    '럭키4',
+    '럭키5'
+
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -257,7 +274,6 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                   const SizedBox(
                     height: 10,
                   ),
-
                   Container(
                     // margin: EdgeInsets.only(left: 16,right: 16),
                     width: double.maxFinite,
@@ -269,32 +285,60 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const BircaText(text: '혼잡도', textSize: 14, textColor: Palette.gray10, fontFamily: 'Pretendard'),
-                        const SizedBox(width: 6,),
+                        const BircaText(
+                            text: '혼잡도',
+                            textSize: 14,
+                            textColor: Palette.gray10,
+                            fontFamily: 'Pretendard'),
+                        const SizedBox(
+                          width: 6,
+                        ),
                         Container(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 2,bottom: 2),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 2, bottom: 2),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
                             color: Palette.primary,
                           ),
-                          child: const Text('포화',style: TextStyle(fontSize: 12,color: Colors.white,fontWeight: FontWeight.bold,fontFamily: 'Pretendard'),),
+                          child: const Text(
+                            '포화',
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Pretendard'),
+                          ),
                         ),
-                        const SizedBox(width: 70,),
-                        const BircaText(text: '특전', textSize: 14, textColor: Palette.gray10, fontFamily: 'Pretendard'),
-                        const SizedBox(width: 6,),
+                        const SizedBox(
+                          width: 70,
+                        ),
+                        const BircaText(
+                            text: '특전',
+                            textSize: 14,
+                            textColor: Palette.gray10,
+                            fontFamily: 'Pretendard'),
+                        const SizedBox(
+                          width: 6,
+                        ),
                         Container(
-                          padding: const EdgeInsets.only(left: 10,right: 10,top: 2,bottom: 2),
+                          padding: const EdgeInsets.only(
+                              left: 10, right: 10, top: 2, bottom: 2),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(4),
                             color: Palette.primary,
                           ),
-                          child: const Text('재고 없음',style: TextStyle(fontSize: 12,color: Colors.white,fontWeight: FontWeight.bold,fontFamily: 'Pretendard'),),
+                          child: const Text(
+                            '재고 없음',
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Pretendard'),
+                          ),
                         ),
-
                       ],
                     ),
                   ),
-
                   const SizedBox(
                     height: 18,
                   ),
@@ -309,16 +353,99 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                   const SizedBox(
                     height: 18,
                   ),
+                  SizedBox(
+                      height: 90,
+                      child: ListView.builder(
+                          shrinkWrap: true, // shrinkWrap을 true로 설정
 
-                  // SizedBox(
-                  //   height:90,
-                  //   child: ListView.builder(
-                  //       scrollDirection: Axis.horizontal,
-                  //       itemCount : cafeDetailImage.length,
-                  //       itemBuilder: (context, index){
-                  //
-                  //       })
-                  // )
+                          scrollDirection: Axis.horizontal,
+                          itemCount: cafeDetailImage.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              padding: const EdgeInsets.only(right: 8),
+                              child: Image.asset(cafeDetailImage[index]),
+                            );
+                          })),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  const Text(
+                    '특전 구성',
+                    style: TextStyle(
+                        color: Palette.gray10,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Pretendard',
+                        fontSize: 16),
+                  ),
+                  const SizedBox(height: 16,),
+                  ListView.builder(
+                      shrinkWrap: true, // shrinkWrap을 true로 설정
+
+                      physics: const NeverScrollableScrollPhysics(),
+                    itemCount: goods.length,
+                      itemBuilder: (context, index){
+                        return Row(
+                          children: [
+                            SizedBox(
+                              width: 90,
+                              child: Text(
+                                  goods[index]  ,style: const TextStyle(
+                                color: Palette.primary,
+                                fontSize: 14,
+                                  fontWeight: FontWeight.w600
+                                
+                              ),
+                            )
+                            ),
+                            Text(goods[index],style: const TextStyle(
+                              color: Palette.gray10,
+                              fontSize: 14,
+
+                            ),)
+
+                          ],
+                        );
+                      }),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  const Text(
+                    '럭키 드로우',
+                    style: TextStyle(
+                        color: Palette.gray10,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Pretendard',
+                        fontSize: 16),
+                  ),
+                  const SizedBox(height: 16,),
+                  ListView.builder(
+                      shrinkWrap: true, // shrinkWrap을 true로 설정
+
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: luckyDraw.length,
+                      itemBuilder: (context, index){
+                        return Row(
+                          children: [
+                            SizedBox(
+                                width: 90,
+                                child: Text(
+                                  luckyDraw[index]  ,style: const TextStyle(
+                                    color: Palette.primary,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w600
+
+                                ),
+                                )
+                            ),
+                            Text(luckyDraw[index],style: const TextStyle(
+                              color: Palette.gray10,
+                              fontSize: 14,
+
+                            ),)
+
+                          ],
+                        );
+                      })
                 ],
               ),
             ),

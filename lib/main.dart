@@ -1,5 +1,4 @@
 import 'package:birca/view/login/login.dart';
-import 'package:birca/viewModel/businessLicenseViewModel.dart';
 import 'package:birca/viewmodel/select_favorite_artist_viewmodel.dart';
 import 'package:birca/viewmodel/select_interest_artist_viewmodel.dart';
 import 'package:birca/viewModel/business_license_view_model.dart';
@@ -24,10 +23,13 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (context) => BusinessLicenseViewModel()),
       ChangeNotifierProvider(create: (context) => NickNameViewModel()),
-      ChangeNotifierProvider(create: (context) => VisitorSearchResultViewModel()),
-      ChangeNotifierProvider(create: (context)=> VisitorHomeViewModel()),
-      ChangeNotifierProvider(create: (context) => SelectFavoriteArtistViewModel()),
-      ChangeNotifierProvider(create: (context) => SelectInterestArtistViewModel()),
+      ChangeNotifierProvider(
+          create: (context) => VisitorSearchResultViewModel()),
+      ChangeNotifierProvider(create: (context) => VisitorHomeViewModel()),
+      ChangeNotifierProvider(
+          create: (context) => SelectFavoriteArtistViewModel()),
+      ChangeNotifierProvider(
+          create: (context) => SelectInterestArtistViewModel()),
     ],
     child: const Birca(),
   ));
@@ -43,12 +45,13 @@ class Birca extends StatelessWidget {
       title: 'Birca',
       theme: ThemeData(
         primaryColor: Palette.primary,
+        fontFamily: "Pretendard",
         textTheme:
             const TextTheme(bodyMedium: TextStyle(color: Color(0xff303031))),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home:  const Login(),
+      home: const Login(),
     );
   }
 }
