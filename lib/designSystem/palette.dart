@@ -9,4 +9,5 @@ class Palette {
   static const gray04 = Color(0xFFBFC0C4);
   static const gray06 = Color(0xFF8F9093);
   static const gray10 = Color(0xFF303031);
+  static const gray08 = Color(0xff606062);
 }

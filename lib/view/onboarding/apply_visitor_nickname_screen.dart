@@ -1,13 +1,22 @@
+import 'dart:developer';
 import 'package:birca/view/onboarding/select_favorite_artist_screen.dart';
+import 'package:birca/viewModel/nickname_view_model.dart';
 import 'package:birca/widgets/appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:birca/widgets/progressbar.dart';
-
+import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../widgets/button.dart';
 
-class ApplyVisitorNickNameScreen extends StatelessWidget {
+class ApplyVisitorNickNameScreen extends StatefulWidget {
   const ApplyVisitorNickNameScreen({super.key});
+
+  @override
+  State<StatefulWidget> createState() => _ApplyVisitorNickNameScreen();
+}
+
+class _ApplyVisitorNickNameScreen extends State<ApplyVisitorNickNameScreen> {
+  final TextEditingController nickNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -72,34 +81,53 @@ class ApplyVisitorNickNameScreen extends StatelessWidget {
                               margin:
                                   const EdgeInsets.only(left: 30, right: 11),
                               height: 36,
-                              child: const TextField(
-                                decoration: InputDecoration(
-                                  hintText: '최대 10자',
-                                  hintStyle: TextStyle(color: Colors.grey),
-                                  labelStyle: TextStyle(color: Colors.grey),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Palette.gray03),
+                              child: Consumer<NickNameViewModel>(
+                                  builder: (context, viewModel, child) {
+                                return TextField(
+                                  controller: nickNameController,
+                                  onChanged: (text) {
+                                    viewModel.isNickNameCheckOk = false;
+                                    log(viewModel.isNickNameCheckOk.toString());
+                                    viewModel
+                                        .isBtnOk(viewModel.isNickNameCheckOk);
+                                  },
+                                  decoration: const InputDecoration(
+                                    hintText: '최대 10자',
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Palette.gray03),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Palette.primary),
+                                    ),
                                   ),
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Palette.primary),
-                                  ),
-                                ),
-                              ))),
-                      Container(
-                        margin: const EdgeInsets.only(right: 30),
-                        child: const BircaOutLinedButton(
-                            text: "중복 검사",
-                            radiusColor: Palette.primary,
-                            width: 86,
-                            height: 36,
-                            radius: 6,
-                            textColor: Palette.primary,
-                            textSize: 14,
-                            backgroundColor: Palette.white,
-                        ),
-                      )
+                                );
+                              }))),
+                      Consumer<NickNameViewModel>(
+                          builder: (context, viewModel, widget) {
+                        return Container(
+                          margin: const EdgeInsets.only(right: 30),
+                          child: BircaOutLinedButton(
+                              text: "중복 검사",
+                              radiusColor: Palette.primary,
+                              width: 86,
+                              height: 36,
+                              radius: 6,
+                              textColor: Palette.primary,
+                              textSize: 14,
+                              backgroundColor: Palette.white,
+                              onPressed: () async {
+                                await Provider.of<NickNameViewModel>(context,
+                                        listen: false)
+                                    .nickNameCheck(nickNameController.text);
+
+                                viewModel.isBtnOk(viewModel.isNickNameCheckOk);
+                              }),
+                        );
+                      })
                     ],
                   ),
                   const Expanded(child: SizedBox()),
@@ -108,19 +136,32 @@ class ApplyVisitorNickNameScreen extends StatelessWidget {
                           left: 30, right: 30, bottom: 40),
                       width: double.infinity,
                       height: 46,
-                      child:  BircaElevatedButton(
+                      child: Consumer<NickNameViewModel>(
+                          builder: (context, viewModel, child) {
+                        return BircaElevatedButton(
                           text: "다음으로",
-                          color: Palette.gray04,
+                          color: viewModel.btnColor,
                           fontSize: 18,
                           textColor: Colors.white,
                           fontWeight: FontWeight.w500,
-                      onPressed: (){
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                const SelectFavoriteArtistScreen()));
-                      },))
+                          onPressed: () {
+                            log('isNickNameCheckOk : ${viewModel.isNickNameCheckOk.toString()}');
+
+                            if (viewModel.isNickNameCheckOk == true) {
+                              Provider.of<NickNameViewModel>(context,
+                                      listen: false)
+                                  .registerNickName(nickNameController.text)
+                                  .then((_) {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const SelectFavoriteArtistScreen()));
+                              }).catchError((error) {
+                                log('registerNickName fail');
+                              });
+                            }
+                          },
+                        );
+                      }))
                 ])));
   }
 }

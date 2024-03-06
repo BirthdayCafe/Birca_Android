@@ -2,6 +2,10 @@ import 'package:birca/view/login/login.dart';
 import 'package:birca/viewModel/businessLicenseViewModel.dart';
 import 'package:birca/viewmodel/select_favorite_artist_viewmodel.dart';
 import 'package:birca/viewmodel/select_interest_artist_viewmodel.dart';
+import 'package:birca/viewModel/business_license_view_model.dart';
+import 'package:birca/viewModel/nickname_view_model.dart';
+import 'package:birca/viewModel/visitor_home_view_model.dart';
+import 'package:birca/viewModel/visitor_search_result_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
@@ -16,12 +20,17 @@ void main() async {
   KakaoSdk.init(
     nativeAppKey: dotenv.env['KAKAO_APP_KEY'],
   );
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider(create: (context)=> BusinessLicenseViewModel()),
-    ChangeNotifierProvider(create: (context) => SelectFavoriteArtistViewModel()),
-    ChangeNotifierProvider(create: (context) => SelectInterestArtistViewModel()),
-  ],
-  child: const Birca(),) );
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => BusinessLicenseViewModel()),
+      ChangeNotifierProvider(create: (context) => NickNameViewModel()),
+      ChangeNotifierProvider(create: (context) => VisitorSearchResultViewModel()),
+      ChangeNotifierProvider(create: (context)=> VisitorHomeViewModel()),
+      ChangeNotifierProvider(create: (context) => SelectFavoriteArtistViewModel()),
+      ChangeNotifierProvider(create: (context) => SelectInterestArtistViewModel()),
+    ],
+    child: const Birca(),
+  ));
 }
 
 class Birca extends StatelessWidget {
@@ -39,7 +48,7 @@ class Birca extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: const Login(),
+      home:  const Login(),
     );
   }
 }
