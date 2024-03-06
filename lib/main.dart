@@ -1,4 +1,4 @@
-import 'package:birca/view/login/login.dart';
+import 'package:birca/view/visitor/visitor_cafe_detail.dart';
 import 'package:birca/viewmodel/select_favorite_artist_viewmodel.dart';
 import 'package:birca/viewmodel/select_interest_artist_viewmodel.dart';
 import 'package:birca/viewModel/business_license_view_model.dart';
@@ -51,7 +51,7 @@ class Birca extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      home: const Login(),
+      home: const VisitorCafeDetail(),
     );
   }
 }
