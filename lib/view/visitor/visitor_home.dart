@@ -1,5 +1,6 @@
 import 'package:birca/designSystem/text.dart';
 import 'package:birca/view/visitor/visitor_search.dart';
+import 'package:birca/widgets/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,6 +16,12 @@ class VisitorHome extends StatefulWidget {
 class _VisitorHome extends State<VisitorHome> {
   var artistList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
   var cafeList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
+
+  String selectedRegion1 = '전체';
+  List<String> optionsRegion1 = ['전체', '서울'];
+
+  String selectedRegion2 = '시/군/구';
+  List<String> optionsRegion2 = ['시/군/구', '강남', '건대', '성수', '홍대'];
 
   bool isSwitched = false;
 
@@ -138,7 +145,85 @@ class _VisitorHome extends State<VisitorHome> {
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return Container();
+                                      return Container(
+                                        padding: const EdgeInsets.only(
+                                            bottom: 20, top: 50),
+                                        height: 300,
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+
+                                                BircaText(
+                                                    text: '지역',
+                                                    textSize: 20,
+                                                    textColor: Palette.gray10,
+                                                    fontFamily: 'Pretendard'),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+
+                                                      DropdownButton(
+                                                        value: selectedRegion1,
+                                                        items: optionsRegion1
+                                                            .map((String option) {
+                                                          return DropdownMenuItem<
+                                                              String>(
+                                                              value: option,
+                                                              child:
+                                                              Text(option));
+                                                        }).toList(),
+                                                        onChanged:
+                                                            (String? newValue) {
+                                                          setState(() {
+                                                            selectedRegion1 =
+                                                            newValue!;
+                                                          });
+                                                        },
+                                                      ),
+
+
+                                                    DropdownButton(
+                                                      value: selectedRegion2,
+                                                      items: optionsRegion2
+                                                          .map((String option) {
+                                                        return DropdownMenuItem<
+                                                                String>(
+                                                            value: option,
+                                                            child:
+                                                                Text(option));
+                                                      }).toList(),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          selectedRegion2 =
+                                                              newValue!;
+                                                        });
+                                                      },
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Container(
+                                              width: 300,
+                                              child: BircaElevatedButton(
+                                                text: '적용하기',
+                                                color: Palette.primary,
+                                                fontSize: 18,
+                                                textColor: Colors.white,
+                                                fontWeight: FontWeight.normal,
+                                                onPressed: () {},
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
                                     });
                               },
                               icon: SvgPicture.asset(

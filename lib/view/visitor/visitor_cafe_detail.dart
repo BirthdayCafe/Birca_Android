@@ -1,6 +1,10 @@
 import 'dart:developer';
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/designSystem/text.dart';
+import 'package:birca/view/visitor/visitor_cafe_tour.dart';
+import 'package:birca/view/visitor/visitor_favorite.dart';
+import 'package:birca/view/visitor/visitor_home.dart';
+import 'package:birca/view/visitor/visitor_mypage.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,25 +33,35 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
     'lib/assets/image/img_cafe_test.png'
   ];
 
-  List<String> goods = [
-    '특전1',
-    '특전2',
-        '특전3',
-        '특전4',
-        '특전5'
+  List<String> goods = ['특전1', '특전2', '특전3', '특전4', '특전5'];
 
+  List<String> luckyDraw = ['럭키1', '럭키2', '럭키3', '럭키4', '럭키5'];
+
+  List<String> cafeMenu = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
+  int _selectedIndex = 0;
+
+  bool isTab = false;
+
+  final List<Widget> _widgetOptions = <Widget>[
+    const VisitorHome(),
+    const VisitorFavorite(),
+    const VisitorCafeTour(),
+    const VisitorMyPage()
   ];
 
-  List<String> luckyDraw = [
-    '럭키1',
-    '럭키2',
-    '럭키3',
-    '럭키4',
-    '럭키5'
+  void _onItemTapped(int index) {
+    // 탭을 클릭했을때 지정한 페이지로 이동
+    setState(() {
+      _selectedIndex = index;
+      isTab = true;
+    });
+  }
 
-  ];
   @override
   Widget build(BuildContext context) {
+
+
+
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
@@ -87,7 +101,9 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
               ))
         ],
       ),
-      body: SingleChildScrollView(
+      body: isTab
+          ? _widgetOptions.elementAt(_selectedIndex)
+          : SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -377,38 +393,35 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                         fontFamily: 'Pretendard',
                         fontSize: 16),
                   ),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   ListView.builder(
                       shrinkWrap: true, // shrinkWrap을 true로 설정
-
                       physics: const NeverScrollableScrollPhysics(),
-                    itemCount: goods.length,
-                      itemBuilder: (context, index){
+                      itemCount: goods.length,
+                      itemBuilder: (context, index) {
                         return Row(
                           children: [
                             SizedBox(
-                              width: 90,
-                              child: Text(
-                                  goods[index]  ,style: const TextStyle(
-                                color: Palette.primary,
+                                width: 90,
+                                child: Text(
+                                  goods[index],
+                                  style: const TextStyle(
+                                      color: Palette.primary,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                            Text(
+                              goods[index],
+                              style: const TextStyle(
+                                color: Palette.gray10,
                                 fontSize: 14,
-                                  fontWeight: FontWeight.w600
-                                
                               ),
                             )
-                            ),
-                            Text(goods[index],style: const TextStyle(
-                              color: Palette.gray10,
-                              fontSize: 14,
-
-                            ),)
-
                           ],
                         );
                       }),
-                  const SizedBox(
-                    height: 18,
-                  ),
                   const Text(
                     '럭키 드로우',
                     style: TextStyle(
@@ -417,40 +430,123 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                         fontFamily: 'Pretendard',
                         fontSize: 16),
                   ),
-                  const SizedBox(height: 16,),
+                  const SizedBox(
+                    height: 16,
+                  ),
                   ListView.builder(
                       shrinkWrap: true, // shrinkWrap을 true로 설정
 
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: luckyDraw.length,
-                      itemBuilder: (context, index){
+                      itemBuilder: (context, index) {
                         return Row(
                           children: [
                             SizedBox(
                                 width: 90,
                                 child: Text(
-                                  luckyDraw[index]  ,style: const TextStyle(
-                                    color: Palette.primary,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600
-
-                                ),
-                                )
+                                  luckyDraw[index],
+                                  style: const TextStyle(
+                                      color: Palette.primary,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600),
+                                )),
+                            Text(
+                              luckyDraw[index],
+                              style: const TextStyle(
+                                color: Palette.gray10,
+                                fontSize: 14,
+                              ),
                             ),
-                            Text(luckyDraw[index],style: const TextStyle(
-                              color: Palette.gray10,
-                              fontSize: 14,
-
-                            ),)
-
                           ],
                         );
-                      })
+                      }),
+                  const Text(
+                    '생일 카페 메뉴',
+                    style: TextStyle(
+                        color: Palette.gray10,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Pretendard',
+                        fontSize: 16),
+                  ),
+                  const SizedBox(
+                    height: 6,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xffF7F7FA),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: ListView.builder(
+                        shrinkWrap: true, // shrinkWrap을 true로 설정
+
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: cafeMenu.length,
+                        itemBuilder: (context, index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    cafeMenu[index],
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 14,
+                                        color: Palette.gray10),
+                                  ),
+                                  Text(
+                                    cafeMenu[index],
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 14,
+                                        color: Palette.primary),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                cafeMenu[index],
+                                style: const TextStyle(
+                                    fontSize: 12, color: Palette.gray06),
+                              ),
+                              const SizedBox(height: 24,)
+                            ],
+                          );
+                        }),
+                  )
                 ],
               ),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        // 애니메이션 비활성화
+
+        items: const [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home_filled,
+                size: 30,
+              ),
+              label: '홈'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite, size: 30), label: '찜한 카페'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.edit_location_alt_outlined, size: 30),
+              label: '카페 투어'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.perm_identity, size: 30), label: '마이페이지'),
+        ],
+
+        // BottomNavigationBarItem(icon:SvgPicture.asset('lib/assets/image/img_bottom_nav_cafe_tour.svg') ,label:'카페 투어' ),
+        // BottomNavigationBarItem(icon:SvgPicture.asset('lib/assets/image/img_bottom_nav_mypage.svg') ,label:'마이페이지' ),],
+        onTap: _onItemTapped,
+        currentIndex: _selectedIndex,
+        selectedItemColor: Palette.primary,
       ),
     );
   }
