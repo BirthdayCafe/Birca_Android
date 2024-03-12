@@ -43,7 +43,7 @@ class _BottomNavHost extends State<BottomNavHost> {
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled,size: 30,) ,label:'홈' ),
           BottomNavigationBarItem(icon: Icon(Icons.chat,size: 30) ,label:'채팅' ),
-          BottomNavigationBarItem(icon: Icon(Icons.cake_outlined,size: 30) ,label:'나의 카페' ),
+          BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined,size: 30) ,label:'스케줄' ),
           BottomNavigationBarItem(icon: Icon(Icons.perm_identity,size: 30) ,label:'마이페이지' ),],
 
         // BottomNavigationBarItem(icon:SvgPicture.asset('lib/assets/image/img_bottom_nav_cafe_tour.svg') ,label:'카페 투어' ),
