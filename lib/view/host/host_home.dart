@@ -278,6 +278,34 @@ class _HostHome extends State<HostHome> {
           ],
         ),
       ),
+        floatingActionButton: SizedBox(
+          width: 86,
+          height: 38,
+          child: FloatingActionButton(
+            onPressed: () {},
+            backgroundColor: Colors.black,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30.0),
+              side: const BorderSide(color: Colors.white, width: 2.0), // 테두리 설정
+            ), // 버튼 배경색
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                BircaText(
+                    text: '지도',
+                    textSize: 16,
+                    textColor: Colors.white,
+                    fontFamily: 'Pretendard'),
+                Icon(
+                  Icons.location_on_outlined,
+                  size: 24,
+                  color: Colors.white,
+                )
+              ],
+            ), // 버튼 모양
+          ),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
     );
   }
 }
