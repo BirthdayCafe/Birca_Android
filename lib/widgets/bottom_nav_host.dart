@@ -1,7 +1,7 @@
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/view/host/host_chatting.dart';
 import 'package:birca/view/host/host_home.dart';
-import 'package:birca/view/host/host_my_cafe.dart';
+import 'package:birca/view/host/host_schedule.dart';
 import 'package:birca/view/host/host_mypage.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class _BottomNavHost extends State<BottomNavHost> {
   final List<Widget> _widgetOptions = <Widget>[
     const HostHome(),
     const HostChatting(),
-    const HostMyCafe(),
+    const HostSchedule(),
     const HostMyPage()
   ];
 
