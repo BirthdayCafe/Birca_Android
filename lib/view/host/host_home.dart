@@ -1,10 +1,9 @@
+import 'package:birca/view/host/host_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
-import '../visitor/visitor_search.dart';
 
 class HostHome extends StatefulWidget {
   const HostHome({super.key});
@@ -29,7 +28,7 @@ class _HostHome extends State<HostHome> {
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const VisitorSearch()));
+                    builder: (context) => const HostSearch()));
               },
               icon: SvgPicture.asset('lib/assets/image/img_search.svg'))
         ],
