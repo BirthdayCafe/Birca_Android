@@ -304,13 +304,17 @@ class _HostCafeDetail extends State<HostCafeDetail> {
                                             fontSize: 14,
                                             color: Palette.gray10),
                                       ),
-                                      Expanded(
+                                      const Expanded(
                                         child: Divider(
-                                          color: Palette.gray06,  // 점선의 색상 설정
-                                          height: 1,  // 점선의 높이 설정
-                                          thickness: 1,  // 점선의 두께 설정
-                                          indent: 10,  // 시작 부분 여백 설정
-                                          endIndent: 10,  // 끝 부분 여백 설정
+                                          color: Palette.gray06,
+                                          // 점선의 색상 설정
+                                          height: 1,
+                                          // 점선의 높이 설정
+                                          thickness: 1,
+                                          // 점선의 두께 설정
+                                          indent: 10,
+                                          // 시작 부분 여백 설정
+                                          endIndent: 10, // 끝 부분 여백 설정
                                         ),
                                       ),
                                       Text(
@@ -363,13 +367,17 @@ class _HostCafeDetail extends State<HostCafeDetail> {
                                             fontSize: 14,
                                             color: Palette.gray10),
                                       ),
-                                      Expanded(
+                                      const Expanded(
                                         child: Divider(
-                                          color: Palette.gray06,  // 점선의 색상 설정
-                                          height: 1,  // 점선의 높이 설정
-                                          thickness: 1,  // 점선의 두께 설정
-                                          indent: 10,  // 시작 부분 여백 설정
-                                          endIndent: 10,  // 끝 부분 여백 설정
+                                          color: Palette.gray06,
+                                          // 점선의 색상 설정
+                                          height: 1,
+                                          // 점선의 높이 설정
+                                          thickness: 1,
+                                          // 점선의 두께 설정
+                                          indent: 10,
+                                          // 시작 부분 여백 설정
+                                          endIndent: 10, // 끝 부분 여백 설정
                                         ),
                                       ),
                                       Text(
