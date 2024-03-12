@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HostMyCafe extends StatelessWidget{
-  const HostMyCafe({super.key});
+class HostSchedule extends StatelessWidget{
+  const HostSchedule({super.key});
 
   @override
   Widget build(BuildContext context) {
