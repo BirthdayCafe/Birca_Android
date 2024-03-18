@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../viewModel/host_search_result_view_model.dart';
-import 'host_schedule.dart';
+import 'host_cafe.dart';
 
 class HostSearch extends StatefulWidget {
   const HostSearch({super.key});
@@ -27,7 +27,7 @@ class _HostSearch extends State<HostSearch>{
   final List<Widget> _widgetOptions = <Widget>[
     const HostHome(),
     const HostChatting(),
-    const HostSchedule(),
+    const HostCafe(),
     const HostMyPage()
   ];
 
