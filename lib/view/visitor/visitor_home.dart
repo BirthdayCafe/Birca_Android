@@ -158,7 +158,7 @@ class _VisitorHome extends State<VisitorHome> {
                                                   CrossAxisAlignment.start,
                                               children: [
 
-                                                BircaText(
+                                                const BircaText(
                                                     text: '지역',
                                                     textSize: 20,
                                                     textColor: Palette.gray10,
@@ -210,7 +210,7 @@ class _VisitorHome extends State<VisitorHome> {
                                                 ),
                                               ],
                                             ),
-                                            Container(
+                                            SizedBox(
                                               width: 300,
                                               child: BircaElevatedButton(
                                                 text: '적용하기',
@@ -229,7 +229,8 @@ class _VisitorHome extends State<VisitorHome> {
                               icon: SvgPicture.asset(
                                 'lib/assets/image/img_filter.svg',
                               ),
-                            )),
+                            )
+                        ),
                         Container(
                           padding: const EdgeInsets.only(left: 12, right: 12),
                           decoration: BoxDecoration(
