@@ -1,4 +1,4 @@
-class VisitorBirthCafeLikeModel {
+class VisitorCafeLikeModel {
   final String birthdayCafeId;
   final String mainImageUrl;
   final String startDate;
@@ -7,7 +7,7 @@ class VisitorBirthCafeLikeModel {
   final String twitterAccount;
   final Artist artist;
 
-  VisitorBirthCafeLikeModel(
+  VisitorCafeLikeModel(
       {required this.birthdayCafeId,
       required this.mainImageUrl,
       required this.startDate,
@@ -16,8 +16,8 @@ class VisitorBirthCafeLikeModel {
       required this.twitterAccount,
       required this.artist});
 
-  factory VisitorBirthCafeLikeModel.fromJson(Map<String, dynamic> json) {
-    return VisitorBirthCafeLikeModel(
+  factory VisitorCafeLikeModel.fromJson(Map<String, dynamic> json) {
+    return VisitorCafeLikeModel(
       birthdayCafeId: json['birthdayCafeId'],
       mainImageUrl: json['mainImageUrl'],
       startDate: json['startDate'],
