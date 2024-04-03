@@ -1,3 +1,4 @@
+
 import 'package:birca/designSystem/text.dart';
 import 'package:birca/viewModel/visitor_cafe_like_view_model.dart';
 import 'package:flutter/material.dart';
@@ -103,7 +104,15 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                               Icons.favorite,
                                               color: Palette.primary,
                                             ),
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              Provider.of<VisitorCafeLikeViewModel>(
+                                                      context,
+                                                      listen: true)
+                                                  .deleteCafeLike(viewModel
+                                                      .visitorCafeLikeModelList![
+                                                          index]
+                                                      .birthdayCafeId);
+                                            },
                                           ))
                                     ],
                                   ),

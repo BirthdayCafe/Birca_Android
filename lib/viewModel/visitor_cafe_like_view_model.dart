@@ -16,6 +16,7 @@ class VisitorCafeLikeViewModel extends ChangeNotifier{
     getCafeLike();
   }
 
+  //찜한 카페 가져오기
   Future<void> getCafeLike() async {
 
     // const storage = FlutterSecureStorage();
@@ -94,6 +95,77 @@ class VisitorCafeLikeViewModel extends ChangeNotifier{
       }
     }
 
+  }
+
+  //찜한 카페 가져오기
+  Future<void> deleteCafeLike(int birthdayCafeId) async {
+
+    // const storage = FlutterSecureStorage();
+    var baseUrl = dotenv.env['BASE_URL'];
+
+    //임시 토큰
+    var token = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAwLCJpYXQiOjE3MTE2MTM3NDcsImV4cCI6MTcxNDIwNTc0N30.dvpR8o4HRtag_drGpHxXO6GHiejOCxa2v7cygqkQibQ';
+
+    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    //
+    // //토큰 가져오기
+    // if (kakaoLoginInfo != null) {
+    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    //   token = loginData['accessToken'].toString();
+    // }
+
+
+    // LogInterceptor 추가
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ));
+
+
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.delete(
+          '${baseUrl}api/v1/birthday-cafes/$birthdayCafeId/like',
+          options: Options(headers: {'Authorization': 'Bearer $token'})
+      );
+
+      // 서버 응답 출력
+      log('Response: ${response.data}');
+
+      getCafeLike();
+
+      notifyListeners();
+
+    } catch (e) {
+      if (e is DioException) {
+        // Dio exception handling
+        if (e.response != null) {
+          // Server responded with an error
+          if (e.response!.statusCode == 400) {
+            // Handle HTTP 400 Bad Request error
+            log('Bad Request - Server returned 400 status code');
+            throw Exception('Failed to getCafeLike');
+
+            // Additional error handling logic here if needed
+          } else {
+            // Handle other HTTP status codes
+            log('Server error - Status code: ${e.response!.statusCode}');
+            throw Exception('Failed to getCafeLike.');
+            // Additional error handling logic here if needed
+          }
+        } else {
+          // No response from the server (network error, timeout, etc.)
+          log('Dio error: ${e.message}');
+          throw Exception('Failed to getCafeLike.');
+
+        }
+      } else {
+        // Handle other exceptions if necessary
+        log('Error: $e');
+        throw Exception('Failed to getCafeLike.');
+
+      }
+    }
 
   }
 }
