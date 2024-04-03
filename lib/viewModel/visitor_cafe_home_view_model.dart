@@ -75,25 +75,25 @@ class VisitorCafeHomeViewModel extends ChangeNotifier{
           if (e.response!.statusCode == 400) {
             // Handle HTTP 400 Bad Request error
             log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getCafeLike');
+            throw Exception('Failed to getCafeHome');
 
             // Additional error handling logic here if needed
           } else {
             // Handle other HTTP status codes
             log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getCafeLike.');
+            throw Exception('Failed to getCafeHome.');
             // Additional error handling logic here if needed
           }
         } else {
           // No response from the server (network error, timeout, etc.)
           log('Dio error: ${e.message}');
-          throw Exception('Failed to getCafeLike.');
+          throw Exception('Failed to getCafeHome.');
 
         }
       } else {
         // Handle other exceptions if necessary
         log('Error: $e');
-        throw Exception('Failed to getCafeLike.');
+        throw Exception('Failed to getCafeHome.');
 
       }
     }
