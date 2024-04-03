@@ -1,9 +1,7 @@
-
 import 'package:birca/designSystem/text.dart';
 import 'package:birca/viewModel/visitor_cafe_like_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../designSystem/palette.dart';
 
 class VisitorFavorite extends StatefulWidget {
