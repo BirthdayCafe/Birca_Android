@@ -1,5 +1,5 @@
 class VisitorCafeLikeModel {
-  final String birthdayCafeId;
+  final int birthdayCafeId;
   final String mainImageUrl;
   final String startDate;
   final String endDate;
@@ -24,7 +24,7 @@ class VisitorCafeLikeModel {
       endDate: json['endDate'],
       birthdayCafeName: json['birthdayCafeName'],
       twitterAccount: json['twitterAccount'],
-      artist: json['artist'],
+      artist: Artist.fromJson(json['artist']),
     );
   }
 }
