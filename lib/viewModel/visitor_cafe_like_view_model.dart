@@ -8,11 +8,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class VisitorCafeLikeViewModel extends ChangeNotifier{
   Dio dio = Dio();
 
-  List<VisitorCafeLikeModel>? _visitorCafeLikeModelList;
-  List<VisitorCafeLikeModel>? get visitorCafeLikeModelList=>_visitorCafeLikeModelList;
+  List<VisitorCafeLikeModel> _visitorCafeLikeModelList = [];
+  List<VisitorCafeLikeModel> get visitorCafeLikeModelList=>_visitorCafeLikeModelList;
 
   VisitorCafeLikeViewModel(){
-    _visitorCafeLikeModelList =[];
     getCafeLike();
   }
 
@@ -23,7 +22,7 @@ class VisitorCafeLikeViewModel extends ChangeNotifier{
     var baseUrl = dotenv.env['BASE_URL'];
 
     //임시 토큰
-    var token = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAwLCJpYXQiOjE3MTE2MTM3NDcsImV4cCI6MTcxNDIwNTc0N30.dvpR8o4HRtag_drGpHxXO6GHiejOCxa2v7cygqkQibQ';
+    var token = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
     // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
     //
@@ -60,10 +59,8 @@ class VisitorCafeLikeViewModel extends ChangeNotifier{
       List<VisitorCafeLikeModel> cafeLikeModels = jsonData.map((e) => VisitorCafeLikeModel.fromJson(e)).toList();
 
       // _visitorCafeLikeModelList에 추가
-      _visitorCafeLikeModelList?.addAll(cafeLikeModels);
-
+      _visitorCafeLikeModelList = cafeLikeModels;
       notifyListeners();
-
     } catch (e) {
       if (e is DioException) {
         // Dio exception handling
@@ -94,17 +91,18 @@ class VisitorCafeLikeViewModel extends ChangeNotifier{
 
       }
     }
-
   }
 
   //찜한 카페 가져오기
-  Future<void> deleteCafeLike(int birthdayCafeId) async {
+  Future<void> deleteCafeLike(int index) async {
+    _visitorCafeLikeModelList.removeAt(index);
+    notifyListeners();
 
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
 
     //임시 토큰
-    var token = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAwLCJpYXQiOjE3MTE2MTM3NDcsImV4cCI6MTcxNDIwNTc0N30.dvpR8o4HRtag_drGpHxXO6GHiejOCxa2v7cygqkQibQ';
+    var token = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
     // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
     //
@@ -125,16 +123,12 @@ class VisitorCafeLikeViewModel extends ChangeNotifier{
     try {
       // API 엔드포인트 및 업로드
       Response response = await dio.delete(
-          '${baseUrl}api/v1/birthday-cafes/$birthdayCafeId/like',
+          '${baseUrl}api/v1/birthday-cafes/${_visitorCafeLikeModelList[index].birthdayCafeId}/like',
           options: Options(headers: {'Authorization': 'Bearer $token'})
       );
 
       // 서버 응답 출력
       log('Response: ${response.data}');
-
-      getCafeLike();
-
-      notifyListeners();
 
     } catch (e) {
       if (e is DioException) {
