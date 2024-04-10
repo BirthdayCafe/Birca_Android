@@ -1,4 +1,5 @@
 import 'package:birca/designSystem/palette.dart';
+import 'package:birca/widgets/bottom_nav_host.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -119,6 +120,11 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                                 onChanged: (value) {
                                   setState(() {
                                     isSwitched = value;
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const BottomNavHost()));
                                   });
                                 },
                               )))
