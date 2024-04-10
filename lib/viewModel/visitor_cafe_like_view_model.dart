@@ -93,7 +93,7 @@ class VisitorCafeLikeViewModel extends ChangeNotifier{
     }
   }
 
-  //찜한 카페 가져오기
+  //찜한 카페 삭제
   Future<void> deleteCafeLike(int index) async {
     _visitorCafeLikeModelList.removeAt(index);
     notifyListeners();
