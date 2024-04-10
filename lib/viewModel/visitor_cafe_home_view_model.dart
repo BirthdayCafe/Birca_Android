@@ -1,40 +1,41 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/visitor_cafe_home_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class VisitorCafeHomeViewModel extends ChangeNotifier{
+class VisitorCafeHomeViewModel extends ChangeNotifier {
   Dio dio = Dio();
 
   List<VisitorCafeHomeModel>? _visitorCafeHomeModelList;
-  List<VisitorCafeHomeModel>? get visitorCafeHomeModelList=>_visitorCafeHomeModelList;
 
-  VisitorCafeHomeViewModel(){
-    _visitorCafeHomeModelList =[];
-    getCafeHome('IN_PROGRESS',1,2);
+  List<VisitorCafeHomeModel>? get visitorCafeHomeModelList =>
+      _visitorCafeHomeModelList;
+
+  VisitorCafeHomeViewModel() {
+    _visitorCafeHomeModelList = [];
+    getCafeHome(
+      'IN_PROGRESS',
+    );
   }
 
   //찜한 카페 가져오기
-  Future<void> getCafeHome(String progressState, int artistId, int cafeId) async {
-
-    const storage = FlutterSecureStorage();
+  Future<void> getCafeHome(String progressState) async {
+    // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
 
     //임시 토큰
-    // var token = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MTAwLCJpYXQiOjE3MTE2MTM3NDcsImV4cCI6MTcxNDIwNTc0N30.dvpR8o4HRtag_drGpHxXO6GHiejOCxa2v7cygqkQibQ';
+    token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     //토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-      token = loginData['accessToken'].toString();
-    }
-
+    // if (kakaoLoginInfo != null) {
+    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    //   token = loginData['accessToken'].toString();
+    // }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -42,31 +43,27 @@ class VisitorCafeHomeViewModel extends ChangeNotifier{
       responseBody: true,
     ));
 
-
     try {
       // API 엔드포인트 및 업로드
-      Response response = await dio.get(
-          '${baseUrl}api/v1/birthday-cafes',
+      Response response = await dio.get('${baseUrl}api/v1/birthday-cafes',
           queryParameters: {
             'progressState': progressState,
-            'artistId': artistId,
-            'cafeId': cafeId,
+            // 'artistId': artistId,
+            // 'cafeId': cafeId,
           },
-          options: Options(headers: {'Authorization': 'Bearer $token'})
-      );
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       // 서버 응답 출력
       log('Response: ${response.data}');
 
-
       List<dynamic> jsonData = response.data;
-      List<VisitorCafeHomeModel> cafeHomeModels = jsonData.map((e) => VisitorCafeHomeModel.fromJson(e)).toList();
+      List<VisitorCafeHomeModel> cafeHomeModels =
+          jsonData.map((e) => VisitorCafeHomeModel.fromJson(e)).toList();
 
       // _visitorCafeHomeModelList 추가
       _visitorCafeHomeModelList?.addAll(cafeHomeModels);
 
       notifyListeners();
-
     } catch (e) {
       if (e is DioException) {
         // Dio exception handling
@@ -88,15 +85,12 @@ class VisitorCafeHomeViewModel extends ChangeNotifier{
           // No response from the server (network error, timeout, etc.)
           log('Dio error: ${e.message}');
           throw Exception('Failed to getCafeHome.');
-
         }
       } else {
         // Handle other exceptions if necessary
         log('Error: $e');
         throw Exception('Failed to getCafeHome.');
-
       }
     }
-
   }
 }
