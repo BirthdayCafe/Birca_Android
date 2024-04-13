@@ -67,9 +67,9 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       // 서버 응답 출력
       log('getBirthdayCafes Response: ${response.data}');
 
+      // final Map<String, dynamic> responseData = json.decode(response.data);
 
-      // _birthdayCafeModel = BirthdayCafeModel.fromJson(response.data);
-
+      _birthdayCafeModel = BirthdayCafeModel.fromJson(response.data);
 
       notifyListeners();
     } catch (e) {
