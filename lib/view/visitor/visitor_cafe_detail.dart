@@ -14,8 +14,6 @@ import 'package:provider/provider.dart';
 class VisitorCafeDetail extends StatefulWidget {
   const VisitorCafeDetail({super.key});
 
-
-
   @override
   State<StatefulWidget> createState() => _VisitorCafeDetail();
 }
@@ -69,17 +67,14 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
         scrolledUnderElevation: 0,
         title: Consumer<BirthdayCafeViewModel>(
           builder: (context, viewModel, widget) {
-
-              return Text(
-                viewModel.birthdayCafeModel!.birthdayCafeName.toString(),
-                style: const TextStyle(
-                    fontSize: 16,
-                    color: Palette.gray10,
-                    fontFamily: 'Pretandard',
-                    fontWeight: FontWeight.bold),
-              );
-
-
+            return Text(
+              '${viewModel.birthdayCafeModel?.birthdayCafeName.toString()}',
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: Palette.gray10,
+                  fontFamily: 'Pretandard',
+                  fontWeight: FontWeight.bold),
+            );
           },
         ),
         leading: IconButton(
@@ -91,14 +86,14 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
           Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
               return Container(
-                // width: double.infinity,
+                  // width: double.infinity,
                   margin: const EdgeInsets.only(top: 10, right: 20),
                   child: Column(
                     children: [
                       viewModel.birthdayCafeModel!.isLiked
                           ? GestureDetector(
                               child: const Icon(
-                                Icons.favorite_border_outlined,
+                                Icons.favorite,
                                 color: Palette.primary,
                               ),
                               onTap: () {
@@ -108,7 +103,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           : GestureDetector(
                               child: const Icon(
                                 Icons.favorite_border_outlined,
-                                color: Palette.gray03,
+                                color: Palette.primary,
                               ),
                               onTap: () {
                                 log('touch');
@@ -116,7 +111,8 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                             ),
                       BircaText(
                           text:
-                              viewModel.birthdayCafeModel!.likeCount.toString(),
+                              '${viewModel.birthdayCafeModel!.likeCount.toString()}',
+                          // '11',
                           textSize: 10,
                           textColor: Palette.gray03,
                           fontFamily: 'Pretandard')
@@ -128,13 +124,14 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
       ),
       body: isTab
           ? _widgetOptions.elementAt(_selectedIndex)
-          : SingleChildScrollView(
-              child: Column(
+          : SingleChildScrollView(child: Consumer<BirthdayCafeViewModel>(
+              builder: (context, viewModel, widget) {
+              return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     margin: const EdgeInsets.only(left: 20),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
@@ -149,7 +146,8 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           height: 2,
                         ),
                         Text(
-                          '샤이니 민호',
+                          // '샤이니 민호',
+                          '${viewModel.birthdayCafeModel?.artist.groupName.toString()} ${viewModel.birthdayCafeModel?.artist.name.toString()}',
                           style: TextStyle(
                               color: Palette.gray10,
                               fontWeight: FontWeight.w500,
@@ -171,24 +169,24 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           height: 2,
                         ),
                         Text(
-                          '2024.02.01 ~ 2024.02.01',
+                          '${viewModel.birthdayCafeModel?.startDate.toString().substring(0, viewModel.birthdayCafeModel!.startDate.toString().length - 9)} ~ ${viewModel.birthdayCafeModel!.endDate.toString().substring(0, viewModel.birthdayCafeModel!.endDate.toString().length - 9)}',
                           style: TextStyle(
                               color: Palette.gray10,
                               fontWeight: FontWeight.w500,
                               fontFamily: 'Pretendard',
                               fontSize: 14),
                         ),
-                        SizedBox(
-                          height: 2,
-                        ),
-                        Text(
-                          '12:00 ~ 18:00',
-                          style: TextStyle(
-                              color: Palette.gray10,
-                              fontWeight: FontWeight.w500,
-                              fontFamily: 'Pretendard',
-                              fontSize: 14),
-                        ),
+                        // SizedBox(
+                        //   height: 2,
+                        // ),
+                        // Text(
+                        //   '12:00 ~ 18:00',
+                        //   style: TextStyle(
+                        //       color: Palette.gray10,
+                        //       fontWeight: FontWeight.w500,
+                        //       fontFamily: 'Pretendard',
+                        //       fontSize: 14),
+                        // ),
                         SizedBox(
                           height: 18,
                         ),
@@ -204,7 +202,8 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           height: 2,
                         ),
                         Text(
-                          '스벅',
+                          // '스벅',
+                          '${viewModel.birthdayCafeModel?.cafe.name.toString()}',
                           style: TextStyle(
                               color: Palette.gray10,
                               fontWeight: FontWeight.w500,
@@ -215,7 +214,8 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           height: 2,
                         ),
                         Text(
-                          '서울 특별시 서대문구 ~',
+                          // '서울 특별시 서대문구 ~',
+                          '${viewModel.birthdayCafeModel?.cafe.address.toString()}',
                           style: TextStyle(
                               color: Palette.gray06,
                               fontFamily: 'Pretendard',
@@ -237,10 +237,11 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           alignment: Alignment.bottomCenter,
                         ),
                         autoplay: false,
-                        itemCount: cafeImage.length,
+                        itemCount: viewModel.birthdayCafeModel!.cafe.images.length,
                         itemBuilder: (context, index) {
-                          return Image.asset(
-                            cafeImage[index],
+                          return Image.network(
+                            // cafeImage[index],
+                            viewModel.birthdayCafeModel!.cafe.images[index].toString(),
                             fit: BoxFit.cover,
                           );
                         },
@@ -253,7 +254,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text(
+                        Text(
                           '트위터 계정',
                           style: TextStyle(
                               color: Palette.gray10,
@@ -266,8 +267,9 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                         ),
                         Row(
                           children: [
-                            const Text(
-                              '@twitter',
+                            Text(
+                              '${viewModel.birthdayCafeModel!.twitterAccount
+                                  .toString()}',
                               style: TextStyle(
                                   color: Palette.gray08,
                                   fontFamily: 'Pretendard',
@@ -293,7 +295,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                                       elevation: 0
                                       // 텍스트 색상
                                       ),
-                                  child: const Text(
+                                  child: Text(
                                     '복사',
                                     style: TextStyle(
                                         fontSize: 10, color: Colors.white),
@@ -341,8 +343,9 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                                   borderRadius: BorderRadius.circular(4),
                                   color: Palette.primary,
                                 ),
-                                child: const Text(
-                                  '포화',
+                                child:
+                                Text(
+                                  viewModel.birthdayCafeModel!.congestionState.toString(),
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.white,
@@ -368,8 +371,9 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                                   borderRadius: BorderRadius.circular(4),
                                   color: Palette.primary,
                                 ),
-                                child: const Text(
-                                  '재고 없음',
+                                child:  Text(
+                                  // '재고 없음',
+                                  viewModel.birthdayCafeModel!.specialGoodsStockState.toString(),
                                   style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.white,
@@ -400,11 +404,15 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                                 shrinkWrap: true, // shrinkWrap을 true로 설정
 
                                 scrollDirection: Axis.horizontal,
-                                itemCount: cafeDetailImage.length,
+                                itemCount: viewModel.birthdayCafeModel!.defaultImages.length,
                                 itemBuilder: (context, index) {
                                   return Container(
                                     padding: const EdgeInsets.only(right: 8),
-                                    child: Image.asset(cafeDetailImage[index]),
+                                    child: Image.network(
+                                        // cafeDetailImage[index]
+                                      viewModel.birthdayCafeModel!.defaultImages[index],
+                                      fit: BoxFit.cover,
+                                    ),
                                   );
                                 })),
                         const SizedBox(
@@ -421,32 +429,40 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                         const SizedBox(
                           height: 16,
                         ),
-                        ListView.builder(
-                            shrinkWrap: true, // shrinkWrap을 true로 설정
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: goods.length,
-                            itemBuilder: (context, index) {
-                              return Row(
-                                children: [
-                                  SizedBox(
-                                      width: 90,
-                                      child: Text(
-                                        goods[index],
-                                        style: const TextStyle(
-                                            color: Palette.primary,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w600),
-                                      )),
-                                  Text(
-                                    goods[index],
-                                    style: const TextStyle(
-                                      color: Palette.gray10,
-                                      fontSize: 14,
-                                    ),
-                                  )
-                                ],
-                              );
-                            }),
+                        Consumer<BirthdayCafeViewModel>(builder: (context,viewModel,widget){
+
+                          return ListView.builder(
+                              shrinkWrap: true, // shrinkWrap을 true로 설정
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount:
+                              // viewModel.birthdayCafeSpecialGoodsModel?.length,
+                              goods.length,
+                              itemBuilder: (context, index) {
+                                return Row(
+                                  children: [
+                                    SizedBox(
+                                        width: 90,
+                                        child: Text(
+                                          // '${viewModel.birthdayCafeSpecialGoodsModel?[index].details}',
+                                          goods[index],
+                                          style: const TextStyle(
+                                              color: Palette.primary,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w600),
+                                        )),
+                                    Text(
+                                      // '${viewModel.birthdayCafeSpecialGoodsModel?[index].details}',
+                                      goods[index] ,
+                                      style: const TextStyle(
+                                        color: Palette.gray10,
+                                        fontSize: 14,
+                                      ),
+                                    )
+                                  ],
+                                );
+                              });
+                        }),
+
                         const Text(
                           '럭키 드로우',
                           style: TextStyle(
@@ -504,7 +520,6 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           ),
                           child: ListView.builder(
                               shrinkWrap: true, // shrinkWrap을 true로 설정
-
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: cafeMenu.length,
                               itemBuilder: (context, index) {
@@ -547,8 +562,8 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                     ),
                   ),
                 ],
-              ),
-            ),
+              );
+            })),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         // 애니메이션 비활성화
