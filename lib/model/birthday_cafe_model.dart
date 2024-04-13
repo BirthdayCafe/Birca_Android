@@ -76,7 +76,7 @@ class Artist {
 class Cafe {
   final String address;
   final String name;
-  final List<dynamic> images;
+  final List<String> images;
 
   Cafe({required this.name, required this.address, required this.images});
 
@@ -84,18 +84,7 @@ class Cafe {
     return Cafe(
       name: json['name'],
       address: json['address'],
-      images: List<Images>.from(json['images'].map((x) => Images.fromJson(x))),
+      images: List<String>.from(json['images']),
     );
   }
-}
-
-class Images {
-  String url;
-
-  Images({required this.url});
-
-  factory Images.fromJson(Map<String, dynamic> json) {
-    return Images(url: json['url']);
-  }
-
 }
