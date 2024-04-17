@@ -20,6 +20,8 @@ class OwnerRequestDetail extends StatefulWidget{
 
 class _OwnerRequestDetail extends State<OwnerRequestDetail>{
 
+  bool isRequestAccept = false;
+
   int _selectedIndex = 0;
 
   bool isTab = false;
@@ -54,26 +56,59 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail>{
           :SingleChildScrollView(
         child: Container(
           width: double.infinity,
-          margin: const EdgeInsets.only(left: 14,top:28,right: 14 ),
+          margin: const EdgeInsets.only(top:28),
           child: Column(
 
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("아티스트",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10),),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("아티스트",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10),),
+
+              ),
 
               const SizedBox(height: 20,),
-              const Text("뉴진스 민지",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10)),
-              const Divider(color: Palette.gray03,),
-              const SizedBox(height: 24,),
-              const Text("신청자",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10),),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("뉴진스 민지",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10)),
+
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 14,right: 183),
+                child:   const Divider(color: Palette.gray03,),
+
+              ),              const SizedBox(height: 24,),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("신청자",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10),),
+
+              ),
 
               const SizedBox(height: 20,),
-              const Text("홍길동",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10)),
-              const Divider(color: Palette.gray03,),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("홍길동",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10)),
+
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 14,right: 183),
+                child:   const Divider(color: Palette.gray03,),
+
+              ),
               const SizedBox(height: 24,),
-              const Text("생일카페 주최 일정",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10),),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("생일카페 주최 일정",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10),),
+
+              ),
               const SizedBox(height: 16,),
               Container(
+                margin: const EdgeInsets.only(left: 14),
                 width: 238,
                 height: 36,
                 decoration: BoxDecoration(
@@ -91,28 +126,82 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail>{
                 ),
               ),
               const SizedBox(height: 20,),
-              const Text("예상 방문자",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10)),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("예상 방문자",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10)),
+
+              ),
               const SizedBox(height: 16,),
-              const Text("최소 10명, 최대 20명",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w300,fontFamily: 'Pretendard',color: Palette.gray10)),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("최소 10명, 최대 20명",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w300,fontFamily: 'Pretendard',color: Palette.gray10)),
+
+              ),
               const SizedBox(height: 20,),
-              const Text("생일 카페 트위터 계정",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10)),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("생일 카페 트위터 계정",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10)),
+
+              ),
               const SizedBox(height: 16,),
-              const Text("@qq",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w300,fontFamily: 'Pretendard',color: Palette.gray10)),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("@qq",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w300,fontFamily: 'Pretendard',color: Palette.gray10)),
+
+              ),
               const SizedBox(height: 20,),
-              const Text("핸드폰 번호",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10)),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("핸드폰 번호",style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,fontFamily: 'Pretendard',color: Palette.gray10)),
+
+              ),
               const SizedBox(height: 16,),
-              const Text("000-0000-0000",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w300,fontFamily: 'Pretendard',color: Palette.gray10)),
+              Container(
+                margin: const EdgeInsets.only(left: 14),
+                child:
+                const Text("000-0000-0000",style: TextStyle(fontSize: 14,fontWeight: FontWeight.w300,fontFamily: 'Pretendard',color: Palette.gray10)),
+
+              ),
 
               const SizedBox(height: 47,),
 
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  BircaOutLinedButton(text:'요청 수락', radiusColor: Palette.primary, backgroundColor: Palette.primary, width: 170, height: 44, radius: 6, textColor: Colors.white, textSize: 14),
-                  BircaOutLinedButton(text:'요청 거절', radiusColor: Palette.primary, backgroundColor: Colors.white, width: 170, height: 44, radius: 6, textColor: Palette.primary, textSize: 14)
+              isRequestAccept?
+                  Container(
+                    alignment: Alignment.center,
+                    width: double.infinity,
+                    height: 40,
+                    color: Palette.gray02,
+                    child: const Text(
+                      '요청 수락이 완료된 글입니다.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w700,
+                        color: Palette.gray06
+                      ),
+                    ),
+                  )
+              :Container(
+                margin: const EdgeInsets.only(left: 19,right: 19),
+                child:  Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    BircaOutLinedButton(text:'요청 수락', radiusColor: Palette.primary, backgroundColor: Palette.primary, width: 170, height: 44, radius: 6, textColor: Colors.white, textSize: 14,onPressed: (){
+                      setState(() {
+                        isRequestAccept=true;
+                      });
+                    },),
+                    const BircaOutLinedButton(text:'요청 거절', radiusColor: Palette.primary, backgroundColor: Colors.white, width: 170, height: 44, radius: 6, textColor: Palette.primary, textSize: 14)
 
-                ],
+                  ],
+                ) ,
               )
+
             ],
 
           ),
@@ -128,8 +217,6 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail>{
           BottomNavigationBarItem(icon: Icon(Icons.calendar_month_rounded,size: 30) ,label:'스케줄' ),
           BottomNavigationBarItem(icon: Icon(Icons.perm_identity,size: 30) ,label:'마이페이지' ),],
 
-        // BottomNavigationBarItem(icon:SvgPicture.asset('lib/assets/image/img_bottom_nav_cafe_tour.svg') ,label:'카페 투어' ),
-        // BottomNavigationBarItem(icon:SvgPicture.asset('lib/assets/image/img_bottom_nav_mypage.svg') ,label:'마이페이지' ),],
         onTap: _onItemTapped,
         currentIndex: _selectedIndex,
         selectedItemColor: Palette.primary,
