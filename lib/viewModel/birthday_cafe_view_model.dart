@@ -30,6 +30,10 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       _birthdayCafeSpecialGoodsModel;
 
   BirthdayCafeViewModel(){
+
+    _birthdayCafeLuckyDrawsModel = [];
+    _birthdayCafeMenusModel = [];
+    _birthdayCafeSpecialGoodsModel = [];
     getBirthdayCafes(15);
     getLuckDraws(15);
     getMenus(15);
