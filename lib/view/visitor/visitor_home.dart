@@ -29,6 +29,7 @@ class _VisitorHome extends State<VisitorHome> {
   bool isSwitched = false;
 
   // String selectedValue = 'Option 1';
+  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -390,10 +391,23 @@ class _VisitorHome extends State<VisitorHome> {
                           Expanded(child: Container()),
 
                           //heart
-                          const Icon(
+                          GestureDetector(
+                            child:
+                           Icon(
                             Icons.favorite,
-                            color: Color(0xffF3F3F3),
+                             color: viewModel.visitorCafeHomeModelList![index].isLiked ? Palette.primary : const Color(0xffF3F3F3),
+                          ),
+                            onTap: (){
+                              // isFavorite = !isFavorite;
+                              // viewModel.visitorCafeHomeModelList![index].isLiked = !viewModel.visitorCafeHomeModelList![index].isLiked;
+
+                              Provider.of<VisitorCafeHomeViewModel>(context,listen: false).like(viewModel.visitorCafeHomeModelList![index].birthdayCafeId);
+
+
+
+                            }
                           )
+
                         ],
                       ),
                     ),
