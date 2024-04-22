@@ -1,21 +1,21 @@
 class BirthdayCafeModel{
 
-  final Cafe cafe;
-  final Artist artist;
-  final String startDate;
-  final String endDate;
-  final String birthdayCafeName;
-  final int likeCount;
-  final bool isLiked;
-  final String twitterAccount;
-  final int minimumVisitant;
-  final int maximumVisitant;
-  final String congestionState;
-  final String visibility;
-  final String progressState;
-  final String specialGoodsStockState;
-  final String mainImage;
-  final List<String> defaultImages;
+   Cafe cafe;
+   Artist artist;
+   String startDate;
+   String endDate;
+   String birthdayCafeName;
+   int likeCount;
+   bool isLiked;
+   String twitterAccount;
+   int minimumVisitant;
+   int maximumVisitant;
+   String congestionState;
+   String visibility;
+   String progressState;
+   String specialGoodsStockState;
+   String mainImage;
+   List<String> defaultImages;
 
   BirthdayCafeModel({
     required this.cafe,
@@ -60,8 +60,8 @@ class BirthdayCafeModel{
 }
 
 class Artist {
-  final String groupName;
-  final String name;
+   String groupName;
+   String name;
 
   Artist({required this.groupName, required this.name});
 
@@ -74,9 +74,9 @@ class Artist {
 }
 
 class Cafe {
-  final String address;
-  final String name;
-  final List<String> images;
+   String address;
+   String name;
+   List<String> images;
 
   Cafe({required this.name, required this.address, required this.images});
 
