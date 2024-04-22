@@ -10,6 +10,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class BirthdayCafeViewModel extends ChangeNotifier {
   Dio dio = Dio();
 
+  int? _cafeID;
+  int? get cafeID=>_cafeID;
+
+
   BirthdayCafeModel? _birthdayCafeModel;
 
   BirthdayCafeModel? get birthdayCafeModel => _birthdayCafeModel;
@@ -34,10 +38,16 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     _birthdayCafeLuckyDrawsModel = [];
     _birthdayCafeMenusModel = [];
     _birthdayCafeSpecialGoodsModel = [];
-    getBirthdayCafes(15);
-    getLuckDraws(15);
-    getMenus(15);
-    getSpecialGoods(15);
+
+  }
+
+  Future<void> fetchData(int cafeID) async {
+    // 여기서 cafeID를 사용하여 해당 카페의 데이터를 가져옵니다.
+    // 예를 들어 네트워크 호출이나 데이터베이스 쿼리를 수행할 수 있습니다.
+    // cafeID를 사용하여 데이터를 가져옵니다.
+    // cafeID에 해당하는 데이터를 가져온 후 상태를 업데이트합니다.
+    _cafeID = cafeID;
+    notifyListeners(); // 상태 변경 알림
   }
   //생일 카페 상세 가져오기
   Future<void> getBirthdayCafes(int birthdayCafeId) async {
