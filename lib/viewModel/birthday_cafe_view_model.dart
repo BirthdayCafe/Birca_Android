@@ -38,7 +38,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     _birthdayCafeLuckyDrawsModel = [];
     _birthdayCafeMenusModel = [];
     _birthdayCafeSpecialGoodsModel = [];
-
+    _birthdayCafeModel?.defaultImages =[];
   }
 
   Future<void> fetchData(int cafeID) async {
