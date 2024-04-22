@@ -12,14 +12,32 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class VisitorCafeDetail extends StatefulWidget {
-  const VisitorCafeDetail({super.key});
+  final int cafeID;
+  const VisitorCafeDetail({Key? key, required this.cafeID}) : super(key: key);
+
 
   @override
   State<StatefulWidget> createState() => _VisitorCafeDetail();
 }
 
 class _VisitorCafeDetail extends State<VisitorCafeDetail> {
+  //
+  @override
+  void initState() {
+    int id =widget.cafeID ; // cafeID를 저장할 변수
 
+    super.initState();
+    Provider.of<BirthdayCafeViewModel>(context,listen: false).fetchData(id);
+    Provider.of<BirthdayCafeViewModel>(context,listen: false).getBirthdayCafes(id);
+    Provider.of<BirthdayCafeViewModel>(context,listen: false).getLuckDraws(id);
+    Provider.of<BirthdayCafeViewModel>(context,listen: false).getMenus(id);
+    Provider.of<BirthdayCafeViewModel>(context,listen: false).getSpecialGoods(id);
+    //
+    // getBirthdayCafes(_cafeID!);
+    // getLuckDraws(_cafeID!);
+    // getMenus(_cafeID!);
+    // getSpecialGoods(_cafeID!);
+  }
   int _selectedIndex = 0;
 
   bool isTab = false;
