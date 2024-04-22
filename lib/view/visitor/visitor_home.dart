@@ -1,4 +1,5 @@
 import 'package:birca/designSystem/text.dart';
+import 'package:birca/view/visitor/visitor_cafe_detail.dart';
 import 'package:birca/view/visitor/visitor_search.dart';
 import 'package:birca/viewModel/visitor_cafe_home_view_model.dart';
 import 'package:birca/widgets/button.dart';
@@ -295,106 +296,115 @@ class _VisitorHome extends State<VisitorHome> {
               scrollDirection: Axis.vertical,
               itemCount: viewModel.visitorCafeHomeModelList?.length,
               itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  margin: const EdgeInsets.only(
-                      left: 16, right: 16, bottom: 16),
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.white, // Container의 배경색
-                    borderRadius: BorderRadius.circular(3),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.1), // 그림자 색상
-                        spreadRadius: 1, // 그림자 확산 정도
-                        blurRadius: 1, // 그림자의 흐림 정도
-                        // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
+                return
+                  GestureDetector(
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          left: 16, right: 16, bottom: 16),
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white, // Container의 배경색
+                        borderRadius: BorderRadius.circular(3),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.1), // 그림자 색상
+                            spreadRadius: 1, // 그림자 확산 정도
+                            blurRadius: 1, // 그림자의 흐림 정도
+                            // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //이미지
-                      SizedBox(
-                        height: 140,
-                        width: 140,
-                        child: Image.network(
-                           viewModel.visitorCafeHomeModelList![index].mainImageUrl.toString(),
-                          fit: BoxFit.cover,),
-                      ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //이미지
+                          SizedBox(
+                            height: 140,
+                            width: 140,
+                            child: Image.network(
+                              viewModel.visitorCafeHomeModelList![index].mainImageUrl.toString(),
+                              fit: BoxFit.cover,),
+                          ),
 
-                      //카페 정보
-                      Container(
-                        height: 140,
-                        margin: const EdgeInsets.only(left: 14),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            // Text('샤이니 민호'),
-                             BircaText(
-                                text: '${viewModel.visitorCafeHomeModelList?[index].artist.groupName.toString()} ${viewModel.visitorCafeHomeModelList?[index].artist.name.toString()}',
-                                textSize: 12,
-                                textColor: Palette.gray08,
-                                fontFamily: 'Pretendard'),
-
-                            // Text('1월 1일~1월 2일'),
-                             BircaText(
-                              text:  '${viewModel.visitorCafeHomeModelList?[index].startDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].startDate.toString().length - 9)}~${viewModel.visitorCafeHomeModelList![index].endDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].endDate.toString().length - 9)}',
-
-                              textSize: 12,
-                              textColor: Palette.gray08,
-                              fontFamily: 'Pretendard',
-                            ),
-                            // Text('카페 이름'),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                             Text(
-                              viewModel.visitorCafeHomeModelList![index].birthdayCafeName,
-                              style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black),
-                            ),
-
-                            Expanded(child: Container()),
-                             Row(
+                          //카페 정보
+                          Container(
+                            height: 140,
+                            margin: const EdgeInsets.only(left: 14),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(
-                                  Icons.location_on_outlined,
-                                  color: Palette.gray08,
-                                  size: 20,
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                // Text('샤이니 민호'),
+                                BircaText(
+                                    text: '${viewModel.visitorCafeHomeModelList?[index].artist.groupName.toString()} ${viewModel.visitorCafeHomeModelList?[index].artist.name.toString()}',
+                                    textSize: 12,
+                                    textColor: Palette.gray08,
+                                    fontFamily: 'Pretendard'),
+
+                                // Text('1월 1일~1월 2일'),
+                                BircaText(
+                                  text:  '${viewModel.visitorCafeHomeModelList?[index].startDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].startDate.toString().length - 9)}~${viewModel.visitorCafeHomeModelList![index].endDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].endDate.toString().length - 9)}',
+
+                                  textSize: 12,
+                                  textColor: Palette.gray08,
+                                  fontFamily: 'Pretendard',
+                                ),
+                                // Text('카페 이름'),
+                                const SizedBox(
+                                  height: 20,
                                 ),
                                 Text(
-                                  '${viewModel.visitorCafeHomeModelList![index].cafe.address.substring(0,14)}...',
+                                  viewModel.visitorCafeHomeModelList![index].birthdayCafeName,
                                   style: const TextStyle(
-                                    color: Palette.gray08,
-                                    fontSize: 12,
-                                    decoration: TextDecoration.underline,
-                                    decorationStyle: TextDecorationStyle
-                                        .solid, // 밑줄의 스타일
-                                  ),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black),
+                                ),
+
+                                Expanded(child: Container()),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.location_on_outlined,
+                                      color: Palette.gray08,
+                                      size: 20,
+                                    ),
+                                    Text(
+                                      '${viewModel.visitorCafeHomeModelList![index].cafe.address.substring(0,14)}...',
+                                      style: const TextStyle(
+                                        color: Palette.gray08,
+                                        fontSize: 12,
+                                        decoration: TextDecoration.underline,
+                                        decorationStyle: TextDecorationStyle
+                                            .solid, // 밑줄의 스타일
+                                      ),
+                                    )
+                                  ],
                                 )
                               ],
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+
+                          Expanded(child: Container()),
+
+                          //heart
+                          const Icon(
+                            Icons.favorite,
+                            color: Color(0xffF3F3F3),
+                          )
+                        ],
                       ),
+                    ),
+                    onTap: (){
 
-                      Expanded(child: Container()),
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>VisitorCafeDetail(cafeID :viewModel.visitorCafeHomeModelList![index].birthdayCafeId )));
+                    },
+                  );
 
-                      //heart
-                      const Icon(
-                        Icons.favorite,
-                        color: Color(0xffF3F3F3),
-                      )
-                    ],
-                  ),
-                );
-              });
+              },
+              );
         }
 
         )],
