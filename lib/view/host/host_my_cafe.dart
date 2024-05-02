@@ -1,8 +1,7 @@
-import 'package:birca/view/host/host_my_cafe_edit.dart';
+import 'package:birca/view/host/host_my_cafe_detail.dart';
 import 'package:birca/viewModel/host_my_cafe_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
 
@@ -167,7 +166,7 @@ class _HostCafe extends State<HostCafe> {
                       ),
                     ),
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>HostCafeEdit(cafeID :viewModel.hostMyCafeModelList![index].birthdayCafeId )));
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>HostMyCafeDetail(cafeID :viewModel.hostMyCafeModelList![index].birthdayCafeId )));
 
                       },
                     );
