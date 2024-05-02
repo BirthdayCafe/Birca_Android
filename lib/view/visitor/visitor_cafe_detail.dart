@@ -32,11 +32,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
     Provider.of<BirthdayCafeViewModel>(context,listen: false).getLuckDraws(id);
     Provider.of<BirthdayCafeViewModel>(context,listen: false).getMenus(id);
     Provider.of<BirthdayCafeViewModel>(context,listen: false).getSpecialGoods(id);
-    //
-    // getBirthdayCafes(_cafeID!);
-    // getLuckDraws(_cafeID!);
-    // getMenus(_cafeID!);
-    // getSpecialGoods(_cafeID!);
+
   }
   int _selectedIndex = 0;
 
