@@ -1,5 +1,5 @@
 import 'package:birca/view/host/host_search.dart';
-import 'package:birca/viewModel/host_cafe_home_view_model.dart';
+import 'package:birca/viewModel/host_my_cafe_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -18,12 +18,12 @@ class HostHome extends StatefulWidget {
 
 class _HostHome extends State<HostHome> {
 
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<HostCafeHomeViewModel>(context,listen: false).getHostCafeHome();
-
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Provider.of<HostCafeHomeViewModel>(context,listen: false).getHostCafeHome();
+  //
+  // }
   var isSwitched = false;
   var cafeList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
 
@@ -44,7 +44,7 @@ class _HostHome extends State<HostHome> {
       ),
       body: SingleChildScrollView(
 
-        child: Consumer<HostCafeHomeViewModel>(
+        child: Consumer<HostMyCafeViewModel>(
           builder: (context, viewModel, widget) {
             return  Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -192,7 +192,7 @@ class _HostHome extends State<HostHome> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
-                    itemCount: viewModel.hostCafeHomeModelList?.length,
+                    itemCount: viewModel.hostMyCafeModelList?.length,
                     itemBuilder: (BuildContext context, int index) {
                       return Container(
                         margin:
@@ -219,7 +219,7 @@ class _HostHome extends State<HostHome> {
                               width: 210,
                               child: Image.network(
                                 // 'lib/assets/image/img_cafe_test.png',
-                                viewModel.hostCafeHomeModelList![index].mainImageUrl,
+                                viewModel.hostMyCafeModelList![index].mainImageUrl,
                                 fit: BoxFit.fill,
                               ),
                             ),
@@ -232,7 +232,7 @@ class _HostHome extends State<HostHome> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    '${viewModel.hostCafeHomeModelList?[index].birthdayCafeName}',
+                                    '${viewModel.hostMyCafeModelList?[index].birthdayCafeName}',
                                     style: const TextStyle(
                                         fontSize: 14,
                                         color: Palette.gray10,
