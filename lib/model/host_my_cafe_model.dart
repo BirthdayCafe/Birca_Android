@@ -1,4 +1,4 @@
-class HostCafeHomeModel {
+class HostMyCafeModel {
    int birthdayCafeId;
    String mainImageUrl;
    String startDate;
@@ -8,7 +8,7 @@ class HostCafeHomeModel {
    String progressState;
 
 
-   HostCafeHomeModel({
+   HostMyCafeModel({
     required this.birthdayCafeId,
     required this.mainImageUrl,
     required this.startDate,
@@ -18,8 +18,8 @@ class HostCafeHomeModel {
     required this.progressState
   });
 
-  factory HostCafeHomeModel.fromJson(Map<String, dynamic> json) {
-    return HostCafeHomeModel(
+  factory HostMyCafeModel.fromJson(Map<String, dynamic> json) {
+    return HostMyCafeModel(
         birthdayCafeId: json['birthdayCafeId'],
         mainImageUrl: json['mainImageUrl'],
         startDate: json['startDate'],

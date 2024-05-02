@@ -1,37 +1,35 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../model/host_cafe_home_model.dart';
+import '../model/host_my_cafe_model.dart';
 
-class HostCafeHomeViewModel extends ChangeNotifier{
+class HostMyCafeViewModel extends ChangeNotifier{
   Dio dio = Dio();
 
-  List<HostCafeHomeModel>? _hostCafeHomeModelList;
+  List<HostMyCafeModel>? _hostMyCafeModelList;
 
-  List<HostCafeHomeModel>? get hostCafeHomeModelList =>
-      _hostCafeHomeModelList;
+  List<HostMyCafeModel>? get hostMyCafeModelList =>
+      _hostMyCafeModelList;
 
-  HostCafeHomeViewModel(){
-    _hostCafeHomeModelList = [];
+  HostMyCafeViewModel(){
+    _hostMyCafeModelList = [];
   }
 
   //주최자 카페 홈 가져오기
-  Future<void> getHostCafeHome() async {
-    const storage = FlutterSecureStorage();
+  Future<void> getHostMyCafe() async {
+    // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
-
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    //
+    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-      token = loginData['accessToken'].toString();
-    }
-    // token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    // if (kakaoLoginInfo != null) {
+    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    //   token = loginData['accessToken'].toString();
+    // }
+    token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiaWF0IjoxNzE0MzE1MTA1LCJleHAiOjE3MTY5MDcxMDV9.pEUnsyNPTMvdXTV1RtwHQFJjcPqzK0lNUZ65w58aZhU';
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -49,11 +47,11 @@ class HostCafeHomeViewModel extends ChangeNotifier{
       log('Response: ${response.data}');
 
       List<dynamic> jsonData = response.data;
-      List<HostCafeHomeModel> cafeHomeModels =
-      jsonData.map((e) => HostCafeHomeModel.fromJson(e)).toList();
+      List<HostMyCafeModel> cafeHomeModels =
+      jsonData.map((e) => HostMyCafeModel.fromJson(e)).toList();
 
       // _hostCafeHomeModelList 추가
-      _hostCafeHomeModelList?.addAll(cafeHomeModels);
+      _hostMyCafeModelList?.addAll(cafeHomeModels);
 
       notifyListeners();
     } catch (e) {
@@ -64,24 +62,24 @@ class HostCafeHomeViewModel extends ChangeNotifier{
           if (e.response!.statusCode == 400) {
             // Handle HTTP 400 Bad Request error
             log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getHostCafeHome');
+            throw Exception('Failed to getHostMyCafe');
 
             // Additional error handling logic here if needed
           } else {
             // Handle other HTTP status codes
             log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getHostCafeHome.');
+            throw Exception('Failed to getHostMyCafe.');
             // Additional error handling logic here if needed
           }
         } else {
           // No response from the server (network error, timeout, etc.)
           log('Dio error: ${e.message}');
-          throw Exception('Failed to getHostCafeHome.');
+          throw Exception('Failed to getHostMyCafe.');
         }
       } else {
         // Handle other exceptions if necessary
         log('Error: $e');
-        throw Exception('Failed to getHostCafeHome.');
+        throw Exception('Failed to getHostMyCafe.');
       }
     }
   }
