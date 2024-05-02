@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/designSystem/text.dart';
+import 'package:birca/view/host/host_my_cafe_edit.dart';
 import 'package:birca/viewModel/birthday_cafe_view_model.dart';
+import 'package:birca/widgets/button.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -556,6 +558,26 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                 ],
               );
             })),
+      floatingActionButton:
+      SizedBox(
+        width: 128,
+          height: 40,
+
+
+        child: FloatingActionButton(
+          backgroundColor: Colors.transparent,
+          onPressed: (){
+
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>HostCafeEdit(cafeID :widget.cafeID)));
+
+          },
+          child:           BircaOutLinedButton(text: '편집하기', radiusColor: Colors.white, backgroundColor: Colors.white, width: 128, height: 40, radius: 33, textColor: Palette.primary, textSize: 14),
+
+
+        ),
+      )
+
+
 
     );
   }
