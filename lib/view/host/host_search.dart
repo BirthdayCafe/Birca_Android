@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../viewModel/host_search_result_view_model.dart';
-import 'host_cafe.dart';
+import 'host_my_cafe.dart';
 
 class HostSearch extends StatefulWidget {
   const HostSearch({super.key});

@@ -1,19 +1,39 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
+import '../../viewModel/birthday_cafe_view_model.dart';
 import '../../widgets/button.dart';
 
 class HostCafeEdit extends StatefulWidget {
-  const HostCafeEdit({super.key});
+  final int cafeID;
+  const HostCafeEdit({Key? key, required this.cafeID}) : super(key: key);
+
 
   @override
   State<StatefulWidget> createState() => _HostCafeEdit();
 }
 
 class _HostCafeEdit extends State<HostCafeEdit> {
+
+  @override
+  void initState() {
+    int id =widget.cafeID ; // cafeID를 저장할 변수
+
+    super.initState();
+    Provider.of<BirthdayCafeViewModel>(context,listen: false).fetchData(id);
+    Provider.of<BirthdayCafeViewModel>(context,listen: false).getBirthdayCafes(id);
+    Provider.of<BirthdayCafeViewModel>(context,listen: false).getLuckDraws(id);
+    Provider.of<BirthdayCafeViewModel>(context,listen: false).getMenus(id);
+    Provider.of<BirthdayCafeViewModel>(context,listen: false).getSpecialGoods(id);
+
+  }
+
+
+
   bool isSwitched = false;
   String hostDate = '';
   bool isDateChecked = false;
