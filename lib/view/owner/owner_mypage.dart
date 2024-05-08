@@ -1,3 +1,4 @@
+import 'package:birca/view/owner/owner_my_cafe.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../designSystem/palette.dart';
@@ -131,14 +132,20 @@ class _OwnerMypage extends State<OwnerMypage> {
                   padding: const EdgeInsets.only(
                       top: 16, bottom: 16, left: 26, right: 26),
                   width: double.infinity,
-                  child: const Text(
-                    '내 카페',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Pretendard',
-                        color: Colors.black),
-                  ),
+                  child: GestureDetector(
+                    child: const Text(
+                      '내 카페',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Pretendard',
+                          color: Colors.black),
+                    ),
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const OwnerMyCafe( )));
+
+                    },
+                  )
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
