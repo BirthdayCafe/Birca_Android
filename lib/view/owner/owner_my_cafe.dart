@@ -201,6 +201,10 @@ class _OwnerMyCafe extends State<OwnerMyCafe> {
                           fontWeight: FontWeight.w400),
                     ),
                     Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Palette.gray02
+                      ),
                       padding: const EdgeInsets.all(6),
                       child: TableCalendar(
                         //오늘 날짜
