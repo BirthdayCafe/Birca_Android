@@ -7,14 +7,12 @@ import '../../widgets/button.dart';
 
 class OwnerMyCafeEdit extends StatefulWidget {
   const OwnerMyCafeEdit({super.key});
+
   @override
   State<StatefulWidget> createState() => _OwnerMyCafeEdit();
-  
-  
 }
 
-class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit>{
-
+class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
   List<String> cafeImage = [
     'lib/assets/image/img_cafe_test.png',
     'lib/assets/image/img_cafe_test.png',
@@ -53,296 +51,294 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit>{
       ),
       body: SingleChildScrollView(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                  padding: const EdgeInsets.all(1),
-                  height: 412,
-                  width: MediaQuery.of(context).size.width,
-                  child: Swiper(
-                    scrollDirection: Axis.horizontal,
-                    pagination: const SwiperPagination(
-                      alignment: Alignment.bottomCenter,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+              padding: const EdgeInsets.all(1),
+              height: 412,
+              width: MediaQuery.of(context).size.width,
+              child: Swiper(
+                scrollDirection: Axis.horizontal,
+                pagination: const SwiperPagination(
+                  alignment: Alignment.bottomCenter,
+                ),
+                autoplay: false,
+                itemCount: cafeImage.length,
+                itemBuilder: (context, index) {
+                  return Image.asset(
+                    cafeImage[index],
+                    fit: BoxFit.cover,
+                  );
+                },
+              )),
+          Container(
+            padding: const EdgeInsets.only(left: 16, right: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  '카페 이름',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Palette.gray10,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700),
+                ),
+                const TextField(
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Palette.gray08,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w400),
+                  decoration: InputDecoration(
+                      hintText: "카페 이름", border: InputBorder.none),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 1,
+                  color: Palette.gray03,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  '트위터 계정',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Palette.gray10,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700),
+                ),
+                const TextField(
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Palette.gray08,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w400),
+                  decoration: InputDecoration(
+                      hintText: "@twitter", border: InputBorder.none),
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 1,
+                  color: Palette.gray03,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  '카페 위치',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Palette.gray10,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Row(children: [
+                  Container(
+                    width: 238,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: const Color(0xffD7D8DC)),
+                      borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
                     ),
-                    autoplay: false,
-                    itemCount: cafeImage.length,
-                    itemBuilder: (context, index) {
-                      return Image.asset(
-                        cafeImage[index],
-                        fit: BoxFit.cover,
-                      );
-                    },
-                  )),
-              Container(
-                padding: const EdgeInsets.only(left: 16, right: 16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                    alignment: Alignment.center,
+                    child: const TextField(
+                      decoration: InputDecoration(
+                          hintText: '서울특별시 서대문구~', border: InputBorder.none),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 11,
+                  ),
+                  BircaOutLinedButton(
+                    text: '장소 선택',
+                    radiusColor: Palette.primary,
+                    width: 80,
+                    height: 36,
+                    radius: 6,
+                    textColor: Palette.primary,
+                    textSize: 14,
+                    onPressed: () {},
+                    backgroundColor: Colors.white,
+                  )
+                ]),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 1,
+                  color: Palette.gray03,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  '대여 가능 날짜',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: Palette.gray10,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700),
+                ),
+                const Text(
+                  '운영 시간',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Palette.gray08,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w500),
+                ),
+                const Row(
                   children: [
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      '카페 이름',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Palette.gray10,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const TextField(
-
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Palette.gray08,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        hintText: "카페 이름",
-                        border: InputBorder.none
-                      ),
-                    ),
-
-                    Container(
-                      width: double.infinity,
-                      height: 1,
-                      color: Palette.gray03,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      '트위터 계정',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Palette.gray10,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const TextField(
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Palette.gray08,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                          hintText: "@twitter",
-                          border: InputBorder.none
-                      ),
-                    ),
-
-                    Container(
-                      width: double.infinity,
-                      height: 1,
-                      color: Palette.gray03,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      '카페 위치',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Palette.gray10,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(height: 16,),
-                    Row(
-
-                        children: [
-
-                      Container(
-                        width: 238,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: const Color(0xffD7D8DC)),
-                          borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
-                        ),
-                        alignment: Alignment.center,
-                        child: const TextField(
-                          decoration: InputDecoration(
-                            hintText: '서울특별시 서대문구~',
-
-                            border: InputBorder.none
+                    SizedBox(
+                      width: 115,
+                      height: 36,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          hintText: "오전 9시",
+                          focusedBorder: UnderlineInputBorder(
+                            // 활성화된 상태의 밑줄 색상
+                            borderSide: BorderSide(color: Palette.primary),
                           ),
-
                         ),
                       ),
-                      const SizedBox(
-                        width: 11,
-                      ),
-                      BircaOutLinedButton(
-                        text: '장소 선택',
-                        radiusColor: Palette.primary,
-                        width: 80,
-                        height: 36,
-                        radius: 6,
-                        textColor: Palette.primary,
-                        textSize: 14,
-                        onPressed: () {
-                        },
-                        backgroundColor: Colors.white,
-                      )
-                    ]),
-                    const SizedBox(
-                      height: 20,
                     ),
-                    Container(
-                      width: double.infinity,
-                      height: 1,
-                      color: Palette.gray03,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      '대여 가능 날짜',
+                    Text(
+                      "부터",
                       style: TextStyle(
-                          fontSize: 16,
-                          color: Palette.gray10,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const Text(
-                      '운영 시간',
-                      style: TextStyle(
-                          fontSize: 14,
                           color: Palette.gray08,
+                          fontSize: 14,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w500),
                     ),
-                    const Row(
-                      children: [
-                        SizedBox(
-                          width: 115,
-                        height: 36,
-                          child: TextField(
-
-                            textAlign: TextAlign.center,
-                          decoration: InputDecoration(
-                            hintText: "오전 9시",
-                            focusedBorder: UnderlineInputBorder( // 활성화된 상태의 밑줄 색상
-                              borderSide: BorderSide(color: Palette.primary),
-                            ),
+                    SizedBox(
+                      width: 115,
+                      height: 36,
+                      child: TextField(
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          hintText: "오전 9시",
+                          focusedBorder: UnderlineInputBorder(
+                            // 활성화된 상태의 밑줄 색상
+                            borderSide: BorderSide(color: Palette.primary),
                           ),
                         ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  '운영 불가능한 날짜 선택',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Palette.gray10,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700),
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                RichText(
+                  text: TextSpan(
+                      style: DefaultTextStyle.of(context).style,
+                      children: const [
+                        TextSpan(
+                          text: '* 대여',
+                          style: TextStyle(
+                              color: Palette.gray08,
+                              fontSize: 10,
+                              decoration: TextDecoration.none,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w500),
                         ),
-                        Text("부터",style: TextStyle(color: Palette.gray08,
-                        fontSize: 14,fontFamily: 'Pretendard',fontWeight: FontWeight.w500),),
-                        SizedBox(
-                          width: 115,
-                          height: 36,
-                          child: TextField(
-
-                            textAlign: TextAlign.center,
-                            decoration: InputDecoration(
-                              hintText: "오전 9시",
-                              focusedBorder: UnderlineInputBorder( // 활성화된 상태의 밑줄 색상
-                                borderSide: BorderSide(color: Palette.primary),
-                              ),
-                            ),
-                          ),
+                        TextSpan(
+                          text: ' 불가능',
+                          style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 10,
+                              decoration: TextDecoration.none,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700),
                         ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                        TextSpan(
+                          text: '한 날짜를 설정해주세요.',
+                          style: TextStyle(
+                              color: Palette.gray08,
+                              fontSize: 10,
+                              decoration: TextDecoration.none,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w500),
+                        ),
+                      ]),
+                ),
+                const SizedBox(
+                  height: 19,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Palette.gray02),
+                  padding: const EdgeInsets.all(6),
+                  child: TableCalendar(
+                    //오늘 날짜
+                    focusedDay: DateTime.now(),
+                    firstDay: DateTime.now(),
+                    lastDay: DateTime.utc(DateTime.now().year + 1),
 
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      '운영 불가능한 날짜 선택',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Palette.gray10,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(height: 5,),
-
-                    RichText(
-                      text: TextSpan(
-                          style: DefaultTextStyle.of(context).style,
-                          children: const [
-                            TextSpan(
-                              text: '* 대여',
-                              style: TextStyle(
-                                  color: Palette.gray08,
-                                  fontSize: 10,
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            TextSpan(
-                              text: ' 불가능',
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 10,
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            TextSpan(
-                              text: '한 날짜를 설정해주세요.',
-                              style: TextStyle(
-                                  color: Palette.gray08,
-                                  fontSize: 10,
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ]),
-                    ),
-                    const SizedBox(height: 19,),
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        color: Palette.gray02
-                      ),
-                      padding: const EdgeInsets.all(6),
-                      child: TableCalendar(
-
-                        //오늘 날짜
-                        focusedDay: DateTime.now(),
-                        firstDay: DateTime.now(),
-                        lastDay: DateTime.utc(DateTime.now().year + 1),
-
-                        headerStyle: const HeaderStyle(
-                            formatButtonVisible: false, titleCentered: true),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 1,
-                      color: Palette.gray03,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      '카페 메뉴',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Palette.gray10,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(
-                      height: 11,
-                    ),
-                    Container(
-                      padding:
-                      const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-                      decoration: BoxDecoration(
-                        color: const Color(0xffF7F7FA),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: ListView.builder(
+                    headerStyle: const HeaderStyle(
+                        formatButtonVisible: false, titleCentered: true),
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 1,
+                  color: Palette.gray03,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  '카페 메뉴',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Palette.gray10,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700),
+                ),
+                const Text(
+                  '메뉴를 작성해주세요.',
+                  style: TextStyle(
+                      fontSize: 10,
+                      color: Palette.gray08,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w400),
+                ),
+                const SizedBox(
+                  height: 11,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 12, bottom: 12),
+                  child: Column(
+                    children: [
+                      ListView.builder(
                           shrinkWrap: true, // shrinkWrap을 true로 설정
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: cafeMenu.length,
@@ -352,139 +348,232 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit>{
                                   top: 12,
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      cafeMenu[index],
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14,
-                                          color: Palette.gray10),
-                                    ),
-                                    const Expanded(
-                                      child: Divider(
-                                        color: Palette.gray06,
-                                        // 점선의 색상 설정
-                                        height: 1,
-                                        // 점선의 높이 설정
-                                        thickness: 1,
-                                        // 점선의 두께 설정
-                                        indent: 10,
-                                        // 시작 부분 여백 설정
-                                        endIndent: 10, // 끝 부분 여백 설정
+                                    Expanded(
+                                      flex: 3,
+                                      // height : 35,
+                                      // width: 150,
+                                      child: TextField(
+                                        textAlign: TextAlign.center,
+                                        decoration: InputDecoration(
+                                          hintText: cafeMenu[index],
+                                          enabledBorder:
+                                              const UnderlineInputBorder(
+                                            // 활성화된 상태의 밑줄 색상
+                                            borderSide: BorderSide(
+                                                color: Palette.primary),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    Text(
-                                      cafeMenu[index],
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14,
-                                          color: Palette.primary),
+                                    const SizedBox(
+                                      width: 16,
                                     ),
+                                    Expanded(
+                                      flex: 2,
+                                      // height : 35,
+                                      // width: 100,
+                                      child: TextField(
+                                        textAlign: TextAlign.center,
+                                        decoration: InputDecoration(
+                                          hintText: cafeMenu[index],
+                                          enabledBorder:
+                                              const UnderlineInputBorder(
+                                            // 활성화된 상태의 밑줄 색상
+                                            borderSide: BorderSide(
+                                                color: Palette.gray03),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    IconButton(
+                                        onPressed: () {
+                                          deleteCafeMenu(index);
+                                        },
+                                        icon: const Icon(
+                                          Icons.highlight_remove,
+                                          size: 24,
+                                        ))
                                   ],
                                 ));
                           }),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      '데코레이션 및 추가 서비스',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Palette.gray10,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(
-                      height: 11,
-                    ),
-                    Container(
-                      padding:
-                      const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-                      decoration: BoxDecoration(
-                        color: const Color(0xffF7F7FA),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: ListView.builder(
+                      BircaOutLinedButton(
+                        text: '추가하기',
+                        radiusColor: Palette.gray02,
+                        backgroundColor: Palette.gray02,
+                        width: 260,
+                        height: 40,
+                        radius: 7,
+                        textColor: Palette.gray08,
+                        textSize: 14,
+                        onPressed: () {
+                          addCafeMenu();
+                        },
+                      )
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Text(
+                  '데코레이션 및 추가 서비스',
+                  style: TextStyle(
+                      fontSize: 14,
+                      color: Palette.gray10,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700),
+                ),
+                const Text(
+                  '제공 가능한 추가 서비스를 작성해주세요.',
+                  style: TextStyle(
+                      fontSize: 10,
+                      color: Palette.gray08,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w400),
+                ),
+                const SizedBox(
+                  height: 11,
+                ),
+                Container(
+                  padding: const EdgeInsets.only(left: 12, bottom: 12),
+                  child: Column(
+                    children: [
+                      ListView.builder(
                           shrinkWrap: true, // shrinkWrap을 true로 설정
                           physics: const NeverScrollableScrollPhysics(),
                           itemCount: service.length,
                           itemBuilder: (context, index) {
                             return Container(
-                                padding: const EdgeInsets.only(top: 12),
+                                padding: const EdgeInsets.only(
+                                  top: 12,
+                                ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      service[index],
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 14,
-                                          color: Palette.gray10),
-                                    ),
-                                    const Expanded(
-                                      child: Divider(
-                                        color: Palette.gray06,
-                                        // 점선의 색상 설정
-                                        height: 1,
-                                        // 점선의 높이 설정
-                                        thickness: 1,
-                                        // 점선의 두께 설정
-                                        indent: 10,
-                                        // 시작 부분 여백 설정
-                                        endIndent: 10, // 끝 부분 여백 설정
+                                    Expanded(
+                                      flex: 3,
+                                      // height : 35,
+                                      // width: 150,
+                                      child: TextField(
+                                        textAlign: TextAlign.center,
+                                        decoration: InputDecoration(
+                                          hintText: service[index],
+                                          enabledBorder:
+                                              const UnderlineInputBorder(
+                                            // 활성화된 상태의 밑줄 색상
+                                            borderSide: BorderSide(
+                                                color: Palette.primary),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                    Text(
-                                      service[index],
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.w600,
-                                          fontSize: 14,
-                                          color: Palette.primary),
+                                    const SizedBox(
+                                      width: 16,
                                     ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: TextField(
+                                        textAlign: TextAlign.center,
+                                        decoration: InputDecoration(
+                                          hintText: service[index],
+                                          enabledBorder:
+                                              const UnderlineInputBorder(
+                                            // 활성화된 상태의 밑줄 색상
+                                            borderSide: BorderSide(
+                                                color: Palette.gray03),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    IconButton(
+                                        onPressed: () {
+                                          deleteService(index);
+                                        },
+                                        icon: const Icon(
+                                          Icons.highlight_remove,
+                                          size: 24,
+                                        ))
                                   ],
                                 ));
                           }),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-
-
-                  ],
+                      BircaOutLinedButton(
+                        text: '추가하기',
+                        radiusColor: Palette.gray02,
+                        backgroundColor: Palette.gray02,
+                        width: 260,
+                        height: 40,
+                        radius: 7,
+                        textColor: Palette.gray08,
+                        textSize: 14,
+                        onPressed: () {
+                          addService();
+                        },
+                      )
+                    ],
+                  ),
                 ),
+                const SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
+          ),
+          GestureDetector(
+            child: Container(
+              width: double.infinity,
+              height: 40,
+              color: Palette.gray04,
+              alignment: Alignment.center,
+              child: const Text(
+                '저장하기',
+                style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Pretendard',
+                    color: Colors.white,
+                    fontSize: 14),
               ),
-              GestureDetector(
-                child: Container(width: double.infinity,
-                  height: 40,
-                  color: Palette.gray04,
-                  alignment: Alignment.center,
-                  child: const Text(
-                    '저장하기',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'Pretendard',
-                        color: Colors.white,
-                        fontSize: 14
-                    ),
-                  ),),
-                onTap: (){
-                  Navigator.pop(context);
-
-                },
-              ),
-              
-              const SizedBox(
-                height: 20,
-              ),
-
-            ],
-
-          )
-      ),
+            ),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      )),
     );
   }
-  
-  
+
+  //카페 메뉴 삭제
+  void deleteCafeMenu(int index) {
+    setState(() {
+      cafeMenu.removeAt(index);
+    });
+  }
+
+  //카페 메뉴 생성
+  void addCafeMenu() {
+    setState(() {
+      cafeMenu.add("a");
+    });
+  }
+
+  //데코 및 추가 서비스 삭제
+  void deleteService(int index) {
+    setState(() {
+      service.removeAt(index);
+    });
+  }
+
+  //데코 및 추가 서비스 생성
+  void addService() {
+    setState(() {
+      service.add("a");
+    });
+  }
 }
