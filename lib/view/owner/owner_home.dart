@@ -1,4 +1,5 @@
 import 'package:birca/designSystem/palette.dart';
+import 'package:birca/view/owner/owner_request_detail.dart';
 import 'package:birca/viewModel/owner_home_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -57,11 +58,11 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                 ListView.builder(
                     itemCount: viewModel.ownerHomeModelList?.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
+                      return GestureDetector(child: Container(
                         // height: 140,
                         width: double.infinity,
                         margin:
-                            const EdgeInsets.only(left: 14, right: 14, top: 19),
+                        const EdgeInsets.only(left: 14, right: 14, top: 19),
                         padding: const EdgeInsets.only(
                             left: 26, top: 31, bottom: 28.5),
                         decoration: BoxDecoration(
@@ -94,7 +95,7 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                               height: 13.5,
                             ),
                             Text(
-                                '${viewModel.ownerHomeModelList?[index].startDate.toString().substring(0, viewModel.ownerHomeModelList![index].startDate.toString().length - 9)} ~ ${viewModel.ownerHomeModelList?[index].endDate.toString().substring(0, viewModel.ownerHomeModelList![index].endDate.toString().length - 9)}',
+                              '${viewModel.ownerHomeModelList?[index].startDate.toString().substring(0, viewModel.ownerHomeModelList![index].startDate.toString().length - 9)} ~ ${viewModel.ownerHomeModelList?[index].endDate.toString().substring(0, viewModel.ownerHomeModelList![index].endDate.toString().length - 9)}',
 
                               style: const TextStyle(
                                   color: Palette.gray10,
@@ -104,16 +105,20 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                             )
                           ],
                         ),
-                      );
+                      ),
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>OwnerRequestDetail(cafeID :viewModel.ownerHomeModelList![index].birthdayCafeId )));
+
+                      },);
                     }),
                 ListView.builder(
                     itemCount: requestList.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
+                      return GestureDetector(child: Container(
                         // height: 140,
                         width: double.infinity,
                         margin:
-                            const EdgeInsets.only(left: 14, right: 14, top: 19),
+                        const EdgeInsets.only(left: 14, right: 14, top: 19),
                         padding: const EdgeInsets.only(
                             left: 26, top: 31, bottom: 28.5),
                         decoration: BoxDecoration(
@@ -155,6 +160,11 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                             )
                           ],
                         ),
+                      ),
+                          onTap: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=>OwnerRequestDetail(cafeID :viewModel.ownerHomeModelList![index].birthdayCafeId )));
+
+                          }
                       );
                     }),
               ],
