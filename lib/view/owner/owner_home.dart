@@ -112,7 +112,7 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                       },);
                     }),
                 ListView.builder(
-                    itemCount: requestList.length,
+                    itemCount: viewModel.ownerHomeModelList?.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(child: Container(
                         // height: 140,
