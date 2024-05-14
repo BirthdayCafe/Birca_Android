@@ -17,10 +17,12 @@ class OwnerRequestDetail extends StatefulWidget {
 }
 
 class _OwnerRequestDetail extends State<OwnerRequestDetail> {
+  int id = 0;
+
   @override
   void initState() {
     super.initState();
-    int id = widget.cafeID; // cafeID를 저장할 변수
+    id = widget.cafeID; // cafeID를 저장할 변수
 
     Provider.of<OwnerRequestDetailViewModel>(context, listen: false)
         .getRequestDetailHome(id);
@@ -64,9 +66,9 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 14),
-                      child:  Text(
+                      child: Text(
                           "${viewModel.ownerRequestDetailModel?.artist.groupName} ${viewModel.ownerRequestDetailModel?.artist.name}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                               fontFamily: 'Pretendard',
@@ -97,8 +99,7 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 14),
-                      child: const Text(
-                          "홍길동",
+                      child: const Text("홍길동",
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
@@ -137,9 +138,10 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                         borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
                       ),
                       alignment: Alignment.center,
-                      child:  Text(
+                      child: Text(
                         '${viewModel.ownerRequestDetailModel?.startDate.toString().substring(0, viewModel.ownerRequestDetailModel!.startDate.toString().length - 9)} ~ ${viewModel.ownerRequestDetailModel?.endDate.toString().substring(0, viewModel.ownerRequestDetailModel!.endDate.toString().length - 9)}',
-                        style: const TextStyle(fontSize: 14, color: Palette.gray08),
+                        style: const TextStyle(
+                            fontSize: 14, color: Palette.gray08),
                       ),
                     ),
                     const SizedBox(
@@ -159,9 +161,9 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 14),
-                      child:  Text(
+                      child: Text(
                           "최소 ${viewModel.ownerRequestDetailModel?.minimumVisitants.toString()}명, 최대 ${viewModel.ownerRequestDetailModel?.maximumVisitants.toString()}명",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w300,
                               fontFamily: 'Pretendard',
@@ -184,9 +186,9 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 14),
-                      child:  Text(
+                      child: Text(
                           "${viewModel.ownerRequestDetailModel?.twiiterAccount}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w300,
                               fontFamily: 'Pretendard',
@@ -209,9 +211,9 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(left: 14),
-                      child:  Text(
+                      child: Text(
                           "${viewModel.ownerRequestDetailModel?.hostPhoneNumber}",
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w300,
                               fontFamily: 'Pretendard',
@@ -250,20 +252,31 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                                   textColor: Colors.white,
                                   textSize: 14,
                                   onPressed: () {
+                                    Provider.of<OwnerRequestDetailViewModel>(
+                                            context,
+                                            listen: false)
+                                        .postApprove(id);
                                     setState(() {
                                       isRequestAccept = true;
                                     });
                                   },
                                 ),
-                                const BircaOutLinedButton(
-                                    text: '요청 거절',
-                                    radiusColor: Palette.primary,
-                                    backgroundColor: Colors.white,
-                                    width: 170,
-                                    height: 44,
-                                    radius: 6,
-                                    textColor: Palette.primary,
-                                    textSize: 14)
+                                BircaOutLinedButton(
+                                  text: '요청 거절',
+                                  radiusColor: Palette.primary,
+                                  backgroundColor: Colors.white,
+                                  width: 170,
+                                  height: 44,
+                                  radius: 6,
+                                  textColor: Palette.primary,
+                                  textSize: 14,
+                                  onPressed: () {
+                                    Provider.of<OwnerRequestDetailViewModel>(
+                                            context,
+                                            listen: false)
+                                        .postCancel(id);
+                                  },
+                                ),
                               ],
                             ),
                           )
