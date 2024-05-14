@@ -31,7 +31,7 @@ class OwnerHomeViewModel extends ChangeNotifier{
     //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
     //   token = loginData['accessToken'].toString();
     // }
-    token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1MjE2MjA2LCJleHAiOjE3MTc4MDgyMDZ9.v1HNk52QlUDjKoO-Um5AHS_eBj5GscsLZ2upP455kvQ';
+    token ="eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4";
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
