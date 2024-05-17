@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/view/owner/owner_request_detail.dart';
 import 'package:birca/viewModel/owner_home_view_model.dart';
@@ -58,120 +60,133 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                 ListView.builder(
                     itemCount: viewModel.ownerHomeModelList?.length,
                     itemBuilder: (BuildContext context, int index) {
-                      if (viewModel.ownerHomeModelList == null || viewModel.ownerHomeModelList!.isEmpty) {
+                      if (viewModel.ownerHomeModelList == null ||
+                          viewModel.ownerHomeModelList!.isEmpty) {
                         return const CircularProgressIndicator(); // 또는 로딩 중을 나타내는 다른 위젯
                       }
-                      return GestureDetector(child: Container(
-                        // height: 140,
-                        width: double.infinity,
-                        margin:
-                        const EdgeInsets.only(left: 14, right: 14, top: 19),
-                        padding: const EdgeInsets.only(
-                            left: 26, top: 31, bottom: 28.5),
-                        decoration: BoxDecoration(
-                          color: Palette.gray02, // Container의 배경색
-                          borderRadius: BorderRadius.circular(6),
+                      return GestureDetector(
+                        child: Container(
+                          // height: 140,
+                          width: double.infinity,
+                          margin: const EdgeInsets.only(
+                              left: 14, right: 14, top: 19),
+                          padding: const EdgeInsets.only(
+                              left: 26, top: 31, bottom: 28.5),
+                          decoration: BoxDecoration(
+                            color: Palette.gray02, // Container의 배경색
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${viewModel.ownerHomeModelList?[index].artist.groupName} ${viewModel.ownerHomeModelList?[index].artist.name}",
+                                style: const TextStyle(
+                                    color: Palette.primary,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 14),
+                              ),
+                              const SizedBox(
+                                height: 13.5,
+                              ),
+                              Text(
+                                "${viewModel.ownerHomeModelList?[index].hostName}",
+                                style: const TextStyle(
+                                    color: Palette.gray10,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14),
+                              ),
+                              const SizedBox(
+                                height: 13.5,
+                              ),
+                              Text(
+                                '${viewModel.ownerHomeModelList?[index].startDate.toString().substring(0, viewModel.ownerHomeModelList![index].startDate.toString().length - 9)} ~ ${viewModel.ownerHomeModelList?[index].endDate.toString().substring(0, viewModel.ownerHomeModelList![index].endDate.toString().length - 9)}',
+                                style: const TextStyle(
+                                    color: Palette.gray10,
+                                    fontFamily: 'Pretendard',
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14),
+                              )
+                            ],
+                          ),
                         ),
-                        child:  Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${viewModel.ownerHomeModelList?[index].artist.groupName} ${viewModel.ownerHomeModelList?[index].artist.name}",
-                              style: const TextStyle(
-                                  color: Palette.primary,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14),
-                            ),
-                            const SizedBox(
-                              height: 13.5,
-                            ),
-                            Text(
-                              "${viewModel.ownerHomeModelList?[index].hostName}",
-                              style: const TextStyle(
-                                  color: Palette.gray10,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14),
-                            ),
-                            const SizedBox(
-                              height: 13.5,
-                            ),
-                            Text(
-                              '${viewModel.ownerHomeModelList?[index].startDate.toString().substring(0, viewModel.ownerHomeModelList![index].startDate.toString().length - 9)} ~ ${viewModel.ownerHomeModelList?[index].endDate.toString().substring(0, viewModel.ownerHomeModelList![index].endDate.toString().length - 9)}',
-
-                              style: const TextStyle(
-                                  color: Palette.gray10,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14),
-                            )
-                          ],
-                        ),
-                      ),
-                      onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>OwnerRequestDetail(cafeID :viewModel.ownerHomeModelList![index].birthdayCafeId )));
-
-                      },);
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => OwnerRequestDetail(
+                                      cafeID: viewModel
+                                          .ownerHomeModelList![index]
+                                          .birthdayCafeId)));
+                        },
+                      );
                     }),
                 ListView.builder(
                     itemCount: viewModel.ownerHomeModelList?.length,
                     itemBuilder: (BuildContext context, int index) {
-                      if (viewModel.ownerHomeModelList == null || viewModel.ownerHomeModelList!.isEmpty) {
+                      if (viewModel.ownerHomeModelList == null ||
+                          viewModel.ownerHomeModelList!.isEmpty) {
                         return const CircularProgressIndicator(); // 또는 로딩 중을 나타내는 다른 위젯
                       }
-                      return GestureDetector(child: Container(
-                        // height: 140,
-                        width: double.infinity,
-                        margin:
-                        const EdgeInsets.only(left: 14, right: 14, top: 19),
-                        padding: const EdgeInsets.only(
-                            left: 26, top: 31, bottom: 28.5),
-                        decoration: BoxDecoration(
-                          color: Palette.gray02, // Container의 배경색
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child:  Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "아티스트: ${viewModel.ownerHomeModelList?[index].artist.groupName} ${viewModel.ownerHomeModelList?[index].artist.name}",
-                              style: const TextStyle(
-                                  color: Palette.primary,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14),
+                      return GestureDetector(
+                          child: Container(
+                            // height: 140,
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(
+                                left: 14, right: 14, top: 19),
+                            padding: const EdgeInsets.only(
+                                left: 26, top: 31, bottom: 28.5),
+                            decoration: BoxDecoration(
+                              color: Palette.gray02, // Container의 배경색
+                              borderRadius: BorderRadius.circular(6),
                             ),
-                            const SizedBox(
-                              height: 13.5,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "아티스트: ${viewModel.ownerHomeModelList?[index].artist.groupName} ${viewModel.ownerHomeModelList?[index].artist.name}",
+                                  style: const TextStyle(
+                                      color: Palette.primary,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14),
+                                ),
+                                const SizedBox(
+                                  height: 13.5,
+                                ),
+                                Text(
+                                  "닉네임 : ${viewModel.ownerHomeModelList?[index].hostName}",
+                                  style: const TextStyle(
+                                      color: Palette.gray10,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14),
+                                ),
+                                const SizedBox(
+                                  height: 13.5,
+                                ),
+                                Text(
+                                  '일정: ${viewModel.ownerHomeModelList?[index].startDate.toString().substring(0, viewModel.ownerHomeModelList![index].startDate.toString().length - 9)} ~ ${viewModel.ownerHomeModelList?[index].endDate.toString().substring(0, viewModel.ownerHomeModelList![index].endDate.toString().length - 9)}',
+                                  style: const TextStyle(
+                                      color: Palette.gray10,
+                                      fontFamily: 'Pretendard',
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14),
+                                )
+                              ],
                             ),
-                            Text(
-                              "닉네임 : ${viewModel.ownerHomeModelList?[index].hostName}",
-                              style: const TextStyle(
-                                  color: Palette.gray10,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14),
-                            ),
-                            const SizedBox(
-                              height: 13.5,
-                            ),
-                            Text(
-                              '일정: ${viewModel.ownerHomeModelList?[index].startDate.toString().substring(0, viewModel.ownerHomeModelList![index].startDate.toString().length - 9)} ~ ${viewModel.ownerHomeModelList?[index].endDate.toString().substring(0, viewModel.ownerHomeModelList![index].endDate.toString().length - 9)}',
-                              style: const TextStyle(
-                                  color: Palette.gray10,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 14),
-                            )
-                          ],
-                        ),
-                      ),
-                          onTap: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context)=>OwnerRequestDetail(cafeID :viewModel.ownerHomeModelList![index].birthdayCafeId )));
-
-                          }
-                      );
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => OwnerRequestDetail(
+                                        cafeID: viewModel
+                                            .ownerHomeModelList![index]
+                                            .birthdayCafeId)));
+                          });
                     }),
               ],
             );
@@ -182,15 +197,16 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
   void _handleTabSelection() {
     switch (_tabController.index) {
       case 0:
-
         Provider.of<OwnerHomeViewModel>(context, listen: false)
             .getOwnerHome("RENTAL_PENDING");
-
+        log(0);
 
         break;
       case 1:
         Provider.of<OwnerHomeViewModel>(context, listen: false)
             .getOwnerHome("RENTAL_APPROVED");
+        log(1);
+
         break;
     }
   }
