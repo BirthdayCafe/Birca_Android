@@ -1,6 +1,8 @@
 import 'package:birca/view/owner/owner_my_cafe.dart';
+import 'package:birca/viewModel/mypage_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../widgets/button.dart';
 
@@ -12,6 +14,14 @@ class OwnerMypage extends StatefulWidget {
 }
 
 class _OwnerMypage extends State<OwnerMypage> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<MypageViewModel>(context, listen: false)
+        .getNickName();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,14 +58,16 @@ class _OwnerMypage extends State<OwnerMypage> {
                 const SizedBox(
                   height: 13,
                 ),
-                const Text(
-                  '홍길동',
-                  style: TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                      color: Colors.black),
-                ),
+                Consumer<MypageViewModel>(builder: (context,viewModel,widget){
+                  return Text(
+                    '${viewModel.nickname?.nickname}',
+                    style: const TextStyle(
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                        color: Colors.black),
+                  );
+                }) ,
                 const SizedBox(
                   height: 11,
                 ),
