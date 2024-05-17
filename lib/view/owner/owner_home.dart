@@ -58,6 +58,9 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                 ListView.builder(
                     itemCount: viewModel.ownerHomeModelList?.length,
                     itemBuilder: (BuildContext context, int index) {
+                      if (viewModel.ownerHomeModelList == null || viewModel.ownerHomeModelList!.isEmpty) {
+                        return const CircularProgressIndicator(); // 또는 로딩 중을 나타내는 다른 위젯
+                      }
                       return GestureDetector(child: Container(
                         // height: 140,
                         width: double.infinity,
@@ -114,6 +117,9 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                 ListView.builder(
                     itemCount: viewModel.ownerHomeModelList?.length,
                     itemBuilder: (BuildContext context, int index) {
+                      if (viewModel.ownerHomeModelList == null || viewModel.ownerHomeModelList!.isEmpty) {
+                        return const CircularProgressIndicator(); // 또는 로딩 중을 나타내는 다른 위젯
+                      }
                       return GestureDetector(child: Container(
                         // height: 140,
                         width: double.infinity,
@@ -176,8 +182,10 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
   void _handleTabSelection() {
     switch (_tabController.index) {
       case 0:
+
         Provider.of<OwnerHomeViewModel>(context, listen: false)
             .getOwnerHome("RENTAL_PENDING");
+
 
         break;
       case 1:
