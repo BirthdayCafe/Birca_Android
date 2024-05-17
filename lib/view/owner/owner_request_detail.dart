@@ -162,7 +162,7 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                     Container(
                       margin: const EdgeInsets.only(left: 14),
                       child: Text(
-                          "최소 ${viewModel.ownerRequestDetailModel?.minimumVisitants.toString()}명, 최대 ${viewModel.ownerRequestDetailModel?.maximumVisitants.toString()}명",
+                          "최소 ${viewModel.ownerRequestDetailModel?.minimumVisitant.toString()}명, 최대 ${viewModel.ownerRequestDetailModel?.maximumVisitant.toString()}명",
                           style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w300,
@@ -187,7 +187,7 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                     Container(
                       margin: const EdgeInsets.only(left: 14),
                       child: Text(
-                          "${viewModel.ownerRequestDetailModel?.twiiterAccount}",
+                          "${viewModel.ownerRequestDetailModel?.twitterAccount}",
                           style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w300,
