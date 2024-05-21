@@ -35,8 +35,8 @@ class OwnerMyCafeDetailModel {
 }
 
 class MenuModel {
-  final String name;
-  final int price;
+   String name;
+   int price;
 
   MenuModel({required this.name, required this.price});
 
@@ -49,8 +49,8 @@ class MenuModel {
 }
 
 class OptionModel {
-  final String name;
-  final int price;
+   String name;
+   int price;
 
   OptionModel({required this.name, required this.price});
 
