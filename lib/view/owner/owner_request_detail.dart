@@ -3,6 +3,7 @@ import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import '../../viewModel/owner_home_view_model.dart';
 import '../../viewModel/owner_request_detail_view_model.dart';
 
 class OwnerRequestDetail extends StatefulWidget {
@@ -37,6 +38,8 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
           scrolledUnderElevation: 0,
           leading: IconButton(
               onPressed: () {
+                Provider.of<OwnerHomeViewModel>(context, listen: false)
+                    .getOwnerHome("RENTAL_PENDING");
                 Navigator.pop(context);
               },
               icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
