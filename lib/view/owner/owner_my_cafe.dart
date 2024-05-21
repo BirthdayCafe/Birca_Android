@@ -16,22 +16,7 @@ class OwnerMyCafe extends StatefulWidget {
 }
 
 class _OwnerMyCafe extends State<OwnerMyCafe> {
-  List<String> cafeImage = [
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png'
-  ];
 
-  List<String> cafeMenu = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
-  List<String> service = [
-    'service1',
-    'service2',
-    'service3',
-    'service4',
-    'service5'
-  ];
 
   @override
   void initState() {
