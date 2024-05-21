@@ -1,8 +1,10 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../designSystem/palette.dart';
+import '../../viewModel/owner_my_cafe_view_model.dart';
 import '../../widgets/button.dart';
 
 class OwnerMyCafeEdit extends StatefulWidget {
@@ -13,6 +15,15 @@ class OwnerMyCafeEdit extends StatefulWidget {
 }
 
 class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
+  }
+
+
   List<String> cafeImage = [
     'lib/assets/image/img_cafe_test.png',
     'lib/assets/image/img_cafe_test.png',
@@ -538,6 +549,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
               ),
             ),
             onTap: () {
+              Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
               Navigator.pop(context);
             },
           ),
