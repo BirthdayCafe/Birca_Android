@@ -1,12 +1,9 @@
-import 'package:birca/view/host/host_chatting.dart';
-import 'package:birca/view/host/host_home.dart';
-import 'package:birca/view/host/host_mypage.dart';
 import 'package:birca/view/host/host_search_result.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../viewModel/host_search_result_view_model.dart';
-import 'host_my_cafe.dart';
 
 class HostSearch extends StatefulWidget {
   const HostSearch({super.key});
@@ -18,32 +15,18 @@ class HostSearch extends StatefulWidget {
 }
 
 class _HostSearch extends State<HostSearch>{
-  int _selectedIndex = 0;
 
   bool isTab = false;
 
   TextEditingController searchController = TextEditingController();
 
-  final List<Widget> _widgetOptions = <Widget>[
-    const HostHome(),
-    const HostChatting(),
-    const HostCafe(),
-    const HostMyPage()
-  ];
 
-  void _onItemTapped(int index) {
-    // 탭을 클릭했을때 지정한 페이지로 이동
-    setState(() {
-      _selectedIndex = index;
-      isTab = true;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: isTab ? _widgetOptions.elementAt(_selectedIndex):
+        child:
         Column(
           children: [
             Container(
@@ -52,9 +35,15 @@ class _HostSearch extends State<HostSearch>{
                 height: 40,
                 child: Row(
                   children: [
+                    IconButton(
+                        onPressed: (){
+                          Navigator.pop(context);
+                        },
+                        icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
                     Expanded(
                       // height: 40,
                       // width: 350,
+
                       child: TextField(
                         controller: searchController,
                         textAlignVertical: TextAlignVertical.center,
@@ -101,21 +90,6 @@ class _HostSearch extends State<HostSearch>{
                 ))
           ],
         )
-      ),
-      bottomNavigationBar:  BottomNavigationBar(
-        type: BottomNavigationBarType.fixed, // 애니메이션 비활성화
-
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home_filled,size: 30,) ,label:'홈' ),
-          BottomNavigationBarItem(icon: Icon(Icons.chat,size: 30) ,label:'채팅' ),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_today_outlined,size: 30) ,label:'스케줄' ),
-          BottomNavigationBarItem(icon: Icon(Icons.perm_identity,size: 30) ,label:'마이페이지' ),],
-
-        // BottomNavigationBarItem(icon:SvgPicture.asset('lib/assets/image/img_bottom_nav_cafe_tour.svg') ,label:'카페 투어' ),
-        // BottomNavigationBarItem(icon:SvgPicture.asset('lib/assets/image/img_bottom_nav_mypage.svg') ,label:'마이페이지' ),],
-        onTap: _onItemTapped,
-        currentIndex: _selectedIndex,
-        selectedItemColor: Palette.primary,
       ),
 
     );
