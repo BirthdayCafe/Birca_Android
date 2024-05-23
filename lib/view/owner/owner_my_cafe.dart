@@ -1,4 +1,4 @@
-import 'package:birca/view/owner/onwer_my_cafe_edit.dart';
+import 'package:birca/view/owner/owner_my_cafe_edit.dart';
 import 'package:birca/viewModel/owner_my_cafe_view_model.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,7 @@ class _OwnerMyCafe extends State<OwnerMyCafe> {
                       autoplay: false,
                       itemCount: viewModel.ownerMyCafeDetailModel!.cafeImages.length,
                       itemBuilder: (context, index) {
-                        return Image.asset(
+                        return Image.network(
                           viewModel.ownerMyCafeDetailModel!.cafeImages[index],
                           fit: BoxFit.cover,
                         );
