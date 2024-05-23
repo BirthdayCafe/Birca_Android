@@ -26,12 +26,11 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
   TextEditingController cafeOptionsPrice = TextEditingController();
 
   @override
-  void initState() {
-    super.initState();
-
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
-  }
 
+  }
   // List<String> cafeImage = [
   //   'lib/assets/image/img_cafe_test.png',
   //   'lib/assets/image/img_cafe_test.png',
@@ -66,13 +65,13 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
         child: Consumer<OwnerMyCafeViewModel>(
             builder: (context, viewModel, widget) {
           cafeNameController.text =
-              ' ${viewModel.ownerMyCafeDetailModel?.cafeName}';
+              '${viewModel.ownerMyCafeDetailModel?.cafeName}';
           cafeAddressController.text =
-              ' ${viewModel.ownerMyCafeDetailModel?.cafeAddress}';
+              '${viewModel.ownerMyCafeDetailModel?.cafeAddress}';
           businessHoursController.text =
-              ' ${viewModel.ownerMyCafeDetailModel?.businessHours}';
+              '${viewModel.ownerMyCafeDetailModel?.businessHours}';
           twitterAccountController.text =
-              ' ${viewModel.ownerMyCafeDetailModel?.twitterAccount}';
+              '${viewModel.ownerMyCafeDetailModel?.twitterAccount}';
 
           cafeMenu = viewModel.ownerMyCafeDetailModel!.cafeMenus;
 
@@ -577,19 +576,15 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                         fontSize: 14),
                   ),
                 ),
-                onTap: () {
+                onTap: ()   {
 
-                  // Map<String, dynamic> requestData = {
-                  //   'cafeName': cafeNameController.text,
-                  //   'cafeAddress': cafeAddressController.text,
-                  //   'twitterAccount': twitterAccountController.text,
-                  //   'businessHours': businessHoursController.text,
-                  //   'cafeMenus': cafeMenu,
-                  //   'cafeOptions': cafeOptions
-                  // };
                   Provider.of<OwnerMyCafeViewModel>(context, listen: false).patchMyCafe(cafeNameController.text, cafeAddressController.text,  twitterAccountController.text,  businessHoursController.text,  cafeMenu.map((menu) => menu.toMap()).toList(), cafeOptions.map((option) => option.toMap()).toList());
 
+                 setState(() {
+
+                 });
                   Navigator.pop(context);
+
                 },
               ),
               const SizedBox(
