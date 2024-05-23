@@ -46,6 +46,13 @@ class MenuModel {
       price: json['price'],
     );
   }
+
+   Map<String, Object> toMap() {
+     return {
+       'name': name,
+       'price': price,
+     };
+   }
 }
 
 class OptionModel {
@@ -60,4 +67,11 @@ class OptionModel {
       price: json['price'],
     );
   }
+
+   Map<String, Object> toMap() {
+     return {
+       'name': name,
+       'price': price,
+     };
+   }
 }
