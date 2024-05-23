@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:birca/model/owner_my_cafe_detail_model.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
@@ -26,11 +28,12 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
   TextEditingController cafeOptionsPrice = TextEditingController();
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
 
   }
+
   // List<String> cafeImage = [
   //   'lib/assets/image/img_cafe_test.png',
   //   'lib/assets/image/img_cafe_test.png',
@@ -73,9 +76,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
           twitterAccountController.text =
               '${viewModel.ownerMyCafeDetailModel?.twitterAccount}';
 
-          cafeMenu = viewModel.ownerMyCafeDetailModel!.cafeMenus;
+          cafeMenu.addAll(viewModel.ownerMyCafeDetailModel!.cafeMenus) ;
 
-          cafeOptions = viewModel.ownerMyCafeDetailModel!.cafeOptions;
+          cafeOptions.addAll(viewModel.ownerMyCafeDetailModel!.cafeOptions);
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -372,10 +375,10 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           ListView.builder(
                               shrinkWrap: true, // shrinkWrap을 true로 설정
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel
-                                  .ownerMyCafeDetailModel!.cafeMenus.length,
+                              itemCount: 1,
+
                               itemBuilder: (context, index) {
-                                cafeMenuName.text = cafeMenu[index].name;
+                                cafeMenuName.text = cafeMenu[index].name.toString();
                                 cafeMenuPrice.text =
                                     cafeMenu[index].price.toString();
                                 return Container(
@@ -474,13 +477,14 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 12, bottom: 12),
+
+
                       child: Column(
                         children: [
                           ListView.builder(
                               shrinkWrap: true, // shrinkWrap을 true로 설정
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: viewModel
-                                  .ownerMyCafeDetailModel!.cafeOptions.length,
+                              itemCount: 1,
                               itemBuilder: (context, index) {
                                 cafeOptionsName.text = cafeOptions[index].name;
                                 cafeOptionsPrice.text =
@@ -576,14 +580,18 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                         fontSize: 14),
                   ),
                 ),
-                onTap: ()   {
+                onTap: ()  async {
 
-                  Provider.of<OwnerMyCafeViewModel>(context, listen: false).patchMyCafe(cafeNameController.text, cafeAddressController.text,  twitterAccountController.text,  businessHoursController.text,  cafeMenu.map((menu) => menu.toMap()).toList(), cafeOptions.map((option) => option.toMap()).toList());
 
-                 setState(() {
 
-                 });
-                  Navigator.pop(context);
+                  await Provider.of<OwnerMyCafeViewModel>(context, listen: false).patchMyCafe(cafeNameController.text, cafeAddressController.text,  twitterAccountController.text,  businessHoursController.text,  cafeMenu.map((menu) => menu.toMap()).toList(), cafeOptions.map((option) => option.toMap()).toList()).then((_) {
+                    // Navigate on success
+                    Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
+                    Navigator.pop(context);
+
+                  }).catchError((error) {
+                    log('fail');
+                  });
 
                 },
               ),
