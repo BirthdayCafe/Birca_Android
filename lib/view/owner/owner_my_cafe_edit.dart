@@ -45,6 +45,14 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
   List<MenuModel> cafeMenu = [];
   List<OptionModel> cafeOptions = [];
 
+  bool isDateChecked = false;
+  bool isCountChecked = false;
+
+  DateTime? _selectedDay;
+  DateTime _focusedDay = DateTime.now();
+
+  final List<DateTime> _selectedDates = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -330,12 +338,44 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                       padding: const EdgeInsets.all(6),
                       child: TableCalendar(
                         //오늘 날짜
-                        focusedDay: DateTime.now(),
+                        focusedDay: _focusedDay,
                         firstDay: DateTime.now(),
                         lastDay: DateTime.utc(DateTime.now().year + 1),
 
                         headerStyle: const HeaderStyle(
                             formatButtonVisible: false, titleCentered: true),
+
+                        // rangeStartDay: _rangeStart,
+                        // rangeEndDay: _rangeEnd,
+                        // rangeSelectionMode: _rangeSelectionMode,
+
+                        selectedDayPredicate: (day) {
+                          return _selectedDates.any((selectedDate) => isSameDay(selectedDate, day));
+                        },
+
+                        onDaySelected: (selectedDay, focusedDay) {
+                          if (!isSameDay(_selectedDay, selectedDay)) {
+                            setState(() {
+                              _selectedDay = selectedDay;
+                              _focusedDay =
+                                  focusedDay;
+
+                              if (_selectedDates.any((date) => isSameDay(date, selectedDay))) {
+                                // 이미 선택된 날짜이면 리스트에서 제거
+                                _selectedDates.removeWhere((date) => isSameDay(date, selectedDay));
+                              } else {
+                                // 선택되지 않은 날짜이면 리스트에 추가
+                                _selectedDates.add(selectedDay);
+                              }
+
+                              log(_selectedDates.toString());
+                              // _rangeStart = null; // Important to clean those
+                              // _rangeEnd = null;
+                              // _rangeSelectionMode = RangeSelectionMode.toggledOff;
+                            });
+                          }
+                        },
+
                       ),
                     ),
                     const SizedBox(
