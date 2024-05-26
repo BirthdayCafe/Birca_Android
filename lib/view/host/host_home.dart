@@ -194,105 +194,110 @@ class _HostHome extends State<HostHome> {
               ),
     Consumer<HostHomeViewModel>(
     builder: (builder, viewModel, widget) {
-      return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          scrollDirection: Axis.vertical,
-          itemCount: viewModel.hostCafeHomeModelList!.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              margin: const EdgeInsets.only(
-                  left: 16, right: 16, bottom: 16),
-              decoration: BoxDecoration(
-                color: Colors.white, // Container의 배경색
-                borderRadius: BorderRadius.circular(3),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    // 그림자 색상
-                    spreadRadius: 1,
-                    // 그림자 확산 정도
-                    blurRadius: 1, // 그림자의 흐림 정도
-                    // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
-                  ),
-                ],
-              ),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //이미지
-                  SizedBox(
-                    height: 140,
-                    width: 210,
-                    child: Image.network(
-                      viewModel
-                          .hostCafeHomeModelList![index].cafeImageUrl,
-                      fit: BoxFit.fill,
+      if(viewModel.hostCafeHomeModelList==null){
+        return const CircularProgressIndicator();
+      } else {
+        return ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            scrollDirection: Axis.vertical,
+            itemCount: viewModel.hostCafeHomeModelList?.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Container(
+                margin: const EdgeInsets.only(
+                    left: 16, right: 16, bottom: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white, // Container의 배경색
+                  borderRadius: BorderRadius.circular(3),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      // 그림자 색상
+                      spreadRadius: 1,
+                      // 그림자 확산 정도
+                      blurRadius: 1, // 그림자의 흐림 정도
+                      // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
                     ),
-                  ),
-
-                  //카페 정보
-
-                  Container(
-                    padding: const EdgeInsets.only(left: 10, top: 40),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          // '${viewModel.hostCafeHomeModelList?[index].birthdayCafeName}',
-                          '카페 이름',
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Palette.gray10,
-                              fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(
-                          height: 21,
-                        ),
-                         Text(
-                          '${viewModel.hostCafeHomeModelList?[index].twitterAccount}',
-                          style: const TextStyle(
-                              fontSize: 12,
-                              color: Palette.gray08,
-                              fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                         Row(
-                          children: [
-                            const Icon(
-                              Icons.location_on_outlined,
-                              color: Palette.gray08,
-                              size: 12,
-                            ),
-                            Text(
-                              '${viewModel.hostCafeHomeModelList?[index].address.substring(0,10)}',
-                              style: const TextStyle(
-                                  fontSize: 12,
-                                  color: Palette.gray08,
-                                  fontWeight: FontWeight.w400),
-                            ),
-                          ],
-                        ),
-                      ],
+                  ],
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //이미지
+                    SizedBox(
+                      height: 140,
+                      width: 210,
+                      child: Image.network(
+                        viewModel
+                            .hostCafeHomeModelList![index].cafeImageUrl,
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                  ),
 
-                  Expanded(child: Container()),
+                    //카페 정보
 
-                  //heart
-                  Container(
-                    padding: const EdgeInsets.only(top: 8, right: 8),
-                    child: const Icon(
-                      Icons.favorite,
-                      color: Color(0xffF3F3F3),
+                    Container(
+                      padding: const EdgeInsets.only(left: 10, top: 40),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            // '${viewModel.hostCafeHomeModelList?[index].birthdayCafeName}',
+                            '카페 이름',
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: Palette.gray10,
+                                fontWeight: FontWeight.w600),
+                          ),
+                          const SizedBox(
+                            height: 21,
+                          ),
+                          Text(
+                            '${viewModel.hostCafeHomeModelList?[index].twitterAccount}',
+                            style: const TextStyle(
+                                fontSize: 12,
+                                color: Palette.gray08,
+                                fontWeight: FontWeight.w400),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.location_on_outlined,
+                                color: Palette.gray08,
+                                size: 12,
+                              ),
+                              Text(
+                                '${viewModel.hostCafeHomeModelList?[index].address.substring(0,10)}',
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Palette.gray08,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  )
-                ],
-              ),
-            );
-          });
+
+                    Expanded(child: Container()),
+
+                    //heart
+                    Container(
+                      padding: const EdgeInsets.only(top: 8, right: 8),
+                      child: const Icon(
+                        Icons.favorite,
+                        color: Color(0xffF3F3F3),
+                      ),
+                    )
+                  ],
+                ),
+              );
+            });
+      }
+
     }),
 
             ],
