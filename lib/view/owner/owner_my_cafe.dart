@@ -19,11 +19,12 @@ class _OwnerMyCafe extends State<OwnerMyCafe> {
 
 
   @override
-  void initState() {
-    super.initState();
-
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
+
   }
+
 
   @override
   Widget build(BuildContext context) {
