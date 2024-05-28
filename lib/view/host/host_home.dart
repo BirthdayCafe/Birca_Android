@@ -1,3 +1,4 @@
+import 'package:birca/view/host/host_home_detail.dart';
 import 'package:birca/view/host/host_search.dart';
 import 'package:birca/viewModel/host_home_view_model.dart';
 import 'package:birca/viewModel/host_my_cafe_view_model.dart';
@@ -203,7 +204,7 @@ class _HostHome extends State<HostHome> {
                       scrollDirection: Axis.vertical,
                       itemCount: viewModel.hostCafeHomeModelList?.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
+                        return GestureDetector(child:  Container(
                           margin: const EdgeInsets.only(
                               left: 16, right: 16, bottom: 16),
                           decoration: BoxDecoration(
@@ -238,7 +239,7 @@ class _HostHome extends State<HostHome> {
 
                               Container(
                                 padding:
-                                    const EdgeInsets.only(left: 10, top: 40),
+                                const EdgeInsets.only(left: 10, top: 40),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -288,27 +289,27 @@ class _HostHome extends State<HostHome> {
                               //heart
                               Container(
                                   padding:
-                                      const EdgeInsets.only(top: 8, right: 8),
+                                  const EdgeInsets.only(top: 8, right: 8),
                                   child: viewModel
-                                          .hostCafeHomeModelList![index].liked
+                                      .hostCafeHomeModelList![index].liked
                                       ? GestureDetector(
-                                          child: const Icon(
-                                          Icons.favorite,
-                                          color: Palette.primary,
-                                        ),onTap: (){
-                                            Provider.of<HostHomeViewModel>(context,listen: false).deleteLike(viewModel.hostCafeHomeModelList![index].cafeId);
-                                            setState(() {
+                                    child: const Icon(
+                                      Icons.favorite,
+                                      color: Palette.primary,
+                                    ),onTap: (){
+                                    Provider.of<HostHomeViewModel>(context,listen: false).deleteLike(viewModel.hostCafeHomeModelList![index].cafeId);
+                                    setState(() {
 
-                                              viewModel.hostCafeHomeModelList?[index].liked=false;
-                                            });
+                                      viewModel.hostCafeHomeModelList?[index].liked=false;
+                                    });
 
                                   },)
                                       : GestureDetector(
-                                          child: const Icon(
-                                          Icons.favorite,
-                                          color: Color(0xffF3F3F3),
+                                      child: const Icon(
+                                        Icons.favorite,
+                                        color: Color(0xffF3F3F3),
 
-                                        ),onTap: (){
+                                      ),onTap: (){
                                     Provider.of<HostHomeViewModel>(context,listen: false).postLike(viewModel.hostCafeHomeModelList![index].cafeId);
 
                                     setState(() {
@@ -318,7 +319,17 @@ class _HostHome extends State<HostHome> {
                                   }))
                             ],
                           ),
-                        );
+                        ),
+                        onTap: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HostHomeDetail(
+                                      cafeID: viewModel
+                                          .hostCafeHomeModelList![index].cafeId
+                                          )));
+                        },);
+
                       });
                 }
               }),
