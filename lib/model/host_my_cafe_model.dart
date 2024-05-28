@@ -1,22 +1,20 @@
 class HostMyCafeModel {
-   int birthdayCafeId;
-   String mainImageUrl;
-   String startDate;
-   String endDate;
-   String birthdayCafeName;
-   Artist artist;
-   String progressState;
+  int birthdayCafeId;
+  String mainImageUrl;
+  String startDate;
+  String endDate;
+  String birthdayCafeName;
+  Artist artist;
+  String progressState;
 
-
-   HostMyCafeModel({
-    required this.birthdayCafeId,
-    required this.mainImageUrl,
-    required this.startDate,
-    required this.endDate,
-    required this.birthdayCafeName,
-    required this.artist,
-    required this.progressState
-  });
+  HostMyCafeModel(
+      {required this.birthdayCafeId,
+      required this.mainImageUrl,
+      required this.startDate,
+      required this.endDate,
+      required this.birthdayCafeName,
+      required this.artist,
+      required this.progressState});
 
   factory HostMyCafeModel.fromJson(Map<String, dynamic> json) {
     return HostMyCafeModel(
@@ -26,13 +24,13 @@ class HostMyCafeModel {
         endDate: json['endDate'],
         birthdayCafeName: json['birthdayCafeName'],
         artist: Artist.fromJson(json['artist']),
-    progressState: json['progressState']);
+        progressState: json['progressState']);
   }
 }
 
 class Artist {
-   String groupName;
-   String name;
+  String? groupName;
+  String name;
 
   Artist({required this.groupName, required this.name});
 
@@ -43,4 +41,3 @@ class Artist {
     );
   }
 }
-
