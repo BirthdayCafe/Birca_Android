@@ -1,9 +1,9 @@
 import 'dart:developer';
-
 import 'package:birca/model/owner_my_cafe_detail_model.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../designSystem/palette.dart';
@@ -31,17 +31,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
   void initState() {
     super.initState();
     Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
-
   }
 
-  // List<String> cafeImage = [
-  //   'lib/assets/image/img_cafe_test.png',
-  //   'lib/assets/image/img_cafe_test.png',
-  //   'lib/assets/image/img_cafe_test.png',
-  //   'lib/assets/image/img_cafe_test.png',
-  //   'lib/assets/image/img_cafe_test.png'
-  // ];
-  //
   List<MenuModel> cafeMenu = [];
   List<OptionModel> cafeOptions = [];
 
@@ -52,6 +43,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
   DateTime _focusedDay = DateTime.now();
 
   final List<DateTime> _selectedDates = [];
+  final ImagePicker _picker = ImagePicker();
+  List<PickedFile> _selectedImages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +77,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
           twitterAccountController.text =
               '${viewModel.ownerMyCafeDetailModel?.twitterAccount}';
 
-          cafeMenu.addAll(viewModel.ownerMyCafeDetailModel!.cafeMenus) ;
+          cafeMenu.addAll(viewModel.ownerMyCafeDetailModel!.cafeMenus);
 
           cafeOptions.addAll(viewModel.ownerMyCafeDetailModel!.cafeOptions);
 
@@ -110,6 +103,34 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                       );
                     },
                   )),
+              Container(
+                alignment: Alignment.center,
+                child: BircaOutLinedButton(
+                  text: '사진 편집',
+                  radiusColor: Palette.primary,
+                  backgroundColor: Colors.white,
+                  width: 50,
+                  height: 30,
+                  radius: 5,
+                  textColor: Palette.primary,
+                  textSize: 10,
+                  onPressed: () async {
+                    _pickImages();
+                    // List<PickedFile>? images = await picker.getMultiImage();
+                  },
+                ),
+              ),
+               Container(
+                 alignment: Alignment.center,
+                 child:Text(
+                 '${_selectedImages.length}장 편집됨',
+                 style: const TextStyle(
+                     fontSize: 12,
+                     color: Palette.gray06,
+                     fontFamily: 'Pretendard',
+                     fontWeight: FontWeight.w500),
+               ) ,)
+               ,
               Container(
                 padding: const EdgeInsets.only(left: 16, right: 16),
                 child: Column(
@@ -350,32 +371,30 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                         // rangeSelectionMode: _rangeSelectionMode,
 
                         selectedDayPredicate: (day) {
-                          return _selectedDates.any((selectedDate) => isSameDay(selectedDate, day));
+                          return _selectedDates.any(
+                              (selectedDate) => isSameDay(selectedDate, day));
                         },
 
                         onDaySelected: (selectedDay, focusedDay) {
                           if (!isSameDay(_selectedDay, selectedDay)) {
                             setState(() {
                               _selectedDay = selectedDay;
-                              _focusedDay =
-                                  focusedDay;
+                              _focusedDay = focusedDay;
 
-                              if (_selectedDates.any((date) => isSameDay(date, selectedDay))) {
+                              if (_selectedDates.any(
+                                  (date) => isSameDay(date, selectedDay))) {
                                 // 이미 선택된 날짜이면 리스트에서 제거
-                                _selectedDates.removeWhere((date) => isSameDay(date, selectedDay));
+                                _selectedDates.removeWhere(
+                                    (date) => isSameDay(date, selectedDay));
                               } else {
                                 // 선택되지 않은 날짜이면 리스트에 추가
                                 _selectedDates.add(selectedDay);
                               }
 
                               log(_selectedDates.toString());
-                              // _rangeStart = null; // Important to clean those
-                              // _rangeEnd = null;
-                              // _rangeSelectionMode = RangeSelectionMode.toggledOff;
                             });
                           }
                         },
-
                       ),
                     ),
                     const SizedBox(
@@ -416,9 +435,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                               shrinkWrap: true, // shrinkWrap을 true로 설정
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: 1,
-
                               itemBuilder: (context, index) {
-                                cafeMenuName.text = cafeMenu[index].name.toString();
+                                cafeMenuName.text =
+                                    cafeMenu[index].name.toString();
                                 cafeMenuPrice.text =
                                     cafeMenu[index].price.toString();
                                 return Container(
@@ -517,8 +536,6 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     ),
                     Container(
                       padding: const EdgeInsets.only(left: 12, bottom: 12),
-
-
                       child: Column(
                         children: [
                           ListView.builder(
@@ -620,19 +637,36 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                         fontSize: 14),
                   ),
                 ),
-                onTap: ()  async {
+                onTap: () async {
+                  // 선택된 날짜를 ISO 8601 문자열 형식으로 변환
+                  final List<String> dateStrings = _selectedDates
+                      .map((date) => date.toIso8601String())
+                      .toList();
 
+                  // 데이터 정의
+                  // final Map<String, dynamic> data = {
+                  //   "datOffDates": dateStrings,
+                  // };
 
+                  // Provider.of<OwnerM가yCafeViewModel>(context,listen: false).postDayOff(cafeId, data);
 
-                  await Provider.of<OwnerMyCafeViewModel>(context, listen: false).patchMyCafe(cafeNameController.text, cafeAddressController.text,  twitterAccountController.text,  businessHoursController.text,  cafeMenu.map((menu) => menu.toMap()).toList(), cafeOptions.map((option) => option.toMap()).toList()).then((_) {
+                  await Provider.of<OwnerMyCafeViewModel>(context,
+                          listen: false)
+                      .patchMyCafe(
+                          cafeNameController.text,
+                          cafeAddressController.text,
+                          twitterAccountController.text,
+                          businessHoursController.text,
+                          cafeMenu.map((menu) => menu.toMap()).toList(),
+                          cafeOptions.map((option) => option.toMap()).toList())
+                      .then((_) {
                     // Navigate on success
-                    Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
+                    Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                        .getMyCafe();
                     Navigator.pop(context);
-
                   }).catchError((error) {
                     log('fail');
                   });
-
                 },
               ),
               const SizedBox(
@@ -673,5 +707,30 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
     setState(() {
       cafeOptions.add(OptionModel(name: "", price: 0));
     });
+  }
+
+  Future<void> _pickImages() async {
+    // final List<XFile> pickedFiles = await _picker.pickMultiImage();
+    List<PickedFile>? images = await _picker.getMultiImage();
+
+    if (images != null) {
+
+      if(images.length>5){
+
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('You can select up to 5 images.')));
+        log(_selectedImages.toString());
+      } else {
+        setState(() {
+          _selectedImages = images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
+
+          // Provider.of<OwnerMyCafeViewModel>(context, listen: false).postImage(cafeId, pickedFiles).then((value) => null)
+          log(_selectedImages.toString());
+        });
+      }
+
+
+
+    }
   }
 }
