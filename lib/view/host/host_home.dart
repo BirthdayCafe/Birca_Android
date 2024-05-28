@@ -1,7 +1,6 @@
 import 'package:birca/view/host/host_home_detail.dart';
 import 'package:birca/view/host/host_search.dart';
 import 'package:birca/viewModel/host_home_view_model.dart';
-import 'package:birca/viewModel/host_my_cafe_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -44,7 +43,7 @@ class _HostHome extends State<HostHome> {
                 icon: SvgPicture.asset('lib/assets/image/img_search.svg'))
           ],
         ),
-        body: SingleChildScrollView(child: Consumer<HostMyCafeViewModel>(
+        body: SingleChildScrollView(child: Consumer<HostHomeViewModel>(
             builder: (context, viewModel, widget) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
