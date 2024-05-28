@@ -3,7 +3,7 @@ class HostCafeHomeDetailModel {
   String twitterAccount;
   String address;
   String businessHours;
-  RentalSchedules rentalSchedules;
+  List<RentalSchedules> rentalSchedules;
 
 
   HostCafeHomeDetailModel({
@@ -15,12 +15,15 @@ class HostCafeHomeDetailModel {
   });
 
   factory HostCafeHomeDetailModel.fromJson(Map<String, dynamic> json) {
+    List<dynamic> schedule = json['rentalSchedules'] ?? [];
+
     return HostCafeHomeDetailModel(
       name: json['name'],
       businessHours: json['businessHours'],
       address: json['address'],
       twitterAccount: json['twitterAccount'],
-      rentalSchedules: RentalSchedules.fromJson(json['rentalSchedules']),
+      rentalSchedules: schedule.map((schedules) => RentalSchedules.fromJson(schedules)).toList(),
+
     );
   }
 }
