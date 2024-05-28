@@ -1,3 +1,4 @@
+import 'package:birca/view/host/host_my_cafe_detail.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,29 +11,27 @@ import '../../widgets/button.dart';
 
 class HostCafeEdit extends StatefulWidget {
   final int cafeID;
-  const HostCafeEdit({Key? key, required this.cafeID}) : super(key: key);
 
+  const HostCafeEdit({Key? key, required this.cafeID}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HostCafeEdit();
 }
 
 class _HostCafeEdit extends State<HostCafeEdit> {
-
   @override
   void initState() {
-    int id =widget.cafeID ; // cafeID를 저장할 변수
+    int id = widget.cafeID; // cafeID를 저장할 변수
 
     super.initState();
-    Provider.of<BirthdayCafeViewModel>(context,listen: false).fetchData(id);
-    Provider.of<BirthdayCafeViewModel>(context,listen: false).getBirthdayCafes(id);
-    Provider.of<BirthdayCafeViewModel>(context,listen: false).getLuckDraws(id);
-    Provider.of<BirthdayCafeViewModel>(context,listen: false).getMenus(id);
-    Provider.of<BirthdayCafeViewModel>(context,listen: false).getSpecialGoods(id);
-
+    Provider.of<BirthdayCafeViewModel>(context, listen: false).fetchData(id);
+    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+        .getBirthdayCafes(id);
+    Provider.of<BirthdayCafeViewModel>(context, listen: false).getLuckDraws(id);
+    Provider.of<BirthdayCafeViewModel>(context, listen: false).getMenus(id);
+    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+        .getSpecialGoods(id);
   }
-
-
 
   bool isSwitched = false;
   String hostDate = '';
@@ -52,6 +51,11 @@ class _HostCafeEdit extends State<HostCafeEdit> {
     'lib/assets/image/img_cafe_test.png',
     'lib/assets/image/img_cafe_test.png'
   ];
+
+  List<String> goods = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
+
+  List<String> cafeMenu = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
+  List<String> luckyDraw = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
 
   @override
   Widget build(BuildContext context) {
@@ -321,6 +325,88 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         fontSize: 10),
                   ),
                   const SizedBox(
+                    height: 11,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 12, bottom: 12),
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                            shrinkWrap: true, // shrinkWrap을 true로 설정
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: goods.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        // height : 35,
+                                        // width: 150,
+                                        child: TextField(
+                                          textAlign: TextAlign.center,
+                                          decoration: InputDecoration(
+                                            hintText: goods[index],
+                                            enabledBorder:
+                                                const UnderlineInputBorder(
+                                              // 활성화된 상태의 밑줄 색상
+                                              borderSide: BorderSide(
+                                                  color: Palette.primary),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      Expanded(
+                                        flex: 3,
+                                        child: TextField(
+                                          textAlign: TextAlign.center,
+                                          decoration: InputDecoration(
+                                            hintText: goods[index],
+                                            enabledBorder:
+                                                const UnderlineInputBorder(
+                                              // 활성화된 상태의 밑줄 색상
+                                              borderSide: BorderSide(
+                                                  color: Palette.gray03),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      IconButton(
+                                          onPressed: () {
+                                            deleteGoods(index);
+                                          },
+                                          icon: const Icon(
+                                            Icons.highlight_remove,
+                                            size: 24,
+                                          ))
+                                    ],
+                                  ));
+                            }),
+                        BircaOutLinedButton(
+                          text: '추가하기',
+                          radiusColor: Palette.gray02,
+                          backgroundColor: Palette.gray02,
+                          width: 260,
+                          height: 40,
+                          radius: 7,
+                          textColor: Palette.gray08,
+                          textSize: 14,
+                          onPressed: () {
+                            addGoods();
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
                     height: 26,
                   ),
                   const Text(
@@ -338,6 +424,88 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         fontFamily: 'Pretendard',
                         fontWeight: FontWeight.w400,
                         fontSize: 10),
+                  ),
+                  const SizedBox(
+                    height: 11,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 12, bottom: 12),
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                            shrinkWrap: true, // shrinkWrap을 true로 설정
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: cafeMenu.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        // height : 35,
+                                        // width: 150,
+                                        child: TextField(
+                                          textAlign: TextAlign.center,
+                                          decoration: InputDecoration(
+                                            hintText: cafeMenu[index],
+                                            enabledBorder:
+                                                const UnderlineInputBorder(
+                                              // 활성화된 상태의 밑줄 색상
+                                              borderSide: BorderSide(
+                                                  color: Palette.primary),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      Expanded(
+                                        flex: 3,
+                                        child: TextField(
+                                          textAlign: TextAlign.center,
+                                          decoration: InputDecoration(
+                                            hintText: cafeMenu[index],
+                                            enabledBorder:
+                                                const UnderlineInputBorder(
+                                              // 활성화된 상태의 밑줄 색상
+                                              borderSide: BorderSide(
+                                                  color: Palette.gray03),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      IconButton(
+                                          onPressed: () {
+                                            deleteMenu(index);
+                                          },
+                                          icon: const Icon(
+                                            Icons.highlight_remove,
+                                            size: 24,
+                                          ))
+                                    ],
+                                  ));
+                            }),
+                        BircaOutLinedButton(
+                          text: '추가하기',
+                          radiusColor: Palette.gray02,
+                          backgroundColor: Palette.gray02,
+                          width: 260,
+                          height: 40,
+                          radius: 7,
+                          textColor: Palette.gray08,
+                          textSize: 14,
+                          onPressed: () {
+                            addMenu();
+                          },
+                        )
+                      ],
+                    ),
                   ),
                   const SizedBox(
                     height: 26,
@@ -359,6 +527,86 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         fontSize: 10),
                   ),
                   const SizedBox(
+                    height: 11,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(left: 12, bottom: 12),
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                            shrinkWrap: true, // shrinkWrap을 true로 설정
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: luckyDraw.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                  padding: const EdgeInsets.only(
+                                    top: 12,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        flex: 1,
+                                        child: TextField(
+                                          textAlign: TextAlign.center,
+                                          decoration: InputDecoration(
+                                            hintText: luckyDraw[index],
+                                            enabledBorder:
+                                                const UnderlineInputBorder(
+                                              // 활성화된 상태의 밑줄 색상
+                                              borderSide: BorderSide(
+                                                  color: Palette.primary),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 16,
+                                      ),
+                                      Expanded(
+                                        flex: 6,
+                                        child: TextField(
+                                          textAlign: TextAlign.center,
+                                          decoration: InputDecoration(
+                                            hintText: luckyDraw[index],
+                                            enabledBorder:
+                                                const UnderlineInputBorder(
+                                              // 활성화된 상태의 밑줄 색상
+                                              borderSide: BorderSide(
+                                                  color: Palette.gray03),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      IconButton(
+                                          onPressed: () {
+                                            deleteLuckyDraw(index);
+                                          },
+                                          icon: const Icon(
+                                            Icons.highlight_remove,
+                                            size: 24,
+                                          ))
+                                    ],
+                                  ));
+                            }),
+                        BircaOutLinedButton(
+                          text: '추가하기',
+                          radiusColor: Palette.gray02,
+                          backgroundColor: Palette.gray02,
+                          width: 260,
+                          height: 40,
+                          radius: 7,
+                          textColor: Palette.gray08,
+                          textSize: 14,
+                          onPressed: () {
+                            addLuckyDraw();
+                          },
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
                     height: 26,
                   ),
                   const Text(
@@ -377,6 +625,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         fontWeight: FontWeight.w400,
                         fontSize: 10),
                   ),
+                  const SizedBox(
+                    height: 10,
+                  ),
                   SizedBox(
                       height: 90,
                       child: ListView.builder(
@@ -392,16 +643,52 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           })),
                   const SizedBox(
                     height: 26,
-                  )
+                  ),
+                  const BircaOutLinedButton(
+                      text: '파일 업로드',
+                      radiusColor: Palette.primary,
+                      backgroundColor: Colors.white,
+                      width: 96,
+                      height: 36,
+                      radius: 6,
+                      textColor: Palette.primary,
+                      textSize: 14),
+                  const SizedBox(
+                    height: 26,
+                  ),
                 ],
               ),
             )
           ],
         ),
       ),
+      floatingActionButton: SizedBox(
+        width: 128,
+        height: 40,
+        child: FloatingActionButton(
+          backgroundColor: Colors.transparent,
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        HostMyCafeDetail(cafeID: widget.cafeID)));
+          },
+          child: const BircaOutLinedButton(
+              text: '편집완료',
+              radiusColor: Colors.white,
+              backgroundColor: Colors.white,
+              width: 128,
+              height: 40,
+              radius: 33,
+              textColor: Palette.primary,
+              textSize: 14),
+        ),
+      ),
     );
   }
 
+  //달력
   void _showBottomDialogCalendar(BuildContext context) async {
     var hostDate1 = await showModalBottomSheet(
         context: context,
@@ -484,5 +771,47 @@ class _HostCafeEdit extends State<HostCafeEdit> {
         hostDate = hostDate1;
       });
     }
+  }
+
+  //특전 삭제
+  void deleteGoods(int index) {
+    setState(() {
+      goods.removeAt(index);
+    });
+  }
+
+  //특전 생성
+  void addGoods() {
+    setState(() {
+      goods.add("a");
+    });
+  }
+
+  //메뉴 삭제
+  void deleteMenu(int index) {
+    setState(() {
+      cafeMenu.removeAt(index);
+    });
+  }
+
+  //메뉴 생성
+  void addMenu() {
+    setState(() {
+      cafeMenu.add("a");
+    });
+  }
+
+  //특전 삭제
+  void deleteLuckyDraw(int index) {
+    setState(() {
+      luckyDraw.removeAt(index);
+    });
+  }
+
+  //특전 생성
+  void addLuckyDraw() {
+    setState(() {
+      luckyDraw.add("a");
+    });
   }
 }

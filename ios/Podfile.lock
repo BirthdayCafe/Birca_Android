@@ -39,7 +39,9 @@ PODS:
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
-  - kakao_flutter_sdk_common (1.8.0):
+  - image_picker_ios (0.0.1):
+    - Flutter
+  - kakao_flutter_sdk_common (1.9.2):
     - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
@@ -60,6 +62,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
+  - image_picker_ios (from `.symlinks/plugins/image_picker_ios/ios`)
   - kakao_flutter_sdk_common (from `.symlinks/plugins/kakao_flutter_sdk_common/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -82,6 +85,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   fluttertoast:
     :path: ".symlinks/plugins/fluttertoast/ios"
+  image_picker_ios:
+    :path: ".symlinks/plugins/image_picker_ios/ios"
   kakao_flutter_sdk_common:
     :path: ".symlinks/plugins/kakao_flutter_sdk_common/ios"
   path_provider_foundation:
@@ -96,10 +101,11 @@ SPEC CHECKSUMS:
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 15fd9539e4eb735dc54bae8c0534a7a9511a03de
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
-  flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
-  fluttertoast: 31b00dabfa7fb7bacd9e7dbee580d7a2ff4bf265
-  kakao_flutter_sdk_common: f1f155e0e8a195ec73e0f69acc0b0af510a0e926
-  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  flutter_secure_storage: d33dac7ae2ea08509be337e775f6b59f1ff45f12
+  fluttertoast: 9f2f8e81bb5ce18facb9748d7855bf5a756fe3db
+  image_picker_ios: b545a5f16c0fa88e3ecbbce3ed4de45567a8ec18
+  kakao_flutter_sdk_common: 049c9341e325da17ac75751a35646dbbcfa06891
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   SDWebImage: fc8f2d48bbfd72ef39d70e981bd24a3f3be53fec
   shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
   SwiftyGif: 93a1cc87bf3a51916001cf8f3d63835fb64c819f
