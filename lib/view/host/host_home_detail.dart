@@ -3,18 +3,33 @@ import 'package:birca/widgets/button.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
+import '../../viewModel/host_home_view_model.dart';
 
-class HostCafeDetail extends StatefulWidget {
-  const HostCafeDetail({super.key});
+class HostHomeDetail extends StatefulWidget {
+  final int cafeID;
+
+  const HostHomeDetail({Key? key, required this.cafeID}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _HostCafeDetail();
+  State<StatefulWidget> createState() => _HostHomeDetail();
 }
 
-class _HostCafeDetail extends State<HostCafeDetail> {
+class _HostHomeDetail extends State<HostHomeDetail> {
+
+  //
+  @override
+  void initState() {
+    int id = widget.cafeID; // cafeID를 저장할 변수
+    Provider.of<HostHomeViewModel>(context, listen: false).getCafeDatail(id);
+
+    super.initState();
+
+  }
+
   List<String> cafeImage = [
     'lib/assets/image/img_cafe_test.png',
     'lib/assets/image/img_cafe_test.png',
