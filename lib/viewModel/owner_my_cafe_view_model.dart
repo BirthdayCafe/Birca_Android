@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
 import '../model/owner_my_cafe_detail_model.dart';
@@ -175,10 +177,10 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
     try {
       // API 엔드포인트 및 업로드
-      Response response = await dio.patch(
-          '${baseUrl}api/v1/cafes/$cafeId/day-offs',
-          data: {data},
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      Response response = await dio.post(
+          '${baseUrl}api/v1/cafes/$cafeId/day-off',
+          data: jsonEncode(data),
+          options: Options(headers: {'Authorization': 'Bearer $token'},contentType: Headers.jsonContentType ));
 
       // 서버 응답 출력
       log('postDayOff Response: ${response.data}');
@@ -230,15 +232,16 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     //   token = loginData['accessToken'].toString();
     // }
 
+
     // PickedFile 리스트를 File 리스트로 변환
-    List<File> files =
+    List<File> cafeImages =
         pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
 
     // 업로드할 파일을 FormData로 변환
     FormData formData = FormData();
-    for (int i = 0; i < files.length; i++) {
+    for (int i = 0; i < cafeImages.length; i++) {
       formData.files
-          .add(MapEntry('files', await MultipartFile.fromFile(files[i].path)));
+          .add(MapEntry('cafeImages', await MultipartFile.fromFile(cafeImages[i].path)));
     }
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -246,12 +249,14 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
       responseBody: true,
     ));
 
+    log(formData.toString());
+
     try {
       // API 엔드포인트 및 업로드
-      Response response = await dio.patch(
+      Response response = await dio.post(
           '${baseUrl}api/v1/cafes/$cafeId/images',
-          data: {formData},
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+          data: formData,
+          options: Options(headers: {'Authorization': 'Bearer $token'}, ),);
 
       // 서버 응답 출력
       log('postImage Response: ${response.data}');
@@ -286,4 +291,6 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
       }
     }
   }
+
+
 }
