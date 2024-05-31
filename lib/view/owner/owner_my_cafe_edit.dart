@@ -4,6 +4,7 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../designSystem/palette.dart';
@@ -115,22 +116,22 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                   textColor: Palette.primary,
                   textSize: 10,
                   onPressed: () async {
-                    _pickImages();
+                    _pickImages(viewModel.ownerMyCafeDetailModel!.cafeId);
                     // List<PickedFile>? images = await picker.getMultiImage();
                   },
                 ),
               ),
-               Container(
-                 alignment: Alignment.center,
-                 child:Text(
-                 '${_selectedImages.length}장 편집됨',
-                 style: const TextStyle(
-                     fontSize: 12,
-                     color: Palette.gray06,
-                     fontFamily: 'Pretendard',
-                     fontWeight: FontWeight.w500),
-               ) ,)
-               ,
+              Container(
+                alignment: Alignment.center,
+                child: Text(
+                  '${_selectedImages.length}장 편집됨',
+                  style: const TextStyle(
+                      fontSize: 12,
+                      color: Palette.gray06,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w500),
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.only(left: 16, right: 16),
                 child: Column(
@@ -434,7 +435,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           ListView.builder(
                               shrinkWrap: true, // shrinkWrap을 true로 설정
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 1,
+                              itemCount: 0,
                               itemBuilder: (context, index) {
                                 cafeMenuName.text =
                                     cafeMenu[index].name.toString();
@@ -541,7 +542,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           ListView.builder(
                               shrinkWrap: true, // shrinkWrap을 true로 설정
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 1,
+                              itemCount: 0,
                               itemBuilder: (context, index) {
                                 cafeOptionsName.text = cafeOptions[index].name;
                                 cafeOptionsPrice.text =
@@ -640,15 +641,16 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                 onTap: () async {
                   // 선택된 날짜를 ISO 8601 문자열 형식으로 변환
                   final List<String> dateStrings = _selectedDates
-                      .map((date) => date.toIso8601String())
+                      .map((date) =>DateFormat('yyyy-MM-ddTHH:mm:ss').format(date))
                       .toList();
 
                   // 데이터 정의
-                  // final Map<String, dynamic> data = {
-                  //   "datOffDates": dateStrings,
-                  // };
+                  final Map<String, dynamic> data = {
+                    "datOffDates": dateStrings,
+                  };
 
-                  // Provider.of<OwnerM가yCafeViewModel>(context,listen: false).postDayOff(cafeId, data);
+                   Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                      .postDayOff(viewModel.ownerMyCafeDetailModel!.cafeId, data);
 
                   await Provider.of<OwnerMyCafeViewModel>(context,
                           listen: false)
@@ -660,6 +662,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           cafeMenu.map((menu) => menu.toMap()).toList(),
                           cafeOptions.map((option) => option.toMap()).toList())
                       .then((_) {
+                        log(dateStrings.toString());
                     // Navigate on success
                     Provider.of<OwnerMyCafeViewModel>(context, listen: false)
                         .getMyCafe();
@@ -709,28 +712,25 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
     });
   }
 
-  Future<void> _pickImages() async {
+  Future<void> _pickImages(int cafeId) async {
     // final List<XFile> pickedFiles = await _picker.pickMultiImage();
     List<PickedFile>? images = await _picker.getMultiImage();
 
     if (images != null) {
-
-      if(images.length>5){
-
+      if (images.length > 5) {
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('You can select up to 5 images.')));
         log(_selectedImages.toString());
       } else {
-        setState(() {
-          _selectedImages = images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
+        setState(() async {
+          _selectedImages =
+              images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
 
-          // Provider.of<OwnerMyCafeViewModel>(context, listen: false).postImage(cafeId, pickedFiles).then((value) => null)
+          await Provider.of<OwnerMyCafeViewModel>(context, listen: false).postImage(cafeId, _selectedImages).then((value) => Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe());
           log(_selectedImages.toString());
         });
       }
-
-
-
     }
   }
+
 }
