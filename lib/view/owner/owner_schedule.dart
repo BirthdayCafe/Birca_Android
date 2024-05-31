@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'package:birca/view/owner/owner_schedule_add.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../designSystem/palette.dart';
@@ -27,16 +28,22 @@ class _OwnerSchedule extends State<OwnerSchedule> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Row(
+        title:  Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               '스케줄',
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w700,
                   fontFamily: 'Pretendard',
                   color: Palette.primary),
-            ),
+            ),IconButton(onPressed: (){
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const OwnerScheduleAdd()));}, icon: const Icon(Icons.add,size: 30,))
+
           ],
         ),
         centerTitle: false,
