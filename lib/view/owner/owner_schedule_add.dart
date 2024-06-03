@@ -1,7 +1,11 @@
 import 'package:birca/designSystem/palette.dart';
+import 'package:birca/model/owner_schedule_model.dart';
+import 'package:birca/viewModel/owner_schedule_view_model.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class OwnerScheduleAdd extends StatefulWidget {
@@ -14,6 +18,12 @@ class OwnerScheduleAdd extends StatefulWidget {
 }
 
 class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
+  TextEditingController artistController = TextEditingController();
+  TextEditingController minimumVisitantsController = TextEditingController();
+  TextEditingController maximumVisitantsController = TextEditingController();
+  TextEditingController twitterAccountController = TextEditingController();
+  TextEditingController hostPhoneNumberController = TextEditingController();
+
   //table calendar 변수
   bool isSwitched = false;
   String hostDate = '';
@@ -60,13 +70,14 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
               Container(
                 width: 190,
                 margin: const EdgeInsets.only(left: 14),
-                child: const TextField(
-                  style: TextStyle(
+                child: TextField(
+                  controller: artistController,
+                  style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'Pretendard',
                       color: Palette.gray10),
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       // 활성화된 상태의 밑줄 색상
                       borderSide: BorderSide(color: Palette.gray03),
@@ -100,39 +111,7 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
             const SizedBox(
               height: 24,
             ),
-            Container(
-              margin: const EdgeInsets.only(left: 14),
-              child: const Text(
-                "신청자",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Pretendard',
-                    color: Palette.gray10),
-              ),
-            ),
 
-            Container(
-              width: 190,
-              margin: const EdgeInsets.only(left: 14),
-              child: const TextField(
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Pretendard',
-                    color: Palette.gray10),
-                decoration: InputDecoration(
-                  enabledBorder: UnderlineInputBorder(
-                    // 활성화된 상태의 밑줄 색상
-                    borderSide: BorderSide(color: Palette.gray03),
-                  ),
-                ),
-              ),
-            ),
-
-            const SizedBox(
-              height: 24,
-            ),
             Container(
               margin: const EdgeInsets.only(left: 14),
               child: const Text(
@@ -197,9 +176,9 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
             ),
             Container(
                 margin: const EdgeInsets.only(left: 14),
-                child: const Row(
+                child: Row(
                   children: [
-                    Text("최대",
+                    const Text("최대",
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
@@ -208,17 +187,18 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                     SizedBox(
                       width: 50,
                       child: TextField(
+                        controller: maximumVisitantsController,
                         keyboardType: TextInputType.number,
                         // inputFormatters: <TextInputFormatter>[
                         //   FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                         // ],
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w300,
                             fontFamily: 'Pretendard',
                             color: Palette.gray10),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "00",
                           enabledBorder: UnderlineInputBorder(
                             // 활성화된 상태의 밑줄 색상
@@ -227,16 +207,16 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                         ),
                       ),
                     ),
-                    Text("명",
+                    const Text("명",
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'Pretendard',
                             color: Palette.gray10)),
-                    SizedBox(
+                    const SizedBox(
                       width: 20,
                     ),
-                    Text("최소",
+                    const Text("최소",
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
@@ -245,17 +225,18 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                     SizedBox(
                       width: 50,
                       child: TextField(
+                        controller: minimumVisitantsController,
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
                         // inputFormatters: <TextInputFormatter>[
                         //   FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                         // ],
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w300,
                             fontFamily: 'Pretendard',
                             color: Palette.gray10),
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "00",
                           enabledBorder: UnderlineInputBorder(
                             // 활성화된 상태의 밑줄 색상
@@ -264,7 +245,7 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                         ),
                       ),
                     ),
-                    Text("명",
+                    const Text("명",
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
@@ -290,13 +271,14 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
             Container(
               width: 200,
               margin: const EdgeInsets.only(left: 14),
-              child: const TextField(
-                style: TextStyle(
+              child: TextField(
+                controller: twitterAccountController,
+                style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
                     fontFamily: 'Pretendard',
                     color: Palette.gray10),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "@twitter",
                   enabledBorder: UnderlineInputBorder(
                     // 활성화된 상태의 밑줄 색상
@@ -323,13 +305,14 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
             Container(
               width: 200,
               margin: const EdgeInsets.only(left: 14),
-              child: const TextField(
-                style: TextStyle(
+              child: TextField(
+                controller: hostPhoneNumberController,
+                style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
                     fontFamily: 'Pretendard',
                     color: Palette.gray10),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "000-0000-0000",
                   enabledBorder: UnderlineInputBorder(
                     // 활성화된 상태의 밑줄 색상
@@ -342,20 +325,47 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
               height: 47,
             ),
             GestureDetector(
-                child: Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              height: 40,
-              color: Palette.primary,
-              child: const Text(
-                '추가하기',
-                style: TextStyle(
-                    fontSize: 14,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white),
+              child: Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                height: 40,
+                color: Palette.primary,
+                child: const Text(
+                  '추가하기',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      color: Colors.white),
+                ),
               ),
-            ))
+              onTap: () async {
+                await Provider.of<OwnerScheduleViewModel>(context,
+                        listen: false)
+                    .postSchedule(OwnerScheduleAddModel(
+                  artistId: 1,
+                    cafeId:1,
+                        // artist: Artist(
+                        //     name: artistController.text,
+                        //     groupName: artistController.text),
+                        startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                            .format(_rangeStart!),
+                        endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                            .format(_rangeEnd!),
+                        minimumVisitants:
+                            int.parse(minimumVisitantsController.text),
+                        maximumVisitants:
+                            int.parse(maximumVisitantsController.text),
+                        twitterAccount: twitterAccountController.text,
+                        hostPhoneNumber: hostPhoneNumberController.text))
+                    .then((value){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('추가 완료')));
+                  Navigator.pop(context);
+                }
+                );
+              },
+            )
           ],
         ),
       )),
