@@ -19,7 +19,9 @@ class OwnerScheduleModel {
 }
 
 class OwnerScheduleAddModel {
-  Artist artist;
+  int artistId;
+  int cafeId;
+  // Artist artist;
   String startDate;
   String endDate;
   int minimumVisitants;
@@ -28,7 +30,9 @@ class OwnerScheduleAddModel {
   String hostPhoneNumber;
 
   OwnerScheduleAddModel({
-    required this.artist,
+    required this.artistId,
+    required this.cafeId,
+    // required this.artist,
     required this.startDate,
     required this.endDate,
     required this.minimumVisitants,
@@ -39,7 +43,9 @@ class OwnerScheduleAddModel {
 
   factory OwnerScheduleAddModel.fromJson(Map<String, dynamic> json) {
     return OwnerScheduleAddModel(
-      artist: Artist.fromJson(json['artist']),
+      artistId: json['artistId'],
+      cafeId: json['cafeId'],
+      // artist: Artist.fromJson(json['artist']),
       startDate: json['startDate'],
       endDate: json['endDate'],
       minimumVisitants: json['minimumVisitants'],
@@ -51,7 +57,9 @@ class OwnerScheduleAddModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'artist': artist.toJson(),
+      'artistId':artistId,
+      'cafeId':cafeId,
+      // 'artist': artist.toJson(),
       'startDate': startDate,
       'endDate': endDate,
       'minimumVisitants': minimumVisitants,
