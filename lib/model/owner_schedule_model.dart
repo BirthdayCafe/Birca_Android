@@ -48,6 +48,18 @@ class OwnerScheduleAddModel {
       hostPhoneNumber: json['hostPhoneNumber'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'artist': artist.toJson(),
+      'startDate': startDate,
+      'endDate': endDate,
+      'minimumVisitants': minimumVisitants,
+      'maximumVisitants': maximumVisitants,
+      'twitterAccount': twitterAccount,
+      'hostPhoneNumber': hostPhoneNumber,
+    };
+  }
 }
 
 class Artist {
@@ -64,5 +76,12 @@ class Artist {
       groupName: json['groupName'],
       name: json['name'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'groupName': groupName,
+      'name': name,
+    };
   }
 }
