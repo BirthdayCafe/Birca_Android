@@ -20,8 +20,6 @@ class OwnerScheduleModel {
 
 class OwnerScheduleAddModel {
   int artistId;
-  int cafeId;
-  // Artist artist;
   String startDate;
   String endDate;
   int minimumVisitants;
@@ -31,8 +29,6 @@ class OwnerScheduleAddModel {
 
   OwnerScheduleAddModel({
     required this.artistId,
-    required this.cafeId,
-    // required this.artist,
     required this.startDate,
     required this.endDate,
     required this.minimumVisitants,
@@ -44,8 +40,6 @@ class OwnerScheduleAddModel {
   factory OwnerScheduleAddModel.fromJson(Map<String, dynamic> json) {
     return OwnerScheduleAddModel(
       artistId: json['artistId'],
-      cafeId: json['cafeId'],
-      // artist: Artist.fromJson(json['artist']),
       startDate: json['startDate'],
       endDate: json['endDate'],
       minimumVisitants: json['minimumVisitants'],
@@ -57,39 +51,13 @@ class OwnerScheduleAddModel {
 
   Map<String, dynamic> toJson() {
     return {
-      'artistId':artistId,
-      'cafeId':cafeId,
-      // 'artist': artist.toJson(),
+      'artistId': artistId,
       'startDate': startDate,
       'endDate': endDate,
       'minimumVisitants': minimumVisitants,
       'maximumVisitants': maximumVisitants,
       'twitterAccount': twitterAccount,
       'hostPhoneNumber': hostPhoneNumber,
-    };
-  }
-}
-
-class Artist {
-  final String? groupName;
-  final String name;
-
-  Artist({
-    this.groupName,
-    required this.name,
-  });
-
-  factory Artist.fromJson(Map<String, dynamic> json) {
-    return Artist(
-      groupName: json['groupName'],
-      name: json['name'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'groupName': groupName,
-      'name': name,
     };
   }
 }
