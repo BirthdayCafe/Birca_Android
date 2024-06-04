@@ -1,5 +1,6 @@
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/model/owner_schedule_model.dart';
+import 'package:birca/view/owner/owner_select_artist.dart';
 import 'package:birca/viewModel/owner_schedule_view_model.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
@@ -86,28 +87,26 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                 ),
               ),
               const SizedBox(
-                width: 150,
+                width: 16,
               ),
-              // BircaOutLinedButton(
-              //   text: '아티스트 선택',
-              //   radiusColor: Palette.primary,
-              //   width: 100,
-              //   height: 36,
-              //   radius: 6,
-              //   textColor: Palette.primary,
-              //   textSize: 14,
-              //   onPressed: () {
-              //     _showBottomDialogCalendar(context);
-              //   },
-              //   backgroundColor: Colors.white,
-              // )
+              BircaOutLinedButton(
+                text: '아티스트 선택',
+                radiusColor: Palette.primary,
+                width: 100,
+                height: 36,
+                radius: 6,
+                textColor: Palette.primary,
+                textSize: 14,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const OwnerSelectArtist()));
+                },
+                backgroundColor: Colors.white,
+              )
             ]),
-            // Container(
-            //   margin: const EdgeInsets.only(left: 14, right: 183),
-            //   child: const Divider(
-            //     color: Palette.gray03,
-            //   ),
-            // ),
+
             const SizedBox(
               height: 24,
             ),
@@ -343,11 +342,7 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                 await Provider.of<OwnerScheduleViewModel>(context,
                         listen: false)
                     .postSchedule(OwnerScheduleAddModel(
-                  artistId: 1,
-                    cafeId:1,
-                        // artist: Artist(
-                        //     name: artistController.text,
-                        //     groupName: artistController.text),
+                        artistId: 1,
                         startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
                             .format(_rangeStart!),
                         endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
@@ -358,12 +353,11 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                             int.parse(maximumVisitantsController.text),
                         twitterAccount: twitterAccountController.text,
                         hostPhoneNumber: hostPhoneNumberController.text))
-                    .then((value){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('추가 완료')));
+                    .then((value) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(const SnackBar(content: Text('추가 완료')));
                   Navigator.pop(context);
-                }
-                );
+                });
               },
             )
           ],
