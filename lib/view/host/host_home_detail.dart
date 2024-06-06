@@ -428,7 +428,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                   radius: 6,
                   textColor: Palette.primary,
                   textSize: 14)
-=
+
        
 
             ],
