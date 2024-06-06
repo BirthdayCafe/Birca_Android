@@ -29,7 +29,7 @@ class HostMyCafeViewModel extends ChangeNotifier{
     //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
     //   token = loginData['accessToken'].toString();
     // }
-    token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MiwiaWF0IjoxNzE0MzE1MTA1LCJleHAiOjE3MTY5MDcxMDV9.pEUnsyNPTMvdXTV1RtwHQFJjcPqzK0lNUZ65w58aZhU';
+    token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzE2MjkwNDAxLCJleHAiOjE3MjE0NzQ0MDF9.8BaCgTdEVbBMf1tApT9le3_LtBU69QW6SESucv6jiM0';
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -45,14 +45,16 @@ class HostMyCafeViewModel extends ChangeNotifier{
 
       // 서버 응답 출력
       log('Response: ${response.data}');
-
+      _hostMyCafeModelList = [];
       List<dynamic> jsonData = response.data;
       List<HostMyCafeModel> cafeHomeModels =
       jsonData.map((e) => HostMyCafeModel.fromJson(e)).toList();
 
+
       // _hostCafeHomeModelList 추가
       _hostMyCafeModelList?.addAll(cafeHomeModels);
 
+      log("model  $_hostMyCafeModelList");
       notifyListeners();
     } catch (e) {
       if (e is DioException) {
