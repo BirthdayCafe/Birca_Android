@@ -242,10 +242,9 @@ class _HostHome extends State<HostHome> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Text(
-                                      // '${viewModel.hostCafeHomeModelList?[index].birthdayCafeName}',
-                                      '카페 이름',
-                                      style: TextStyle(
+                                      Text(
+                                      '${viewModel.hostCafeHomeModelList?[index].name}',
+                                      style: const TextStyle(
                                           fontSize: 14,
                                           color: Palette.gray10,
                                           fontWeight: FontWeight.w600),
