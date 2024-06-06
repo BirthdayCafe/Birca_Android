@@ -37,6 +37,9 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
 
+  int artistId =0;
+  String artist ="";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,11 +100,18 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                 radius: 6,
                 textColor: Palette.primary,
                 textSize: 14,
-                onPressed: () {
-                  Navigator.push(
+                onPressed: ()  async {
+                  final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const OwnerSelectArtist()));
+
+                  if(result!=null){
+                    artistId = result['id'];
+                    artist = result['artist'];
+                    artistController.text = artist;
+                  }
+
                 },
                 backgroundColor: Colors.white,
               )
@@ -342,14 +352,14 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                 await Provider.of<OwnerScheduleViewModel>(context,
                         listen: false)
                     .postSchedule(OwnerScheduleAddModel(
-                        artistId: 1,
+                        artistId: artistId,
                         startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
                             .format(_rangeStart!),
                         endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
                             .format(_rangeEnd!),
-                        minimumVisitants:
+                        minimumVisitant:
                             int.parse(minimumVisitantsController.text),
-                        maximumVisitants:
+                        maximumVisitant:
                             int.parse(maximumVisitantsController.text),
                         twitterAccount: twitterAccountController.text,
                         hostPhoneNumber: hostPhoneNumberController.text))
