@@ -221,7 +221,7 @@ class HostHomeViewModel extends ChangeNotifier {
   }
 
   //카페 상세
-  Future<void> getCafeDatail(int cafeId) async {
+  Future<void> getCafeDetail(int cafeId) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
