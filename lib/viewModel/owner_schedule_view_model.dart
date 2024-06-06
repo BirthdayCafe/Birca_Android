@@ -8,9 +8,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class OwnerScheduleViewModel extends ChangeNotifier {
   Dio dio = Dio();
 
-  List<OwnerScheduleModel>? _ownerScheduleModel;
+  OwnerScheduleModel? _ownerScheduleModel;
 
-  List<OwnerScheduleModel>? get ownerScheduleModel => _ownerScheduleModel;
+  OwnerScheduleModel? get ownerScheduleModel => _ownerScheduleModel;
 
   //사장님 스케줄 추가
   Future<void> postSchedule(OwnerScheduleAddModel ownerScheduleAddModel) async {
@@ -76,7 +76,7 @@ class OwnerScheduleViewModel extends ChangeNotifier {
   }
 
   //사장님 스케줄 가져오기
-  Future<void> getSchedule(int year, int month) async {
+  Future<void> getSchedule(String dateTime) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
@@ -101,17 +101,17 @@ class OwnerScheduleViewModel extends ChangeNotifier {
       // API 엔드포인트 및 업로드
       Response response = await dio.get(
           '${baseUrl}api/v1/owners/birthday-cafes/schedules',
-          queryParameters: {'year': year, 'month': month},
+          queryParameters: {'date': dateTime},
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-      _ownerScheduleModel =[];
-      List<dynamic> jsonData = response.data;
-      List<OwnerScheduleModel> scheduleModels =
-      jsonData.map((e) => OwnerScheduleModel.fromJson(e)).toList();
-      _ownerScheduleModel?.addAll(scheduleModels);
+      _ownerScheduleModel = null;
 
       // 서버 응답 출력
       log('getSchedule Response: ${response.data}');
+
+      if (response.data != null && response.data.isNotEmpty) {
+        _ownerScheduleModel = OwnerScheduleModel.fromJson(response.data);
+      }
 
       notifyListeners();
     } catch (e) {
