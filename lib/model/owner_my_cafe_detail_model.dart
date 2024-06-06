@@ -1,4 +1,5 @@
 class OwnerMyCafeDetailModel {
+  int cafeId;
   String cafeName;
   String cafeAddress;
   String twitterAccount;
@@ -8,6 +9,7 @@ class OwnerMyCafeDetailModel {
   List<String> cafeImages;
 
   OwnerMyCafeDetailModel({
+    required this.cafeId,
     required this.cafeName,
     required this.cafeAddress,
     required this.twitterAccount,
@@ -23,6 +25,7 @@ class OwnerMyCafeDetailModel {
     List<dynamic> imageList = json['cafeImages'] ?? [];
 
     return OwnerMyCafeDetailModel(
+        cafeId: json['cafeId'],
         cafeName: json['cafeName'],
         cafeAddress: json['cafeAddress'],
         twitterAccount: json['twitterAccount'],
