@@ -1,4 +1,5 @@
 import 'package:birca/view/host/host_my_cafe_detail.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -77,22 +78,156 @@ class _HostCafeEdit extends State<HostCafeEdit> {
             icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 33,
-            ),
-            Image.asset(
-              'lib/assets/image/img_cafe_test.png',
-              height: 412,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
-            ),
-            Container(
-                padding: const EdgeInsets.only(left: 20, right: 17, top: 20),
+        child:
+            Consumer<BirthdayCafeViewModel>(builder: (context, viewModel, widget) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 33,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(1),
+                  height: 412,
+                  width: MediaQuery.of(context).size.width,
+                  child: Swiper(
+                    scrollDirection: Axis.horizontal,
+                    pagination: const SwiperPagination(
+                      alignment: Alignment.bottomCenter,
+                    ),
+                    autoplay: false,
+                    itemCount: viewModel.birthdayCafeModel!.cafe.images.length,
+                    itemBuilder: (context, index) {
+                      return Image.network(
+                        viewModel.birthdayCafeModel!.cafe.images[index]
+                            .toString(),
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  )),
+              Container(
+                  padding: const EdgeInsets.only(left: 20, right: 17, top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        '카페 이름',
+                        style: TextStyle(
+                            color: Palette.gray10,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18),
+                      ),
+                      SizedBox(
+                          height: 10,
+                          child: Transform.scale(
+                              scale: 0.7,
+                              child: CupertinoSwitch(
+                                value: isSwitched,
+                                activeColor: Palette.primary,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                  });
+                                },
+                              ))),
+                    ],
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: double.infinity,
+                color: Palette.gray03,
+                height: 1,
+                margin: const EdgeInsets.only(left: 14, right: 14),
+              ),
+              const SizedBox(
+                height: 13,
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20),
+                child: const Text(
+                  '실시간 혼잡도 및 특전',
+                  style: TextStyle(
+                      color: Palette.gray10,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 16, right: 16),
+                width: double.maxFinite,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: const Color(0xffF7F7FA),
+                ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const BircaText(
+                        text: '혼잡도',
+                        textSize: 14,
+                        textColor: Palette.gray10,
+                        fontFamily: 'Pretendard'),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, top: 2, bottom: 2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Palette.primary,
+                      ),
+                      child: const Text(
+                        '포화',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Pretendard'),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 70,
+                    ),
+                    const BircaText(
+                        text: '특전',
+                        textSize: 14,
+                        textColor: Palette.gray10,
+                        fontFamily: 'Pretendard'),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, top: 2, bottom: 2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Palette.primary,
+                      ),
+                      child: const Text(
+                        '재고 없음',
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Pretendard'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 18, right: 18, top: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       '카페 이름',
@@ -100,567 +235,449 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           color: Palette.gray10,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
-                          fontSize: 18),
+                          fontSize: 16),
                     ),
-                    SizedBox(
-                        height: 10,
-                        child: Transform.scale(
-                            scale: 0.7,
-                            child: CupertinoSwitch(
-                              value: isSwitched,
-                              activeColor: Palette.primary,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                });
-                              },
-                            ))),
-                  ],
-                )),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: double.infinity,
-              color: Palette.gray03,
-              height: 1,
-              margin: const EdgeInsets.only(left: 14, right: 14),
-            ),
-            const SizedBox(
-              height: 13,
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20),
-              child: const Text(
-                '실시간 혼잡도 및 특전',
-                style: TextStyle(
-                    color: Palette.gray10,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 16, right: 16),
-              width: double.maxFinite,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: const Color(0xffF7F7FA),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const BircaText(
-                      text: '혼잡도',
-                      textSize: 14,
-                      textColor: Palette.gray10,
-                      fontFamily: 'Pretendard'),
-                  const SizedBox(
-                    width: 6,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 10, right: 10, top: 2, bottom: 2),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: Palette.primary,
-                    ),
-                    child: const Text(
-                      '포화',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Pretendard'),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 70,
-                  ),
-                  const BircaText(
-                      text: '특전',
-                      textSize: 14,
-                      textColor: Palette.gray10,
-                      fontFamily: 'Pretendard'),
-                  const SizedBox(
-                    width: 6,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 10, right: 10, top: 2, bottom: 2),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: Palette.primary,
-                    ),
-                    child: const Text(
-                      '재고 없음',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Pretendard'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 18, right: 18, top: 40),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    '카페 이름',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: '아티스트 및 그룹명',
-                      border: UnderlineInputBorder(), // 밑줄 추가
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '주최자 정보',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: '트위터 계정',
-                      border: UnderlineInputBorder(), // 밑줄 추가
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '생일 카페 주최 일정',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Row(children: [
-                    Container(
-                      width: 238,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: const Color(0xffD7D8DC)),
-                        borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        hostDate,
+                    const TextField(
+                      decoration: InputDecoration(
+                        hintText: '아티스트 및 그룹명',
+                        border: UnderlineInputBorder(), // 밑줄 추가
                       ),
                     ),
                     const SizedBox(
-                      width: 11,
+                      height: 26,
                     ),
-                    BircaOutLinedButton(
-                      text: '날짜 선택',
-                      radiusColor: Palette.primary,
-                      width: 80,
-                      height: 36,
-                      radius: 6,
-                      textColor: Palette.primary,
-                      textSize: 14,
-                      onPressed: () {
-                        _showBottomDialogCalendar(context);
-                      },
-                      backgroundColor: Colors.white,
-                    )
-                  ]),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '카페 위치',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: '서울 특별시~~',
-                      border: UnderlineInputBorder(), // 밑줄 추가
+                    const Text(
+                      '주최자 정보',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '특전 구성',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const Text(
-                    '* 특전 종류와 구성품을 작성해주세요.',
-                    style: TextStyle(
-                        color: Palette.gray08,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10),
-                  ),
-                  const SizedBox(
-                    height: 11,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 12, bottom: 12),
-                    child: Column(
-                      children: [
-                        ListView.builder(
+                    const TextField(
+                      decoration: InputDecoration(
+                        hintText: '트위터 계정',
+                        border: UnderlineInputBorder(), // 밑줄 추가
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '생일 카페 주최 일정',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Row(children: [
+                      Container(
+                        width: 238,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xffD7D8DC)),
+                          borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          hostDate,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 11,
+                      ),
+                      BircaOutLinedButton(
+                        text: '날짜 선택',
+                        radiusColor: Palette.primary,
+                        width: 80,
+                        height: 36,
+                        radius: 6,
+                        textColor: Palette.primary,
+                        textSize: 14,
+                        onPressed: () {
+                          _showBottomDialogCalendar(context);
+                        },
+                        backgroundColor: Colors.white,
+                      )
+                    ]),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '카페 위치',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const TextField(
+                      decoration: InputDecoration(
+                        hintText: '서울 특별시~~',
+                        border: UnderlineInputBorder(), // 밑줄 추가
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '특전 구성',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const Text(
+                      '* 특전 종류와 구성품을 작성해주세요.',
+                      style: TextStyle(
+                          color: Palette.gray08,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10),
+                    ),
+                    const SizedBox(
+                      height: 11,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 12, bottom: 12),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                              shrinkWrap: true, // shrinkWrap을 true로 설정
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: goods.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                    padding: const EdgeInsets.only(
+                                      top: 12,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          // height : 35,
+                                          // width: 150,
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                              hintText: goods[index],
+                                              enabledBorder:
+                                                  const UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.primary),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 16,
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                              hintText: goods[index],
+                                              enabledBorder:
+                                                  const UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.gray03),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              deleteGoods(index);
+                                            },
+                                            icon: const Icon(
+                                              Icons.highlight_remove,
+                                              size: 24,
+                                            ))
+                                      ],
+                                    ));
+                              }),
+                          BircaOutLinedButton(
+                            text: '추가하기',
+                            radiusColor: Palette.gray02,
+                            backgroundColor: Palette.gray02,
+                            width: 260,
+                            height: 40,
+                            radius: 7,
+                            textColor: Palette.gray08,
+                            textSize: 14,
+                            onPressed: () {
+                              addGoods();
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '생일 카페 메뉴',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const Text(
+                      '* 메뉴 구성을 작성해주세요.',
+                      style: TextStyle(
+                          color: Palette.gray08,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10),
+                    ),
+                    const SizedBox(
+                      height: 11,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 12, bottom: 12),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                              shrinkWrap: true, // shrinkWrap을 true로 설정
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: cafeMenu.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                    padding: const EdgeInsets.only(
+                                      top: 12,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          // height : 35,
+                                          // width: 150,
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                              hintText: cafeMenu[index],
+                                              enabledBorder:
+                                                  const UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.primary),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 16,
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                              hintText: cafeMenu[index],
+                                              enabledBorder:
+                                                  const UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.gray03),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              deleteMenu(index);
+                                            },
+                                            icon: const Icon(
+                                              Icons.highlight_remove,
+                                              size: 24,
+                                            ))
+                                      ],
+                                    ));
+                              }),
+                          BircaOutLinedButton(
+                            text: '추가하기',
+                            radiusColor: Palette.gray02,
+                            backgroundColor: Palette.gray02,
+                            width: 260,
+                            height: 40,
+                            radius: 7,
+                            textColor: Palette.gray08,
+                            textSize: 14,
+                            onPressed: () {
+                              addMenu();
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '럭키 드로우',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const Text(
+                      '* 럭키드로우 구성을 작성해주세요.',
+                      style: TextStyle(
+                          color: Palette.gray08,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10),
+                    ),
+                    const SizedBox(
+                      height: 11,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 12, bottom: 12),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                              shrinkWrap: true, // shrinkWrap을 true로 설정
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: luckyDraw.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                    padding: const EdgeInsets.only(
+                                      top: 12,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                              hintText: luckyDraw[index],
+                                              enabledBorder:
+                                                  const UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.primary),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 16,
+                                        ),
+                                        Expanded(
+                                          flex: 6,
+                                          child: TextField(
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                              hintText: luckyDraw[index],
+                                              enabledBorder:
+                                                  const UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.gray03),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              deleteLuckyDraw(index);
+                                            },
+                                            icon: const Icon(
+                                              Icons.highlight_remove,
+                                              size: 24,
+                                            ))
+                                      ],
+                                    ));
+                              }),
+                          BircaOutLinedButton(
+                            text: '추가하기',
+                            radiusColor: Palette.gray02,
+                            backgroundColor: Palette.gray02,
+                            width: 260,
+                            height: 40,
+                            radius: 7,
+                            textColor: Palette.gray08,
+                            textSize: 14,
+                            onPressed: () {
+                              addLuckyDraw();
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '사진',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const Text(
+                      '* 생일 카페 관련 사진은 최대 10장까지 업로드 가능합니다.',
+                      style: TextStyle(
+                          color: Palette.gray08,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                        height: 90,
+                        child: ListView.builder(
                             shrinkWrap: true, // shrinkWrap을 true로 설정
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: goods.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        // height : 35,
-                                        // width: 150,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: goods[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.primary),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: goods[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.gray03),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      IconButton(
-                                          onPressed: () {
-                                            deleteGoods(index);
-                                          },
-                                          icon: const Icon(
-                                            Icons.highlight_remove,
-                                            size: 24,
-                                          ))
-                                    ],
-                                  ));
-                            }),
-                        BircaOutLinedButton(
-                          text: '추가하기',
-                          radiusColor: Palette.gray02,
-                          backgroundColor: Palette.gray02,
-                          width: 260,
-                          height: 40,
-                          radius: 7,
-                          textColor: Palette.gray08,
-                          textSize: 14,
-                          onPressed: () {
-                            addGoods();
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '생일 카페 메뉴',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const Text(
-                    '* 메뉴 구성을 작성해주세요.',
-                    style: TextStyle(
-                        color: Palette.gray08,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10),
-                  ),
-                  const SizedBox(
-                    height: 11,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 12, bottom: 12),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                            shrinkWrap: true, // shrinkWrap을 true로 설정
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: cafeMenu.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        // height : 35,
-                                        // width: 150,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: cafeMenu[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.primary),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: cafeMenu[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.gray03),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      IconButton(
-                                          onPressed: () {
-                                            deleteMenu(index);
-                                          },
-                                          icon: const Icon(
-                                            Icons.highlight_remove,
-                                            size: 24,
-                                          ))
-                                    ],
-                                  ));
-                            }),
-                        BircaOutLinedButton(
-                          text: '추가하기',
-                          radiusColor: Palette.gray02,
-                          backgroundColor: Palette.gray02,
-                          width: 260,
-                          height: 40,
-                          radius: 7,
-                          textColor: Palette.gray08,
-                          textSize: 14,
-                          onPressed: () {
-                            addMenu();
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '럭키 드로우',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const Text(
-                    '* 럭키드로우 구성을 작성해주세요.',
-                    style: TextStyle(
-                        color: Palette.gray08,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10),
-                  ),
-                  const SizedBox(
-                    height: 11,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 12, bottom: 12),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                            shrinkWrap: true, // shrinkWrap을 true로 설정
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: luckyDraw.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: luckyDraw[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.primary),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Expanded(
-                                        flex: 6,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: luckyDraw[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.gray03),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      IconButton(
-                                          onPressed: () {
-                                            deleteLuckyDraw(index);
-                                          },
-                                          icon: const Icon(
-                                            Icons.highlight_remove,
-                                            size: 24,
-                                          ))
-                                    ],
-                                  ));
-                            }),
-                        BircaOutLinedButton(
-                          text: '추가하기',
-                          radiusColor: Palette.gray02,
-                          backgroundColor: Palette.gray02,
-                          width: 260,
-                          height: 40,
-                          radius: 7,
-                          textColor: Palette.gray08,
-                          textSize: 14,
-                          onPressed: () {
-                            addLuckyDraw();
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '사진',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const Text(
-                    '* 생일 카페 관련 사진은 최대 10장까지 업로드 가능합니다.',
-                    style: TextStyle(
-                        color: Palette.gray08,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                      height: 90,
-                      child: ListView.builder(
-                          shrinkWrap: true, // shrinkWrap을 true로 설정
 
-                          scrollDirection: Axis.horizontal,
-                          itemCount: cafeDetailImage.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              padding: const EdgeInsets.only(right: 8),
-                              child: Image.asset(cafeDetailImage[index]),
-                            );
-                          })),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const BircaOutLinedButton(
-                      text: '파일 업로드',
-                      radiusColor: Palette.primary,
-                      backgroundColor: Colors.white,
-                      width: 96,
-                      height: 36,
-                      radius: 6,
-                      textColor: Palette.primary,
-                      textSize: 14),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: cafeDetailImage.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: Image.asset(cafeDetailImage[index]),
+                              );
+                            })),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const BircaOutLinedButton(
+                        text: '파일 업로드',
+                        radiusColor: Palette.primary,
+                        backgroundColor: Colors.white,
+                        width: 96,
+                        height: 36,
+                        radius: 6,
+                        textColor: Palette.primary,
+                        textSize: 14),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          );
+        }),
       ),
       floatingActionButton: SizedBox(
         width: 128,
