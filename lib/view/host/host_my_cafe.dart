@@ -180,6 +180,10 @@ class _HostCafe extends State<HostCafe> {
                                         .hostMyCafeModelList![index]
                                         .birthdayCafeId)));
                       },
+                      onLongPress: () {
+                        _openCancelDialog(viewModel
+                            .hostMyCafeModelList![index].birthdayCafeId);
+                      },
                     );
                   }),
             );
@@ -200,5 +204,58 @@ class _HostCafe extends State<HostCafe> {
             );
           }
         }));
+  }
+
+  void _openCancelDialog(int cafeId) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            '카페 대관을 취소하시겠습니까?',
+            style: TextStyle(
+                fontSize: 16,
+                color: Palette.gray10,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w500),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                    onPressed: () async {
+                     await Provider.of<HostMyCafeViewModel>(context, listen: false)
+                          .postCancel(cafeId).then((value) {
+
+                       Provider.of<HostMyCafeViewModel>(context, listen: false).getHostMyCafe();
+
+                       ScaffoldMessenger.of(context)
+                           .showSnackBar(const SnackBar(content: Text('취소 완료')));
+                       Navigator.pop(context);
+                     });
+                    },
+                    child: const Text("네",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Palette.gray10,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w500))),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("아니요",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Palette.gray10,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w500))),
+              ],
+            )
+          ],
+        );
+      },
+    );
   }
 }
