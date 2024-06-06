@@ -16,6 +16,20 @@ class HostMyCafeViewModel extends ChangeNotifier{
     _hostMyCafeModelList = [];
   }
 
+  // progressState를 한글로 변환하는 매핑
+  Map<String, String> progressStateMapping = {
+    'RENTAL_PENDING': '대기중',
+    'FINISHED': '완료',
+    'IN_PROGRESS': '진행 중',
+    'RENTAL_APPROVED': '승인',
+    'RENTAL_CANCELED': '취소'
+  };
+
+  // progressState를 한글로 변환하는 함수
+  String getProgressStateInKorean(String progressState) {
+    return progressStateMapping[progressState] ?? '알 수 없음';
+  }
+
   //주최자 카페 홈 가져오기
   Future<void> getHostMyCafe() async {
     // const storage = FlutterSecureStorage();
