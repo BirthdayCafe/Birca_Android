@@ -254,148 +254,148 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // const Text(
-                    //   '카페 메뉴',
-                    //   style: TextStyle(
-                    //       fontSize: 14,
-                    //       color: Palette.gray10,
-                    //       fontFamily: 'Pretendard',
-                    //       fontWeight: FontWeight.w700),
-                    // ),
-                    // const SizedBox(
-                    //   height: 11,
-                    // ),
-                    // Container(
-                    //   padding:
-                    //       const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-                    //   decoration: BoxDecoration(
-                    //     color: const Color(0xffF7F7FA),
-                    //     borderRadius: BorderRadius.circular(4),
-                    //   ),
-                    //   child: ListView.builder(
-                    //       shrinkWrap: true, // shrinkWrap을 true로 설정
-                    //       physics: const NeverScrollableScrollPhysics(),
-                    //       itemCount: cafeMenu.length,
-                    //       itemBuilder: (context, index) {
-                    //         return Container(
-                    //             padding: const EdgeInsets.only(
-                    //               top: 12,
-                    //             ),
-                    //             child: Row(
-                    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //               children: [
-                    //                 Text(
-                    //                   cafeMenu[index],
-                    //                   style: const TextStyle(
-                    //                       fontWeight: FontWeight.w400,
-                    //                       fontSize: 14,
-                    //                       color: Palette.gray10),
-                    //                 ),
-                    //                 const Expanded(
-                    //                   child: Divider(
-                    //                     color: Palette.gray06,
-                    //                     // 점선의 색상 설정
-                    //                     height: 1,
-                    //                     // 점선의 높이 설정
-                    //                     thickness: 1,
-                    //                     // 점선의 두께 설정
-                    //                     indent: 10,
-                    //                     // 시작 부분 여백 설정
-                    //                     endIndent: 10, // 끝 부분 여백 설정
-                    //                   ),
-                    //                 ),
-                    //                 Text(
-                    //                   cafeMenu[index],
-                    //                   style: const TextStyle(
-                    //                       fontWeight: FontWeight.w600,
-                    //                       fontSize: 14,
-                    //                       color: Palette.primary),
-                    //                 ),
-                    //               ],
-                    //             ));
-                    //       }),
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // const Text(
-                    //   '데코레이션 및 추가 서비스',
-                    //   style: TextStyle(
-                    //       fontSize: 14,
-                    //       color: Palette.gray10,
-                    //       fontFamily: 'Pretendard',
-                    //       fontWeight: FontWeight.w700),
-                    // ),
-                    // const SizedBox(
-                    //   height: 11,
-                    // ),
-                    // Container(
-                    //   padding:
-                    //       const EdgeInsets.only(left: 12, right: 12, bottom: 12),
-                    //   decoration: BoxDecoration(
-                    //     color: const Color(0xffF7F7FA),
-                    //     borderRadius: BorderRadius.circular(4),
-                    //   ),
-                    //   child: ListView.builder(
-                    //       shrinkWrap: true, // shrinkWrap을 true로 설정
-                    //       physics: const NeverScrollableScrollPhysics(),
-                    //       itemCount: service.length,
-                    //       itemBuilder: (context, index) {
-                    //         return Container(
-                    //             padding: const EdgeInsets.only(top: 12),
-                    //             child: Row(
-                    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //               children: [
-                    //                 Text(
-                    //                   service[index],
-                    //                   style: const TextStyle(
-                    //                       fontWeight: FontWeight.w400,
-                    //                       fontSize: 14,
-                    //                       color: Palette.gray10),
-                    //                 ),
-                    //                 const Expanded(
-                    //                   child: Divider(
-                    //                     color: Palette.gray06,
-                    //                     // 점선의 색상 설정
-                    //                     height: 1,
-                    //                     // 점선의 높이 설정
-                    //                     thickness: 1,
-                    //                     // 점선의 두께 설정
-                    //                     indent: 10,
-                    //                     // 시작 부분 여백 설정
-                    //                     endIndent: 10, // 끝 부분 여백 설정
-                    //                   ),
-                    //                 ),
-                    //                 Text(
-                    //                   service[index],
-                    //                   style: const TextStyle(
-                    //                       fontWeight: FontWeight.w600,
-                    //                       fontSize: 14,
-                    //                       color: Palette.primary),
-                    //                 ),
-                    //               ],
-                    //             ));
-                    //       }),
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // Container(
-                    //   width: double.infinity,
-                    //   height: 1,
-                    //   color: Palette.gray03,
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // const Text(
-                    //   '리뷰',
-                    //   style: TextStyle(
-                    //       fontSize: 14,
-                    //       color: Palette.gray10,
-                    //       fontFamily: 'Pretendard',
-                    //       fontWeight: FontWeight.w700),
-                    // ),
+                    const Text(
+                      '카페 메뉴',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(
+                      height: 11,
+                    ),
+                    Container(
+                      padding:
+                          const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                      decoration: BoxDecoration(
+                        color: const Color(0xffF7F7FA),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: ListView.builder(
+                          shrinkWrap: true, // shrinkWrap을 true로 설정
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: viewModel.hostCafeHomeDetailModel?.cafeMenus.length??0,
+                          itemBuilder: (context, index) {
+                            return Container(
+                                padding: const EdgeInsets.only(
+                                  top: 12,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '${viewModel.hostCafeHomeDetailModel?.cafeMenus[index].name}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                          color: Palette.gray10),
+                                    ),
+                                    const Expanded(
+                                      child: Divider(
+                                        color: Palette.gray06,
+                                        // 점선의 색상 설정
+                                        height: 1,
+                                        // 점선의 높이 설정
+                                        thickness: 1,
+                                        // 점선의 두께 설정
+                                        indent: 10,
+                                        // 시작 부분 여백 설정
+                                        endIndent: 10, // 끝 부분 여백 설정
+                                      ),
+                                    ),
+                                    Text(
+                                      '${viewModel.hostCafeHomeDetailModel?.cafeMenus[index].price}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
+                                          color: Palette.primary),
+                                    ),
+                                  ],
+                                ));
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      '데코레이션 및 추가 서비스',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(
+                      height: 11,
+                    ),
+                    Container(
+                      padding:
+                          const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                      decoration: BoxDecoration(
+                        color: const Color(0xffF7F7FA),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: ListView.builder(
+                          shrinkWrap: true, // shrinkWrap을 true로 설정
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: viewModel.hostCafeHomeDetailModel?.cafeOptions.length??0,
+                          itemBuilder: (context, index) {
+                            return Container(
+                                padding: const EdgeInsets.only(top: 12),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '${viewModel.hostCafeHomeDetailModel?.cafeOptions[index].name}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                          color: Palette.gray10),
+                                    ),
+                                    const Expanded(
+                                      child: Divider(
+                                        color: Palette.gray06,
+                                        // 점선의 색상 설정
+                                        height: 1,
+                                        // 점선의 높이 설정
+                                        thickness: 1,
+                                        // 점선의 두께 설정
+                                        indent: 10,
+                                        // 시작 부분 여백 설정
+                                        endIndent: 10, // 끝 부분 여백 설정
+                                      ),
+                                    ),
+                                    Text(
+                                      '${viewModel.hostCafeHomeDetailModel?.cafeOptions[index].price}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 14,
+                                          color: Palette.primary),
+                                    ),
+                                  ],
+                                ));
+                          }),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 1,
+                      color: Palette.gray03,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      '리뷰',
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700),
+                    ),
                   ],
                 ),
               )
