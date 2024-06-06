@@ -1,3 +1,4 @@
+import 'package:birca/view/host/host_request.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
     'lib/assets/image/img_cafe_test.png',
     'lib/assets/image/img_cafe_test.png'
   ];
+
   //
   // List<String> cafeMenu = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
   // List<String> service = [
@@ -99,7 +101,8 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                       alignment: Alignment.bottomCenter,
                     ),
                     autoplay: false,
-                    itemCount: viewModel.hostCafeHomeDetailModel!.cafeImages.length,
+                    itemCount:
+                        viewModel.hostCafeHomeDetailModel!.cafeImages.length,
                     itemBuilder: (context, index) {
                       return Image.network(
                         viewModel.hostCafeHomeDetailModel!.cafeImages[index],
@@ -115,7 +118,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                     const SizedBox(
                       height: 20,
                     ),
-                     Text(
+                    Text(
                       '${viewModel.hostCafeHomeDetailModel?.name}',
                       style: const TextStyle(
                           fontSize: 18,
@@ -142,7 +145,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700),
                     ),
-                     Text(
+                    Text(
                       '${viewModel.hostCafeHomeDetailModel?.twitterAccount}',
                       style: const TextStyle(
                           fontSize: 14,
@@ -169,7 +172,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700),
                     ),
-                     Text(
+                    Text(
                       '${viewModel.hostCafeHomeDetailModel?.address}',
                       style: const TextStyle(
                           fontSize: 14,
@@ -196,7 +199,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700),
                     ),
-                     Text(
+                    Text(
                       '${viewModel.hostCafeHomeDetailModel?.businessHours}',
                       style: const TextStyle(
                           fontSize: 14,
@@ -266,8 +269,8 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                       height: 11,
                     ),
                     Container(
-                      padding:
-                          const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                      padding: const EdgeInsets.only(
+                          left: 12, right: 12, bottom: 12),
                       decoration: BoxDecoration(
                         color: const Color(0xffF7F7FA),
                         borderRadius: BorderRadius.circular(4),
@@ -275,14 +278,17 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                       child: ListView.builder(
                           shrinkWrap: true, // shrinkWrap을 true로 설정
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: viewModel.hostCafeHomeDetailModel?.cafeMenus.length??0,
+                          itemCount: viewModel
+                                  .hostCafeHomeDetailModel?.cafeMenus.length ??
+                              0,
                           itemBuilder: (context, index) {
                             return Container(
                                 padding: const EdgeInsets.only(
                                   top: 12,
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       '${viewModel.hostCafeHomeDetailModel?.cafeMenus[index].name}',
@@ -330,8 +336,8 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                       height: 11,
                     ),
                     Container(
-                      padding:
-                          const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+                      padding: const EdgeInsets.only(
+                          left: 12, right: 12, bottom: 12),
                       decoration: BoxDecoration(
                         color: const Color(0xffF7F7FA),
                         borderRadius: BorderRadius.circular(4),
@@ -339,12 +345,15 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                       child: ListView.builder(
                           shrinkWrap: true, // shrinkWrap을 true로 설정
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: viewModel.hostCafeHomeDetailModel?.cafeOptions.length??0,
+                          itemCount: viewModel.hostCafeHomeDetailModel
+                                  ?.cafeOptions.length ??
+                              0,
                           itemBuilder: (context, index) {
                             return Container(
                                 padding: const EdgeInsets.only(top: 12),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       '${viewModel.hostCafeHomeDetailModel?.cafeOptions[index].name}',
@@ -402,24 +411,34 @@ class _HostHomeDetail extends State<HostHomeDetail> {
             ],
           );
         })),
-        bottomNavigationBar: const Padding(
-          padding: EdgeInsets.only(left: 18, right: 18, top: 21, bottom: 44),
+        bottomNavigationBar: Padding(
+          padding:
+              const EdgeInsets.only(left: 18, right: 18, top: 21, bottom: 44),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               BircaOutLinedButton(
-                  text: '대관 요청하기',
-                  radiusColor: Palette.primary,
-                  backgroundColor: Palette.primary,
-                  width: 160,
-                  height: 44,
-                  radius: 6,
-                  textColor: Colors.white,
-                  textSize: 14),
-              SizedBox(
+                text: '대관 요청하기',
+                radiusColor: Palette.primary,
+                backgroundColor: Palette.primary,
+                width: 160,
+                height: 44,
+                radius: 6,
+                textColor: Colors.white,
+                textSize: 14,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HostRequest(
+                                cafeID: widget.cafeID,
+                              )));
+                },
+              ),
+              const SizedBox(
                 width: 14,
               ),
-              BircaOutLinedButton(
+              const BircaOutLinedButton(
                   text: '전화하기',
                   radiusColor: Palette.primary,
                   backgroundColor: Colors.white,
@@ -428,9 +447,6 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                   radius: 6,
                   textColor: Palette.primary,
                   textSize: 14)
-
-       
-
             ],
           ),
         ));
