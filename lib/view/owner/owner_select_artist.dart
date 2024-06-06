@@ -1,4 +1,3 @@
-import 'package:birca/view/onboarding/select_interest_artist_screen.dart';
 import 'package:birca/widgets/item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -274,12 +273,21 @@ class _OwnerSelectArtist
                     fontWeight: FontWeight.w500,
                     onPressed: () {
                       if (model.selectedArtist.isNotEmpty) {
-                        model.postFavoriteArtist();
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const SelectInterestArtistScreen()));
+                        Map<String, dynamic> data = {
+                          'id': model.selectedArtist[0].groupId,
+                          'artist': model.selectedArtist[0].groupName,
+                        };
+
+
+                        Navigator.pop(context,data);
+                        // model.postFavoriteArtist();
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) =>
+                        //             const SelectInterestArtistScreen()));
+
+
                       }
                     },
                   )),
