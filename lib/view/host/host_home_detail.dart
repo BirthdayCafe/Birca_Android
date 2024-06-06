@@ -21,7 +21,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
   @override
   void initState() {
     int id = widget.cafeID; // cafeID를 저장할 변수
-    Provider.of<HostHomeViewModel>(context, listen: false).getCafeDatail(id);
+    Provider.of<HostHomeViewModel>(context, listen: false).getCafeDetail(id);
 
     super.initState();
   }
@@ -99,10 +99,10 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                       alignment: Alignment.bottomCenter,
                     ),
                     autoplay: false,
-                    itemCount: cafeImage.length,
+                    itemCount: viewModel.hostCafeHomeDetailModel!.cafeImages.length,
                     itemBuilder: (context, index) {
-                      return Image.asset(
-                        cafeImage[index],
+                      return Image.network(
+                        viewModel.hostCafeHomeDetailModel!.cafeImages[index],
                         fit: BoxFit.cover,
                       );
                     },
