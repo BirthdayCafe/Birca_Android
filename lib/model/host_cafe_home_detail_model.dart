@@ -118,3 +118,50 @@ class CafeOption {
     };
   }
 }
+class HostRequestModel {
+  final int artistId;
+  final int cafeId;
+  final String startDate;
+  final String endDate;
+  final int minimumVisitant;
+  final int maximumVisitant;
+  final String twitterAccount;
+  final String hostPhoneNumber;
+
+  HostRequestModel({
+    required this.artistId,
+    required this.cafeId,
+    required this.startDate,
+    required this.endDate,
+    required this.minimumVisitant,
+    required this.maximumVisitant,
+    required this.twitterAccount,
+    required this.hostPhoneNumber,
+  });
+
+  factory HostRequestModel.fromJson(Map<String, dynamic> json) {
+    return HostRequestModel(
+      artistId: json['artistId'],
+      cafeId: json['cafeId'],
+      startDate: json['startDate'],
+      endDate: json['endDate'],
+      minimumVisitant: json['minimumVisitant'],
+      maximumVisitant: json['maximumVisitant'],
+      twitterAccount: json['twitterAccount'],
+      hostPhoneNumber: json['hostPhoneNumber'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'artistId': artistId,
+      'cafeId': cafeId,
+      'startDate': startDate,
+      'endDate': endDate,
+      'minimumVisitant': minimumVisitant,
+      'maximumVisitant': maximumVisitant,
+      'twitterAccount': twitterAccount,
+      'hostPhoneNumber': hostPhoneNumber,
+    };
+  }
+}
