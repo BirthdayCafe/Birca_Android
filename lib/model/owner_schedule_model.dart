@@ -22,8 +22,8 @@ class OwnerScheduleAddModel {
   int artistId;
   String startDate;
   String endDate;
-  int minimumVisitants;
-  int maximumVisitants;
+  int minimumVisitant;
+  int maximumVisitant;
   String twitterAccount;
   String hostPhoneNumber;
 
@@ -31,8 +31,8 @@ class OwnerScheduleAddModel {
     required this.artistId,
     required this.startDate,
     required this.endDate,
-    required this.minimumVisitants,
-    required this.maximumVisitants,
+    required this.minimumVisitant,
+    required this.maximumVisitant,
     required this.twitterAccount,
     required this.hostPhoneNumber,
   });
@@ -42,8 +42,8 @@ class OwnerScheduleAddModel {
       artistId: json['artistId'],
       startDate: json['startDate'],
       endDate: json['endDate'],
-      minimumVisitants: json['minimumVisitants'],
-      maximumVisitants: json['maximumVisitants'],
+      minimumVisitant: json['minimumVisitant'],
+      maximumVisitant: json['maximumVisitant'],
       twitterAccount: json['twitterAccount'],
       hostPhoneNumber: json['hostPhoneNumber'],
     );
@@ -54,8 +54,8 @@ class OwnerScheduleAddModel {
       'artistId': artistId,
       'startDate': startDate,
       'endDate': endDate,
-      'minimumVisitants': minimumVisitants,
-      'maximumVisitants': maximumVisitants,
+      'minimumVisitant': minimumVisitant,
+      'maximumVisitant': maximumVisitant,
       'twitterAccount': twitterAccount,
       'hostPhoneNumber': hostPhoneNumber,
     };
