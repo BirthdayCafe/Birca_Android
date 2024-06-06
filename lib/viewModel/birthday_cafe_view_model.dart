@@ -33,6 +33,30 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   List<BirthdayCafeSpecialGoodsModel>? get birthdayCafeSpecialGoodsModel =>
       _birthdayCafeSpecialGoodsModel;
 
+  // congestionState를 한글로 변환하는 매핑
+  Map<String, String> congestionStateMapping = {
+    'SMOOTH': '원활',
+    'MODERATE': '보통',
+    'CONGESTED': '혼잡',
+  };
+
+  // progressState를 한글로 변환하는 함수
+  String getCongestionStateInKorean(String congestionState) {
+    return congestionStateMapping[congestionState] ?? '알 수 없음';
+  }
+
+  // specialGoodsStockState를 한글로 변환하는 매핑
+  Map<String, String> specialGoodsStockStateMapping = {
+    'EXHAUSTED': '소진',
+    'SCARCE': '적음',
+    'ABUNDANT': '많음',
+  };
+
+  // progressState를 한글로 변환하는 함수
+  String getSpecialGoodsStockStateInKorean(String specialGoodsStockState) {
+    return specialGoodsStockStateMapping[specialGoodsStockState] ?? '알 수 없음';
+  }
+
   BirthdayCafeViewModel(){
 
     _birthdayCafeLuckyDrawsModel = [];
