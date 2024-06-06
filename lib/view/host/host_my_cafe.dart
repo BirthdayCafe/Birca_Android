@@ -155,7 +155,12 @@ class _HostCafe extends State<HostCafe> {
                                               width: 4,
                                             ),
                                             Text(
-                                                '${viewModel.hostMyCafeModelList?[index].progressState}',
+                                                viewModel
+                                                    .getProgressStateInKorean(
+                                                        viewModel
+                                                            .hostMyCafeModelList![
+                                                                index]
+                                                            .progressState),
                                                 style: const TextStyle(
                                                     fontSize: 10,
                                                     color: Palette.primary))
