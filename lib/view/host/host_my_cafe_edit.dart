@@ -22,11 +22,11 @@ class HostCafeEdit extends StatefulWidget {
 }
 
 class _HostCafeEdit extends State<HostCafeEdit> {
+  int id = 0;
 
-  int id =0;
   @override
   void initState() {
-     id = widget.cafeID; // cafeID를 저장할 변수
+    id = widget.cafeID; // cafeID를 저장할 변수
 
     super.initState();
     Provider.of<BirthdayCafeViewModel>(context, listen: false).fetchData(id);
@@ -37,6 +37,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
     Provider.of<BirthdayCafeViewModel>(context, listen: false)
         .getSpecialGoods(id);
   }
+
   final ImagePicker _picker = ImagePicker();
   List<PickedFile> _selectedImages = [];
 
@@ -638,6 +639,43 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                       height: 26,
                     ),
                     const Text(
+                      '대표 사진',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                        height: 90,
+                        width: 90,
+                        child: Image.network(
+                            viewModel.birthdayCafeModel?.mainImage ?? '',fit: BoxFit.cover,),
+                      ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    BircaOutLinedButton(
+                      text: '사진 업로드',
+                      radiusColor: Palette.primary,
+                      backgroundColor: Colors.white,
+                      width: 96,
+                      height: 36,
+                      radius: 6,
+                      textColor: Palette.primary,
+                      textSize: 14,
+                      onPressed: () {
+                        _pickMainImages(id);
+                      },
+                    ),
+
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
                       '사진',
                       style: TextStyle(
                           color: Palette.gray10,
@@ -662,28 +700,36 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                             shrinkWrap: true, // shrinkWrap을 true로 설정
 
                             scrollDirection: Axis.horizontal,
-                            itemCount: viewModel.birthdayCafeModel?.defaultImages.length??0,
+                            itemCount: viewModel
+                                    .birthdayCafeModel?.defaultImages.length ??
+                                0,
                             itemBuilder: (context, index) {
                               return Container(
                                 padding: const EdgeInsets.only(right: 8),
-                                child: Image.network(viewModel.birthdayCafeModel!.defaultImages[index],scale: 90,fit: BoxFit.cover,),
+                                child: Image.network(
+                                  viewModel
+                                      .birthdayCafeModel!.defaultImages[index],
+                                  scale: 90,
+                                  fit: BoxFit.cover,
+                                ),
                               );
                             })),
                     const SizedBox(
                       height: 26,
                     ),
-                     BircaOutLinedButton(
-                        text: '파일 업로드',
-                        radiusColor: Palette.primary,
-                        backgroundColor: Colors.white,
-                        width: 96,
-                        height: 36,
-                        radius: 6,
-                        textColor: Palette.primary,
-                        textSize: 14,onPressed: (){
-                      _pickImages(id);
-
-                    },),
+                    BircaOutLinedButton(
+                      text: '사진 업로드',
+                      radiusColor: Palette.primary,
+                      backgroundColor: Colors.white,
+                      width: 96,
+                      height: 36,
+                      radius: 6,
+                      textColor: Palette.primary,
+                      textSize: 14,
+                      onPressed: () {
+                        _pickImages(id);
+                      },
+                    ),
                     const SizedBox(
                       height: 26,
                     ),
@@ -766,22 +812,46 @@ class _HostCafeEdit extends State<HostCafeEdit> {
     // final List<XFile> pickedFiles = await _picker.pickMultiImage();
     List<PickedFile>? images = await _picker.getMultiImage();
 
+
     if (images != null) {
-      if (images.length >10) {
-        ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('사진은 10장까지 선택 가능합니다.')));
+      if (images.length > 10) {
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('사진은 10장까지 선택 가능합니다.')));
         log(_selectedImages.toString());
       } else {
-        setState(() async {
+
+
           _selectedImages =
               images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
 
-          await Provider.of<BirthdayCafeViewModel>(context, listen: false).postImage(cafeId, _selectedImages).then((value) =>  Provider.of<BirthdayCafeViewModel>(context, listen: false)
-              .getBirthdayCafes(id));
+          log('---------${_selectedImages.length}--------');
+
+
+          await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+              .postImage(cafeId, _selectedImages)
+              .then((value) =>
+                  Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                      .getBirthdayCafes(id));
           log(_selectedImages.toString());
-        });
+
       }
     }
   }
 
+  Future<void> _pickMainImages(int cafeId) async {
+    PickedFile? image = await _picker.getImage(source: ImageSource.gallery);
+
+    if (image != null) {
+
+        setState(() async {
+
+          await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+              .postMainImage(cafeId, image)
+              .then((value) =>
+              Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .getBirthdayCafes(id));
+        });
+
+    }
+  }
 }
