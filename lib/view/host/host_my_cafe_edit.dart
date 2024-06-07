@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
 import '../../viewModel/birthday_cafe_view_model.dart';
@@ -39,12 +38,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   bool isDateChecked = false;
   bool isCountChecked = false;
 
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
-  DateTime? _selectedDay;
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _rangeStart;
-  DateTime? _rangeEnd;
-
   List<String> cafeDetailImage = [
     'lib/assets/image/img_cafe_test.png',
     'lib/assets/image/img_cafe_test.png',
@@ -57,20 +50,32 @@ class _HostCafeEdit extends State<HostCafeEdit> {
 
   List<String> cafeMenu = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
   List<String> luckyDraw = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
+  TextEditingController birthDayCafeNameController = TextEditingController();
+
+  TextEditingController cafeNameController = TextEditingController();
+  TextEditingController artistController = TextEditingController();
+  TextEditingController twitterController = TextEditingController();
+  TextEditingController cafeAddressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        title: const Text(
-          '나의 생일 카페',
-          style: TextStyle(
-              fontSize: 16,
-              color: Palette.gray10,
-              fontFamily: 'Pretandard',
-              fontWeight: FontWeight.bold),
-        ),
+        title: Consumer<BirthdayCafeViewModel>(
+            builder: (context, viewModel, widget) {
+          birthDayCafeNameController.text =
+              viewModel.birthdayCafeModel?.birthdayCafeName ?? '';
+          return TextField(
+              controller: birthDayCafeNameController,
+              decoration: const InputDecoration(
+                  hintText: '생일 카페 이름', border: InputBorder.none),
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: Palette.gray10,
+                  fontFamily: 'Pretandard',
+                  fontWeight: FontWeight.bold));
+        }),
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -78,8 +83,15 @@ class _HostCafeEdit extends State<HostCafeEdit> {
             icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
       ),
       body: SingleChildScrollView(
-        child:
-            Consumer<BirthdayCafeViewModel>(builder: (context, viewModel, widget) {
+        child: Consumer<BirthdayCafeViewModel>(
+            builder: (context, viewModel, widget) {
+          cafeNameController.text = viewModel.birthdayCafeModel!.cafe.name;
+          artistController.text =
+              '${viewModel.birthdayCafeModel!.artist.groupName} ${viewModel.birthdayCafeModel!.artist.name}';
+          twitterController.text = viewModel.birthdayCafeModel!.twitterAccount;
+          cafeAddressController.text =
+              viewModel.birthdayCafeModel!.cafe.address;
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -110,13 +122,17 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text(
-                        '카페 이름',
-                        style: TextStyle(
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                          '${viewModel.birthdayCafeModel?.cafe.name}',
+                          style: const TextStyle(
                             color: Palette.gray10,
                             fontFamily: 'Pretendard',
                             fontWeight: FontWeight.w700,
-                            fontSize: 18),
+                            fontSize: 18,
+                          ),
+                        ),
                       ),
                       SizedBox(
                           height: 10,
@@ -185,9 +201,10 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         borderRadius: BorderRadius.circular(4),
                         color: Palette.primary,
                       ),
-                      child: const Text(
-                        '포화',
-                        style: TextStyle(
+                      child: Text(
+                        viewModel.getCongestionStateInKorean(
+                            viewModel.birthdayCafeModel!.congestionState),
+                        style: const TextStyle(
                             fontSize: 12,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -212,9 +229,10 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         borderRadius: BorderRadius.circular(4),
                         color: Palette.primary,
                       ),
-                      child: const Text(
-                        '재고 없음',
-                        style: TextStyle(
+                      child: Text(
+                        viewModel.getSpecialGoodsStockStateInKorean(viewModel
+                            .birthdayCafeModel!.specialGoodsStockState),
+                        style: const TextStyle(
                             fontSize: 12,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -230,15 +248,16 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      '카페 이름',
+                      '아티스트',
                       style: TextStyle(
                           color: Palette.gray10,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
                           fontSize: 16),
                     ),
-                    const TextField(
-                      decoration: InputDecoration(
+                    TextField(
+                      controller: artistController,
+                      decoration: const InputDecoration(
                         hintText: '아티스트 및 그룹명',
                         border: UnderlineInputBorder(), // 밑줄 추가
                       ),
@@ -254,8 +273,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           fontWeight: FontWeight.w700,
                           fontSize: 16),
                     ),
-                    const TextField(
-                      decoration: InputDecoration(
+                    TextField(
+                      controller: twitterController,
+                      decoration: const InputDecoration(
                         hintText: '트위터 계정',
                         border: UnderlineInputBorder(), // 밑줄 추가
                       ),
@@ -284,25 +304,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         ),
                         alignment: Alignment.center,
                         child: Text(
-                          hostDate,
+                          '${viewModel.birthdayCafeModel?.startDate.substring(0, 10)} ~ ${viewModel.birthdayCafeModel?.endDate.substring(0, 10)}',
                         ),
                       ),
-                      const SizedBox(
-                        width: 11,
-                      ),
-                      BircaOutLinedButton(
-                        text: '날짜 선택',
-                        radiusColor: Palette.primary,
-                        width: 80,
-                        height: 36,
-                        radius: 6,
-                        textColor: Palette.primary,
-                        textSize: 14,
-                        onPressed: () {
-                          _showBottomDialogCalendar(context);
-                        },
-                        backgroundColor: Colors.white,
-                      )
                     ]),
                     const SizedBox(
                       height: 26,
@@ -315,8 +319,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           fontWeight: FontWeight.w700,
                           fontSize: 16),
                     ),
-                    const TextField(
-                      decoration: InputDecoration(
+                    TextField(
+                      controller: cafeAddressController,
+                      decoration: const InputDecoration(
                         hintText: '서울 특별시~~',
                         border: UnderlineInputBorder(), // 밑줄 추가
                       ),
@@ -703,91 +708,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
         ),
       ),
     );
-  }
-
-  //달력
-  void _showBottomDialogCalendar(BuildContext context) async {
-    var hostDate1 = await showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-            //
-            return Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(
-                      left: 25, right: 25, top: 10, bottom: 13),
-                  child: TableCalendar(
-                    //오늘 날짜
-                    focusedDay: _focusedDay,
-                    firstDay: DateTime.now(),
-                    lastDay: DateTime.utc(DateTime.now().year + 1),
-
-                    headerStyle: const HeaderStyle(
-                        formatButtonVisible: false, titleCentered: true),
-
-                    rangeStartDay: _rangeStart,
-                    rangeEndDay: _rangeEnd,
-                    rangeSelectionMode: _rangeSelectionMode,
-
-                    selectedDayPredicate: (day) {
-                      return isSameDay(_selectedDay, day);
-                    },
-
-                    onDaySelected: (selectedDay, focusedDay) {
-                      if (!isSameDay(_selectedDay, selectedDay)) {
-                        setState(() {
-                          _selectedDay = selectedDay;
-                          _focusedDay =
-                              focusedDay; // update `_focusedDay` here as well
-                          _rangeStart = null; // Important to clean those
-                          _rangeEnd = null;
-                          _rangeSelectionMode = RangeSelectionMode.toggledOff;
-                        });
-                      }
-                    },
-
-                    //달력 날짜 범위 선택
-                    onRangeSelected: (start, end, focusedDay) {
-                      setState(() {
-                        _selectedDay = null;
-                        _focusedDay = focusedDay;
-                        _rangeStart = start;
-                        _rangeEnd = end;
-                        _rangeSelectionMode = RangeSelectionMode.toggledOn;
-                        // print('start : $_rangeStart / end : $_rangeEnd ');
-                      });
-                    },
-                  ),
-                ),
-                BircaFilledButton(
-                  text: '적용하기',
-                  color: Palette.primary,
-                  width: 300,
-                  height: 46,
-                  onPressed: () {
-                    //날짜를 하나만 선택 했을 시
-                    _rangeEnd ??= _rangeStart;
-                    setState(() {
-                      hostDate =
-                          '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
-                      // print(hostDate);
-                    });
-
-                    Navigator.of(context).pop(hostDate);
-                  },
-                ),
-              ],
-            );
-          });
-        });
-
-    if (hostDate1 != null) {
-      setState(() {
-        hostDate = hostDate1;
-      });
-    }
   }
 
   //특전 삭제
