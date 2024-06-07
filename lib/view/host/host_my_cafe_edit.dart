@@ -848,8 +848,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
 
         log('---------${_selectedImages.length}--------');
 
-        _selectedImages = [];
-
         await Provider.of<BirthdayCafeViewModel>(context, listen: false)
             .postImage(cafeId, _selectedImages)
             .then((value) =>
