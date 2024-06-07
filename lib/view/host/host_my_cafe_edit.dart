@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:birca/view/host/host_my_cafe_detail.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
@@ -19,9 +22,11 @@ class HostCafeEdit extends StatefulWidget {
 }
 
 class _HostCafeEdit extends State<HostCafeEdit> {
+
+  int id =0;
   @override
   void initState() {
-    int id = widget.cafeID; // cafeID를 저장할 변수
+     id = widget.cafeID; // cafeID를 저장할 변수
 
     super.initState();
     Provider.of<BirthdayCafeViewModel>(context, listen: false).fetchData(id);
@@ -32,19 +37,21 @@ class _HostCafeEdit extends State<HostCafeEdit> {
     Provider.of<BirthdayCafeViewModel>(context, listen: false)
         .getSpecialGoods(id);
   }
+  final ImagePicker _picker = ImagePicker();
+  List<PickedFile> _selectedImages = [];
 
   bool isSwitched = false;
   String hostDate = '';
   bool isDateChecked = false;
   bool isCountChecked = false;
 
-  List<String> cafeDetailImage = [
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png'
-  ];
+  // List<String> cafeDetailImage = [
+  //   'lib/assets/image/img_cafe_test.png',
+  //   'lib/assets/image/img_cafe_test.png',
+  //   'lib/assets/image/img_cafe_test.png',
+  //   'lib/assets/image/img_cafe_test.png',
+  //   'lib/assets/image/img_cafe_test.png'
+  // ];
 
   List<String> goods = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
 
@@ -655,17 +662,17 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                             shrinkWrap: true, // shrinkWrap을 true로 설정
 
                             scrollDirection: Axis.horizontal,
-                            itemCount: cafeDetailImage.length,
+                            itemCount: viewModel.birthdayCafeModel?.defaultImages.length??0,
                             itemBuilder: (context, index) {
                               return Container(
                                 padding: const EdgeInsets.only(right: 8),
-                                child: Image.asset(cafeDetailImage[index]),
+                                child: Image.network(viewModel.birthdayCafeModel!.defaultImages[index],scale: 90,fit: BoxFit.cover,),
                               );
                             })),
                     const SizedBox(
                       height: 26,
                     ),
-                    const BircaOutLinedButton(
+                     BircaOutLinedButton(
                         text: '파일 업로드',
                         radiusColor: Palette.primary,
                         backgroundColor: Colors.white,
@@ -673,7 +680,10 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         height: 36,
                         radius: 6,
                         textColor: Palette.primary,
-                        textSize: 14),
+                        textSize: 14,onPressed: (){
+                      _pickImages(id);
+
+                    },),
                     const SizedBox(
                       height: 26,
                     ),
@@ -751,4 +761,27 @@ class _HostCafeEdit extends State<HostCafeEdit> {
       luckyDraw.add("a");
     });
   }
+
+  Future<void> _pickImages(int cafeId) async {
+    // final List<XFile> pickedFiles = await _picker.pickMultiImage();
+    List<PickedFile>? images = await _picker.getMultiImage();
+
+    if (images != null) {
+      if (images.length >10) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('사진은 10장까지 선택 가능합니다.')));
+        log(_selectedImages.toString());
+      } else {
+        setState(() async {
+          _selectedImages =
+              images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
+
+          await Provider.of<BirthdayCafeViewModel>(context, listen: false).postImage(cafeId, _selectedImages).then((value) =>  Provider.of<BirthdayCafeViewModel>(context, listen: false)
+              .getBirthdayCafes(id));
+          log(_selectedImages.toString());
+        });
+      }
+    }
+  }
+
 }
