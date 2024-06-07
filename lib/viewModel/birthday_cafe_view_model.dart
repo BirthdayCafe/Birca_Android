@@ -372,7 +372,6 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
     // 업로드할 파일을 FormData로 변환
     FormData formData = FormData();
-    formData.files.clear();
 
     for (int i = 0; i < cafeImages.length; i++) {
       formData.files.add(MapEntry(
@@ -507,6 +506,73 @@ class BirthdayCafeViewModel extends ChangeNotifier {
         // Handle other exceptions if necessary
         log('Error: $e');
         throw Exception('Failed to postImage.');
+      }
+    }
+  }
+
+  //생일카페 정보 수정
+  Future<void> patchInfo(
+      int cafeId, BirthdayCafeInfoModel birthdayCafeInfoModel) async {
+    // const storage = FlutterSecureStorage();
+    var baseUrl = dotenv.env['BASE_URL'];
+    var token = '';
+
+    token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    //
+    // // 토큰 가져오기
+    // if (kakaoLoginInfo != null) {
+    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    //   token = loginData['accessToken'].toString();
+    // }
+
+    // LogInterceptor 추가
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ));
+
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.patch(
+        '${baseUrl}api/v1/birthday-cafes/$cafeId',
+        data: birthdayCafeInfoModel.toJson(),
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+
+      // 서버 응답 출력
+      log('patchInfo Response: ${response.data}');
+
+      notifyListeners();
+    } catch (e) {
+      if (e is DioException) {
+        // Dio exception handling
+        if (e.response != null) {
+          // Server responded with an error
+          if (e.response!.statusCode == 400) {
+            // Handle HTTP 400 Bad Request error
+            log('Bad Request - Server returned 400 status code');
+            throw Exception('Failed to patchInfo');
+
+            // Additional error handling logic here if needed
+          } else {
+            // Handle other HTTP status codes
+            log('Server error - Status code: ${e.response!.statusCode}');
+            throw Exception('Failed to patchInfo.');
+            // Additional error handling logic here if needed
+          }
+        } else {
+          // No response from the server (network error, timeout, etc.)
+          log('Dio error: ${e.message}');
+          throw Exception('Failed to patchInfo.');
+        }
+      } else {
+        // Handle other exceptions if necessary
+        log('Error: $e');
+        throw Exception('Failed to patchInfo.');
       }
     }
   }
