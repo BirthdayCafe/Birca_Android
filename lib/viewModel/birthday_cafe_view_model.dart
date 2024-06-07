@@ -13,8 +13,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   Dio dio = Dio();
 
   int? _cafeID;
-  int? get cafeID=>_cafeID;
 
+  int? get cafeID => _cafeID;
 
   BirthdayCafeModel? _birthdayCafeModel;
 
@@ -59,12 +59,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     return specialGoodsStockStateMapping[specialGoodsStockState] ?? '알 수 없음';
   }
 
-  BirthdayCafeViewModel(){
-
+  BirthdayCafeViewModel() {
     _birthdayCafeLuckyDrawsModel = [];
     _birthdayCafeMenusModel = [];
     _birthdayCafeSpecialGoodsModel = [];
-    _birthdayCafeModel?.defaultImages =[];
+    _birthdayCafeModel?.defaultImages = [];
   }
 
   Future<void> fetchData(int cafeID) async {
@@ -75,13 +74,15 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     _cafeID = cafeID;
     notifyListeners(); // 상태 변경 알림
   }
+
   //생일 카페 상세 가져오기
   Future<void> getBirthdayCafes(int birthdayCafeId) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
 
-    token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
     // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
     //
     // // 토큰 가져오기
@@ -89,8 +90,6 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
     //   token = loginData['accessToken'].toString();
     // }
-
-
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -147,7 +146,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
-    token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
     // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
     //
@@ -216,7 +216,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
-    token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
     // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
     //
@@ -284,7 +285,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
-    token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
     //
     // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
@@ -354,7 +356,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
 
-        token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
     // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
     //
     // // 토큰 가져오기
@@ -363,16 +366,20 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     //   token = loginData['accessToken'].toString();
     // }
 
-
     // PickedFile 리스트를 File 리스트로 변환
     List<File> cafeImages =
-    pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
+        pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
 
     // 업로드할 파일을 FormData로 변환
     FormData formData = FormData();
+    formData.files.clear();
+
     for (int i = 0; i < cafeImages.length; i++) {
-      formData.files
-          .add(MapEntry('defaultImage', await MultipartFile.fromFile(cafeImages[i].path,)));
+      formData.files.add(MapEntry(
+          'defaultImage',
+          await MultipartFile.fromFile(
+            cafeImages[i].path,
+          )));
     }
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -387,7 +394,10 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       Response response = await dio.post(
         '${baseUrl}api/v1/birthday-cafes/$cafeId/images',
         data: formData,
-        options: Options(headers: {'Authorization': 'Bearer $token'}, ),);
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
 
       // 서버 응답 출력
       log('postImage Response: ${response.data}');
@@ -423,4 +433,81 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     }
   }
 
+  //생일 카페 대표 사진 편집
+  Future<void> postMainImage(int cafeId, PickedFile pickedFile) async {
+    // const storage = FlutterSecureStorage();
+    var baseUrl = dotenv.env['BASE_URL'];
+    var token = '';
+
+    token =
+        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    //
+    // // 토큰 가져오기
+    // if (kakaoLoginInfo != null) {
+    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    //   token = loginData['accessToken'].toString();
+    // }
+
+    // PickedFile 리스트를 File 리스트로 변환
+    File cafeImage = File(pickedFile.path);
+
+    // 업로드할 파일을 FormData로 변환
+    FormData formData = FormData.fromMap({
+      'mainImage': await MultipartFile.fromFile(
+        cafeImage.path,
+      )
+    });
+
+    // LogInterceptor 추가
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ));
+
+    log(formData.toString());
+
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.post(
+        '${baseUrl}api/v1/birthday-cafes/$cafeId/images/main',
+        data: formData,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+
+      // 서버 응답 출력
+      log('postImage Response: ${response.data}');
+
+      notifyListeners();
+    } catch (e) {
+      if (e is DioException) {
+        // Dio exception handling
+        if (e.response != null) {
+          // Server responded with an error
+          if (e.response!.statusCode == 400) {
+            // Handle HTTP 400 Bad Request error
+            log('Bad Request - Server returned 400 status code');
+            throw Exception('Failed to postImage');
+
+            // Additional error handling logic here if needed
+          } else {
+            // Handle other HTTP status codes
+            log('Server error - Status code: ${e.response!.statusCode}');
+            throw Exception('Failed to postImage.');
+            // Additional error handling logic here if needed
+          }
+        } else {
+          // No response from the server (network error, timeout, etc.)
+          log('Dio error: ${e.message}');
+          throw Exception('Failed to postImage.');
+        }
+      } else {
+        // Handle other exceptions if necessary
+        log('Error: $e');
+        throw Exception('Failed to postImage.');
+      }
+    }
+  }
 }
