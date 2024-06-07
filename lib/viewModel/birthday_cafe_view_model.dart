@@ -375,7 +375,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
     for (int i = 0; i < cafeImages.length; i++) {
       formData.files.add(MapEntry(
-          'defaultImage',
+          'defaultImages',
           await MultipartFile.fromFile(
             cafeImages[i].path,
           )));
