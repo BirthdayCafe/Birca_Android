@@ -578,7 +578,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   }
 
   //생일카페 정보 수정
-  Future<void> patchCafeState(int cafeId, String stateName) async {
+  Future<void> patchCafeState(int cafeId, String stateName,String state) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
@@ -603,6 +603,9 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       // API 엔드포인트 및 업로드
       Response response = await dio.patch(
         '${baseUrl}api/v1/birthday-cafes/$cafeId/$stateName',
+        data: {
+          'state' : state
+        },
         options: Options(
           headers: {'Authorization': 'Bearer $token'},
         ),
@@ -641,4 +644,5 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       }
     }
   }
+
 }
