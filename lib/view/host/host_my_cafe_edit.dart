@@ -47,20 +47,11 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   bool isDateChecked = false;
   bool isCountChecked = false;
 
-  // List<String> cafeDetailImage = [
-  //   'lib/assets/image/img_cafe_test.png',
-  //   'lib/assets/image/img_cafe_test.png',
-  //   'lib/assets/image/img_cafe_test.png',
-  //   'lib/assets/image/img_cafe_test.png',
-  //   'lib/assets/image/img_cafe_test.png'
-  // ];
-
   List<String> goods = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
-
   List<String> cafeMenu = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
   List<String> luckyDraw = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
-  TextEditingController birthDayCafeNameController = TextEditingController();
 
+  TextEditingController birthDayCafeNameController = TextEditingController();
   TextEditingController cafeNameController = TextEditingController();
   TextEditingController artistController = TextEditingController();
   TextEditingController twitterController = TextEditingController();
