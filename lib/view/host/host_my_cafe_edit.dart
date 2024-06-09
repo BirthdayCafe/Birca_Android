@@ -210,14 +210,26 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         borderRadius: BorderRadius.circular(4),
                         color: Palette.primary,
                       ),
-                      child: Text(
-                        viewModel.getCongestionStateInKorean(
-                            viewModel.birthdayCafeModel!.congestionState),
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Pretendard'),
+                      child: GestureDetector(
+                        child: Text(
+                          viewModel.getCongestionStateInKorean(
+                              viewModel.birthdayCafeModel!.congestionState),
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Pretendard'),
+                        ),
+                        onTap: () async {
+                          if (viewModel.birthdayCafeModel?.progressState ==
+                              'IN_PROGRESS') {
+                            _selectCongestionState();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('현재 진행 중일 때에만 변경 가능 합니다.')));
+                          }
+                        },
                       ),
                     ),
                     const SizedBox(
@@ -238,14 +250,26 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         borderRadius: BorderRadius.circular(4),
                         color: Palette.primary,
                       ),
-                      child: Text(
-                        viewModel.getSpecialGoodsStockStateInKorean(viewModel
-                            .birthdayCafeModel!.specialGoodsStockState),
-                        style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Pretendard'),
+                      child: GestureDetector(
+                        child: Text(
+                          viewModel.getSpecialGoodsStockStateInKorean(viewModel
+                              .birthdayCafeModel!.specialGoodsStockState),
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Pretendard'),
+                        ),
+                        onTap: () {
+                          if (viewModel.birthdayCafeModel?.progressState ==
+                              'IN_PROGRESS') {
+                            _selectGoodsState();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('현재 진행 중일 때에만 변경 가능 합니다.')));
+                          }
+                        },
                       ),
                     ),
                   ],
@@ -846,8 +870,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
         _selectedImages =
             images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
 
-        log('---------${_selectedImages.length}--------');
-
         await Provider.of<BirthdayCafeViewModel>(context, listen: false)
             .postImage(cafeId, _selectedImages)
             .then((value) =>
@@ -870,5 +892,107 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                     .getBirthdayCafes(id));
       });
     }
+  }
+
+  void _selectCongestionState() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('혼잡도 상태를 선택해주세요.'),
+            children: [
+              SimpleDialogOption(
+                child: const Text("원활"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'congestion', 'SMOOTH')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              SimpleDialogOption(
+                child: const Text("보통"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'congestion', 'MODERATE')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              SimpleDialogOption(
+                child: const Text("혼잡"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'congestion', 'CONGESTED')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              )
+            ],
+          );
+        });
+  }
+
+  void _selectGoodsState() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('특전 재고 상태를 선택해주세요.'),
+            children: [
+              SimpleDialogOption(
+                child: const Text("소진"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'specialGoods', 'EXHAUSTED')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              SimpleDialogOption(
+                child: const Text("적음"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'specialGoods', 'SCARCE')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              SimpleDialogOption(
+                child: const Text("많음"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'specialGoods', 'ABUNDANT')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              )
+            ],
+          );
+        });
   }
 }
