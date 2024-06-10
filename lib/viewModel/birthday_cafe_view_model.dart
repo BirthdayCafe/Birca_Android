@@ -35,6 +35,13 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   List<BirthdayCafeSpecialGoodsModel>? get birthdayCafeSpecialGoodsModel =>
       _birthdayCafeSpecialGoodsModel;
 
+  //현재 상태를 저장하는 변수
+  final String _congestionState = 'UNKNOWN';
+  final String _specialGoodsState = 'UNKNOWN';
+
+  String get congestionState => _congestionState;
+  String get specialGoodsState => _specialGoodsState;
+
   // congestionState를 한글로 변환하는 매핑
   Map<String, String> congestionStateMapping = {
     'SMOOTH': '원활',
@@ -613,6 +620,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       // 서버 응답 출력
       log('patchCafeState Response: ${response.data}');
+
 
       notifyListeners();
     } catch (e) {
