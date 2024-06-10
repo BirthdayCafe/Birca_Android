@@ -499,24 +499,19 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                               itemCount:
                                   viewModel.birthdayCafeMenusModel?.length,
                               itemBuilder: (context, index) {
-
                                 for (int i = 0;
-                                i <
-                                    viewModel.birthdayCafeMenusModel!
-                                        .length;
-                                i++) {
+                                    i <
+                                        viewModel
+                                            .birthdayCafeMenusModel!.length;
+                                    i++) {
                                   viewModel.menuNameController[i].text =
-                                      viewModel
-                                          .birthdayCafeMenusModel![i]
-                                          .name;
+                                      viewModel.birthdayCafeMenusModel![i].name;
                                   viewModel.menuDetailsController[i].text =
                                       viewModel
-                                          .birthdayCafeMenusModel![i]
-                                          .details;
+                                          .birthdayCafeMenusModel![i].details;
                                   viewModel.menuPriceController[i].text =
-                                      viewModel
-                                          .birthdayCafeMenusModel![i]
-                                          .price.toString();
+                                      viewModel.birthdayCafeMenusModel![i].price
+                                          .toString();
                                 }
                                 return Container(
                                     padding: const EdgeInsets.only(
@@ -531,8 +526,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           // height : 35,
                                           // width: 150,
                                           child: TextField(
-                                            controller: viewModel.menuNameController[index],
-
+                                            controller: viewModel
+                                                .menuNameController[index],
                                             textAlign: TextAlign.center,
                                             decoration: InputDecoration(
                                               enabledBorder:
@@ -550,7 +545,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 3,
                                           child: TextField(
-                                            controller: viewModel.menuDetailsController[index],
+                                            controller: viewModel
+                                                .menuDetailsController[index],
                                             textAlign: TextAlign.center,
                                             decoration: InputDecoration(
                                               enabledBorder:
@@ -568,11 +564,12 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 3,
                                           child: TextField(
-                                            controller: viewModel.menuPriceController[index],
+                                            controller: viewModel
+                                                .menuPriceController[index],
                                             textAlign: TextAlign.center,
                                             decoration: InputDecoration(
                                               enabledBorder:
-                                              const UnderlineInputBorder(
+                                                  const UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
                                                 borderSide: BorderSide(
                                                     color: Palette.gray03),
@@ -582,7 +579,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         ),
                                         IconButton(
                                             onPressed: () {
-
                                               viewModel.deleteMenus(index);
                                             },
                                             icon: const Icon(
@@ -637,8 +633,22 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           ListView.builder(
                               shrinkWrap: true, // shrinkWrap을 true로 설정
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: luckyDraw.length,
+                              itemCount:
+                                  viewModel.birthdayCafeLuckyDrawsModel?.length,
                               itemBuilder: (context, index) {
+                                for (int i = 0;
+                                    i <
+                                        viewModel.birthdayCafeLuckyDrawsModel!
+                                            .length;
+                                    i++) {
+                                  viewModel.luckyDrawsRankController[i].text =
+                                      viewModel
+                                          .birthdayCafeLuckyDrawsModel![i].rank
+                                          .toString();
+                                  viewModel.luckyDrawsPrizeController[i].text =
+                                      viewModel.birthdayCafeLuckyDrawsModel![i]
+                                          .prize;
+                                }
                                 return Container(
                                     padding: const EdgeInsets.only(
                                       top: 12,
@@ -650,9 +660,11 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 1,
                                           child: TextField(
+                                            controller: viewModel
+                                                    .luckyDrawsRankController[
+                                                index],
                                             textAlign: TextAlign.center,
                                             decoration: InputDecoration(
-                                              hintText: luckyDraw[index],
                                               enabledBorder:
                                                   const UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
@@ -668,9 +680,11 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 6,
                                           child: TextField(
+                                            controller: viewModel
+                                                    .luckyDrawsPrizeController[
+                                                index],
                                             textAlign: TextAlign.center,
                                             decoration: InputDecoration(
-                                              hintText: luckyDraw[index],
                                               enabledBorder:
                                                   const UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
@@ -682,7 +696,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         ),
                                         IconButton(
                                             onPressed: () {
-                                              deleteLuckyDraw(index);
+                                              viewModel.deleteLuckyDraws(index);
                                             },
                                             icon: const Icon(
                                               Icons.highlight_remove,
@@ -701,7 +715,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                             textColor: Palette.gray08,
                             textSize: 14,
                             onPressed: () {
-                              addLuckyDraw();
+                              viewModel.addLuckyDraws();
                             },
                           )
                         ],
@@ -852,8 +866,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
               }
 
               for (int i = 0;
-              i < viewModel.birthdayCafeMenusModel!.length;
-              i++) {
+                  i < viewModel.birthdayCafeMenusModel!.length;
+                  i++) {
                 viewModel.birthdayCafeMenusModel![i].name =
                     viewModel.menuNameController[i].text;
                 viewModel.birthdayCafeMenusModel![i].details =
@@ -862,10 +876,20 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                     int.parse(viewModel.menuPriceController[i].text);
               }
 
-              await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+              for (int i = 0;
+                  i < viewModel.birthdayCafeLuckyDrawsModel!.length;
+                  i++) {
+                viewModel.birthdayCafeLuckyDrawsModel![i].rank =
+                    int.parse(viewModel.luckyDrawsRankController[i].text);
+                viewModel.birthdayCafeLuckyDrawsModel![i].prize =
+                    viewModel.luckyDrawsPrizeController[i].text;
+              }
+              Provider.of<BirthdayCafeViewModel>(context, listen: false)
                   .postSpecialGoods(id);
-              await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+              Provider.of<BirthdayCafeViewModel>(context, listen: false)
                   .postMenus(id);
+              Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .postLuckyDraws(id);
 
               await Provider.of<BirthdayCafeViewModel>(context, listen: false)
                   .patchInfo(
@@ -893,21 +917,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
         ),
       ),
     );
-  }
-
-
-  //특전 삭제
-  void deleteLuckyDraw(int index) {
-    setState(() {
-      luckyDraw.removeAt(index);
-    });
-  }
-
-  //특전 생성
-  void addLuckyDraw() {
-    setState(() {
-      luckyDraw.add("a");
-    });
   }
 
   Future<void> _pickImages(int cafeId) async {
