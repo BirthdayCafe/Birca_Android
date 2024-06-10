@@ -43,6 +43,18 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   List<TextEditingController> get goodsDetailsController =>
       _goodsDetailsController;
+  List<TextEditingController> _menuNameController = [];
+
+  List<TextEditingController> get menuNameController => _menuNameController;
+  List<TextEditingController> _menuDetailsController = [];
+
+  List<TextEditingController> get menuDetailsController =>
+      _menuDetailsController;
+  List<TextEditingController> _menuPriceController = [];
+
+  List<TextEditingController> get menuPriceController =>
+      _menuPriceController;
+
 
   //현재 상태를 저장하는 변수
   final String _congestionState = 'UNKNOWN';
@@ -276,13 +288,20 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       // 서버 응답 출력
       log('getMenus Response: ${response.data}');
 
+      _birthdayCafeMenusModel =[];
+
       List<dynamic> jsonData = response.data;
       List<BirthdayCafeMenusModel> menusModels =
           jsonData.map((e) => BirthdayCafeMenusModel.fromJson(e)).toList();
 
-      // _visitorCafeHomeModelList 추가
       _birthdayCafeMenusModel?.addAll(menusModels);
 
+      for (int i = 0; i < _birthdayCafeMenusModel!.length; i++) {
+        _menuNameController.add(TextEditingController());
+        _menuDetailsController.add(TextEditingController());
+        _menuPriceController.add(TextEditingController());
+
+      }
       notifyListeners();
     } catch (e) {
       if (e is DioException) {
@@ -679,6 +698,75 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     }
   }
 
+  //생일카페 menu 수정
+  Future<void> postMenus(int cafeId) async {
+    // const storage = FlutterSecureStorage();
+    var baseUrl = dotenv.env['BASE_URL'];
+    var token = '';
+
+    token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    //
+    // // 토큰 가져오기
+    // if (kakaoLoginInfo != null) {
+    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    //   token = loginData['accessToken'].toString();
+    // }
+
+    // LogInterceptor 추가
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ));
+    List<Map<String, dynamic>>? jsonList =
+    _birthdayCafeMenusModel?.map((item) => item.toJson()).toList();
+
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.post(
+        '${baseUrl}api/v1/birthday-cafes/$cafeId/menus',
+        data: jsonList,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
+
+      // 서버 응답 출력
+      log('postMenus Response: ${response.data}');
+
+      notifyListeners();
+    } catch (e) {
+      if (e is DioException) {
+        // Dio exception handling
+        if (e.response != null) {
+          // Server responded with an error
+          if (e.response!.statusCode == 400) {
+            // Handle HTTP 400 Bad Request error
+            log('Bad Request - Server returned 400 status code');
+            throw Exception('Failed to postMenus');
+
+            // Additional error handling logic here if needed
+          } else {
+            // Handle other HTTP status codes
+            log('Server error - Status code: ${e.response!.statusCode}');
+            throw Exception('Failed to postMenus.');
+            // Additional error handling logic here if needed
+          }
+        } else {
+          // No response from the server (network error, timeout, etc.)
+          log('Dio error: ${e.message}');
+          throw Exception('Failed to postMenus.');
+        }
+      } else {
+        // Handle other exceptions if necessary
+        log('Error: $e');
+        throw Exception('Failed to postMenus.');
+      }
+    }
+  }
+
+
   //생일카페 상태 수정
   Future<void> patchCafeState(
       int cafeId, String stateName, String state) async {
@@ -744,6 +832,33 @@ class BirthdayCafeViewModel extends ChangeNotifier {
         throw Exception('Failed to patchCafeState.');
       }
     }
+  }
+  //menu 삭제
+  void deleteMenus(int index) {
+    _menuNameController[index].dispose();
+    _menuPriceController[index].dispose();
+    _menuDetailsController[index].dispose();
+
+
+    _menuNameController.removeAt(index);
+    _menuPriceController.removeAt(index);
+    _menuDetailsController.removeAt(index);
+
+    _birthdayCafeMenusModel?.removeAt(index);
+
+    notifyListeners();
+  }
+
+  //menu 생성
+  void addMenus() {
+    _menuNameController.add(TextEditingController());
+    _menuPriceController.add(TextEditingController());
+    _menuDetailsController.add(TextEditingController());
+
+    _birthdayCafeMenusModel
+        ?.add(BirthdayCafeMenusModel(name: 'name', details: 'details',price: 0));
+
+    notifyListeners();
   }
 
   //  특전 삭제
