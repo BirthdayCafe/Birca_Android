@@ -1,10 +1,38 @@
+class Artist {
+  String groupName;
+  String name;
+
+  Artist({
+    required this.groupName,
+    required this.name,
+  });
+
+  factory Artist.fromJson(Map<String, dynamic> json) {
+    return Artist(
+      groupName: json['groupName'],
+      name: json['name'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'groupName': groupName,
+      'name': name,
+    };
+  }
+}
+
 class OwnerScheduleModel {
   int birthdayCafeId;
+  String nickname;
+  Artist artist;
   String startDate;
   String endDate;
 
   OwnerScheduleModel({
     required this.birthdayCafeId,
+    required this.nickname,
+    required this.artist,
     required this.startDate,
     required this.endDate,
   });
@@ -12,12 +40,23 @@ class OwnerScheduleModel {
   factory OwnerScheduleModel.fromJson(Map<String, dynamic> json) {
     return OwnerScheduleModel(
       birthdayCafeId: json['birthdayCafeId'],
+      nickname: json['nickname'],
+      artist: Artist.fromJson(json['artist']),
       startDate: json['startDate'],
       endDate: json['endDate'],
     );
   }
-}
 
+  Map<String, dynamic> toJson() {
+    return {
+      'birthdayCafeId': birthdayCafeId,
+      'nickname': nickname,
+      'artist': artist.toJson(),
+      'startDate': startDate,
+      'endDate': endDate,
+    };
+  }
+}
 class OwnerScheduleAddModel {
   int artistId;
   String startDate;
