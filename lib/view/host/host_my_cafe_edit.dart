@@ -47,9 +47,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   bool isDateChecked = false;
   bool isCountChecked = false;
 
-  //
-  // List<String> goods = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
-  List<String> cafeMenu = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
   List<String> luckyDraw = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
 
   TextEditingController birthDayCafeNameController = TextEditingController();
@@ -57,9 +54,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   TextEditingController artistController = TextEditingController();
   TextEditingController twitterController = TextEditingController();
   TextEditingController cafeAddressController = TextEditingController();
-
-  // List<TextEditingController> goodsNameController = [];
-  // List<TextEditingController> goodsDetailsController = [];
 
   @override
   Widget build(BuildContext context) {
@@ -502,8 +496,28 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           ListView.builder(
                               shrinkWrap: true, // shrinkWrap을 true로 설정
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: cafeMenu.length,
+                              itemCount:
+                                  viewModel.birthdayCafeMenusModel?.length,
                               itemBuilder: (context, index) {
+
+                                for (int i = 0;
+                                i <
+                                    viewModel.birthdayCafeMenusModel!
+                                        .length;
+                                i++) {
+                                  viewModel.menuNameController[i].text =
+                                      viewModel
+                                          .birthdayCafeMenusModel![i]
+                                          .name;
+                                  viewModel.menuDetailsController[i].text =
+                                      viewModel
+                                          .birthdayCafeMenusModel![i]
+                                          .details;
+                                  viewModel.menuPriceController[i].text =
+                                      viewModel
+                                          .birthdayCafeMenusModel![i]
+                                          .price.toString();
+                                }
                                 return Container(
                                     padding: const EdgeInsets.only(
                                       top: 12,
@@ -517,9 +531,10 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           // height : 35,
                                           // width: 150,
                                           child: TextField(
+                                            controller: viewModel.menuNameController[index],
+
                                             textAlign: TextAlign.center,
                                             decoration: InputDecoration(
-                                              hintText: cafeMenu[index],
                                               enabledBorder:
                                                   const UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
@@ -535,9 +550,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 3,
                                           child: TextField(
+                                            controller: viewModel.menuDetailsController[index],
                                             textAlign: TextAlign.center,
                                             decoration: InputDecoration(
-                                              hintText: cafeMenu[index],
                                               enabledBorder:
                                                   const UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
@@ -547,9 +562,28 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                             ),
                                           ),
                                         ),
+                                        const SizedBox(
+                                          width: 16,
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: TextField(
+                                            controller: viewModel.menuPriceController[index],
+                                            textAlign: TextAlign.center,
+                                            decoration: InputDecoration(
+                                              enabledBorder:
+                                              const UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.gray03),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
                                         IconButton(
                                             onPressed: () {
-                                              deleteMenu(index);
+
+                                              viewModel.deleteMenus(index);
                                             },
                                             icon: const Icon(
                                               Icons.highlight_remove,
@@ -568,7 +602,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                             textColor: Palette.gray08,
                             textSize: 14,
                             onPressed: () {
-                              addMenu();
+                              viewModel.addMenus();
                             },
                           )
                         ],
@@ -817,8 +851,21 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                     viewModel.goodsDetailsController[i].text;
               }
 
+              for (int i = 0;
+              i < viewModel.birthdayCafeMenusModel!.length;
+              i++) {
+                viewModel.birthdayCafeMenusModel![i].name =
+                    viewModel.menuNameController[i].text;
+                viewModel.birthdayCafeMenusModel![i].details =
+                    viewModel.menuDetailsController[i].text;
+                viewModel.birthdayCafeMenusModel![i].price =
+                    int.parse(viewModel.menuPriceController[i].text);
+              }
+
               await Provider.of<BirthdayCafeViewModel>(context, listen: false)
                   .postSpecialGoods(id);
+              await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .postMenus(id);
 
               await Provider.of<BirthdayCafeViewModel>(context, listen: false)
                   .patchInfo(
@@ -848,19 +895,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
     );
   }
 
-  //메뉴 삭제
-  void deleteMenu(int index) {
-    setState(() {
-      cafeMenu.removeAt(index);
-    });
-  }
-
-  //메뉴 생성
-  void addMenu() {
-    setState(() {
-      cafeMenu.add("a");
-    });
-  }
 
   //특전 삭제
   void deleteLuckyDraw(int index) {
