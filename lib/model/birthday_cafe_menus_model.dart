@@ -14,4 +14,12 @@ class BirthdayCafeMenusModel{
     );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'details': details,
+      'price' : price
+    };
+  }
+
 }
