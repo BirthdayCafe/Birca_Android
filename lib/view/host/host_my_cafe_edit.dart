@@ -713,7 +713,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                     ),
                     SizedBox(
                         height: 90,
-                        child: ListView.builder(
+                        child:
+
+                        ListView.builder(
                             shrinkWrap: true, // shrinkWrap을 true로 설정
 
                             scrollDirection: Axis.horizontal,
@@ -721,15 +723,19 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                     .birthdayCafeModel?.defaultImages.length ??
                                 0,
                             itemBuilder: (context, index) {
-                              return Container(
-                                padding: const EdgeInsets.only(right: 8),
-                                child: Image.network(
-                                  viewModel
-                                      .birthdayCafeModel!.defaultImages[index],
-                                  scale: 90,
-                                  fit: BoxFit.cover,
-                                ),
-                              );
+                              if(viewModel.isLoading){
+                                return const CircularProgressIndicator();
+                              } else {
+                                return Container(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: Image.network(
+                                    viewModel
+                                        .birthdayCafeModel!.defaultImages[index],
+                                    scale: 90,
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              }
                             })),
                     const SizedBox(
                       height: 26,
@@ -849,24 +855,30 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   }
 
   Future<void> _pickImages(int cafeId) async {
-    // final List<XFile> pickedFiles = await _picker.pickMultiImage();
     List<PickedFile>? images = await _picker.getMultiImage();
 
     if (images != null) {
       if (images.length > 10) {
         ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('사진은 10장까지 선택 가능합니다.')));
+            .showSnackBar(const SnackBar(content: Text('사진은 10장까지 선택 가능 합니다.')));
         log(_selectedImages.toString());
       } else {
         _selectedImages =
             images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
 
-        await Provider.of<BirthdayCafeViewModel>(context, listen: false)
-            .postImage(cafeId, _selectedImages)
-            .then((value) =>
-                Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                    .getBirthdayCafes(id));
-        log(_selectedImages.toString());
+        Provider.of<BirthdayCafeViewModel>(context, listen: false).setLoading(true);
+
+
+        try{
+          await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+              .postImage(cafeId, _selectedImages)
+              .then((value) =>
+              Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .getBirthdayCafes(id));
+        }finally{
+          Provider.of<BirthdayCafeViewModel>(context, listen: false).setLoading(false);
+        }
+
       }
     }
   }
@@ -876,11 +888,12 @@ class _HostCafeEdit extends State<HostCafeEdit> {
 
     if (image != null) {
       setState(() async {
-        await Provider.of<BirthdayCafeViewModel>(context, listen: false)
-            .postMainImage(cafeId, image)
-            .then((value) =>
-                Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                    .getBirthdayCafes(id));
+          await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+              .postMainImage(cafeId, image)
+              .then((value) =>
+              Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .getBirthdayCafes(id));
+
       });
     }
   }
