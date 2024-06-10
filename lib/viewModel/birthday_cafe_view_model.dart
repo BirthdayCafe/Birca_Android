@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:birca/model/birthday_cafe_lucky_draws_model.dart';
@@ -37,16 +36,20 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       _birthdayCafeSpecialGoodsModel;
 
   List<TextEditingController> _goodsNameController = [];
+
   List<TextEditingController> get goodsNameController => _goodsNameController;
 
   List<TextEditingController> _goodsDetailsController = [];
-  List<TextEditingController> get goodsDetailsController => _goodsDetailsController;
+
+  List<TextEditingController> get goodsDetailsController =>
+      _goodsDetailsController;
 
   //현재 상태를 저장하는 변수
   final String _congestionState = 'UNKNOWN';
   final String _specialGoodsState = 'UNKNOWN';
 
   String get congestionState => _congestionState;
+
   String get specialGoodsState => _specialGoodsState;
 
   // congestionState를 한글로 변환하는 매핑
@@ -75,6 +78,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //로딩 상태 관리
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   void setLoading(bool value) {
@@ -195,6 +199,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       // 서버 응답 출력
       log('getSpecialGoods Response: ${response.data}');
 
+      _birthdayCafeSpecialGoodsModel = [];
+
       List<dynamic> jsonData = response.data;
       List<BirthdayCafeSpecialGoodsModel> specialGoodsModels = jsonData
           .map((e) => BirthdayCafeSpecialGoodsModel.fromJson(e))
@@ -203,7 +209,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       // _visitorCafeHomeModelList 추가
       _birthdayCafeSpecialGoodsModel?.addAll(specialGoodsModels);
 
-      for(int i=0; i<_birthdayCafeSpecialGoodsModel!.length;i++){
+      for (int i = 0; i < _birthdayCafeSpecialGoodsModel!.length; i++) {
         _goodsNameController.add(TextEditingController());
         _goodsDetailsController.add(TextEditingController());
       }
@@ -612,7 +618,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     var token = '';
 
     token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
     // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
     //
     // // 토큰 가져오기
@@ -626,13 +632,14 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       requestBody: true,
       responseBody: true,
     ));
-    String jsonData = jsonEncode(_birthdayCafeSpecialGoodsModel);
+    List<Map<String, dynamic>>? jsonList =
+        _birthdayCafeSpecialGoodsModel?.map((item) => item.toJson()).toList();
 
     try {
       // API 엔드포인트 및 업로드
       Response response = await dio.post(
         '${baseUrl}api/v1/birthday-cafes/$cafeId/special-goods',
-        data: jsonData,
+        data: jsonList,
         options: Options(
           headers: {'Authorization': 'Bearer $token'},
         ),
@@ -673,7 +680,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   }
 
   //생일카페 상태 수정
-  Future<void> patchCafeState(int cafeId, String stateName,String state) async {
+  Future<void> patchCafeState(
+      int cafeId, String stateName, String state) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
@@ -698,9 +706,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       // API 엔드포인트 및 업로드
       Response response = await dio.patch(
         '${baseUrl}api/v1/birthday-cafes/$cafeId/$stateName',
-        data: {
-          'state' : state
-        },
+        data: {'state': state},
         options: Options(
           headers: {'Authorization': 'Bearer $token'},
         ),
@@ -708,7 +714,6 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       // 서버 응답 출력
       log('patchCafeState Response: ${response.data}');
-
 
       notifyListeners();
     } catch (e) {
@@ -757,9 +762,9 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   void addGoods() {
     _goodsNameController.add(TextEditingController());
     _goodsDetailsController.add(TextEditingController());
-    _birthdayCafeSpecialGoodsModel?.add(BirthdayCafeSpecialGoodsModel(name: 'name', details: 'details'));
+    _birthdayCafeSpecialGoodsModel
+        ?.add(BirthdayCafeSpecialGoodsModel(name: 'name', details: 'details'));
 
-   notifyListeners();
+    notifyListeners();
   }
-
 }
