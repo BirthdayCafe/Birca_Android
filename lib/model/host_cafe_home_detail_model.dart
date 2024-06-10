@@ -1,5 +1,6 @@
 
 class HostCafeHomeDetailModel {
+  bool liked;
   String name;
   String twitterAccount;
   String address;
@@ -10,6 +11,7 @@ class HostCafeHomeDetailModel {
   List<CafeOption> cafeOptions;
 
   HostCafeHomeDetailModel({
+    required this.liked,
     required this.name,
     required this.twitterAccount,
     required this.address,
@@ -22,6 +24,7 @@ class HostCafeHomeDetailModel {
 
   factory HostCafeHomeDetailModel.fromJson(Map<String, dynamic> json) {
     return HostCafeHomeDetailModel(
+      liked: json['liked'],
       name: json['name'],
       twitterAccount: json['twitterAccount'],
       address: json['address'],
@@ -35,6 +38,7 @@ class HostCafeHomeDetailModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'liked':liked,
       'name': name,
       'twitterAccount': twitterAccount,
       'address': address,
