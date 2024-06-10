@@ -10,4 +10,11 @@ class BirthdayCafeLuckyDrawsModel{
       prize: json['prize'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'rank': rank,
+      'prize': prize,
+    };
+  }
 }

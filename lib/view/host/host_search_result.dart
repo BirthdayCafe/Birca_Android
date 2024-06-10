@@ -1,45 +1,43 @@
-import 'package:birca/viewModel/host_search_result_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
 
 class HostSearchResult extends StatefulWidget {
-  const HostSearchResult({super.key});
+  final String keyword;
+
+  const HostSearchResult({Key? key, required this.keyword}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _HostSearchResult();
 }
 
-class _HostSearchResult extends State<HostSearchResult>{
-
-  var searchResult =['a','a','a','a'];
+class _HostSearchResult extends State<HostSearchResult> {
+  var searchResult = ['a', 'a', 'a', 'a'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        scrolledUnderElevation: 0,
-        title:Consumer<HostSearchResultViewModel>(builder: (context,viewModel,child){
-          return BircaText(text: '"${viewModel.search}" 검색 결과', textSize: 18, textColor: Palette.gray10, fontFamily: 'Pretednard');
-        }) ,
-        leading: IconButton(
-            onPressed: (){
-              Navigator.pop(context);
-            },
-            icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
-
-
-      ),
-        body:  ListView.builder(
-          // shrinkWrap: true,
+        appBar: AppBar(
+          scrolledUnderElevation: 0,
+          title: BircaText(
+              text: '"${widget.keyword}" 검색 결과',
+              textSize: 18,
+              textColor: Palette.gray10,
+              fontFamily: 'Pretednard'),
+          leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
+        ),
+        body: ListView.builder(
+            // shrinkWrap: true,
             scrollDirection: Axis.vertical,
             itemCount: searchResult.length,
             itemBuilder: (BuildContext context, int index) {
               return Container(
-                margin:
-                const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
                 // padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.white, // Container의 배경색
@@ -126,8 +124,6 @@ class _HostSearchResult extends State<HostSearchResult>{
                   ],
                 ),
               );
-            })
-    );
+            }));
   }
-
 }

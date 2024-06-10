@@ -1,9 +1,13 @@
+import 'dart:developer';
+
+import 'package:birca/model/birthday_cafe_model.dart';
 import 'package:birca/view/host/host_my_cafe_detail.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
 import '../../viewModel/birthday_cafe_view_model.dart';
@@ -19,9 +23,11 @@ class HostCafeEdit extends StatefulWidget {
 }
 
 class _HostCafeEdit extends State<HostCafeEdit> {
+  int id = 0;
+
   @override
   void initState() {
-    int id = widget.cafeID; // cafeID를 저장할 변수
+    id = widget.cafeID; // cafeID를 저장할 변수
 
     super.initState();
     Provider.of<BirthdayCafeViewModel>(context, listen: false).fetchData(id);
@@ -33,43 +39,41 @@ class _HostCafeEdit extends State<HostCafeEdit> {
         .getSpecialGoods(id);
   }
 
+  final ImagePicker _picker = ImagePicker();
+  List<PickedFile> _selectedImages = [];
+
   bool isSwitched = false;
   String hostDate = '';
   bool isDateChecked = false;
   bool isCountChecked = false;
 
-  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
-  DateTime? _selectedDay;
-  DateTime _focusedDay = DateTime.now();
-  DateTime? _rangeStart;
-  DateTime? _rangeEnd;
-
-  List<String> cafeDetailImage = [
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png',
-    'lib/assets/image/img_cafe_test.png'
-  ];
-
-  List<String> goods = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
-
-  List<String> cafeMenu = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
   List<String> luckyDraw = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
+
+  TextEditingController birthDayCafeNameController = TextEditingController();
+  TextEditingController cafeNameController = TextEditingController();
+  TextEditingController artistController = TextEditingController();
+  TextEditingController twitterController = TextEditingController();
+  TextEditingController cafeAddressController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
-        title: const Text(
-          '나의 생일 카페',
-          style: TextStyle(
-              fontSize: 16,
-              color: Palette.gray10,
-              fontFamily: 'Pretandard',
-              fontWeight: FontWeight.bold),
-        ),
+        title: Consumer<BirthdayCafeViewModel>(
+            builder: (context, viewModel, widget) {
+          birthDayCafeNameController.text =
+              viewModel.birthdayCafeModel?.birthdayCafeName ?? '';
+          return TextField(
+              controller: birthDayCafeNameController,
+              decoration: const InputDecoration(
+                  hintText: '생일 카페 이름', border: InputBorder.none),
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: Palette.gray10,
+                  fontFamily: 'Pretandard',
+                  fontWeight: FontWeight.bold));
+        }),
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -77,590 +81,755 @@ class _HostCafeEdit extends State<HostCafeEdit> {
             icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(
-              height: 33,
-            ),
-            Image.asset(
-              'lib/assets/image/img_cafe_test.png',
-              height: 412,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
-            ),
-            Container(
-                padding: const EdgeInsets.only(left: 20, right: 17, top: 20),
+        child: Consumer<BirthdayCafeViewModel>(
+            builder: (context, viewModel, widget) {
+          cafeNameController.text = viewModel.birthdayCafeModel!.cafe.name;
+          artistController.text =
+              '${viewModel.birthdayCafeModel!.artist.groupName} ${viewModel.birthdayCafeModel!.artist.name}';
+          twitterController.text = viewModel.birthdayCafeModel!.twitterAccount;
+          cafeAddressController.text =
+              viewModel.birthdayCafeModel!.cafe.address;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 33,
+              ),
+              Container(
+                  padding: const EdgeInsets.all(1),
+                  height: 412,
+                  width: MediaQuery.of(context).size.width,
+                  child: Swiper(
+                    scrollDirection: Axis.horizontal,
+                    pagination: const SwiperPagination(
+                      alignment: Alignment.bottomCenter,
+                    ),
+                    autoplay: false,
+                    itemCount: viewModel.birthdayCafeModel!.cafe.images.length,
+                    itemBuilder: (context, index) {
+                      return Image.network(
+                        viewModel.birthdayCafeModel!.cafe.images[index]
+                            .toString(),
+                        fit: BoxFit.cover,
+                      );
+                    },
+                  )),
+              Container(
+                  padding: const EdgeInsets.only(left: 20, right: 17, top: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: 200,
+                        child: Text(
+                          '${viewModel.birthdayCafeModel?.cafe.name}',
+                          style: const TextStyle(
+                            color: Palette.gray10,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                          height: 10,
+                          child: Transform.scale(
+                              scale: 0.7,
+                              child: CupertinoSwitch(
+                                value: isSwitched,
+                                activeColor: Palette.primary,
+                                onChanged: (value) {
+                                  setState(() {
+                                    isSwitched = value;
+                                  });
+                                },
+                              ))),
+                    ],
+                  )),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                width: double.infinity,
+                color: Palette.gray03,
+                height: 1,
+                margin: const EdgeInsets.only(left: 14, right: 14),
+              ),
+              const SizedBox(
+                height: 13,
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 20),
+                child: const Text(
+                  '실시간 혼잡도 및 특전',
+                  style: TextStyle(
+                      color: Palette.gray10,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16),
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                margin: const EdgeInsets.only(left: 16, right: 16),
+                width: double.maxFinite,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  color: const Color(0xffF7F7FA),
+                ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const BircaText(
+                        text: '혼잡도',
+                        textSize: 14,
+                        textColor: Palette.gray10,
+                        fontFamily: 'Pretendard'),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, top: 2, bottom: 2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Palette.primary,
+                      ),
+                      child: GestureDetector(
+                        child: Text(
+                          viewModel.getCongestionStateInKorean(
+                              viewModel.birthdayCafeModel!.congestionState),
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Pretendard'),
+                        ),
+                        onTap: () async {
+                          if (viewModel.birthdayCafeModel?.progressState ==
+                              'IN_PROGRESS') {
+                            _selectCongestionState();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('현재 진행 중일 때에만 변경 가능 합니다.')));
+                          }
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 70,
+                    ),
+                    const BircaText(
+                        text: '특전',
+                        textSize: 14,
+                        textColor: Palette.gray10,
+                        fontFamily: 'Pretendard'),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, top: 2, bottom: 2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(4),
+                        color: Palette.primary,
+                      ),
+                      child: GestureDetector(
+                        child: Text(
+                          viewModel.getSpecialGoodsStockStateInKorean(viewModel
+                              .birthdayCafeModel!.specialGoodsStockState),
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Pretendard'),
+                        ),
+                        onTap: () {
+                          if (viewModel.birthdayCafeModel?.progressState ==
+                              'IN_PROGRESS') {
+                            _selectGoodsState();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('현재 진행 중일 때에만 변경 가능 합니다.')));
+                          }
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(left: 18, right: 18, top: 40),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      '카페 이름',
+                      '아티스트',
                       style: TextStyle(
                           color: Palette.gray10,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700,
-                          fontSize: 18),
+                          fontSize: 16),
                     ),
-                    SizedBox(
-                        height: 10,
-                        child: Transform.scale(
-                            scale: 0.7,
-                            child: CupertinoSwitch(
-                              value: isSwitched,
-                              activeColor: Palette.primary,
-                              onChanged: (value) {
-                                setState(() {
-                                  isSwitched = value;
-                                });
-                              },
-                            ))),
-                  ],
-                )),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: double.infinity,
-              color: Palette.gray03,
-              height: 1,
-              margin: const EdgeInsets.only(left: 14, right: 14),
-            ),
-            const SizedBox(
-              height: 13,
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 20),
-              child: const Text(
-                '실시간 혼잡도 및 특전',
-                style: TextStyle(
-                    color: Palette.gray10,
-                    fontFamily: 'Pretendard',
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16),
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 16, right: 16),
-              width: double.maxFinite,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(4),
-                color: const Color(0xffF7F7FA),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const BircaText(
-                      text: '혼잡도',
-                      textSize: 14,
-                      textColor: Palette.gray10,
-                      fontFamily: 'Pretendard'),
-                  const SizedBox(
-                    width: 6,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 10, right: 10, top: 2, bottom: 2),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: Palette.primary,
-                    ),
-                    child: const Text(
-                      '포화',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Pretendard'),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 70,
-                  ),
-                  const BircaText(
-                      text: '특전',
-                      textSize: 14,
-                      textColor: Palette.gray10,
-                      fontFamily: 'Pretendard'),
-                  const SizedBox(
-                    width: 6,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 10, right: 10, top: 2, bottom: 2),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      color: Palette.primary,
-                    ),
-                    child: const Text(
-                      '재고 없음',
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Pretendard'),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.only(left: 18, right: 18, top: 40),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    '카페 이름',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: '아티스트 및 그룹명',
-                      border: UnderlineInputBorder(), // 밑줄 추가
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '주최자 정보',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: '트위터 계정',
-                      border: UnderlineInputBorder(), // 밑줄 추가
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '생일 카페 주최 일정',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Row(children: [
-                    Container(
-                      width: 238,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: const Color(0xffD7D8DC)),
-                        borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
-                      ),
-                      alignment: Alignment.center,
-                      child: Text(
-                        hostDate,
+                    TextField(
+                      controller: artistController,
+                      decoration: const InputDecoration(
+                        hintText: '아티스트 및 그룹명',
+                        border: UnderlineInputBorder(), // 밑줄 추가
                       ),
                     ),
                     const SizedBox(
-                      width: 11,
+                      height: 26,
+                    ),
+                    const Text(
+                      '주최자 정보',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    TextField(
+                      controller: twitterController,
+                      decoration: const InputDecoration(
+                        hintText: '트위터 계정',
+                        border: UnderlineInputBorder(), // 밑줄 추가
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '생일 카페 주최 일정',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Row(children: [
+                      Container(
+                        width: 238,
+                        height: 36,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xffD7D8DC)),
+                          borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
+                        ),
+                        alignment: Alignment.center,
+                        child: Text(
+                          '${viewModel.birthdayCafeModel?.startDate.substring(0, 10)} ~ ${viewModel.birthdayCafeModel?.endDate.substring(0, 10)}',
+                        ),
+                      ),
+                    ]),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '카페 위치',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    TextField(
+                      controller: cafeAddressController,
+                      decoration: const InputDecoration(
+                        hintText: '서울 특별시~~',
+                        border: UnderlineInputBorder(), // 밑줄 추가
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '특전 구성',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const Text(
+                      '* 특전 종류와 구성품을 작성해주세요.',
+                      style: TextStyle(
+                          color: Palette.gray08,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10),
+                    ),
+                    const SizedBox(
+                      height: 11,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 12, bottom: 12),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                              shrinkWrap: true, // shrinkWrap을 true로 설정
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount: viewModel
+                                  .birthdayCafeSpecialGoodsModel?.length,
+                              itemBuilder: (context, index) {
+                                for (int i = 0;
+                                    i <
+                                        viewModel.birthdayCafeSpecialGoodsModel!
+                                            .length;
+                                    i++) {
+                                  viewModel.goodsNameController[i].text =
+                                      viewModel
+                                          .birthdayCafeSpecialGoodsModel![i]
+                                          .name;
+                                  viewModel.goodsDetailsController[i].text =
+                                      viewModel
+                                          .birthdayCafeSpecialGoodsModel![i]
+                                          .details;
+                                }
+
+                                return Container(
+                                    padding: const EdgeInsets.only(
+                                      top: 12,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          // height : 35,
+                                          // width: 150,
+                                          child: TextField(
+                                            controller: viewModel
+                                                .goodsNameController[index],
+                                            textAlign: TextAlign.center,
+                                            decoration: const InputDecoration(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.primary),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 16,
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: TextField(
+                                            controller: viewModel
+                                                .goodsDetailsController[index],
+                                            textAlign: TextAlign.center,
+                                            decoration: const InputDecoration(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.gray03),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              viewModel.deleteGoods(index);
+                                            },
+                                            icon: const Icon(
+                                              Icons.highlight_remove,
+                                              size: 24,
+                                            ))
+                                      ],
+                                    ));
+                              }),
+                          BircaOutLinedButton(
+                            text: '추가하기',
+                            radiusColor: Palette.gray02,
+                            backgroundColor: Palette.gray02,
+                            width: 260,
+                            height: 40,
+                            radius: 7,
+                            textColor: Palette.gray08,
+                            textSize: 14,
+                            onPressed: () {
+                              viewModel.addGoods();
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '생일 카페 메뉴',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const Text(
+                      '* 메뉴 구성을 작성해주세요.',
+                      style: TextStyle(
+                          color: Palette.gray08,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10),
+                    ),
+                    const SizedBox(
+                      height: 11,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 12, bottom: 12),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                              shrinkWrap: true, // shrinkWrap을 true로 설정
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount:
+                                  viewModel.birthdayCafeMenusModel?.length,
+                              itemBuilder: (context, index) {
+                                for (int i = 0;
+                                    i <
+                                        viewModel
+                                            .birthdayCafeMenusModel!.length;
+                                    i++) {
+                                  viewModel.menuNameController[i].text =
+                                      viewModel.birthdayCafeMenusModel![i].name;
+                                  viewModel.menuDetailsController[i].text =
+                                      viewModel
+                                          .birthdayCafeMenusModel![i].details;
+                                  viewModel.menuPriceController[i].text =
+                                      viewModel.birthdayCafeMenusModel![i].price
+                                          .toString();
+                                }
+                                return Container(
+                                    padding: const EdgeInsets.only(
+                                      top: 12,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          // height : 35,
+                                          // width: 150,
+                                          child: TextField(
+                                            controller: viewModel
+                                                .menuNameController[index],
+                                            textAlign: TextAlign.center,
+                                            decoration: const InputDecoration(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.primary),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 16,
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: TextField(
+                                            controller: viewModel
+                                                .menuDetailsController[index],
+                                            textAlign: TextAlign.center,
+                                            decoration: const InputDecoration(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.gray03),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 16,
+                                        ),
+                                        Expanded(
+                                          flex: 3,
+                                          child: TextField(
+                                            controller: viewModel
+                                                .menuPriceController[index],
+                                            textAlign: TextAlign.center,
+                                            decoration: const InputDecoration(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.gray03),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              viewModel.deleteMenus(index);
+                                            },
+                                            icon: const Icon(
+                                              Icons.highlight_remove,
+                                              size: 24,
+                                            ))
+                                      ],
+                                    ));
+                              }),
+                          BircaOutLinedButton(
+                            text: '추가하기',
+                            radiusColor: Palette.gray02,
+                            backgroundColor: Palette.gray02,
+                            width: 260,
+                            height: 40,
+                            radius: 7,
+                            textColor: Palette.gray08,
+                            textSize: 14,
+                            onPressed: () {
+                              viewModel.addMenus();
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '럭키 드로우',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const Text(
+                      '* 럭키드로우 구성을 작성해주세요.',
+                      style: TextStyle(
+                          color: Palette.gray08,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10),
+                    ),
+                    const SizedBox(
+                      height: 11,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 12, bottom: 12),
+                      child: Column(
+                        children: [
+                          ListView.builder(
+                              shrinkWrap: true, // shrinkWrap을 true로 설정
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount:
+                                  viewModel.birthdayCafeLuckyDrawsModel?.length,
+                              itemBuilder: (context, index) {
+                                for (int i = 0;
+                                    i <
+                                        viewModel.birthdayCafeLuckyDrawsModel!
+                                            .length;
+                                    i++) {
+                                  viewModel.luckyDrawsRankController[i].text =
+                                      viewModel
+                                          .birthdayCafeLuckyDrawsModel![i].rank
+                                          .toString();
+                                  viewModel.luckyDrawsPrizeController[i].text =
+                                      viewModel.birthdayCafeLuckyDrawsModel![i]
+                                          .prize;
+                                }
+                                return Container(
+                                    padding: const EdgeInsets.only(
+                                      top: 12,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Expanded(
+                                          flex: 1,
+                                          child: TextField(
+                                            controller: viewModel
+                                                    .luckyDrawsRankController[
+                                                index],
+                                            textAlign: TextAlign.center,
+                                            decoration: const InputDecoration(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.primary),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 16,
+                                        ),
+                                        Expanded(
+                                          flex: 6,
+                                          child: TextField(
+                                            controller: viewModel
+                                                    .luckyDrawsPrizeController[
+                                                index],
+                                            textAlign: TextAlign.center,
+                                            decoration: const InputDecoration(
+                                              enabledBorder:
+                                                  UnderlineInputBorder(
+                                                // 활성화된 상태의 밑줄 색상
+                                                borderSide: BorderSide(
+                                                    color: Palette.gray03),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                            onPressed: () {
+                                              viewModel.deleteLuckyDraws(index);
+                                            },
+                                            icon: const Icon(
+                                              Icons.highlight_remove,
+                                              size: 24,
+                                            ))
+                                      ],
+                                    ));
+                              }),
+                          BircaOutLinedButton(
+                            text: '추가하기',
+                            radiusColor: Palette.gray02,
+                            backgroundColor: Palette.gray02,
+                            width: 260,
+                            height: 40,
+                            radius: 7,
+                            textColor: Palette.gray08,
+                            textSize: 14,
+                            onPressed: () {
+                              viewModel.addLuckyDraws();
+                            },
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '대표 사진',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                      height: 90,
+                      width: 90,
+                      child: Image.network(
+                        viewModel.birthdayCafeModel?.mainImage ?? '',
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 26,
                     ),
                     BircaOutLinedButton(
-                      text: '날짜 선택',
-                      radiusColor: Palette.primary,
-                      width: 80,
-                      height: 36,
-                      radius: 6,
-                      textColor: Palette.primary,
-                      textSize: 14,
-                      onPressed: () {
-                        _showBottomDialogCalendar(context);
-                      },
-                      backgroundColor: Colors.white,
-                    )
-                  ]),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '카페 위치',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const TextField(
-                    decoration: InputDecoration(
-                      hintText: '서울 특별시~~',
-                      border: UnderlineInputBorder(), // 밑줄 추가
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '특전 구성',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const Text(
-                    '* 특전 종류와 구성품을 작성해주세요.',
-                    style: TextStyle(
-                        color: Palette.gray08,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10),
-                  ),
-                  const SizedBox(
-                    height: 11,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 12, bottom: 12),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                            shrinkWrap: true, // shrinkWrap을 true로 설정
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: goods.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        // height : 35,
-                                        // width: 150,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: goods[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.primary),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: goods[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.gray03),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      IconButton(
-                                          onPressed: () {
-                                            deleteGoods(index);
-                                          },
-                                          icon: const Icon(
-                                            Icons.highlight_remove,
-                                            size: 24,
-                                          ))
-                                    ],
-                                  ));
-                            }),
-                        BircaOutLinedButton(
-                          text: '추가하기',
-                          radiusColor: Palette.gray02,
-                          backgroundColor: Palette.gray02,
-                          width: 260,
-                          height: 40,
-                          radius: 7,
-                          textColor: Palette.gray08,
-                          textSize: 14,
-                          onPressed: () {
-                            addGoods();
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '생일 카페 메뉴',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const Text(
-                    '* 메뉴 구성을 작성해주세요.',
-                    style: TextStyle(
-                        color: Palette.gray08,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10),
-                  ),
-                  const SizedBox(
-                    height: 11,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 12, bottom: 12),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                            shrinkWrap: true, // shrinkWrap을 true로 설정
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: cafeMenu.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        // height : 35,
-                                        // width: 150,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: cafeMenu[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.primary),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Expanded(
-                                        flex: 3,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: cafeMenu[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.gray03),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      IconButton(
-                                          onPressed: () {
-                                            deleteMenu(index);
-                                          },
-                                          icon: const Icon(
-                                            Icons.highlight_remove,
-                                            size: 24,
-                                          ))
-                                    ],
-                                  ));
-                            }),
-                        BircaOutLinedButton(
-                          text: '추가하기',
-                          radiusColor: Palette.gray02,
-                          backgroundColor: Palette.gray02,
-                          width: 260,
-                          height: 40,
-                          radius: 7,
-                          textColor: Palette.gray08,
-                          textSize: 14,
-                          onPressed: () {
-                            addMenu();
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '럭키 드로우',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const Text(
-                    '* 럭키드로우 구성을 작성해주세요.',
-                    style: TextStyle(
-                        color: Palette.gray08,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10),
-                  ),
-                  const SizedBox(
-                    height: 11,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 12, bottom: 12),
-                    child: Column(
-                      children: [
-                        ListView.builder(
-                            shrinkWrap: true, // shrinkWrap을 true로 설정
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: luckyDraw.length,
-                            itemBuilder: (context, index) {
-                              return Container(
-                                  padding: const EdgeInsets.only(
-                                    top: 12,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        flex: 1,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: luckyDraw[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.primary),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 16,
-                                      ),
-                                      Expanded(
-                                        flex: 6,
-                                        child: TextField(
-                                          textAlign: TextAlign.center,
-                                          decoration: InputDecoration(
-                                            hintText: luckyDraw[index],
-                                            enabledBorder:
-                                                const UnderlineInputBorder(
-                                              // 활성화된 상태의 밑줄 색상
-                                              borderSide: BorderSide(
-                                                  color: Palette.gray03),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      IconButton(
-                                          onPressed: () {
-                                            deleteLuckyDraw(index);
-                                          },
-                                          icon: const Icon(
-                                            Icons.highlight_remove,
-                                            size: 24,
-                                          ))
-                                    ],
-                                  ));
-                            }),
-                        BircaOutLinedButton(
-                          text: '추가하기',
-                          radiusColor: Palette.gray02,
-                          backgroundColor: Palette.gray02,
-                          width: 260,
-                          height: 40,
-                          radius: 7,
-                          textColor: Palette.gray08,
-                          textSize: 14,
-                          onPressed: () {
-                            addLuckyDraw();
-                          },
-                        )
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const Text(
-                    '사진',
-                    style: TextStyle(
-                        color: Palette.gray10,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16),
-                  ),
-                  const Text(
-                    '* 생일 카페 관련 사진은 최대 10장까지 업로드 가능합니다.',
-                    style: TextStyle(
-                        color: Palette.gray08,
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                      height: 90,
-                      child: ListView.builder(
-                          shrinkWrap: true, // shrinkWrap을 true로 설정
-
-                          scrollDirection: Axis.horizontal,
-                          itemCount: cafeDetailImage.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              padding: const EdgeInsets.only(right: 8),
-                              child: Image.asset(cafeDetailImage[index]),
-                            );
-                          })),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                  const BircaOutLinedButton(
-                      text: '파일 업로드',
+                      text: '사진 업로드',
                       radiusColor: Palette.primary,
                       backgroundColor: Colors.white,
                       width: 96,
                       height: 36,
                       radius: 6,
                       textColor: Palette.primary,
-                      textSize: 14),
-                  const SizedBox(
-                    height: 26,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+                      textSize: 14,
+                      onPressed: () {
+                        _pickMainImages(id);
+                      },
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    const Text(
+                      '사진',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 16),
+                    ),
+                    const Text(
+                      '* 생일 카페 관련 사진은 최대 10장까지 업로드 가능합니다.',
+                      style: TextStyle(
+                          color: Palette.gray08,
+                          fontFamily: 'Pretendard',
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    SizedBox(
+                        height: 90,
+                        child: ListView.builder(
+                            shrinkWrap: true, // shrinkWrap을 true로 설정
+
+                            scrollDirection: Axis.horizontal,
+                            itemCount: viewModel
+                                    .birthdayCafeModel?.defaultImages.length ??
+                                0,
+                            itemBuilder: (context, index) {
+                              if (viewModel.isLoading) {
+                                return const CircularProgressIndicator();
+                              } else {
+                                return Container(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: Image.network(
+                                    viewModel.birthdayCafeModel!
+                                        .defaultImages[index],
+                                    scale: 90,
+                                    fit: BoxFit.cover,
+                                  ),
+                                );
+                              }
+                            })),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                    BircaOutLinedButton(
+                      text: '사진 업로드',
+                      radiusColor: Palette.primary,
+                      backgroundColor: Colors.white,
+                      width: 96,
+                      height: 36,
+                      radius: 6,
+                      textColor: Palette.primary,
+                      textSize: 14,
+                      onPressed: () {
+                        _pickImages(id);
+                      },
+                    ),
+                    const SizedBox(
+                      height: 26,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          );
+        }),
       ),
       floatingActionButton: SizedBox(
         width: 128,
@@ -674,144 +843,224 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                     builder: (context) =>
                         HostMyCafeDetail(cafeID: widget.cafeID)));
           },
-          child: const BircaOutLinedButton(
-              text: '편집완료',
-              radiusColor: Colors.white,
-              backgroundColor: Colors.white,
-              width: 128,
-              height: 40,
-              radius: 33,
-              textColor: Palette.primary,
-              textSize: 14),
+          child: BircaOutLinedButton(
+            text: '편집완료',
+            radiusColor: Colors.white,
+            backgroundColor: Colors.white,
+            width: 128,
+            height: 40,
+            radius: 33,
+            textColor: Palette.primary,
+            textSize: 14,
+            onPressed: () async {
+              final viewModel =
+                  Provider.of<BirthdayCafeViewModel>(context, listen: false);
+
+              for (int i = 0;
+                  i < viewModel.birthdayCafeSpecialGoodsModel!.length;
+                  i++) {
+                viewModel.birthdayCafeSpecialGoodsModel![i].name =
+                    viewModel.goodsNameController[i].text;
+                viewModel.birthdayCafeSpecialGoodsModel![i].details =
+                    viewModel.goodsDetailsController[i].text;
+              }
+
+              for (int i = 0;
+                  i < viewModel.birthdayCafeMenusModel!.length;
+                  i++) {
+                viewModel.birthdayCafeMenusModel![i].name =
+                    viewModel.menuNameController[i].text;
+                viewModel.birthdayCafeMenusModel![i].details =
+                    viewModel.menuDetailsController[i].text;
+                viewModel.birthdayCafeMenusModel![i].price =
+                    int.parse(viewModel.menuPriceController[i].text);
+              }
+
+              for (int i = 0;
+                  i < viewModel.birthdayCafeLuckyDrawsModel!.length;
+                  i++) {
+                viewModel.birthdayCafeLuckyDrawsModel![i].rank =
+                    int.parse(viewModel.luckyDrawsRankController[i].text);
+                viewModel.birthdayCafeLuckyDrawsModel![i].prize =
+                    viewModel.luckyDrawsPrizeController[i].text;
+              }
+              Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .postSpecialGoods(id);
+              Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .postMenus(id);
+              Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .postLuckyDraws(id);
+
+              await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .patchInfo(
+                      id,
+                      BirthdayCafeInfoModel(
+                          birthdayCafeName: birthDayCafeNameController.text,
+                          birthdayCafeTwitterAccount: twitterController.text))
+                  .then((value) {
+                Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                    .fetchData(id);
+
+                Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                    .getBirthdayCafes(id);
+                Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                    .getLuckDraws(id);
+                Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                    .getMenus(id);
+                Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                    .getSpecialGoods(id);
+
+                Navigator.pop(context);
+              });
+            },
+          ),
         ),
       ),
     );
   }
 
-  //달력
-  void _showBottomDialogCalendar(BuildContext context) async {
-    var hostDate1 = await showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return StatefulBuilder(
-              builder: (BuildContext context, StateSetter setState) {
-            //
-            return Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(
-                      left: 25, right: 25, top: 10, bottom: 13),
-                  child: TableCalendar(
-                    //오늘 날짜
-                    focusedDay: _focusedDay,
-                    firstDay: DateTime.now(),
-                    lastDay: DateTime.utc(DateTime.now().year + 1),
+  Future<void> _pickImages(int cafeId) async {
+    List<PickedFile>? images = await _picker.getMultiImage();
 
-                    headerStyle: const HeaderStyle(
-                        formatButtonVisible: false, titleCentered: true),
+    if (images != null) {
+      if (images.length > 10) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('사진은 10장까지 선택 가능 합니다.')));
+        log(_selectedImages.toString());
+      } else {
+        _selectedImages =
+            images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
 
-                    rangeStartDay: _rangeStart,
-                    rangeEndDay: _rangeEnd,
-                    rangeSelectionMode: _rangeSelectionMode,
+        Provider.of<BirthdayCafeViewModel>(context, listen: false)
+            .setLoading(true);
 
-                    selectedDayPredicate: (day) {
-                      return isSameDay(_selectedDay, day);
-                    },
+        try {
+          await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+              .postImage(cafeId, _selectedImages)
+              .then((value) =>
+                  Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                      .getBirthdayCafes(id));
+        } finally {
+          Provider.of<BirthdayCafeViewModel>(context, listen: false)
+              .setLoading(false);
+        }
+      }
+    }
+  }
 
-                    onDaySelected: (selectedDay, focusedDay) {
-                      if (!isSameDay(_selectedDay, selectedDay)) {
-                        setState(() {
-                          _selectedDay = selectedDay;
-                          _focusedDay =
-                              focusedDay; // update `_focusedDay` here as well
-                          _rangeStart = null; // Important to clean those
-                          _rangeEnd = null;
-                          _rangeSelectionMode = RangeSelectionMode.toggledOff;
-                        });
-                      }
-                    },
+  Future<void> _pickMainImages(int cafeId) async {
+    PickedFile? image = await _picker.getImage(source: ImageSource.gallery);
 
-                    //달력 날짜 범위 선택
-                    onRangeSelected: (start, end, focusedDay) {
-                      setState(() {
-                        _selectedDay = null;
-                        _focusedDay = focusedDay;
-                        _rangeStart = start;
-                        _rangeEnd = end;
-                        _rangeSelectionMode = RangeSelectionMode.toggledOn;
-                        // print('start : $_rangeStart / end : $_rangeEnd ');
-                      });
-                    },
-                  ),
-                ),
-                BircaFilledButton(
-                  text: '적용하기',
-                  color: Palette.primary,
-                  width: 300,
-                  height: 46,
-                  onPressed: () {
-                    //날짜를 하나만 선택 했을 시
-                    _rangeEnd ??= _rangeStart;
-                    setState(() {
-                      hostDate =
-                          '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
-                      // print(hostDate);
-                    });
-
-                    Navigator.of(context).pop(hostDate);
-                  },
-                ),
-              ],
-            );
-          });
-        });
-
-    if (hostDate1 != null) {
-      setState(() {
-        hostDate = hostDate1;
+    if (image != null) {
+      setState(() async {
+        await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+            .postMainImage(cafeId, image)
+            .then((value) =>
+                Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                    .getBirthdayCafes(id));
       });
     }
   }
 
-  //특전 삭제
-  void deleteGoods(int index) {
-    setState(() {
-      goods.removeAt(index);
-    });
+  void _selectCongestionState() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('혼잡도 상태를 선택해주세요.'),
+            children: [
+              SimpleDialogOption(
+                child: const Text("원활"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'congestion', 'SMOOTH')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              SimpleDialogOption(
+                child: const Text("보통"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'congestion', 'MODERATE')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              SimpleDialogOption(
+                child: const Text("혼잡"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'congestion', 'CONGESTED')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              )
+            ],
+          );
+        });
   }
 
-  //특전 생성
-  void addGoods() {
-    setState(() {
-      goods.add("a");
-    });
-  }
-
-  //메뉴 삭제
-  void deleteMenu(int index) {
-    setState(() {
-      cafeMenu.removeAt(index);
-    });
-  }
-
-  //메뉴 생성
-  void addMenu() {
-    setState(() {
-      cafeMenu.add("a");
-    });
-  }
-
-  //특전 삭제
-  void deleteLuckyDraw(int index) {
-    setState(() {
-      luckyDraw.removeAt(index);
-    });
-  }
-
-  //특전 생성
-  void addLuckyDraw() {
-    setState(() {
-      luckyDraw.add("a");
-    });
+  void _selectGoodsState() async {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return SimpleDialog(
+            title: const Text('특전 재고 상태를 선택해주세요.'),
+            children: [
+              SimpleDialogOption(
+                child: const Text("소진"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'specialGoods', 'EXHAUSTED')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              SimpleDialogOption(
+                child: const Text("적음"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'specialGoods', 'SCARCE')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              ),
+              SimpleDialogOption(
+                child: const Text("많음"),
+                onPressed: () async {
+                  await Provider.of<BirthdayCafeViewModel>(context,
+                          listen: false)
+                      .patchCafeState(id, 'specialGoods', 'ABUNDANT')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
+                },
+              )
+            ],
+          );
+        });
   }
 }
