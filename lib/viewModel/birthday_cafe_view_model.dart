@@ -66,6 +66,15 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     return specialGoodsStockStateMapping[specialGoodsStockState] ?? '알 수 없음';
   }
 
+  //로딩 상태 관리
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  void setLoading(bool value) {
+    _isLoading = value;
+    notifyListeners();
+  }
+
   BirthdayCafeViewModel() {
     _birthdayCafeLuckyDrawsModel = [];
     _birthdayCafeMenusModel = [];
