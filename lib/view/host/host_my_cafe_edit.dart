@@ -47,7 +47,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   bool isDateChecked = false;
   bool isCountChecked = false;
 
-  List<String> goods = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
+  //
+  // List<String> goods = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
   List<String> cafeMenu = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
   List<String> luckyDraw = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
 
@@ -56,6 +57,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   TextEditingController artistController = TextEditingController();
   TextEditingController twitterController = TextEditingController();
   TextEditingController cafeAddressController = TextEditingController();
+
+  // List<TextEditingController> goodsNameController = [];
+  // List<TextEditingController> goodsDetailsController = [];
 
   @override
   Widget build(BuildContext context) {
@@ -379,8 +383,24 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           ListView.builder(
                               shrinkWrap: true, // shrinkWrap을 true로 설정
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: goods.length,
+                              itemCount: viewModel
+                                  .birthdayCafeSpecialGoodsModel?.length,
                               itemBuilder: (context, index) {
+                                for (int i = 0;
+                                    i <
+                                        viewModel.birthdayCafeSpecialGoodsModel!
+                                            .length;
+                                    i++) {
+                                  viewModel.goodsNameController[i].text =
+                                      viewModel
+                                          .birthdayCafeSpecialGoodsModel![i]
+                                          .name;
+                                  viewModel.goodsDetailsController[i].text =
+                                      viewModel
+                                          .birthdayCafeSpecialGoodsModel![i]
+                                          .details;
+                                }
+
                                 return Container(
                                     padding: const EdgeInsets.only(
                                       top: 12,
@@ -394,11 +414,12 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           // height : 35,
                                           // width: 150,
                                           child: TextField(
+                                            controller: viewModel
+                                                .goodsNameController[index],
                                             textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
-                                              hintText: goods[index],
+                                            decoration: const InputDecoration(
                                               enabledBorder:
-                                                  const UnderlineInputBorder(
+                                                  UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
                                                 borderSide: BorderSide(
                                                     color: Palette.primary),
@@ -412,11 +433,12 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 3,
                                           child: TextField(
+                                            controller: viewModel
+                                                .goodsDetailsController[index],
                                             textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
-                                              hintText: goods[index],
+                                            decoration: const InputDecoration(
                                               enabledBorder:
-                                                  const UnderlineInputBorder(
+                                                  UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
                                                 borderSide: BorderSide(
                                                     color: Palette.gray03),
@@ -426,7 +448,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         ),
                                         IconButton(
                                             onPressed: () {
-                                              deleteGoods(index);
+                                              viewModel.deleteGoods(index);
                                             },
                                             icon: const Icon(
                                               Icons.highlight_remove,
@@ -445,7 +467,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                             textColor: Palette.gray08,
                             textSize: 14,
                             onPressed: () {
-                              addGoods();
+                              viewModel.addGoods();
                             },
                           )
                         ],
@@ -713,9 +735,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                     ),
                     SizedBox(
                         height: 90,
-                        child:
-
-                        ListView.builder(
+                        child: ListView.builder(
                             shrinkWrap: true, // shrinkWrap을 true로 설정
 
                             scrollDirection: Axis.horizontal,
@@ -723,14 +743,14 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                     .birthdayCafeModel?.defaultImages.length ??
                                 0,
                             itemBuilder: (context, index) {
-                              if(viewModel.isLoading){
+                              if (viewModel.isLoading) {
                                 return const CircularProgressIndicator();
                               } else {
                                 return Container(
                                   padding: const EdgeInsets.only(right: 8),
                                   child: Image.network(
-                                    viewModel
-                                        .birthdayCafeModel!.defaultImages[index],
+                                    viewModel.birthdayCafeModel!
+                                        .defaultImages[index],
                                     scale: 90,
                                     fit: BoxFit.cover,
                                   ),
@@ -785,6 +805,21 @@ class _HostCafeEdit extends State<HostCafeEdit> {
             textColor: Palette.primary,
             textSize: 14,
             onPressed: () async {
+              final viewModel =
+                  Provider.of<BirthdayCafeViewModel>(context, listen: false);
+
+              for (int i = 0;
+                  i < viewModel.birthdayCafeSpecialGoodsModel!.length;
+                  i++) {
+                viewModel.birthdayCafeSpecialGoodsModel![i].name =
+                    viewModel.goodsNameController[i].text;
+                viewModel.birthdayCafeSpecialGoodsModel![i].details =
+                    viewModel.goodsDetailsController[i].text;
+              }
+
+              await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .postSpecialGoods(id);
+
               await Provider.of<BirthdayCafeViewModel>(context, listen: false)
                   .patchInfo(
                       id,
@@ -794,6 +829,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                   .then((value) {
                 Provider.of<BirthdayCafeViewModel>(context, listen: false)
                     .fetchData(id);
+
                 Provider.of<BirthdayCafeViewModel>(context, listen: false)
                     .getBirthdayCafes(id);
                 Provider.of<BirthdayCafeViewModel>(context, listen: false)
@@ -810,20 +846,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
         ),
       ),
     );
-  }
-
-  //특전 삭제
-  void deleteGoods(int index) {
-    setState(() {
-      goods.removeAt(index);
-    });
-  }
-
-  //특전 생성
-  void addGoods() {
-    setState(() {
-      goods.add("a");
-    });
   }
 
   //메뉴 삭제
@@ -859,26 +881,26 @@ class _HostCafeEdit extends State<HostCafeEdit> {
 
     if (images != null) {
       if (images.length > 10) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('사진은 10장까지 선택 가능 합니다.')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('사진은 10장까지 선택 가능 합니다.')));
         log(_selectedImages.toString());
       } else {
         _selectedImages =
             images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
 
-        Provider.of<BirthdayCafeViewModel>(context, listen: false).setLoading(true);
+        Provider.of<BirthdayCafeViewModel>(context, listen: false)
+            .setLoading(true);
 
-
-        try{
+        try {
           await Provider.of<BirthdayCafeViewModel>(context, listen: false)
               .postImage(cafeId, _selectedImages)
               .then((value) =>
-              Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                  .getBirthdayCafes(id));
-        }finally{
-          Provider.of<BirthdayCafeViewModel>(context, listen: false).setLoading(false);
+                  Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                      .getBirthdayCafes(id));
+        } finally {
+          Provider.of<BirthdayCafeViewModel>(context, listen: false)
+              .setLoading(false);
         }
-
       }
     }
   }
@@ -888,12 +910,11 @@ class _HostCafeEdit extends State<HostCafeEdit> {
 
     if (image != null) {
       setState(() async {
-          await Provider.of<BirthdayCafeViewModel>(context, listen: false)
-              .postMainImage(cafeId, image)
-              .then((value) =>
-              Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                  .getBirthdayCafes(id));
-
+        await Provider.of<BirthdayCafeViewModel>(context, listen: false)
+            .postMainImage(cafeId, image)
+            .then((value) =>
+                Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                    .getBirthdayCafes(id));
       });
     }
   }
