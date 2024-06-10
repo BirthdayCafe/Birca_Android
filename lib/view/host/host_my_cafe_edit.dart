@@ -529,9 +529,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                             controller: viewModel
                                                 .menuNameController[index],
                                             textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                               enabledBorder:
-                                                  const UnderlineInputBorder(
+                                                  UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
                                                 borderSide: BorderSide(
                                                     color: Palette.primary),
@@ -548,9 +548,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                             controller: viewModel
                                                 .menuDetailsController[index],
                                             textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                               enabledBorder:
-                                                  const UnderlineInputBorder(
+                                                  UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
                                                 borderSide: BorderSide(
                                                     color: Palette.gray03),
@@ -567,9 +567,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                             controller: viewModel
                                                 .menuPriceController[index],
                                             textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                               enabledBorder:
-                                                  const UnderlineInputBorder(
+                                                  UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
                                                 borderSide: BorderSide(
                                                     color: Palette.gray03),
@@ -664,9 +664,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                                     .luckyDrawsRankController[
                                                 index],
                                             textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                               enabledBorder:
-                                                  const UnderlineInputBorder(
+                                                  UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
                                                 borderSide: BorderSide(
                                                     color: Palette.primary),
@@ -684,9 +684,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                                     .luckyDrawsPrizeController[
                                                 index],
                                             textAlign: TextAlign.center,
-                                            decoration: InputDecoration(
+                                            decoration: const InputDecoration(
                                               enabledBorder:
-                                                  const UnderlineInputBorder(
+                                                  UnderlineInputBorder(
                                                 // 활성화된 상태의 밑줄 색상
                                                 borderSide: BorderSide(
                                                     color: Palette.gray03),
