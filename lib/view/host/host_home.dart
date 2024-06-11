@@ -21,12 +21,12 @@ class _HostHome extends State<HostHome> {
   @override
   void initState() {
     super.initState();
-    Provider.of<HostHomeViewModel>(context, listen: false).getHostHome(1, 3,"");
+    Provider.of<HostHomeViewModel>(context, listen: false)
+        .getHostHome(1, 3, "");
   }
 
   var isSwitched = false;
 
-  // var cafeList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
 
   @override
   Widget build(BuildContext context) {
@@ -45,317 +45,319 @@ class _HostHome extends State<HostHome> {
         ),
         body: SingleChildScrollView(child:
             Consumer<HostHomeViewModel>(builder: (context, viewModel, widget) {
-              if(viewModel.hostCafeHomeModelList==null){
-                return const CircularProgressIndicator();
-              } else {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 16, right: 16),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          if (viewModel.hostCafeHomeModelList == null) {
+            return const CircularProgressIndicator();
+          } else {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(left: 16, right: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              RichText(
-                                text: TextSpan(
-                                    style: DefaultTextStyle.of(context).style,
-                                    children: const [
-                                      TextSpan(
-                                        text: '대관 가능한',
-                                        style: TextStyle(
-                                          color: Palette.primary,
-                                          fontSize: 20,
-                                          decoration: TextDecoration.none,
-                                          fontFamily: 'Pretendard',
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' 카페',
-                                        style: TextStyle(
-                                            color: Palette.gray10,
-                                            fontSize: 20,
-                                            decoration: TextDecoration.none,
-                                            fontFamily: 'Pretendard',
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ]),
-                              ),
-                              SizedBox(
-                                  width: 30,
-                                  child: IconButton(
-                                    onPressed: () {},
-                                    icon: SvgPicture.asset(
-                                      'lib/assets/image/img_filter.svg',
+                          RichText(
+                            text: TextSpan(
+                                style: DefaultTextStyle.of(context).style,
+                                children: const [
+                                  TextSpan(
+                                    text: '대관 가능한',
+                                    style: TextStyle(
+                                      color: Palette.primary,
+                                      fontSize: 20,
+                                      decoration: TextDecoration.none,
+                                      fontFamily: 'Pretendard',
                                     ),
-                                  )),
-                            ],
+                                  ),
+                                  TextSpan(
+                                    text: ' 카페',
+                                    style: TextStyle(
+                                        color: Palette.gray10,
+                                        fontSize: 20,
+                                        decoration: TextDecoration.none,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ]),
                           ),
-                          Row(
-                            children: [
-                              const BircaText(
-                                  text: '찜',
-                                  textSize: 15,
-                                  textColor: Palette.gray06,
-                                  fontFamily: 'Pretendard'),
-                              SizedBox(
-                                  height: 10,
-                                  child: Transform.scale(
-                                      scale: 0.7,
-                                      child: CupertinoSwitch(
-                                        value: isSwitched,
-                                        activeColor: Palette.primary,
-                                        onChanged: (value) {
-                                          setState(() {
-                                            isSwitched = value;
-                                          });
-                                        },
-                                      )))
-                            ],
-                          ),
+                          SizedBox(
+                              width: 30,
+                              child: IconButton(
+                                onPressed: () {},
+                                icon: SvgPicture.asset(
+                                  'lib/assets/image/img_filter.svg',
+                                ),
+                              )),
                         ],
                       ),
-                    ),
-                    Consumer<HostHomeViewModel>(
-                        builder: (builder, viewModel, widget) {
-                          return Row(
-                            children: [
-                              const SizedBox(
-                                width: 16,
+                      Row(
+                        children: [
+                          const BircaText(
+                              text: '찜',
+                              textSize: 15,
+                              textColor: Palette.gray06,
+                              fontFamily: 'Pretendard'),
+                          SizedBox(
+                              height: 10,
+                              child: Transform.scale(
+                                  scale: 0.7,
+                                  child: CupertinoSwitch(
+                                    value: isSwitched,
+                                    activeColor: Palette.primary,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        isSwitched = value;
+                                      });
+
+                                      if(isSwitched){
+
+                                      } else {
+
+                                      }
+                                    },
+                                  )))
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Consumer<HostHomeViewModel>(
+                    builder: (builder, viewModel, widget) {
+                  return Row(
+                    children: [
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 12, right: 12, top: 5, bottom: 5),
+
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Palette.gray06,
+                            ),
+                            borderRadius: BorderRadius.circular(20)),
+                        // 원하는 패딩 값 설정
+
+                        child: const Row(
+                          children: [
+                            Icon(
+                              Icons.calendar_today_outlined,
+                              color: Palette.gray10,
+                              size: 12,
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            BircaText(
+                                text: '10.01(월)~10.02(화)',
+                                textSize: 12,
+                                textColor: Palette.gray10,
+                                fontFamily: 'Pretendard')
+                          ],
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 7,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 12, right: 12, top: 5, bottom: 5),
+
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Palette.gray06,
+                            ),
+                            borderRadius: BorderRadius.circular(20)),
+                        // 원하는 패딩 값 설정
+
+                        child: const Row(
+                          children: [
+                            Icon(
+                              Icons.location_on_outlined,
+                              color: Palette.gray10,
+                              size: 12,
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            BircaText(
+                                text: '홍대',
+                                textSize: 12,
+                                textColor: Palette.gray10,
+                                fontFamily: 'Pretendard')
+                          ],
+                        ),
+                      )
+                    ],
+                  );
+                }),
+                const SizedBox(
+                  height: 30,
+                ),
+                Consumer<HostHomeViewModel>(
+                    builder: (builder, viewModel, widget) {
+                  if (viewModel.hostCafeHomeModelList == null) {
+                    return const CircularProgressIndicator();
+                  } else {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        scrollDirection: Axis.vertical,
+                        itemCount: viewModel.hostCafeHomeModelList?.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return GestureDetector(
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: 16, right: 16, bottom: 16),
+                              decoration: BoxDecoration(
+                                color: Colors.white, // Container의 배경색
+                                borderRadius: BorderRadius.circular(3),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.grey.withOpacity(0.1),
+                                    // 그림자 색상
+                                    spreadRadius: 1,
+                                    // 그림자 확산 정도
+                                    blurRadius: 1, // 그림자의 흐림 정도
+                                    // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
+                                  ),
+                                ],
                               ),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    left: 12, right: 12, top: 5, bottom: 5),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  //이미지
+                                  SizedBox(
+                                    height: 140,
+                                    width: 210,
+                                    child: Image.network(
+                                      viewModel.hostCafeHomeModelList![index]
+                                          .cafeImageUrl,
+                                      fit: BoxFit.fill,
+                                    ),
+                                  ),
 
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Palette.gray06,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20)),
-                                // 원하는 패딩 값 설정
+                                  //카페 정보
 
-                                child: const Row(
-                                  children: [
-                                    Icon(
-                                      Icons.calendar_today_outlined,
-                                      color: Palette.gray10,
-                                      size: 12,
-                                    ),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    BircaText(
-                                        text: '10.01(월)~10.02(화)',
-                                        textSize: 12,
-                                        textColor: Palette.gray10,
-                                        fontFamily: 'Pretendard')
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 7,
-                              ),
-                              Container(
-                                padding: const EdgeInsets.only(
-                                    left: 12, right: 12, top: 5, bottom: 5),
-
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Palette.gray06,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20)),
-                                // 원하는 패딩 값 설정
-
-                                child: const Row(
-                                  children: [
-                                    Icon(
-                                      Icons.location_on_outlined,
-                                      color: Palette.gray10,
-                                      size: 12,
-                                    ),
-                                    SizedBox(
-                                      width: 3,
-                                    ),
-                                    BircaText(
-                                        text: '홍대',
-                                        textSize: 12,
-                                        textColor: Palette.gray10,
-                                        fontFamily: 'Pretendard')
-                                  ],
-                                ),
-                              )
-                            ],
-                          );
-                        }),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Consumer<HostHomeViewModel>(
-                        builder: (builder, viewModel, widget) {
-                          if (viewModel.hostCafeHomeModelList == null) {
-                            return const CircularProgressIndicator();
-                          } else {
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                physics: const NeverScrollableScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                itemCount: viewModel.hostCafeHomeModelList?.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return GestureDetector(
-                                    child: Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 16, right: 16, bottom: 16),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white, // Container의 배경색
-                                        borderRadius: BorderRadius.circular(3),
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.1),
-                                            // 그림자 색상
-                                            spreadRadius: 1,
-                                            // 그림자 확산 정도
-                                            blurRadius: 1, // 그림자의 흐림 정도
-                                            // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
-                                          ),
-                                        ],
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          //이미지
-                                          SizedBox(
-                                            height: 140,
-                                            width: 210,
-                                            child: Image.network(
-                                              viewModel.hostCafeHomeModelList![index]
-                                                  .cafeImageUrl,
-                                              fit: BoxFit.fill,
+                                  Container(
+                                    padding: const EdgeInsets.only(
+                                        left: 10, top: 40),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${viewModel.hostCafeHomeModelList?[index].name}',
+                                          style: const TextStyle(
+                                              fontSize: 14,
+                                              color: Palette.gray10,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        const SizedBox(
+                                          height: 21,
+                                        ),
+                                        Text(
+                                          '${viewModel.hostCafeHomeModelList?[index].twitterAccount}',
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Palette.gray08,
+                                              fontWeight: FontWeight.w400),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Row(
+                                          children: [
+                                            const Icon(
+                                              Icons.location_on_outlined,
+                                              color: Palette.gray08,
+                                              size: 12,
                                             ),
-                                          ),
-
-                                          //카페 정보
-
-                                          Container(
-                                            padding:
-                                            const EdgeInsets.only(left: 10, top: 40),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  '${viewModel.hostCafeHomeModelList?[index].name}',
-                                                  style: const TextStyle(
-                                                      fontSize: 14,
-                                                      color: Palette.gray10,
-                                                      fontWeight: FontWeight.w600),
-                                                ),
-                                                const SizedBox(
-                                                  height: 21,
-                                                ),
-                                                Text(
-                                                  '${viewModel.hostCafeHomeModelList?[index].twitterAccount}',
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Palette.gray08,
-                                                      fontWeight: FontWeight.w400),
-                                                ),
-                                                const SizedBox(
-                                                  height: 5,
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    const Icon(
-                                                      Icons.location_on_outlined,
-                                                      color: Palette.gray08,
-                                                      size: 12,
-                                                    ),
-                                                    Text(
-                                                      '${viewModel.hostCafeHomeModelList?[index].address.substring(0, 10)}',
-                                                      style: const TextStyle(
-                                                          fontSize: 12,
-                                                          color: Palette.gray08,
-                                                          fontWeight: FontWeight.w400),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
+                                            Text(
+                                              '${viewModel.hostCafeHomeModelList?[index].address.substring(0, 10)}',
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  color: Palette.gray08,
+                                                  fontWeight: FontWeight.w400),
                                             ),
-                                          ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
 
-                                          Expanded(child: Container()),
+                                  Expanded(child: Container()),
 
-                                          //heart
-                                          Container(
-                                              padding:
-                                              const EdgeInsets.only(top: 8, right: 8),
-                                              child: viewModel
-                                                  .hostCafeHomeModelList![index].liked
-                                                  ? GestureDetector(
-                                                child: const Icon(
-                                                  Icons.favorite,
-                                                  color: Palette.primary,
-                                                ),
-                                                onTap: () {
-                                                  Provider.of<HostHomeViewModel>(
-                                                      context,
-                                                      listen: false)
-                                                      .deleteLike(viewModel
-                                                      .hostCafeHomeModelList![
-                                                  index]
-                                                      .cafeId);
-                                                  setState(() {
-                                                    viewModel
-                                                        .hostCafeHomeModelList?[
-                                                    index]
-                                                        .liked = false;
-                                                  });
-                                                },
-                                              )
-                                                  : GestureDetector(
-                                                  child: const Icon(
-                                                    Icons.favorite,
-                                                    color: Color(0xffF3F3F3),
-                                                  ),
-                                                  onTap: () {
-                                                    Provider.of<HostHomeViewModel>(
+                                  //heart
+                                  Container(
+                                      padding: const EdgeInsets.only(
+                                          top: 8, right: 8),
+                                      child: viewModel
+                                              .hostCafeHomeModelList![index]
+                                              .liked
+                                          ? GestureDetector(
+                                              child: const Icon(
+                                                Icons.favorite,
+                                                color: Palette.primary,
+                                              ),
+                                              onTap: () {
+                                                Provider.of<HostHomeViewModel>(
                                                         context,
                                                         listen: false)
-                                                        .postLike(viewModel
+                                                    .deleteLike(viewModel
                                                         .hostCafeHomeModelList![
-                                                    index]
-                                                        .cafeId);
-
-                                                    setState(() {
-                                                      viewModel
-                                                          .hostCafeHomeModelList?[
-                                                      index]
-                                                          .liked = true;
-                                                    });
-                                                  }))
-                                        ],
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => HostHomeDetail(
-                                                  cafeID: viewModel
-                                                      .hostCafeHomeModelList![index]
-                                                      .cafeId)));
-                                    },
-                                  );
-                                });
-                          }
-                        }),
-                  ],
-                );
-              }
+                                                            index]
+                                                        .cafeId)
+                                                    .then((value) => viewModel
+                                                        .hostCafeHomeModelList?[
+                                                            index]
+                                                        .liked = false);
+                                              },
+                                            )
+                                          : GestureDetector(
+                                              child: const Icon(
+                                                Icons.favorite,
+                                                color: Color(0xffF3F3F3),
+                                              ),
+                                              onTap: () async {
+                                                Provider.of<HostHomeViewModel>(
+                                                        context,
+                                                        listen: false)
+                                                    .postLike(viewModel
+                                                        .hostCafeHomeModelList![
+                                                            index]
+                                                        .cafeId)
+                                                    .then((value) => viewModel
+                                                        .hostCafeHomeModelList?[
+                                                            index]
+                                                        .liked = true);
+                                              }))
+                                ],
+                              ),
+                            ),
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HostHomeDetail(
+                                          cafeID: viewModel
+                                              .hostCafeHomeModelList![index]
+                                              .cafeId)));
+                            },
+                          );
+                        });
+                  }
+                }),
+              ],
+            );
+          }
         })),
         floatingActionButton: SizedBox(
           width: 86,
