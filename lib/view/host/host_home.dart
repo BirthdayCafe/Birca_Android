@@ -21,7 +21,7 @@ class _HostHome extends State<HostHome> {
   @override
   void initState() {
     super.initState();
-    Provider.of<HostHomeViewModel>(context, listen: false).getHostHome(1, 3);
+    Provider.of<HostHomeViewModel>(context, listen: false).getHostHome(1, 3,"");
   }
 
   var isSwitched = false;
