@@ -17,7 +17,15 @@ class VisitorHome extends StatefulWidget {
 }
 
 class _VisitorHome extends State<VisitorHome> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+        .getCafeHome('IN_PROGRESS');
+  }
+
   var artistList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
+
   // var cafeList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
 
   String selectedRegion1 = '전체';
@@ -161,7 +169,6 @@ class _VisitorHome extends State<VisitorHome> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
-
                                                 const BircaText(
                                                     text: '지역',
                                                     textSize: 20,
@@ -171,27 +178,24 @@ class _VisitorHome extends State<VisitorHome> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-
-                                                      DropdownButton(
-                                                        value: selectedRegion1,
-                                                        items: optionsRegion1
-                                                            .map((String option) {
-                                                          return DropdownMenuItem<
-                                                              String>(
-                                                              value: option,
-                                                              child:
-                                                              Text(option));
-                                                        }).toList(),
-                                                        onChanged:
-                                                            (String? newValue) {
-                                                          setState(() {
-                                                            selectedRegion1 =
-                                                            newValue!;
-                                                          });
-                                                        },
-                                                      ),
-
-
+                                                    DropdownButton(
+                                                      value: selectedRegion1,
+                                                      items: optionsRegion1
+                                                          .map((String option) {
+                                                        return DropdownMenuItem<
+                                                                String>(
+                                                            value: option,
+                                                            child:
+                                                                Text(option));
+                                                      }).toList(),
+                                                      onChanged:
+                                                          (String? newValue) {
+                                                        setState(() {
+                                                          selectedRegion1 =
+                                                              newValue!;
+                                                        });
+                                                      },
+                                                    ),
                                                     DropdownButton(
                                                       value: selectedRegion2,
                                                       items: optionsRegion2
@@ -233,8 +237,7 @@ class _VisitorHome extends State<VisitorHome> {
                               icon: SvgPicture.asset(
                                 'lib/assets/image/img_filter.svg',
                               ),
-                            )
-                        ),
+                            )),
                         Container(
                           padding: const EdgeInsets.only(left: 12, right: 12),
                           decoration: BoxDecoration(
@@ -289,139 +292,154 @@ class _VisitorHome extends State<VisitorHome> {
               const SizedBox(
                 height: 20,
               ),
-        Consumer<VisitorCafeHomeViewModel>(
-        builder: (context, viewModel, widget) {
-          return ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              scrollDirection: Axis.vertical,
-              itemCount: viewModel.visitorCafeHomeModelList?.length,
-              itemBuilder: (BuildContext context, int index) {
-                return
-                  GestureDetector(
-                    child: Container(
-                      margin: const EdgeInsets.only(
-                          left: 16, right: 16, bottom: 16),
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: Colors.white, // Container의 배경색
-                        borderRadius: BorderRadius.circular(3),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.1), // 그림자 색상
-                            spreadRadius: 1, // 그림자 확산 정도
-                            blurRadius: 1, // 그림자의 흐림 정도
-                            // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
+              Consumer<VisitorCafeHomeViewModel>(
+                  builder: (context, viewModel, widget) {
+                if (viewModel.visitorCafeHomeModelList == null) {
+                  return const CircularProgressIndicator();
+                } else {
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemCount: viewModel.visitorCafeHomeModelList!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 16),
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Container의 배경색
+                            borderRadius: BorderRadius.circular(3),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                // 그림자 색상
+                                spreadRadius: 1,
+                                // 그림자 확산 정도
+                                blurRadius: 1, // 그림자의 흐림 정도
+                                // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          //이미지
-                          SizedBox(
-                            height: 140,
-                            width: 140,
-                            child: Image.network(
-                              viewModel.visitorCafeHomeModelList![index].mainImageUrl.toString(),
-                              fit: BoxFit.cover,),
-                          ),
-
-                          //카페 정보
-                          Container(
-                            height: 140,
-                            margin: const EdgeInsets.only(left: 14),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 10,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //이미지
+                              SizedBox(
+                                height: 140,
+                                width: 140,
+                                child: Image.network(
+                                  '${viewModel.visitorCafeHomeModelList?[index].mainImageUrl}',
+                                  fit: BoxFit.cover,
                                 ),
-                                // Text('샤이니 민호'),
-                                BircaText(
-                                    text: '${viewModel.visitorCafeHomeModelList?[index].artist.groupName.toString()} ${viewModel.visitorCafeHomeModelList?[index].artist.name.toString()}',
-                                    textSize: 12,
-                                    textColor: Palette.gray08,
-                                    fontFamily: 'Pretendard'),
+                              ),
 
-                                // Text('1월 1일~1월 2일'),
-                                BircaText(
-                                  text:  '${viewModel.visitorCafeHomeModelList?[index].startDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].startDate.toString().length - 9)}~${viewModel.visitorCafeHomeModelList![index].endDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].endDate.toString().length - 9)}',
-
-                                  textSize: 12,
-                                  textColor: Palette.gray08,
-                                  fontFamily: 'Pretendard',
-                                ),
-                                // Text('카페 이름'),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Text(
-                                  viewModel.visitorCafeHomeModelList![index].birthdayCafeName,
-                                  style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black),
-                                ),
-
-                                Expanded(child: Container()),
-                                Row(
+                              //카페 정보
+                              Container(
+                                height: 140,
+                                margin: const EdgeInsets.only(left: 14),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const Icon(
-                                      Icons.location_on_outlined,
-                                      color: Palette.gray08,
-                                      size: 20,
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    // Text('샤이니 민호'),
+                                    BircaText(
+                                        text:
+                                            '${viewModel.visitorCafeHomeModelList?[index].artist.groupName.toString()} ${viewModel.visitorCafeHomeModelList?[index].artist.name.toString()}',
+                                        textSize: 12,
+                                        textColor: Palette.gray08,
+                                        fontFamily: 'Pretendard'),
+
+                                    // Text('1월 1일~1월 2일'),
+                                    BircaText(
+                                      text:
+                                          '${viewModel.visitorCafeHomeModelList?[index].startDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].startDate.toString().length - 9)}~${viewModel.visitorCafeHomeModelList![index].endDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].endDate.toString().length - 9)}',
+                                      textSize: 12,
+                                      textColor: Palette.gray08,
+                                      fontFamily: 'Pretendard',
+                                    ),
+                                    // Text('카페 이름'),
+                                    const SizedBox(
+                                      height: 20,
                                     ),
                                     Text(
-                                      '${viewModel.visitorCafeHomeModelList![index].cafe.address.substring(0,14)}...',
+                                      viewModel.visitorCafeHomeModelList![index]
+                                          .birthdayCafeName,
                                       style: const TextStyle(
-                                        color: Palette.gray08,
-                                        fontSize: 12,
-                                        decoration: TextDecoration.underline,
-                                        decorationStyle: TextDecorationStyle
-                                            .solid, // 밑줄의 스타일
-                                      ),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
+
+                                    Expanded(child: Container()),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.location_on_outlined,
+                                          color: Palette.gray08,
+                                          size: 20,
+                                        ),
+                                        Text(
+                                          '${viewModel.visitorCafeHomeModelList![index].cafe.address.substring(0, 14)}...',
+                                          style: const TextStyle(
+                                            color: Palette.gray08,
+                                            fontSize: 12,
+                                            decoration:
+                                                TextDecoration.underline,
+                                            decorationStyle: TextDecorationStyle
+                                                .solid, // 밑줄의 스타일
+                                          ),
+                                        )
+                                      ],
                                     )
                                   ],
-                                )
-                              ],
-                            ),
+                                ),
+                              ),
+
+                              Expanded(child: Container()),
+
+                              //heart
+                              GestureDetector(
+                                  child: Icon(
+                                    Icons.favorite,
+                                    color: viewModel
+                                            .visitorCafeHomeModelList![index]
+                                            .isLiked
+                                        ? Palette.primary
+                                        : const Color(0xffF3F3F3),
+                                  ),
+                                  onTap: () {
+                                    // isFavorite = !isFavorite;
+                                    // viewModel.visitorCafeHomeModelList![index].isLiked = !viewModel.visitorCafeHomeModelList![index].isLiked;
+
+                                    Provider.of<VisitorCafeHomeViewModel>(
+                                            context,
+                                            listen: false)
+                                        .like(viewModel
+                                            .visitorCafeHomeModelList![index]
+                                            .birthdayCafeId);
+                                  })
+                            ],
                           ),
-
-                          Expanded(child: Container()),
-
-                          //heart
-                          GestureDetector(
-                            child:
-                           Icon(
-                            Icons.favorite,
-                             color: viewModel.visitorCafeHomeModelList![index].isLiked ? Palette.primary : const Color(0xffF3F3F3),
-                          ),
-                            onTap: (){
-                              // isFavorite = !isFavorite;
-                              // viewModel.visitorCafeHomeModelList![index].isLiked = !viewModel.visitorCafeHomeModelList![index].isLiked;
-
-                              Provider.of<VisitorCafeHomeViewModel>(context,listen: false).like(viewModel.visitorCafeHomeModelList![index].birthdayCafeId);
-
-
-
-                            }
-                          )
-
-                        ],
-                      ),
-                    ),
-                    onTap: (){
-
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>VisitorCafeDetail(cafeID :viewModel.visitorCafeHomeModelList![index].birthdayCafeId )));
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VisitorCafeDetail(
+                                      cafeID: viewModel
+                                          .visitorCafeHomeModelList![index]
+                                          .birthdayCafeId)));
+                        },
+                      );
                     },
                   );
-
-              },
-              );
-        }
-
-        )],
+                }
+              })
+            ],
           ),
         ),
         floatingActionButton: SizedBox(
