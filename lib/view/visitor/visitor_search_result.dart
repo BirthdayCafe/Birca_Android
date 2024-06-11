@@ -149,11 +149,26 @@ class _VisitorSearchResult extends State<VisitorSearchResult> {
                                   : const Color(0xffF3F3F3),
                             ),
                             onTap: () {
-                              Provider.of<VisitorCafeHomeViewModel>(context,
-                                      listen: false)
-                                  .like(viewModel
-                                      .visitorCafeSearchModelList![index]
-                                      .birthdayCafeId);
+                              if (viewModel
+                                  .visitorCafeHomeModelList![index].isLiked) {
+                                Provider.of<VisitorCafeHomeViewModel>(context,
+                                        listen: false)
+                                    .dislike(viewModel
+                                        .visitorCafeHomeModelList![index]
+                                        .birthdayCafeId);
+
+                                viewModel.visitorCafeHomeModelList![index]
+                                    .isLiked = false;
+                              } else {
+                                Provider.of<VisitorCafeHomeViewModel>(context,
+                                        listen: false)
+                                    .like(viewModel
+                                        .visitorCafeHomeModelList![index]
+                                        .birthdayCafeId);
+
+                                viewModel.visitorCafeHomeModelList![index]
+                                    .isLiked = true;
+                              }
                             })
                       ],
                     ),

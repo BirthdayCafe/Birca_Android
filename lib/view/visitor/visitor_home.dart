@@ -412,15 +412,29 @@ class _VisitorHome extends State<VisitorHome> {
                                         : const Color(0xffF3F3F3),
                                   ),
                                   onTap: () {
-                                    // isFavorite = !isFavorite;
-                                    // viewModel.visitorCafeHomeModelList![index].isLiked = !viewModel.visitorCafeHomeModelList![index].isLiked;
+                                    if (viewModel
+                                        .visitorCafeHomeModelList![index]
+                                        .isLiked) {
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                              context,
+                                              listen: false)
+                                          .dislike(viewModel
+                                              .visitorCafeHomeModelList![index]
+                                              .birthdayCafeId);
 
-                                    Provider.of<VisitorCafeHomeViewModel>(
-                                            context,
-                                            listen: false)
-                                        .like(viewModel
-                                            .visitorCafeHomeModelList![index]
-                                            .birthdayCafeId);
+                                      viewModel.visitorCafeHomeModelList![index]
+                                          .isLiked = false;
+                                    } else {
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                              context,
+                                              listen: false)
+                                          .like(viewModel
+                                              .visitorCafeHomeModelList![index]
+                                              .birthdayCafeId);
+
+                                      viewModel.visitorCafeHomeModelList![index]
+                                          .isLiked = true;
+                                    }
                                   })
                             ],
                           ),
