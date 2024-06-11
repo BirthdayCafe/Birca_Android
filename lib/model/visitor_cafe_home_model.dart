@@ -1,12 +1,12 @@
 class VisitorCafeHomeModel {
-  final int birthdayCafeId;
-  final String mainImageUrl;
-  final String startDate;
-  final String endDate;
-  final String birthdayCafeName;
-  final bool isLiked;
-  final Artist artist;
-  final Cafe cafe;
+  int birthdayCafeId;
+  String mainImageUrl;
+  String startDate;
+  String endDate;
+  String birthdayCafeName;
+  bool isLiked;
+  Artist artist;
+  Cafe cafe;
 
   VisitorCafeHomeModel({
     required this.birthdayCafeId,
