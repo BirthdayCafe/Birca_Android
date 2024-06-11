@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/designSystem/text.dart';
 import 'package:birca/viewModel/birthday_cafe_view_model.dart';
@@ -17,10 +16,11 @@ class VisitorCafeDetail extends StatefulWidget {
 }
 
 class _VisitorCafeDetail extends State<VisitorCafeDetail> {
-  //
+  int id = 0;
+
   @override
   void initState() {
-    int id = widget.cafeID; // cafeID를 저장할 변수
+    id = widget.cafeID; // cafeID를 저장할 변수
 
     super.initState();
     Provider.of<BirthdayCafeViewModel>(context, listen: false).fetchData(id);
@@ -68,9 +68,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                             : Icons.favorite_border_outlined,
                         color: Palette.primary,
                       ),
-                      onTap: () {
-                        log('touch');
-                      },
+                      onTap: () {},
                     ),
                     BircaText(
                         text:
