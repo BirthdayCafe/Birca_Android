@@ -18,11 +18,11 @@ class OwnerMyCafe extends StatefulWidget {
 class _OwnerMyCafe extends State<OwnerMyCafe> {
 
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
 
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
   }
 
 
