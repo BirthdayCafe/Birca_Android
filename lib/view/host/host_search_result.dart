@@ -139,11 +139,10 @@ class _HostSearchResult extends State<HostSearchResult> {
                                               listen: false)
                                           .deleteLike(viewModel
                                               .hostCafeHomeModelList![index]
-                                              .cafeId);
-                                      setState(() {
-                                        viewModel.hostCafeHomeModelList?[index]
-                                            .liked = false;
-                                      });
+                                              .cafeId)
+                                          .then((value) => viewModel
+                                              .hostCafeHomeModelList?[index]
+                                              .liked = false);
                                     },
                                   )
                                 : GestureDetector(
@@ -156,12 +155,10 @@ class _HostSearchResult extends State<HostSearchResult> {
                                               listen: false)
                                           .postLike(viewModel
                                               .hostCafeHomeModelList![index]
-                                              .cafeId);
-
-                                      setState(() {
-                                        viewModel.hostCafeHomeModelList?[index]
-                                            .liked = true;
-                                      });
+                                              .cafeId)
+                                          .then((value) => viewModel
+                                              .hostCafeHomeModelList?[index]
+                                              .liked = true);
                                     }))
                       ],
                     ),
