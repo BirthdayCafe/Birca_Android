@@ -917,6 +917,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //menu 삭제
   void deleteMenus(int index) {
+    for (int i = 0; i < birthdayCafeMenusModel!.length; i++) {
+      birthdayCafeMenusModel![i].name = menuNameController[i].text;
+      birthdayCafeMenusModel![i].details = menuDetailsController[i].text;
+      birthdayCafeMenusModel![i].price = int.parse(menuPriceController[i].text);
+    }
     _menuNameController[index].dispose();
     _menuPriceController[index].dispose();
     _menuDetailsController[index].dispose();
@@ -932,6 +937,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //menu 생성
   void addMenus() {
+    for (int i = 0; i < birthdayCafeMenusModel!.length; i++) {
+      birthdayCafeMenusModel![i].name = menuNameController[i].text;
+      birthdayCafeMenusModel![i].details = menuDetailsController[i].text;
+      birthdayCafeMenusModel![i].price = int.parse(menuPriceController[i].text);
+    }
     _menuNameController.add(TextEditingController());
     _menuPriceController.add(TextEditingController());
     _menuDetailsController.add(TextEditingController());
@@ -944,6 +954,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //  특전 삭제
   void deleteGoods(int index) {
+    for (int i = 0; i < birthdayCafeSpecialGoodsModel!.length; i++) {
+      birthdayCafeSpecialGoodsModel![i].name = goodsNameController[i].text;
+
+      birthdayCafeSpecialGoodsModel![i].details =
+          goodsDetailsController[i].text;
+    }
     _goodsNameController[index].dispose();
     _goodsDetailsController[index].dispose();
 
@@ -956,6 +972,13 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //특전 생성
   void addGoods() {
+    for (int i = 0; i < birthdayCafeSpecialGoodsModel!.length; i++) {
+      birthdayCafeSpecialGoodsModel![i].name = goodsNameController[i].text;
+
+      birthdayCafeSpecialGoodsModel![i].details =
+          goodsDetailsController[i].text;
+    }
+
     _goodsNameController.add(TextEditingController());
     _goodsDetailsController.add(TextEditingController());
     _birthdayCafeSpecialGoodsModel
@@ -966,6 +989,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //  luckydraws 삭제
   void deleteLuckyDraws(int index) {
+    for (int i = 0; i < birthdayCafeLuckyDrawsModel!.length; i++) {
+      birthdayCafeLuckyDrawsModel![i].prize = luckyDrawsPrizeController[i].text;
+      birthdayCafeLuckyDrawsModel![i].rank =
+          int.parse(luckyDrawsRankController[i].text);
+    }
+
     _luckyDrawsRankController[index].dispose();
     _luckyDrawsPrizeController[index].dispose();
 
