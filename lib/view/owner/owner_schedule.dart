@@ -149,10 +149,12 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                   ),
                 ),
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>  OwnerRequestDetail(cafeID: viewModel.ownerScheduleModel!.birthdayCafeId)));
+                  if(viewModel.ownerScheduleModel!=null){
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>  OwnerRequestDetail(cafeID: viewModel.ownerScheduleModel!.birthdayCafeId)));
+                  }
                 },
               )
             ],
