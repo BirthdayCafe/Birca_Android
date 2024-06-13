@@ -15,6 +15,23 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   OwnerMyCafeDetailModel? get ownerMyCafeDetailModel => _ownerMyCafeDetailModel;
 
+  final List<TextEditingController> _menuNameController = [];
+
+  List<TextEditingController> get menuNameController => _menuNameController;
+
+  final List<TextEditingController> _menuPriceController = [];
+
+  List<TextEditingController> get menuPriceController => _menuPriceController;
+
+  final List<TextEditingController> _optionNameController = [];
+
+  List<TextEditingController> get optionNameController => _optionNameController;
+
+  final List<TextEditingController> _optionPriceController = [];
+
+  List<TextEditingController> get optionPriceController =>
+      _optionPriceController;
+
   //사장님 나의 카페 가져오기
   Future<void> getMyCafe() async {
     // const storage = FlutterSecureStorage();
@@ -46,6 +63,16 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
       log('getMyCafe Response: ${response.data}');
 
       _ownerMyCafeDetailModel = OwnerMyCafeDetailModel.fromJson(response.data);
+
+      for (int i = 0; i < _ownerMyCafeDetailModel!.cafeMenus.length; i++) {
+        _menuNameController.add(TextEditingController());
+        _menuPriceController.add(TextEditingController());
+      }
+
+      for (int i = 0; i < _ownerMyCafeDetailModel!.cafeOptions.length; i++) {
+        _optionNameController.add(TextEditingController());
+        _optionPriceController.add(TextEditingController());
+      }
 
       notifyListeners();
     } catch (e) {
@@ -287,5 +314,47 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
         throw Exception('Failed to postImage.');
       }
     }
+  }
+
+  //  menu 삭제
+  void deleteCafeMenu(int index) {
+    _menuNameController[index].dispose();
+    _menuPriceController[index].dispose();
+
+    _menuNameController.removeAt(index);
+    _menuPriceController.removeAt(index);
+    ownerMyCafeDetailModel?.cafeMenus.removeAt(index);
+
+    notifyListeners();
+  }
+
+  //menu 생성
+  void addCafeMenu() {
+    _menuNameController.add(TextEditingController());
+    _menuPriceController.add(TextEditingController());
+    ownerMyCafeDetailModel?.cafeMenus.add(MenuModel(name: '메뉴', price: 0));
+
+    notifyListeners();
+  }
+
+  //  option 삭제
+  void deleteCafeOption(int index) {
+    _optionNameController[index].dispose();
+    _optionPriceController[index].dispose();
+
+    _optionNameController.removeAt(index);
+    _optionPriceController.removeAt(index);
+    ownerMyCafeDetailModel?.cafeOptions.removeAt(index);
+
+    notifyListeners();
+  }
+
+  //option 생성
+  void addCafeOption() {
+    _optionNameController.add(TextEditingController());
+    _optionPriceController.add(TextEditingController());
+    ownerMyCafeDetailModel?.cafeOptions.add(OptionModel(name: '옵션', price: 0));
+
+    notifyListeners();
   }
 }
