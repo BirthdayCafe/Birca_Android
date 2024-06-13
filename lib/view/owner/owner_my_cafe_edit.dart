@@ -19,14 +19,6 @@ class OwnerMyCafeEdit extends StatefulWidget {
 }
 
 class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
-  TextEditingController cafeNameController = TextEditingController();
-  TextEditingController cafeAddressController = TextEditingController();
-  TextEditingController twitterAccountController = TextEditingController();
-  TextEditingController businessHoursController = TextEditingController();
-  TextEditingController cafeMenuName = TextEditingController();
-  TextEditingController cafeMenuPrice = TextEditingController();
-  TextEditingController cafeOptionsName = TextEditingController();
-  TextEditingController cafeOptionsPrice = TextEditingController();
 
   @override
   void initState() {
@@ -69,13 +61,13 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
       body: SingleChildScrollView(
         child: Consumer<OwnerMyCafeViewModel>(
             builder: (context, viewModel, widget) {
-          cafeNameController.text =
+          viewModel.cafeNameController.text =
               '${viewModel.ownerMyCafeDetailModel?.cafeName}';
-          cafeAddressController.text =
+          viewModel.cafeAddressController.text =
               '${viewModel.ownerMyCafeDetailModel?.cafeAddress}';
-          businessHoursController.text =
+          viewModel.businessHoursController.text =
               '${viewModel.ownerMyCafeDetailModel?.businessHours}';
-          twitterAccountController.text =
+          viewModel.twitterAccountController.text =
               '${viewModel.ownerMyCafeDetailModel?.twitterAccount}';
 
           cafeMenu.addAll(viewModel.ownerMyCafeDetailModel!.cafeMenus);
@@ -149,7 +141,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           fontWeight: FontWeight.w700),
                     ),
                     TextField(
-                      controller: cafeNameController,
+                      controller: viewModel.cafeNameController,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Palette.gray08,
@@ -175,7 +167,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           fontWeight: FontWeight.w700),
                     ),
                     TextField(
-                      controller: twitterAccountController,
+                      controller: viewModel.twitterAccountController,
                       style: const TextStyle(
                           fontSize: 14,
                           color: Palette.gray08,
@@ -213,7 +205,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                         ),
                         alignment: Alignment.center,
                         child: TextField(
-                          controller: cafeAddressController,
+                          controller: viewModel.cafeAddressController,
                           decoration:
                               const InputDecoration(border: InputBorder.none),
                         ),
@@ -266,7 +258,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           width: 115,
                           height: 36,
                           child: TextField(
-                            controller: businessHoursController,
+                            controller: viewModel.businessHoursController,
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
                               focusedBorder: UnderlineInputBorder(
@@ -679,23 +671,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     "datOffDates": dateStrings,
                   };
 
-                  for (int i = 0;
-                  i < viewModel.ownerMyCafeDetailModel!.cafeMenus.length;
-                  i++) {
-                    viewModel.ownerMyCafeDetailModel!.cafeMenus[i].name =
-                        viewModel.menuNameController[i].text;
-                    viewModel.ownerMyCafeDetailModel!.cafeMenus[i].price =
-                        int.parse(viewModel.menuPriceController[i].text);
-                  }
-
-                  for (int i = 0;
-                  i < viewModel.ownerMyCafeDetailModel!.cafeOptions.length;
-                  i++) {
-                    viewModel.ownerMyCafeDetailModel!.cafeOptions[i].name =
-                        viewModel.optionNameController[i].text;
-                    viewModel.ownerMyCafeDetailModel!.cafeOptions[i].price =
-                        int.parse(viewModel.optionPriceController[i].text);
-                  }
+                 viewModel.update();
 
                   await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
                       .postDayOff(
@@ -708,10 +684,10 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                   await Provider.of<OwnerMyCafeViewModel>(context,
                           listen: false)
                       .patchMyCafe(
-                    cafeNameController.text,
-                    cafeAddressController.text,
-                    twitterAccountController.text,
-                    businessHoursController.text,
+                    viewModel.cafeNameController.text,
+                    viewModel.cafeAddressController.text,
+                    viewModel.twitterAccountController.text,
+                    viewModel.businessHoursController.text,
                   )
                       .then((_) {
                     log(dateStrings.toString());
