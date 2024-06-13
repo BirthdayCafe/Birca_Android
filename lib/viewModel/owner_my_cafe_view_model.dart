@@ -32,6 +32,25 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
   List<TextEditingController> get optionPriceController =>
       _optionPriceController;
 
+  final TextEditingController _cafeNameController = TextEditingController();
+
+  TextEditingController get cafeNameController => _cafeNameController;
+
+  final TextEditingController _cafeAddressController = TextEditingController();
+
+  TextEditingController get cafeAddressController => _cafeAddressController;
+
+  final TextEditingController _twitterAccountController =
+      TextEditingController();
+
+  TextEditingController get twitterAccountController =>
+      _twitterAccountController;
+
+  final TextEditingController _businessHoursController =
+      TextEditingController();
+
+  TextEditingController get businessHoursController => _businessHoursController;
+
   //사장님 나의 카페 가져오기
   Future<void> getMyCafe() async {
     // const storage = FlutterSecureStorage();
@@ -448,17 +467,8 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //  menu 삭제
   void deleteCafeMenu(int index) {
-    for (int i = 0; i < ownerMyCafeDetailModel!.cafeOptions.length; i++) {
-      ownerMyCafeDetailModel!.cafeOptions[i].name =
-          optionNameController[i].text;
-      ownerMyCafeDetailModel!.cafeOptions[i].price =
-          int.parse(optionPriceController[i].text);
-    }
-    for (int i = 0; i < ownerMyCafeDetailModel!.cafeMenus.length; i++) {
-      ownerMyCafeDetailModel!.cafeMenus[i].name = menuNameController[i].text;
-      ownerMyCafeDetailModel!.cafeMenus[i].price =
-          int.parse(menuPriceController[i].text);
-    }
+    update();
+
     _menuNameController[index].dispose();
     _menuPriceController[index].dispose();
 
@@ -471,17 +481,8 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //menu 생성
   void addCafeMenu() {
-    for (int i = 0; i < ownerMyCafeDetailModel!.cafeOptions.length; i++) {
-      ownerMyCafeDetailModel!.cafeOptions[i].name =
-          optionNameController[i].text;
-      ownerMyCafeDetailModel!.cafeOptions[i].price =
-          int.parse(optionPriceController[i].text);
-    }
-    for (int i = 0; i < ownerMyCafeDetailModel!.cafeMenus.length; i++) {
-      ownerMyCafeDetailModel!.cafeMenus[i].name = menuNameController[i].text;
-      ownerMyCafeDetailModel!.cafeMenus[i].price =
-          int.parse(menuPriceController[i].text);
-    }
+    update();
+
     _menuNameController.add(TextEditingController());
     _menuPriceController.add(TextEditingController());
     ownerMyCafeDetailModel?.cafeMenus.add(MenuModel(name: '메뉴', price: 0));
@@ -491,17 +492,8 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //  option 삭제
   void deleteCafeOption(int index) {
-    for (int i = 0; i < ownerMyCafeDetailModel!.cafeOptions.length; i++) {
-      ownerMyCafeDetailModel!.cafeOptions[i].name =
-          optionNameController[i].text;
-      ownerMyCafeDetailModel!.cafeOptions[i].price =
-          int.parse(optionPriceController[i].text);
-    }
-    for (int i = 0; i < ownerMyCafeDetailModel!.cafeMenus.length; i++) {
-      ownerMyCafeDetailModel!.cafeMenus[i].name = menuNameController[i].text;
-      ownerMyCafeDetailModel!.cafeMenus[i].price =
-          int.parse(menuPriceController[i].text);
-    }
+    update();
+
     _optionNameController[index].dispose();
     _optionPriceController[index].dispose();
 
@@ -514,8 +506,16 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //option 생성
   void addCafeOption() {
+    update();
 
+    _optionNameController.add(TextEditingController());
+    _optionPriceController.add(TextEditingController());
+    ownerMyCafeDetailModel?.cafeOptions.add(OptionModel(name: '옵션', price: 0));
 
+    notifyListeners();
+  }
+
+  void update() {
     for (int i = 0; i < ownerMyCafeDetailModel!.cafeOptions.length; i++) {
       ownerMyCafeDetailModel!.cafeOptions[i].name =
           optionNameController[i].text;
@@ -527,10 +527,10 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
       ownerMyCafeDetailModel!.cafeMenus[i].price =
           int.parse(menuPriceController[i].text);
     }
-    _optionNameController.add(TextEditingController());
-    _optionPriceController.add(TextEditingController());
-    ownerMyCafeDetailModel?.cafeOptions.add(OptionModel(name: '옵션', price: 0));
 
-    notifyListeners();
+    ownerMyCafeDetailModel?.cafeName = cafeNameController.text;
+    ownerMyCafeDetailModel?.cafeAddress = cafeAddressController.text;
+    ownerMyCafeDetailModel?.twitterAccount = twitterAccountController.text;
+    ownerMyCafeDetailModel?.businessHours = businessHoursController.text;
   }
 }
