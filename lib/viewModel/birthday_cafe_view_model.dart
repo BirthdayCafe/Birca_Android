@@ -66,12 +66,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   final TextEditingController _birthDayCafeNameController = TextEditingController();
   TextEditingController get birthDayCafeNameController=>_birthDayCafeNameController;
+  //
+  // final TextEditingController _cafeNameController = TextEditingController();
+  // TextEditingController get cafeNameController=>_cafeNameController;
 
-  final TextEditingController _cafeNameController = TextEditingController();
-  TextEditingController get cafeNameController=>_cafeNameController;
-
-  final TextEditingController _artistController = TextEditingController();
-  TextEditingController get artistController=>_artistController;
+  // final TextEditingController _artistController = TextEditingController();
+  // TextEditingController get artistController=>_artistController;
 
   final TextEditingController _twitterController = TextEditingController();
   TextEditingController get twitterController=>_twitterController;

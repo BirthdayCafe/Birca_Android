@@ -47,12 +47,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   bool isDateChecked = false;
   bool isCountChecked = false;
 
-  // TextEditingController birthDayCafeNameController = TextEditingController();
-  // TextEditingController cafeNameController = TextEditingController();
-  // TextEditingController artistController = TextEditingController();
-  // TextEditingController twitterController = TextEditingController();
-  // TextEditingController cafeAddressController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,11 +75,10 @@ class _HostCafeEdit extends State<HostCafeEdit> {
       body: SingleChildScrollView(
         child: Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
-              viewModel.cafeNameController.text = viewModel.birthdayCafeModel!.cafe.name;
-              viewModel. artistController.text =
-              '${viewModel.birthdayCafeModel!.artist.groupName} ${viewModel.birthdayCafeModel!.artist.name}';
+              // viewModel. artistController.text =
+              // '${viewModel.birthdayCafeModel!.artist.groupName} ${viewModel.birthdayCafeModel!.artist.name}';
               viewModel. twitterController.text = viewModel.birthdayCafeModel!.twitterAccount;
-              viewModel. cafeAddressController.text =
+              // viewModel. cafeAddressController.text =
               viewModel.birthdayCafeModel!.cafe.address;
 
           return Column(
@@ -275,9 +268,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           fontWeight: FontWeight.w700,
                           fontSize: 16),
                     ),
-                    TextField(
-                      controller: viewModel.artistController,
-                      decoration: const InputDecoration(
+                    const TextField(
+                      // controller: viewModel.artistController,
+                      decoration: InputDecoration(
                         hintText: '아티스트 및 그룹명',
                         border: UnderlineInputBorder(), // 밑줄 추가
                       ),
