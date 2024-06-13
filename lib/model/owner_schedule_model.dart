@@ -100,3 +100,28 @@ class OwnerScheduleAddModel {
     };
   }
 }
+
+class OwnerScheduleExistModel {
+
+  String startDate;
+  String endDate;
+
+  OwnerScheduleExistModel({
+    required this.startDate,
+    required this.endDate,
+  });
+
+  factory OwnerScheduleExistModel.fromJson(Map<String, dynamic> json) {
+    return OwnerScheduleExistModel(
+      startDate: json['startDate'],
+      endDate: json['endDate'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'startDate': startDate,
+      'endDate': endDate,
+    };
+  }
+}
