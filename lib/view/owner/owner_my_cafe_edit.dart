@@ -435,12 +435,24 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           ListView.builder(
                               shrinkWrap: true, // shrinkWrap을 true로 설정
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 0,
+                              itemCount: viewModel.ownerMyCafeDetailModel
+                                      ?.cafeMenus.length ??
+                                  0,
                               itemBuilder: (context, index) {
-                                cafeMenuName.text =
-                                    cafeMenu[index].name.toString();
-                                cafeMenuPrice.text =
-                                    cafeMenu[index].price.toString();
+                                for (int i = 0;
+                                    i <
+                                        viewModel.ownerMyCafeDetailModel!
+                                            .cafeMenus.length;
+                                    i++) {
+                                  viewModel.menuNameController[i].text =
+                                      viewModel.ownerMyCafeDetailModel!
+                                          .cafeMenus[i].name;
+                                  viewModel.menuPriceController[i].text =
+                                      viewModel.ownerMyCafeDetailModel!
+                                          .cafeMenus[i].price
+                                          .toString();
+                                }
+
                                 return Container(
                                     padding: const EdgeInsets.only(
                                       top: 12,
@@ -454,7 +466,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // height : 35,
                                           // width: 150,
                                           child: TextField(
-                                            controller: cafeMenuName,
+                                            controller: viewModel
+                                                .menuNameController[index],
                                             textAlign: TextAlign.center,
                                             decoration: const InputDecoration(
                                               enabledBorder:
@@ -474,7 +487,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // height : 35,
                                           // width: 100,
                                           child: TextField(
-                                            controller: cafeMenuPrice,
+                                            controller: viewModel
+                                                .menuPriceController[index],
                                             textAlign: TextAlign.center,
                                             decoration: const InputDecoration(
                                               enabledBorder:
@@ -488,7 +502,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                         ),
                                         IconButton(
                                             onPressed: () {
-                                              deleteCafeMenu(index);
+                                              viewModel.deleteCafeMenu(index);
                                             },
                                             icon: const Icon(
                                               Icons.highlight_remove,
@@ -507,7 +521,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                             textColor: Palette.gray08,
                             textSize: 14,
                             onPressed: () {
-                              addCafeMenu();
+                              viewModel.addCafeMenu();
                             },
                           )
                         ],
@@ -542,11 +556,24 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           ListView.builder(
                               shrinkWrap: true, // shrinkWrap을 true로 설정
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: 0,
+                              itemCount: viewModel.ownerMyCafeDetailModel
+                                      ?.cafeOptions.length ??
+                                  0,
                               itemBuilder: (context, index) {
-                                cafeOptionsName.text = cafeOptions[index].name;
-                                cafeOptionsPrice.text =
-                                    cafeOptions[index].price.toString();
+                                for (int i = 0;
+                                    i <
+                                        viewModel.ownerMyCafeDetailModel!
+                                            .cafeOptions.length;
+                                    i++) {
+                                  viewModel.optionNameController[i].text =
+                                      viewModel.ownerMyCafeDetailModel!
+                                          .cafeOptions[i].name;
+                                  viewModel.optionPriceController[i].text =
+                                      viewModel.ownerMyCafeDetailModel!
+                                          .cafeOptions[i].price
+                                          .toString();
+                                }
+
                                 return Container(
                                     padding: const EdgeInsets.only(
                                       top: 12,
@@ -560,7 +587,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // height : 35,
                                           // width: 150,
                                           child: TextField(
-                                            controller: cafeOptionsName,
+                                            controller: viewModel
+                                                .optionNameController[index],
                                             textAlign: TextAlign.center,
                                             decoration: const InputDecoration(
                                               enabledBorder:
@@ -578,7 +606,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                         Expanded(
                                           flex: 2,
                                           child: TextField(
-                                            controller: cafeOptionsPrice,
+                                            controller: viewModel
+                                                .optionPriceController[index],
                                             textAlign: TextAlign.center,
                                             decoration: const InputDecoration(
                                               enabledBorder:
@@ -592,7 +621,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                         ),
                                         IconButton(
                                             onPressed: () {
-                                              deleteService(index);
+                                              viewModel.deleteCafeOption(index);
                                             },
                                             icon: const Icon(
                                               Icons.highlight_remove,
@@ -611,7 +640,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                             textColor: Palette.gray08,
                             textSize: 14,
                             onPressed: () {
-                              addService();
+                              viewModel.addCafeOption();
                             },
                           )
                         ],
@@ -681,36 +710,6 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
         }),
       ),
     );
-  }
-
-//
-// //카페 메뉴 삭제
-  void deleteCafeMenu(int index) {
-    setState(() {
-      cafeMenu.removeAt(index);
-    });
-  }
-
-//
-// //카페 메뉴 생성
-  void addCafeMenu() {
-    setState(() {
-      cafeMenu.add(MenuModel(name: "", price: 0));
-    });
-  }
-
-//데코 및 추가 서비스 삭제
-  void deleteService(int index) {
-    setState(() {
-      cafeOptions.removeAt(index);
-    });
-  }
-
-//데코 및 추가 서비스 생성
-  void addService() {
-    setState(() {
-      cafeOptions.add(OptionModel(name: "", price: 0));
-    });
   }
 
   Future<void> _pickImages(int cafeId) async {
