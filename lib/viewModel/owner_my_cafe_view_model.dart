@@ -78,14 +78,9 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     }
   }
 
-  //사장님 나의 카페 편집
+  //사장님 카페 기본 정보 수정
   Future<void> patchMyCafe(
-      String cafeName,
-      String cafeAddress,
-      String twitter,
-      String hours,
-      List<Map<String, Object>> cafeMenu,
-      List<Map<String, Object>> cafeOptions) async {
+      String cafeName, String cafeAddress, String twitter, String hours) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
@@ -114,8 +109,6 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
             'cafeAddress': cafeAddress,
             'twitterAccount': twitter,
             'businessHours': hours,
-            'cafeMenus': cafeMenu,
-            'cafeOptions': cafeOptions,
           },
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
@@ -180,7 +173,9 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
       Response response = await dio.post(
           '${baseUrl}api/v1/cafes/$cafeId/day-off',
           data: jsonEncode(data),
-          options: Options(headers: {'Authorization': 'Bearer $token'},contentType: Headers.jsonContentType ));
+          options: Options(
+              headers: {'Authorization': 'Bearer $token'},
+              contentType: Headers.jsonContentType));
 
       // 서버 응답 출력
       log('postDayOff Response: ${response.data}');
@@ -232,7 +227,6 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     //   token = loginData['accessToken'].toString();
     // }
 
-
     // PickedFile 리스트를 File 리스트로 변환
     List<File> cafeImages =
         pickedFiles.map((pickedFile) => File(pickedFile.path)).toList();
@@ -240,8 +234,8 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     // 업로드할 파일을 FormData로 변환
     FormData formData = FormData();
     for (int i = 0; i < cafeImages.length; i++) {
-      formData.files
-          .add(MapEntry('cafeImages', await MultipartFile.fromFile(cafeImages[i].path)));
+      formData.files.add(MapEntry(
+          'cafeImages', await MultipartFile.fromFile(cafeImages[i].path)));
     }
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -254,9 +248,12 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     try {
       // API 엔드포인트 및 업로드
       Response response = await dio.post(
-          '${baseUrl}api/v1/cafes/$cafeId/images',
-          data: formData,
-          options: Options(headers: {'Authorization': 'Bearer $token'}, ),);
+        '${baseUrl}api/v1/cafes/$cafeId/images',
+        data: formData,
+        options: Options(
+          headers: {'Authorization': 'Bearer $token'},
+        ),
+      );
 
       // 서버 응답 출력
       log('postImage Response: ${response.data}');
@@ -291,6 +288,4 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
       }
     }
   }
-
-
 }
