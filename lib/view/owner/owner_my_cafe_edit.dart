@@ -679,9 +679,31 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     "datOffDates": dateStrings,
                   };
 
-                  Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                  for (int i = 0;
+                  i < viewModel.ownerMyCafeDetailModel!.cafeMenus.length;
+                  i++) {
+                    viewModel.ownerMyCafeDetailModel!.cafeMenus[i].name =
+                        viewModel.menuNameController[i].text;
+                    viewModel.ownerMyCafeDetailModel!.cafeMenus[i].price =
+                        int.parse(viewModel.menuPriceController[i].text);
+                  }
+
+                  for (int i = 0;
+                  i < viewModel.ownerMyCafeDetailModel!.cafeOptions.length;
+                  i++) {
+                    viewModel.ownerMyCafeDetailModel!.cafeOptions[i].name =
+                        viewModel.optionNameController[i].text;
+                    viewModel.ownerMyCafeDetailModel!.cafeOptions[i].price =
+                        int.parse(viewModel.optionPriceController[i].text);
+                  }
+
+                  await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
                       .postDayOff(
                           viewModel.ownerMyCafeDetailModel!.cafeId, data);
+                 await Provider.of<OwnerMyCafeViewModel>(context,
+                      listen: false).postMenus();
+                  await Provider.of<OwnerMyCafeViewModel>(context,
+                      listen: false).postOptions();
 
                   await Provider.of<OwnerMyCafeViewModel>(context,
                           listen: false)
