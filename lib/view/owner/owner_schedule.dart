@@ -29,8 +29,12 @@ class _OwnerSchedule extends State<OwnerSchedule> {
   void initState() {
     super.initState();
 
-    Provider.of<OwnerScheduleViewModel>(context, listen: false).getSchedule(
-        DateFormat('yyyy-MM-ddT09:00:00').format(DateTime.now()).toString());
+    Provider.of<OwnerScheduleViewModel>(context, listen: false)
+        .getScheduleDetail(DateFormat('yyyy-MM-ddT09:00:00')
+            .format(DateTime.now())
+            .toString());
+    Provider.of<OwnerScheduleViewModel>(context, listen: false)
+        .getSchedule(DateTime.now().year, DateTime.now().month);
   }
 
   @override
@@ -89,11 +93,16 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                         log(_selectedDay.toString());
                         Provider.of<OwnerScheduleViewModel>(context,
                                 listen: false)
-                            .getSchedule(DateFormat('yyyy-MM-ddT09:00:00')
+                            .getScheduleDetail(DateFormat('yyyy-MM-ddT09:00:00')
                                 .format(_selectedDay!)
                                 .toString());
                       });
                     }
+                  },
+                  onPageChanged: (focusedDay) {
+                    _focusedDay = focusedDay;
+                    Provider.of<OwnerScheduleViewModel>(context, listen: false)
+                        .getSchedule(_focusedDay.year, _focusedDay.month);
                   },
                   calendarStyle: const CalendarStyle(
                       // isTodayHighlighted: false,
@@ -149,11 +158,13 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                   ),
                 ),
                 onTap: () {
-                  if(viewModel.ownerScheduleModel!=null){
+                  if (viewModel.ownerScheduleModel != null) {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>  OwnerRequestDetail(cafeID: viewModel.ownerScheduleModel!.birthdayCafeId)));
+                            builder: (context) => OwnerRequestDetail(
+                                cafeID: viewModel
+                                    .ownerScheduleModel!.birthdayCafeId)));
                   }
                 },
               )
