@@ -18,7 +18,7 @@ class HostHomeViewModel extends ChangeNotifier {
       _hostCafeHomeDetailModel;
 
   //host 홈 카페 가져오기
-  Future<void> getHostHome(int cursor, int size) async {
+  Future<void> getHostHome(int cursor, int size,String name) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
@@ -48,8 +48,8 @@ class HostHomeViewModel extends ChangeNotifier {
             //     'liked':liked,
             'cursor': cursor,
             'size': size,
+            'name' : name
             // 'artistId': artistId,
-            // 'cafeId': cafeId,
           },
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
