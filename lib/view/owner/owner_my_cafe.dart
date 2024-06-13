@@ -4,8 +4,6 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
-
 import '../../designSystem/palette.dart';
 
 class OwnerMyCafe extends StatefulWidget {
@@ -164,49 +162,6 @@ class _OwnerMyCafe extends State<OwnerMyCafe> {
                               color: Palette.gray08,
                               fontFamily: 'Pretendard',
                               fontWeight: FontWeight.w400),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Container(
-                          width: double.infinity,
-                          height: 1,
-                          color: Palette.gray03,
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Text(
-                          '예약 스케줄',
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: Palette.gray10,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w700),
-                        ),
-                        const Text(
-                          '* 회색 날짜는 이미 예약이 완료된 날짜입니다',
-                          style: TextStyle(
-                              fontSize: 10,
-                              color: Palette.gray10,
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w400),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Palette.gray02),
-                          padding: const EdgeInsets.all(6),
-                          child: TableCalendar(
-                            //오늘 날짜
-                            focusedDay: DateTime.now(),
-                            firstDay: DateTime.now(),
-                            lastDay: DateTime.utc(DateTime.now().year + 1),
-
-                            headerStyle: const HeaderStyle(
-                                formatButtonVisible: false,
-                                titleCentered: true),
-                          ),
                         ),
                         const SizedBox(
                           height: 20,
