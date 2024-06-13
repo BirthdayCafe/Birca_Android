@@ -448,6 +448,17 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //  menu 삭제
   void deleteCafeMenu(int index) {
+    for (int i = 0; i < ownerMyCafeDetailModel!.cafeOptions.length; i++) {
+      ownerMyCafeDetailModel!.cafeOptions[i].name =
+          optionNameController[i].text;
+      ownerMyCafeDetailModel!.cafeOptions[i].price =
+          int.parse(optionPriceController[i].text);
+    }
+    for (int i = 0; i < ownerMyCafeDetailModel!.cafeMenus.length; i++) {
+      ownerMyCafeDetailModel!.cafeMenus[i].name = menuNameController[i].text;
+      ownerMyCafeDetailModel!.cafeMenus[i].price =
+          int.parse(menuPriceController[i].text);
+    }
     _menuNameController[index].dispose();
     _menuPriceController[index].dispose();
 
@@ -460,6 +471,17 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //menu 생성
   void addCafeMenu() {
+    for (int i = 0; i < ownerMyCafeDetailModel!.cafeOptions.length; i++) {
+      ownerMyCafeDetailModel!.cafeOptions[i].name =
+          optionNameController[i].text;
+      ownerMyCafeDetailModel!.cafeOptions[i].price =
+          int.parse(optionPriceController[i].text);
+    }
+    for (int i = 0; i < ownerMyCafeDetailModel!.cafeMenus.length; i++) {
+      ownerMyCafeDetailModel!.cafeMenus[i].name = menuNameController[i].text;
+      ownerMyCafeDetailModel!.cafeMenus[i].price =
+          int.parse(menuPriceController[i].text);
+    }
     _menuNameController.add(TextEditingController());
     _menuPriceController.add(TextEditingController());
     ownerMyCafeDetailModel?.cafeMenus.add(MenuModel(name: '메뉴', price: 0));
@@ -469,6 +491,17 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //  option 삭제
   void deleteCafeOption(int index) {
+    for (int i = 0; i < ownerMyCafeDetailModel!.cafeOptions.length; i++) {
+      ownerMyCafeDetailModel!.cafeOptions[i].name =
+          optionNameController[i].text;
+      ownerMyCafeDetailModel!.cafeOptions[i].price =
+          int.parse(optionPriceController[i].text);
+    }
+    for (int i = 0; i < ownerMyCafeDetailModel!.cafeMenus.length; i++) {
+      ownerMyCafeDetailModel!.cafeMenus[i].name = menuNameController[i].text;
+      ownerMyCafeDetailModel!.cafeMenus[i].price =
+          int.parse(menuPriceController[i].text);
+    }
     _optionNameController[index].dispose();
     _optionPriceController[index].dispose();
 
@@ -481,6 +514,19 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //option 생성
   void addCafeOption() {
+
+
+    for (int i = 0; i < ownerMyCafeDetailModel!.cafeOptions.length; i++) {
+      ownerMyCafeDetailModel!.cafeOptions[i].name =
+          optionNameController[i].text;
+      ownerMyCafeDetailModel!.cafeOptions[i].price =
+          int.parse(optionPriceController[i].text);
+    }
+    for (int i = 0; i < ownerMyCafeDetailModel!.cafeMenus.length; i++) {
+      ownerMyCafeDetailModel!.cafeMenus[i].name = menuNameController[i].text;
+      ownerMyCafeDetailModel!.cafeMenus[i].price =
+          int.parse(menuPriceController[i].text);
+    }
     _optionNameController.add(TextEditingController());
     _optionPriceController.add(TextEditingController());
     ownerMyCafeDetailModel?.cafeOptions.add(OptionModel(name: '옵션', price: 0));
