@@ -173,6 +173,136 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     }
   }
 
+  //사장님 카페 옵션 수정
+  Future<void> postOptions() async {
+    // const storage = FlutterSecureStorage();
+    var baseUrl = dotenv.env['BASE_URL'];
+    var token = '';
+
+    token =
+        "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4";
+    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    //
+    // // 토큰 가져오기
+    // if (kakaoLoginInfo != null) {
+    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    //   token = loginData['accessToken'].toString();
+    // }
+
+    // LogInterceptor 추가
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ));
+
+    List<Map<String, dynamic>>? jsonList = _ownerMyCafeDetailModel?.cafeOptions
+        .map((item) => item.toJson())
+        .toList();
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.post('${baseUrl}api/v1/cafes/options',
+          data: jsonList,
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      // 서버 응답 출력
+      log('postOptions Response: ${response.data}');
+
+      notifyListeners();
+    } catch (e) {
+      if (e is DioException) {
+        // Dio exception handling
+        if (e.response != null) {
+          // Server responded with an error
+          if (e.response!.statusCode == 400) {
+            // Handle HTTP 400 Bad Request error
+            log('Bad Request - Server returned 400 status code');
+            throw Exception('Failed to postOptions');
+
+            // Additional error handling logic here if needed
+          } else {
+            // Handle other HTTP status codes
+            log('Server error - Status code: ${e.response!.statusCode}');
+            throw Exception('Failed to postOptions.');
+            // Additional error handling logic here if needed
+          }
+        } else {
+          // No response from the server (network error, timeout, etc.)
+          log('Dio error: ${e.message}');
+          throw Exception('Failed to postOptions.');
+        }
+      } else {
+        // Handle other exceptions if necessary
+        log('Error: $e');
+        throw Exception('Failed to postOptions.');
+      }
+    }
+  }
+
+  //사장님 카페 menu 수정
+  Future<void> postMenus() async {
+    // const storage = FlutterSecureStorage();
+    var baseUrl = dotenv.env['BASE_URL'];
+    var token = '';
+
+    token =
+        "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4";
+    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    //
+    // // 토큰 가져오기
+    // if (kakaoLoginInfo != null) {
+    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    //   token = loginData['accessToken'].toString();
+    // }
+
+    // LogInterceptor 추가
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ));
+
+    List<Map<String, dynamic>>? jsonList = _ownerMyCafeDetailModel?.cafeMenus
+        .map((item) => item.toJson())
+        .toList();
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.post('${baseUrl}api/v1/cafes/menus',
+          data: jsonList,
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      // 서버 응답 출력
+      log('postMenus Response: ${response.data}');
+
+      notifyListeners();
+    } catch (e) {
+      if (e is DioException) {
+        // Dio exception handling
+        if (e.response != null) {
+          // Server responded with an error
+          if (e.response!.statusCode == 400) {
+            // Handle HTTP 400 Bad Request error
+            log('Bad Request - Server returned 400 status code');
+            throw Exception('Failed to postMenus');
+
+            // Additional error handling logic here if needed
+          } else {
+            // Handle other HTTP status codes
+            log('Server error - Status code: ${e.response!.statusCode}');
+            throw Exception('Failed to postMenus.');
+            // Additional error handling logic here if needed
+          }
+        } else {
+          // No response from the server (network error, timeout, etc.)
+          log('Dio error: ${e.message}');
+          throw Exception('Failed to postMenus.');
+        }
+      } else {
+        // Handle other exceptions if necessary
+        log('Error: $e');
+        throw Exception('Failed to postMenus.');
+      }
+    }
+  }
+
   //사장님 휴무일 편집
   Future<void> postDayOff(int cafeId, Map<String, dynamic> data) async {
     // const storage = FlutterSecureStorage();
