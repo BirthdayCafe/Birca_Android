@@ -35,11 +35,24 @@ class OwnerMyCafeDetailModel {
             optionList.map((option) => OptionModel.fromJson(option)).toList(),
         cafeImages: imageList.map((image) => image.toString()).toList());
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'cafeId': cafeId,
+      'cafeName': cafeName,
+      'cafeAddress': cafeAddress,
+      'twitterAccount': twitterAccount,
+      'businessHours': businessHours,
+      'cafeMenus': cafeMenus.map((menu) => menu.toJson()).toList(),
+      'cafeOptions': cafeOptions.map((option) => option.toJson()).toList(),
+      'cafeImages': cafeImages,
+    };
+  }
 }
 
 class MenuModel {
-   String name;
-   int price;
+  String name;
+  int price;
 
   MenuModel({required this.name, required this.price});
 
@@ -50,17 +63,24 @@ class MenuModel {
     );
   }
 
-   Map<String, Object> toMap() {
-     return {
-       'name': name,
-       'price': price,
-     };
-   }
+  Map<String, Object> toMap() {
+    return {
+      'name': name,
+      'price': price,
+    };
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'price': price,
+    };
+  }
 }
 
 class OptionModel {
-   String name;
-   int price;
+  String name;
+  int price;
 
   OptionModel({required this.name, required this.price});
 
@@ -71,10 +91,17 @@ class OptionModel {
     );
   }
 
-   Map<String, Object> toMap() {
-     return {
-       'name': name,
-       'price': price,
-     };
-   }
+  Map<String, Object> toMap() {
+    return {
+      'name': name,
+      'price': price,
+    };
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'price': price,
+    };
+  }
 }

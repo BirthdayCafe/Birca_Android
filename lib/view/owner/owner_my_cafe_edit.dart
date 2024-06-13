@@ -641,7 +641,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                 onTap: () async {
                   // 선택된 날짜를 ISO 8601 문자열 형식으로 변환
                   final List<String> dateStrings = _selectedDates
-                      .map((date) =>DateFormat('yyyy-MM-ddTHH:mm:ss').format(date))
+                      .map((date) =>
+                          DateFormat('yyyy-MM-ddTHH:mm:ss').format(date))
                       .toList();
 
                   // 데이터 정의
@@ -649,20 +650,20 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     "datOffDates": dateStrings,
                   };
 
-                   Provider.of<OwnerMyCafeViewModel>(context, listen: false)
-                      .postDayOff(viewModel.ownerMyCafeDetailModel!.cafeId, data);
+                  Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                      .postDayOff(
+                          viewModel.ownerMyCafeDetailModel!.cafeId, data);
 
                   await Provider.of<OwnerMyCafeViewModel>(context,
                           listen: false)
                       .patchMyCafe(
-                          cafeNameController.text,
-                          cafeAddressController.text,
-                          twitterAccountController.text,
-                          businessHoursController.text,
-                          cafeMenu.map((menu) => menu.toMap()).toList(),
-                          cafeOptions.map((option) => option.toMap()).toList())
+                    cafeNameController.text,
+                    cafeAddressController.text,
+                    twitterAccountController.text,
+                    businessHoursController.text,
+                  )
                       .then((_) {
-                        log(dateStrings.toString());
+                    log(dateStrings.toString());
                     // Navigate on success
                     Provider.of<OwnerMyCafeViewModel>(context, listen: false)
                         .getMyCafe();
@@ -726,11 +727,14 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
           _selectedImages =
               images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
 
-          await Provider.of<OwnerMyCafeViewModel>(context, listen: false).postImage(cafeId, _selectedImages).then((value) => Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe());
+          await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+              .postImage(cafeId, _selectedImages)
+              .then((value) =>
+                  Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                      .getMyCafe());
           log(_selectedImages.toString());
         });
       }
     }
   }
-
 }
