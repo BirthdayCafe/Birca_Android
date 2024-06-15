@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:birca/view/owner/owner_request_detail.dart';
 import 'package:birca/view/owner/owner_schedule_add.dart';
 import 'package:flutter/material.dart';
@@ -29,9 +28,8 @@ class _OwnerSchedule extends State<OwnerSchedule> {
   void initState() {
     super.initState();
     Provider.of<OwnerScheduleViewModel>(context, listen: false)
-        .getScheduleDetail(DateFormat('yyyy-MM-ddT00:00:00')
-            .format(DateTime.now())
-            .toString());
+        .getScheduleDetail(
+            DateFormat('yyyy-MM-ddT00:00:00').format(DateTime.now()));
     Provider.of<OwnerScheduleViewModel>(context, listen: false)
         .getSchedule(DateTime.now().year, DateTime.now().month);
   }
@@ -68,22 +66,6 @@ class _OwnerSchedule extends State<OwnerSchedule> {
         ),
         body: SingleChildScrollView(child: Consumer<OwnerScheduleViewModel>(
             builder: (context, viewModel, widget) {
-          List<Map<String, DateTime>> dateRanges = [];
-          for (int i = 0; i < viewModel.ownerScheduleExistModel!.length; i++) {
-            dateRanges.add(
-              {
-                'start': DateTime(
-                    viewModel.ownerScheduleExistModel![i].startYear,
-                    viewModel.ownerScheduleExistModel![i].startMonth,
-                    viewModel.ownerScheduleExistModel![i].startDay),
-                'end': DateTime(
-                    viewModel.ownerScheduleExistModel![i].endYear,
-                    viewModel.ownerScheduleExistModel![i].endMonth,
-                    viewModel.ownerScheduleExistModel![i].endDay)
-              },
-            );
-          }
-
           return Column(
             children: [
               Container(
@@ -103,45 +85,21 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                     if (!isSameDay(_selectedDay, selectedDay)) {
                       setState(() {
                         _selectedDay = selectedDay;
-                        _focusedDay =
-                            focusedDay; // update `_focusedDay` here as well
-
-                        log(_selectedDay.toString());
-                        Provider.of<OwnerScheduleViewModel>(context,
-                                listen: false)
-                            .getScheduleDetail(DateFormat('yyyy-MM-ddT00:00:00')
-                                .format(_selectedDay!)
-                                .toString());
+                        _focusedDay = focusedDay;
+                        viewModel.getScheduleDetail(
+                            DateFormat('yyyy-MM-ddT00:00:00')
+                                .format(_selectedDay!));
                       });
                     }
                   },
                   onPageChanged: (focusedDay) {
                     _focusedDay = focusedDay;
-                    Provider.of<OwnerScheduleViewModel>(context, listen: false)
-                        .getSchedule(_focusedDay.year, _focusedDay.month);
-
-                    dateRanges = [];
-                    for (int i = 0;
-                        i < viewModel.ownerScheduleExistModel!.length;
-                        i++) {
-                      dateRanges.add(
-                        {
-                          'start': DateTime(
-                              viewModel.ownerScheduleExistModel![i].startYear,
-                              viewModel.ownerScheduleExistModel![i].startMonth,
-                              viewModel.ownerScheduleExistModel![i].startDay),
-                          'end': DateTime(
-                              viewModel.ownerScheduleExistModel![i].endYear,
-                              viewModel.ownerScheduleExistModel![i].endMonth,
-                              viewModel.ownerScheduleExistModel![i].endDay)
-                        },
-                      );
-                    }
+                    viewModel.getSchedule(_focusedDay.year, _focusedDay.month);
                   },
 
                   calendarBuilders: CalendarBuilders(
                       defaultBuilder: (context, day, focusedDay) {
-                    for (var range in dateRanges) {
+                    for (var range in viewModel.dateRanges) {
                       if (day.isAfter(range['start']!
                               .subtract(const Duration(days: 1))) &&
                           day.isBefore(

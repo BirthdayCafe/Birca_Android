@@ -15,6 +15,11 @@ class OwnerScheduleViewModel extends ChangeNotifier {
   List<OwnerScheduleExistModel>? _ownerScheduleExistModel;
   List<OwnerScheduleExistModel>? get ownerScheduleExistModel => _ownerScheduleExistModel;
 
+  List<Map<String, DateTime>> _dateRanges=[];
+  List<Map<String, DateTime>> get dateRanges => _dateRanges;
+
+
+
   //사장님 스케줄 추가
   Future<void> postSchedule(OwnerScheduleAddModel ownerScheduleAddModel) async {
     // const storage = FlutterSecureStorage();
@@ -186,6 +191,22 @@ class OwnerScheduleViewModel extends ChangeNotifier {
       _ownerScheduleExistModel?.addAll(cafeHomeModels);
       // 서버 응답 출력
       log('getSchedule Response: ${response.data}');
+
+      _dateRanges = [];
+      for (int i = 0; i < ownerScheduleExistModel!.length; i++) {
+        _dateRanges.add(
+          {
+            'start': DateTime(
+                ownerScheduleExistModel![i].startYear,
+                ownerScheduleExistModel![i].startMonth,
+                ownerScheduleExistModel![i].startDay),
+            'end': DateTime(
+                ownerScheduleExistModel![i].endYear,
+                ownerScheduleExistModel![i].endMonth,
+                ownerScheduleExistModel![i].endDay)
+          },
+        );
+      }
 
 
       notifyListeners();
