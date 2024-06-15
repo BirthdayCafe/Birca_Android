@@ -37,8 +37,8 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
   DateTime? _rangeStart;
   DateTime? _rangeEnd;
 
-  int artistId =0;
-  String artist ="";
+  int artistId = 0;
+  String artist = "";
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,6 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                     color: Palette.gray10),
               ),
             ),
-
             Row(children: [
               Container(
                 width: 190,
@@ -100,27 +99,24 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                 radius: 6,
                 textColor: Palette.primary,
                 textSize: 14,
-                onPressed: ()  async {
+                onPressed: () async {
                   final result = await Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => const OwnerSelectArtist()));
 
-                  if(result!=null){
+                  if (result != null) {
                     artistId = result['id'];
                     artist = result['artist'];
                     artistController.text = artist;
                   }
-
                 },
                 backgroundColor: Colors.white,
               )
             ]),
-
             const SizedBox(
               height: 24,
             ),
-
             Container(
               margin: const EdgeInsets.only(left: 14),
               child: const Text(
@@ -364,8 +360,11 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                         twitterAccount: twitterAccountController.text,
                         hostPhoneNumber: hostPhoneNumberController.text))
                     .then((value) {
+                  Provider.of<OwnerScheduleViewModel>(context, listen: false)
+                      .getSchedule(_rangeStart!.year, _rangeStart!.month);
                   ScaffoldMessenger.of(context)
                       .showSnackBar(const SnackBar(content: Text('추가 완료')));
+
                   Navigator.pop(context);
                 });
               },
