@@ -28,9 +28,8 @@ class _OwnerSchedule extends State<OwnerSchedule> {
   @override
   void initState() {
     super.initState();
-
     Provider.of<OwnerScheduleViewModel>(context, listen: false)
-        .getScheduleDetail(DateFormat('yyyy-MM-ddT09:00:00')
+        .getScheduleDetail(DateFormat('yyyy-MM-ddT00:00:00')
             .format(DateTime.now())
             .toString());
     Provider.of<OwnerScheduleViewModel>(context, listen: false)
@@ -69,6 +68,22 @@ class _OwnerSchedule extends State<OwnerSchedule> {
         ),
         body: SingleChildScrollView(child: Consumer<OwnerScheduleViewModel>(
             builder: (context, viewModel, widget) {
+          List<Map<String, DateTime>> dateRanges = [];
+          for (int i = 0; i < viewModel.ownerScheduleExistModel!.length; i++) {
+            dateRanges.add(
+              {
+                'start': DateTime(
+                    viewModel.ownerScheduleExistModel![i].startYear,
+                    viewModel.ownerScheduleExistModel![i].startMonth,
+                    viewModel.ownerScheduleExistModel![i].startDay),
+                'end': DateTime(
+                    viewModel.ownerScheduleExistModel![i].endYear,
+                    viewModel.ownerScheduleExistModel![i].endMonth,
+                    viewModel.ownerScheduleExistModel![i].endDay)
+              },
+            );
+          }
+
           return Column(
             children: [
               Container(
@@ -90,10 +105,11 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                         _selectedDay = selectedDay;
                         _focusedDay =
                             focusedDay; // update `_focusedDay` here as well
+
                         log(_selectedDay.toString());
                         Provider.of<OwnerScheduleViewModel>(context,
                                 listen: false)
-                            .getScheduleDetail(DateFormat('yyyy-MM-ddT09:00:00')
+                            .getScheduleDetail(DateFormat('yyyy-MM-ddT00:00:00')
                                 .format(_selectedDay!)
                                 .toString());
                       });
@@ -103,11 +119,52 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                     _focusedDay = focusedDay;
                     Provider.of<OwnerScheduleViewModel>(context, listen: false)
                         .getSchedule(_focusedDay.year, _focusedDay.month);
+
+                    dateRanges = [];
+                    for (int i = 0;
+                        i < viewModel.ownerScheduleExistModel!.length;
+                        i++) {
+                      dateRanges.add(
+                        {
+                          'start': DateTime(
+                              viewModel.ownerScheduleExistModel![i].startYear,
+                              viewModel.ownerScheduleExistModel![i].startMonth,
+                              viewModel.ownerScheduleExistModel![i].startDay),
+                          'end': DateTime(
+                              viewModel.ownerScheduleExistModel![i].endYear,
+                              viewModel.ownerScheduleExistModel![i].endMonth,
+                              viewModel.ownerScheduleExistModel![i].endDay)
+                        },
+                      );
+                    }
                   },
-                  calendarStyle: const CalendarStyle(
+
+                  calendarBuilders: CalendarBuilders(
+                      defaultBuilder: (context, day, focusedDay) {
+                    for (var range in dateRanges) {
+                      if (day.isAfter(range['start']!
+                              .subtract(const Duration(days: 1))) &&
+                          day.isBefore(
+                              range['end']!.add(const Duration(days: 1)))) {
+                        return Container(
+                          margin: const EdgeInsets.all(6.0),
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                              color: Palette.primary, shape: BoxShape.circle),
+                          child: Text(
+                            '${day.day}',
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        );
+                      }
+                    }
+                    return null;
+                  }),
+                  calendarStyle: CalendarStyle(
                       // isTodayHighlighted: false,
                       selectedDecoration: BoxDecoration(
-                          color: Palette.primary, shape: BoxShape.circle)),
+                          color: Colors.blue.withOpacity(0.5),
+                          shape: BoxShape.circle)),
                 ),
               ),
               GestureDetector(
