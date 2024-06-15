@@ -29,9 +29,13 @@ class _OwnerSchedule extends State<OwnerSchedule> {
     super.initState();
     Provider.of<OwnerScheduleViewModel>(context, listen: false)
         .getScheduleDetail(
-            DateFormat('yyyy-MM-ddT00:00:00').format(DateTime.now()));
+        DateFormat('yyyy-MM-ddT00:00:00').format(DateTime.now()));
     Provider.of<OwnerScheduleViewModel>(context, listen: false)
-        .getSchedule(DateTime.now().year, DateTime.now().month);
+        .getSchedule(DateTime
+        .now()
+        .year, DateTime
+        .now()
+        .month);
   }
 
   @override
@@ -66,125 +70,138 @@ class _OwnerSchedule extends State<OwnerSchedule> {
         ),
         body: SingleChildScrollView(child: Consumer<OwnerScheduleViewModel>(
             builder: (context, viewModel, widget) {
-          return Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(
-                    left: 25, right: 25, top: 10, bottom: 13),
-                child: TableCalendar(
-                  //오늘 날짜
-                  focusedDay: _focusedDay,
-                  firstDay: DateTime.now(),
-                  lastDay: DateTime.utc(DateTime.now().year + 1),
-                  headerStyle: const HeaderStyle(
-                      formatButtonVisible: false, titleCentered: true),
-                  selectedDayPredicate: (day) {
-                    return isSameDay(_selectedDay, day);
-                  },
-                  onDaySelected: (selectedDay, focusedDay) {
-                    if (!isSameDay(_selectedDay, selectedDay)) {
-                      setState(() {
-                        _selectedDay = selectedDay;
+              return Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(
+                        left: 25, right: 25, top: 10, bottom: 13),
+                    child: TableCalendar(
+                      //오늘 날짜
+                      focusedDay: _focusedDay,
+                      firstDay: DateTime.now(),
+                      lastDay: DateTime.utc(DateTime
+                          .now()
+                          .year + 1),
+                      headerStyle: const HeaderStyle(
+                          formatButtonVisible: false, titleCentered: true),
+                      selectedDayPredicate: (day) {
+                        return isSameDay(_selectedDay, day);
+                      },
+                      onDaySelected: (selectedDay, focusedDay) {
+                        if (!isSameDay(_selectedDay, selectedDay)) {
+                          setState(() {
+                            _selectedDay = selectedDay;
+                            _focusedDay = focusedDay;
+                            viewModel.getScheduleDetail(
+                                DateFormat('yyyy-MM-ddT00:00:00')
+                                    .format(_selectedDay!));
+                          });
+                        }
+                      },
+                      onPageChanged: (focusedDay) {
                         _focusedDay = focusedDay;
-                        viewModel.getScheduleDetail(
-                            DateFormat('yyyy-MM-ddT00:00:00')
-                                .format(_selectedDay!));
-                      });
-                    }
-                  },
-                  onPageChanged: (focusedDay) {
-                    _focusedDay = focusedDay;
-                    viewModel.getSchedule(_focusedDay.year, _focusedDay.month);
-                  },
+                        viewModel.getSchedule(
+                            _focusedDay.year, _focusedDay.month);
+                      },
 
-                  calendarBuilders: CalendarBuilders(
-                      defaultBuilder: (context, day, focusedDay) {
-                    for (var range in viewModel.dateRanges) {
-                      if (day.isAfter(range['start']!
-                              .subtract(const Duration(days: 1))) &&
-                          day.isBefore(
-                              range['end']!.add(const Duration(days: 1)))) {
-                        return Container(
-                          margin: const EdgeInsets.all(6.0),
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                              color: Palette.primary, shape: BoxShape.circle),
-                          child: Text(
-                            '${day.day}',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        );
-                      }
-                    }
-                    return null;
-                  }),
-                  calendarStyle: CalendarStyle(
-                      // isTodayHighlighted: false,
-                      selectedDecoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(0.5),
-                          shape: BoxShape.circle)),
-                ),
-              ),
-              GestureDetector(
-                child: Container(
-                  // height: 140,
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(left: 14, right: 14, top: 19),
-                  padding:
+                      calendarBuilders: CalendarBuilders(
+                          defaultBuilder: (context, day, focusedDay) {
+                            for (var range in viewModel.dateRanges) {
+                              if (day.isAfter(range['start']!) &&
+                                  day.isBefore(
+                                      range['end']!.add(
+                                          const Duration(days: 1)))) {
+                                return Container(
+                                  margin: const EdgeInsets.all(6.0),
+                                  alignment: Alignment.center,
+                                  decoration: const BoxDecoration(
+                                      color: Palette.primary,
+                                      shape: BoxShape.circle),
+                                  child: Text(
+                                  '${day.day}',
+                                  style: const TextStyle(color: Colors.white),
+                                ),);
+                          }
+                          }
+                            return
+                            null;
+                          }),
+                      calendarStyle: CalendarStyle(
+                        // isTodayHighlighted: false,
+                          selectedDecoration: BoxDecoration(
+                              color: Colors.blue.withOpacity(0.5),
+                              shape: BoxShape.circle)),
+                    ),
+                  ),
+                  GestureDetector(
+                    child: Container(
+                      // height: 140,
+                      width: double.infinity,
+                      margin: const EdgeInsets.only(
+                          left: 14, right: 14, top: 19),
+                      padding:
                       const EdgeInsets.only(left: 26, top: 31, bottom: 28.5),
-                  decoration: BoxDecoration(
-                    color: Palette.gray02, // Container의 배경색
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "아티스트 : ${viewModel.ownerScheduleModel?.artist.groupName ?? ""} ${viewModel.ownerScheduleModel?.artist.name ?? ""}",
-                        style: const TextStyle(
-                            color: Palette.primary,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14),
+                      decoration: BoxDecoration(
+                        color: Palette.gray02, // Container의 배경색
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      const SizedBox(
-                        height: 13.5,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "아티스트 : ${viewModel.ownerScheduleModel?.artist
+                                .groupName ?? ""} ${viewModel.ownerScheduleModel
+                                ?.artist.name ?? ""}",
+                            style: const TextStyle(
+                                color: Palette.primary,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14),
+                          ),
+                          const SizedBox(
+                            height: 13.5,
+                          ),
+                          Text(
+                            "닉네임 : ${viewModel.ownerScheduleModel?.nickname ??
+                                ""}",
+                            style: const TextStyle(
+                                color: Palette.gray10,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14),
+                          ),
+                          const SizedBox(
+                            height: 13.5,
+                          ),
+                          Text(
+                            "일정 : ${viewModel.ownerScheduleModel?.startDate
+                                .substring(0, 10) ?? ""} ~ ${viewModel
+                                .ownerScheduleModel?.endDate.substring(0, 10) ??
+                                ""}",
+                            style: const TextStyle(
+                                color: Palette.gray10,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w500,
+                                fontSize: 14),
+                          )
+                        ],
                       ),
-                      Text(
-                        "닉네임 : ${viewModel.ownerScheduleModel?.nickname ?? ""}",
-                        style: const TextStyle(
-                            color: Palette.gray10,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14),
-                      ),
-                      const SizedBox(
-                        height: 13.5,
-                      ),
-                      Text(
-                        "일정 : ${viewModel.ownerScheduleModel?.startDate.substring(0, 10) ?? ""} ~ ${viewModel.ownerScheduleModel?.endDate.substring(0, 10) ?? ""}",
-                        style: const TextStyle(
-                            color: Palette.gray10,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14),
-                      )
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  if (viewModel.ownerScheduleModel != null) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OwnerRequestDetail(
-                                cafeID: viewModel
-                                    .ownerScheduleModel!.birthdayCafeId)));
-                  }
-                },
-              )
-            ],
-          );
-        })));
+                    ),
+                    onTap: () {
+                      if (viewModel.ownerScheduleModel != null) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    OwnerRequestDetail(
+                                        cafeID: viewModel
+                                            .ownerScheduleModel!
+                                            .birthdayCafeId)));
+                      }
+                    },
+                  )
+                ],
+              );
+            })));
   }
 }
