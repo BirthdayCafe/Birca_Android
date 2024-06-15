@@ -103,12 +103,12 @@ class OwnerScheduleAddModel {
 }
 
 class OwnerScheduleExistModel {
-  String startYear;
-  String startMonth;
-  String startDay;
-  String endYear;
-  String endMonth;
-  String endDay;
+  int startYear;
+  int startMonth;
+  int startDay;
+  int endYear;
+  int endMonth;
+  int endDay;
 
   OwnerScheduleExistModel(
       {required this.startYear,
