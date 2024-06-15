@@ -57,6 +57,7 @@ class OwnerScheduleModel {
     };
   }
 }
+
 class OwnerScheduleAddModel {
   int artistId;
   String startDate;
@@ -102,26 +103,40 @@ class OwnerScheduleAddModel {
 }
 
 class OwnerScheduleExistModel {
+  String startYear;
+  String startMonth;
+  String startDay;
+  String endYear;
+  String endMonth;
+  String endDay;
 
-  String startDate;
-  String endDate;
-
-  OwnerScheduleExistModel({
-    required this.startDate,
-    required this.endDate,
-  });
+  OwnerScheduleExistModel(
+      {required this.startYear,
+      required this.startMonth,
+      required this.startDay,
+      required this.endYear,
+      required this.endMonth,
+      required this.endDay});
 
   factory OwnerScheduleExistModel.fromJson(Map<String, dynamic> json) {
     return OwnerScheduleExistModel(
-      startDate: json['startDate'],
-      endDate: json['endDate'],
+      startYear: json['startYear'],
+      startMonth: json['startMonth'],
+      startDay: json['startDay'],
+      endYear: json['endYear'],
+      endMonth: json['endMonth'],
+      endDay: json['endDay'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'startDate': startDate,
-      'endDate': endDate,
+      'startYear': startYear,
+      'startMonth': startMonth,
+      'startDay': startDay,
+      'endYear': endYear,
+      'endMonth': endMonth,
+      'endDay': endDay,
     };
   }
 }
