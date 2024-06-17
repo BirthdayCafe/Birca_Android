@@ -57,3 +57,23 @@ class Cafe {
     );
   }
 }
+
+
+class HomeArtists {
+  String? artistId;
+  String? artistName;
+  String? artistImage;
+
+  HomeArtists(
+      {required this.artistId,
+        required this.artistName,
+        required this.artistImage});
+
+  factory HomeArtists.fromJson(Map<String, dynamic> json) {
+    return HomeArtists(
+      artistId: json['artistId'],
+      artistName: json['artistName'],
+      artistImage: json['artistImage'],
+    );
+  }
+}
