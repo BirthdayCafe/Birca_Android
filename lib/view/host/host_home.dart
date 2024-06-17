@@ -22,7 +22,7 @@ class _HostHome extends State<HostHome> {
   void initState() {
     super.initState();
     Provider.of<HostHomeViewModel>(context, listen: false)
-        .getHostHome(1, 3, "");
+        .getHostHome(1, 10, "",false);
   }
 
   var isSwitched = false;
@@ -117,7 +117,9 @@ class _HostHome extends State<HostHome> {
 
                                       if(isSwitched){
 
+                                        viewModel.getHostHome(1, 10, "",true);
                                       } else {
+                                        viewModel.getHostHome(1, 10, "",false);
 
                                       }
                                     },
