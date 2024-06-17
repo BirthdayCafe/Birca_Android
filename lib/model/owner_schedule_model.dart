@@ -57,6 +57,7 @@ class OwnerScheduleModel {
     };
   }
 }
+
 class OwnerScheduleAddModel {
   int artistId;
   String startDate;
@@ -97,6 +98,45 @@ class OwnerScheduleAddModel {
       'maximumVisitant': maximumVisitant,
       'twitterAccount': twitterAccount,
       'hostPhoneNumber': hostPhoneNumber,
+    };
+  }
+}
+
+class OwnerScheduleExistModel {
+  int startYear;
+  int startMonth;
+  int startDay;
+  int endYear;
+  int endMonth;
+  int endDay;
+
+  OwnerScheduleExistModel(
+      {required this.startYear,
+      required this.startMonth,
+      required this.startDay,
+      required this.endYear,
+      required this.endMonth,
+      required this.endDay});
+
+  factory OwnerScheduleExistModel.fromJson(Map<String, dynamic> json) {
+    return OwnerScheduleExistModel(
+      startYear: json['startYear'],
+      startMonth: json['startMonth'],
+      startDay: json['startDay'],
+      endYear: json['endYear'],
+      endMonth: json['endMonth'],
+      endDay: json['endDay'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'startYear': startYear,
+      'startMonth': startMonth,
+      'startDay': startDay,
+      'endYear': endYear,
+      'endMonth': endMonth,
+      'endDay': endDay,
     };
   }
 }

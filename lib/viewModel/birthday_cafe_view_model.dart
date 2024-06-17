@@ -64,6 +64,21 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   List<TextEditingController> get luckyDrawsPrizeController =>
       _luckyDrawsPrizeController;
 
+  final TextEditingController _birthDayCafeNameController = TextEditingController();
+  TextEditingController get birthDayCafeNameController=>_birthDayCafeNameController;
+  //
+  // final TextEditingController _cafeNameController = TextEditingController();
+  // TextEditingController get cafeNameController=>_cafeNameController;
+
+  // final TextEditingController _artistController = TextEditingController();
+  // TextEditingController get artistController=>_artistController;
+
+  final TextEditingController _twitterController = TextEditingController();
+  TextEditingController get twitterController=>_twitterController;
+
+  final TextEditingController _cafeAddressController = TextEditingController();
+  TextEditingController get cafeAddressController=>_cafeAddressController;
+
   //현재 상태를 저장하는 변수
   final String _congestionState = 'UNKNOWN';
   final String _specialGoodsState = 'UNKNOWN';
@@ -917,6 +932,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //menu 삭제
   void deleteMenus(int index) {
+    update();
+
     _menuNameController[index].dispose();
     _menuPriceController[index].dispose();
     _menuDetailsController[index].dispose();
@@ -932,6 +949,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //menu 생성
   void addMenus() {
+    update();
+
     _menuNameController.add(TextEditingController());
     _menuPriceController.add(TextEditingController());
     _menuDetailsController.add(TextEditingController());
@@ -944,6 +963,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //  특전 삭제
   void deleteGoods(int index) {
+    update();
+
     _goodsNameController[index].dispose();
     _goodsDetailsController[index].dispose();
 
@@ -956,6 +977,9 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //특전 생성
   void addGoods() {
+    update();
+
+
     _goodsNameController.add(TextEditingController());
     _goodsDetailsController.add(TextEditingController());
     _birthdayCafeSpecialGoodsModel
@@ -966,6 +990,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //  luckydraws 삭제
   void deleteLuckyDraws(int index) {
+    update();
+
     _luckyDrawsRankController[index].dispose();
     _luckyDrawsPrizeController[index].dispose();
 
@@ -978,11 +1004,39 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //luckydraws 생성
   void addLuckyDraws() {
+    update();
     _luckyDrawsRankController.add(TextEditingController());
     _luckyDrawsPrizeController.add(TextEditingController());
     birthdayCafeLuckyDrawsModel
         ?.add(BirthdayCafeLuckyDrawsModel(rank: 0, prize: '상품'));
 
     notifyListeners();
+  }
+
+  void update() {
+
+    for (int i = 0; i < birthdayCafeMenusModel!.length; i++) {
+      birthdayCafeMenusModel![i].name = menuNameController[i].text;
+      birthdayCafeMenusModel![i].details = menuDetailsController[i].text;
+      birthdayCafeMenusModel![i].price = int.parse(menuPriceController[i].text);
+    }
+
+    for (int i = 0; i < birthdayCafeSpecialGoodsModel!.length; i++) {
+      birthdayCafeSpecialGoodsModel![i].name = goodsNameController[i].text;
+      birthdayCafeSpecialGoodsModel![i].details =
+          goodsDetailsController[i].text;
+    }
+
+    for (int i = 0; i < birthdayCafeLuckyDrawsModel!.length; i++) {
+      birthdayCafeLuckyDrawsModel![i].prize = luckyDrawsPrizeController[i].text;
+      birthdayCafeLuckyDrawsModel![i].rank =
+          int.parse(luckyDrawsRankController[i].text);
+    }
+
+
+    birthdayCafeModel?.birthdayCafeName = birthDayCafeNameController.text;
+    birthdayCafeModel?.twitterAccount = twitterController.text;
+
+
   }
 }

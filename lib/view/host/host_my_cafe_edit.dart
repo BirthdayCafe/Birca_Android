@@ -47,14 +47,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   bool isDateChecked = false;
   bool isCountChecked = false;
 
-  List<String> luckyDraw = ['menu1', 'menu2', 'menu3', 'menu4', 'menu5'];
-
-  TextEditingController birthDayCafeNameController = TextEditingController();
-  TextEditingController cafeNameController = TextEditingController();
-  TextEditingController artistController = TextEditingController();
-  TextEditingController twitterController = TextEditingController();
-  TextEditingController cafeAddressController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,10 +54,10 @@ class _HostCafeEdit extends State<HostCafeEdit> {
         scrolledUnderElevation: 0,
         title: Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
-          birthDayCafeNameController.text =
+          viewModel.birthDayCafeNameController.text =
               viewModel.birthdayCafeModel?.birthdayCafeName ?? '';
           return TextField(
-              controller: birthDayCafeNameController,
+              controller: viewModel.birthDayCafeNameController,
               decoration: const InputDecoration(
                   hintText: '생일 카페 이름', border: InputBorder.none),
               style: const TextStyle(
@@ -83,11 +75,10 @@ class _HostCafeEdit extends State<HostCafeEdit> {
       body: SingleChildScrollView(
         child: Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
-          cafeNameController.text = viewModel.birthdayCafeModel!.cafe.name;
-          artistController.text =
-              '${viewModel.birthdayCafeModel!.artist.groupName} ${viewModel.birthdayCafeModel!.artist.name}';
-          twitterController.text = viewModel.birthdayCafeModel!.twitterAccount;
-          cafeAddressController.text =
+              // viewModel. artistController.text =
+              // '${viewModel.birthdayCafeModel!.artist.groupName} ${viewModel.birthdayCafeModel!.artist.name}';
+              viewModel. twitterController.text = viewModel.birthdayCafeModel!.twitterAccount;
+              // viewModel. cafeAddressController.text =
               viewModel.birthdayCafeModel!.cafe.address;
 
           return Column(
@@ -277,9 +268,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           fontWeight: FontWeight.w700,
                           fontSize: 16),
                     ),
-                    TextField(
-                      controller: artistController,
-                      decoration: const InputDecoration(
+                    const TextField(
+                      // controller: viewModel.artistController,
+                      decoration: InputDecoration(
                         hintText: '아티스트 및 그룹명',
                         border: UnderlineInputBorder(), // 밑줄 추가
                       ),
@@ -296,7 +287,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           fontSize: 16),
                     ),
                     TextField(
-                      controller: twitterController,
+                      controller: viewModel.twitterController,
                       decoration: const InputDecoration(
                         hintText: '트위터 계정',
                         border: UnderlineInputBorder(), // 밑줄 추가
@@ -342,7 +333,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           fontSize: 16),
                     ),
                     TextField(
-                      controller: cafeAddressController,
+                      controller: viewModel.cafeAddressController,
                       decoration: const InputDecoration(
                         hintText: '서울 특별시~~',
                         border: UnderlineInputBorder(), // 밑줄 추가
@@ -856,34 +847,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
               final viewModel =
                   Provider.of<BirthdayCafeViewModel>(context, listen: false);
 
-              for (int i = 0;
-                  i < viewModel.birthdayCafeSpecialGoodsModel!.length;
-                  i++) {
-                viewModel.birthdayCafeSpecialGoodsModel![i].name =
-                    viewModel.goodsNameController[i].text;
-                viewModel.birthdayCafeSpecialGoodsModel![i].details =
-                    viewModel.goodsDetailsController[i].text;
-              }
+              viewModel.update();
 
-              for (int i = 0;
-                  i < viewModel.birthdayCafeMenusModel!.length;
-                  i++) {
-                viewModel.birthdayCafeMenusModel![i].name =
-                    viewModel.menuNameController[i].text;
-                viewModel.birthdayCafeMenusModel![i].details =
-                    viewModel.menuDetailsController[i].text;
-                viewModel.birthdayCafeMenusModel![i].price =
-                    int.parse(viewModel.menuPriceController[i].text);
-              }
-
-              for (int i = 0;
-                  i < viewModel.birthdayCafeLuckyDrawsModel!.length;
-                  i++) {
-                viewModel.birthdayCafeLuckyDrawsModel![i].rank =
-                    int.parse(viewModel.luckyDrawsRankController[i].text);
-                viewModel.birthdayCafeLuckyDrawsModel![i].prize =
-                    viewModel.luckyDrawsPrizeController[i].text;
-              }
               Provider.of<BirthdayCafeViewModel>(context, listen: false)
                   .postSpecialGoods(id);
               Provider.of<BirthdayCafeViewModel>(context, listen: false)
@@ -895,8 +860,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                   .patchInfo(
                       id,
                       BirthdayCafeInfoModel(
-                          birthdayCafeName: birthDayCafeNameController.text,
-                          birthdayCafeTwitterAccount: twitterController.text))
+                          birthdayCafeName: viewModel.birthDayCafeNameController.text,
+                          birthdayCafeTwitterAccount: viewModel.twitterController.text))
                   .then((value) {
                 Provider.of<BirthdayCafeViewModel>(context, listen: false)
                     .fetchData(id);
