@@ -21,7 +21,7 @@ class _VisitorHome extends State<VisitorHome> {
   void initState() {
     super.initState();
     Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-        .getCafeHome('IN_PROGRESS');
+        .getCafeHome(1,10,'','IN_PROGRESS');
   }
 
   var artistList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
