@@ -4,9 +4,12 @@ import 'package:birca/viewModel/host_home_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:table_calendar/table_calendar.dart';
 import '../../designSystem/palette.dart';
 import '../../designSystem/text.dart';
+import '../../widgets/button.dart';
 
 class HostHome extends StatefulWidget {
   const HostHome({super.key});
@@ -22,11 +25,17 @@ class _HostHome extends State<HostHome> {
   void initState() {
     super.initState();
     Provider.of<HostHomeViewModel>(context, listen: false)
-        .getHostHome(1, 10, "",false);
+        .getHostHome(1, 10, "", false, "", "");
   }
 
   var isSwitched = false;
+  String hostDate = '';
 
+  RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
+  DateTime? _selectedDay;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _rangeStart;
+  DateTime? _rangeEnd;
 
   @override
   Widget build(BuildContext context) {
@@ -86,14 +95,6 @@ class _HostHome extends State<HostHome> {
                                   ),
                                 ]),
                           ),
-                          SizedBox(
-                              width: 30,
-                              child: IconButton(
-                                onPressed: () {},
-                                icon: SvgPicture.asset(
-                                  'lib/assets/image/img_filter.svg',
-                                ),
-                              )),
                         ],
                       ),
                       Row(
@@ -115,12 +116,26 @@ class _HostHome extends State<HostHome> {
                                         isSwitched = value;
                                       });
 
-                                      if(isSwitched){
-
-                                        viewModel.getHostHome(1, 10, "",true);
+                                      if (isSwitched) {
+                                        viewModel.getHostHome(
+                                            1,
+                                            10,
+                                            "",
+                                            isSwitched,
+                                            DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                                .format(_rangeStart!),
+                                            DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                                .format(_rangeEnd!));
                                       } else {
-                                        viewModel.getHostHome(1, 10, "",false);
-
+                                        viewModel.getHostHome(
+                                            1,
+                                            10,
+                                            "",
+                                            isSwitched,
+                                            DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                                .format(_rangeStart!),
+                                            DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                                .format(_rangeEnd!));
                                       }
                                     },
                                   )))
@@ -129,6 +144,9 @@ class _HostHome extends State<HostHome> {
                     ],
                   ),
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 Consumer<HostHomeViewModel>(
                     builder: (builder, viewModel, widget) {
                   return Row(
@@ -136,34 +154,36 @@ class _HostHome extends State<HostHome> {
                       const SizedBox(
                         width: 16,
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            left: 12, right: 12, top: 5, bottom: 5),
-
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Palette.gray06,
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
-                        // 원하는 패딩 값 설정
-
-                        child: const Row(
-                          children: [
-                            Icon(
-                              Icons.calendar_today_outlined,
-                              color: Palette.gray10,
-                              size: 12,
-                            ),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            BircaText(
-                                text: '10.01(월)~10.02(화)',
-                                textSize: 12,
-                                textColor: Palette.gray10,
-                                fontFamily: 'Pretendard')
-                          ],
+                      GestureDetector(
+                        child: Container(
+                          padding: const EdgeInsets.only(
+                              left: 12, right: 12, top: 5, bottom: 5),
+                          decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Palette.gray06,
+                              ),
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Row(
+                            children: [
+                              const Icon(
+                                Icons.calendar_today_outlined,
+                                color: Palette.gray10,
+                                size: 12,
+                              ),
+                              const SizedBox(
+                                width: 3,
+                              ),
+                              BircaText(
+                                  text: hostDate,
+                                  textSize: 12,
+                                  textColor: Palette.gray10,
+                                  fontFamily: 'Pretendard')
+                            ],
+                          ),
                         ),
+                        onTap: () {
+                          _showBottomDialogCalendar(context);
+                        },
                       ),
                       const SizedBox(
                         width: 7,
@@ -171,14 +191,11 @@ class _HostHome extends State<HostHome> {
                       Container(
                         padding: const EdgeInsets.only(
                             left: 12, right: 12, top: 5, bottom: 5),
-
                         decoration: BoxDecoration(
                             border: Border.all(
                               color: Palette.gray06,
                             ),
                             borderRadius: BorderRadius.circular(20)),
-                        // 원하는 패딩 값 설정
-
                         child: const Row(
                           children: [
                             Icon(
@@ -389,5 +406,96 @@ class _HostHome extends State<HostHome> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);
+  }
+
+  void _showBottomDialogCalendar(BuildContext context) async {
+    var hostDate1 = await showModalBottomSheet(
+        context: context,
+        builder: (context) {
+          return StatefulBuilder(
+              builder: (BuildContext context, StateSetter setState) {
+            return Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.only(
+                      left: 25, right: 25, top: 10, bottom: 13),
+                  child: TableCalendar(
+                    //오늘 날짜
+                    focusedDay: _focusedDay,
+                    firstDay: DateTime.now(),
+                    lastDay: DateTime.utc(DateTime.now().year + 1),
+
+                    headerStyle: const HeaderStyle(
+                        formatButtonVisible: false, titleCentered: true),
+
+                    rangeStartDay: _rangeStart,
+                    rangeEndDay: _rangeEnd,
+                    rangeSelectionMode: _rangeSelectionMode,
+
+                    selectedDayPredicate: (day) {
+                      return isSameDay(_selectedDay, day);
+                    },
+
+                    onDaySelected: (selectedDay, focusedDay) {
+                      if (!isSameDay(_selectedDay, selectedDay)) {
+                        setState(() {
+                          _selectedDay = selectedDay;
+                          _focusedDay =
+                              focusedDay; // update `_focusedDay` here as well
+                          _rangeStart = null; // Important to clean those
+                          _rangeEnd = null;
+                          _rangeSelectionMode = RangeSelectionMode.toggledOff;
+                        });
+                      }
+                    },
+
+                    //달력 날짜 범위 선택
+                    onRangeSelected: (start, end, focusedDay) {
+                      setState(() {
+                        _selectedDay = null;
+                        _focusedDay = focusedDay;
+                        _rangeStart = start;
+                        _rangeEnd = end;
+                        _rangeSelectionMode = RangeSelectionMode.toggledOn;
+                        // print('start : $_rangeStart / end : $_rangeEnd ');
+                      });
+                    },
+                  ),
+                ),
+                BircaFilledButton(
+                  text: '적용하기',
+                  color: Palette.primary,
+                  width: 300,
+                  height: 46,
+                  onPressed: () async {
+                    _rangeEnd ??= _rangeStart;
+                    setState(() {
+                      hostDate =
+                          '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
+                      // print(hostDate);
+                    });
+                    await Provider.of<HostHomeViewModel>(context, listen: false)
+                        .getHostHome(
+                            1,
+                            10,
+                            "",
+                            isSwitched,
+                            DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                .format(_rangeStart!),
+                            DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                .format(_rangeEnd!))
+                        .then((value) => Navigator.of(context).pop(hostDate));
+                  },
+                ),
+              ],
+            );
+          });
+        });
+
+    if (hostDate1 != null) {
+      setState(() {
+        hostDate = hostDate1;
+      });
+    }
   }
 }
