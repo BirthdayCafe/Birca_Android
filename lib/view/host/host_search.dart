@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
+import '../../viewModel/host_home_view_model.dart';
 import '../../viewModel/host_search_result_view_model.dart';
 
 class HostSearch extends StatefulWidget {
@@ -31,14 +32,14 @@ class _HostSearch extends State<HostSearch> {
               child: Row(
                 children: [
                   IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
+                      onPressed: () async {
+                        await Provider.of<HostHomeViewModel>(context,
+                                listen: false)
+                            .getHostHome(1, 3, "",false,"","")
+                            .then((value) => Navigator.pop(context));
                       },
                       icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
                   Expanded(
-                    // height: 40,
-                    // width: 350,
-
                     child: TextField(
                       controller: searchController,
                       textAlignVertical: TextAlignVertical.center,

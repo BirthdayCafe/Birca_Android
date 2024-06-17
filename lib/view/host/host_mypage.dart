@@ -1,7 +1,8 @@
+import 'package:birca/viewModel/mypage_view_model.dart';
 import 'package:birca/widgets/bottom_nav_visitor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../widgets/button.dart';
 
@@ -13,6 +14,12 @@ class HostMyPage extends StatefulWidget {
 }
 
 class _HostMyPage extends State<HostMyPage> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<MypageViewModel>(context, listen: false).getNickName();
+  }
+
   bool isSwitched = false;
 
   @override
@@ -47,8 +54,6 @@ class _HostMyPage extends State<HostMyPage> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
             width: double.infinity,
@@ -64,14 +69,17 @@ class _HostMyPage extends State<HostMyPage> {
                 const SizedBox(
                   height: 13,
                 ),
-                const Text(
-                  '홍길동',
-                  style: TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                      color: Colors.black),
-                ),
+                Consumer<MypageViewModel>(
+                    builder: (context, viewModel, widget) {
+                  return Text(
+                    viewModel.nickname?.nickname ?? '',
+                    style: const TextStyle(
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                        color: Colors.black),
+                  );
+                }),
                 const SizedBox(
                   height: 11,
                 ),
@@ -83,7 +91,7 @@ class _HostMyPage extends State<HostMyPage> {
                     height: 33,
                     radius: 15,
                     textColor: Palette.primary,
-                    textSize: 15)
+                    textSize: 15),
               ],
             ),
           ),

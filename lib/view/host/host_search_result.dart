@@ -20,7 +20,7 @@ class _HostSearchResult extends State<HostSearchResult> {
   void initState() {
     super.initState();
     Provider.of<HostHomeViewModel>(context, listen: false)
-        .getHostHome(1, 3, widget.keyword);
+        .getHostHome(1, 3, widget.keyword,false,"","");
   }
 
   @override

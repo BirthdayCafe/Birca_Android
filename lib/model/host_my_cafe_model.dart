@@ -1,6 +1,6 @@
 class HostMyCafeModel {
   int birthdayCafeId;
-  String mainImageUrl;
+  String? mainImageUrl;
   String startDate;
   String endDate;
   String birthdayCafeName;
