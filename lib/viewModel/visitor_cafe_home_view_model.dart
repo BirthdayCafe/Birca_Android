@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'package:birca/model/owner_home_model.dart';
 import 'package:birca/model/visitor_cafe_home_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
