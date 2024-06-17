@@ -19,7 +19,7 @@ class MypageViewModel extends ChangeNotifier {
   Future<void> getNickName() async {
     var token = '';
     token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4";
+    'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzE2MjkwNDAxLCJleHAiOjE3MjE0NzQ0MDF9.8BaCgTdEVbBMf1tApT9le3_LtBU69QW6SESucv6jiM0';
 
     // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
