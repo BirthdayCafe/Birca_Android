@@ -18,7 +18,8 @@ class HostHomeViewModel extends ChangeNotifier {
       _hostCafeHomeDetailModel;
 
   //host 홈 카페 가져오기
-  Future<void> getHostHome(int cursor, int size,String name,bool liked) async {
+  Future<void> getHostHome(int cursor, int size, String name, bool liked,
+      String startDate, String endDate) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
@@ -41,34 +42,31 @@ class HostHomeViewModel extends ChangeNotifier {
 
     try {
       Response? response;
-      if(liked){
+      if (liked) {
         // API 엔드포인트 및 업로드
         response = await dio.get('${baseUrl}api/v1/cafes',
             queryParameters: {
-              // 'startDate' : startDate,
-              //     'endDate':endDate,
-                  'liked':liked,
+              'startDate': startDate,
+              'endDate': endDate,
+              'liked': liked,
               'cursor': cursor,
               'size': size,
-              'name' : name
-              // 'artistId': artistId,
+              'name': name
             },
             options: Options(headers: {'Authorization': 'Bearer $token'}));
       } else {
         // API 엔드포인트 및 업로드
-         response = await dio.get('${baseUrl}api/v1/cafes',
+        response = await dio.get('${baseUrl}api/v1/cafes',
             queryParameters: {
-              // 'startDate' : startDate,
-              //     'endDate':endDate,
+              'startDate': startDate,
+              'endDate': endDate,
               //     'liked':liked,
               'cursor': cursor,
               'size': size,
-              'name' : name
-              // 'artistId': artistId,
+              'name': name
             },
             options: Options(headers: {'Authorization': 'Bearer $token'}));
       }
-
 
       // 서버 응답 출력
       log('Response: ${response.data}');
@@ -327,8 +325,7 @@ class HostHomeViewModel extends ChangeNotifier {
 
     try {
       // API 엔드포인트 및 업로드
-      Response response = await dio.post(
-          '${baseUrl}api/v1/birthday-cafes',
+      Response response = await dio.post('${baseUrl}api/v1/birthday-cafes',
           data: hostRequestModel.toJson(),
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
