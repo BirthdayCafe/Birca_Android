@@ -117,25 +117,47 @@ class _HostHome extends State<HostHome> {
                                       });
 
                                       if (isSwitched) {
-                                        viewModel.getHostHome(
-                                            1,
-                                            10,
-                                            "",
-                                            isSwitched,
-                                            DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                                .format(_rangeStart!),
-                                            DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                                .format(_rangeEnd!));
+
+                                        if(_rangeStart==null&&_rangeEnd==null){
+                                          viewModel.getHostHome(
+                                              1,
+                                              10,
+                                              "",
+                                              isSwitched,
+                                              '',
+                                              '');
+                                        } else {
+                                          viewModel.getHostHome(
+                                              1,
+                                              10,
+                                              "",
+                                              isSwitched,
+                                              DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                                  .format(_rangeStart!),
+                                              DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                                  .format(_rangeEnd!));
+                                        }
+
                                       } else {
-                                        viewModel.getHostHome(
-                                            1,
-                                            10,
-                                            "",
-                                            isSwitched,
-                                            DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                                .format(_rangeStart!),
-                                            DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                                .format(_rangeEnd!));
+                                        if(_rangeStart==null&&_rangeEnd==null){
+                                          viewModel.getHostHome(
+                                              1,
+                                              10,
+                                              "",
+                                              isSwitched,
+                                              '',
+                                              '');
+                                        } else {
+                                          viewModel.getHostHome(
+                                              1,
+                                              10,
+                                              "",
+                                              isSwitched,
+                                              DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                                  .format(_rangeStart!),
+                                              DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                                  .format(_rangeEnd!));
+                                        }
                                       }
                                     },
                                   )))
