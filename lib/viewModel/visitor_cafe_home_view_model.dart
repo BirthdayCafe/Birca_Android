@@ -18,7 +18,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       _visitorCafeSearchModelList;
 
   //방문자 홈 카페 가져오기
-  Future<void> getCafeHome(String progressState) async {
+  Future<void> getCafeHome(int cursor, int size,String name, String progressState) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
@@ -43,9 +43,9 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       Response response = await dio.get('${baseUrl}api/v1/birthday-cafes',
           queryParameters: {
             'progressState': progressState,
-            // 'cursor' : cursor,
-            // 'size' : size,
-            // 'name' : name,
+            'cursor' : cursor,
+            'size' : size,
+            'name' : name,
           },
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
