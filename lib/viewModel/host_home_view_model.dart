@@ -18,7 +18,7 @@ class HostHomeViewModel extends ChangeNotifier {
       _hostCafeHomeDetailModel;
 
   //host 홈 카페 가져오기
-  Future<void> getHostHome(int cursor, int size,String name) async {
+  Future<void> getHostHome(int cursor, int size,String name,bool liked) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
@@ -40,18 +40,35 @@ class HostHomeViewModel extends ChangeNotifier {
     ));
 
     try {
-      // API 엔드포인트 및 업로드
-      Response response = await dio.get('${baseUrl}api/v1/cafes',
-          queryParameters: {
-            // 'startDate' : startDate,
-            //     'endDate':endDate,
-            //     'liked':liked,
-            'cursor': cursor,
-            'size': size,
-            'name' : name
-            // 'artistId': artistId,
-          },
-          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      Response? response;
+      if(liked){
+        // API 엔드포인트 및 업로드
+        response = await dio.get('${baseUrl}api/v1/cafes',
+            queryParameters: {
+              // 'startDate' : startDate,
+              //     'endDate':endDate,
+                  'liked':liked,
+              'cursor': cursor,
+              'size': size,
+              'name' : name
+              // 'artistId': artistId,
+            },
+            options: Options(headers: {'Authorization': 'Bearer $token'}));
+      } else {
+        // API 엔드포인트 및 업로드
+         response = await dio.get('${baseUrl}api/v1/cafes',
+            queryParameters: {
+              // 'startDate' : startDate,
+              //     'endDate':endDate,
+              //     'liked':liked,
+              'cursor': cursor,
+              'size': size,
+              'name' : name
+              // 'artistId': artistId,
+            },
+            options: Options(headers: {'Authorization': 'Bearer $token'}));
+      }
+
 
       // 서버 응답 출력
       log('Response: ${response.data}');
