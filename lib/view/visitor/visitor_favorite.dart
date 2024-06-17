@@ -1,4 +1,5 @@
 import 'package:birca/designSystem/text.dart';
+import 'package:birca/view/visitor/visitor_cafe_detail.dart';
 import 'package:birca/viewModel/visitor_cafe_like_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -67,10 +68,8 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                 mainAxisSpacing: 24.0, // 행 간의 간격
                                 childAspectRatio: 0.79),
                         itemCount: viewModel.visitorCafeLikeModelList.length,
-                        // 그리드에 표시할 전체 아이템 수
-
                         itemBuilder: (BuildContext context, int index) {
-                          return Container(
+                          return GestureDetector(child: Container(
                             width: 180,
                             height: 415,
                             margin: const EdgeInsets.all(1.5),
@@ -113,12 +112,12 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                             ),
                                             onPressed: () async {
                                               Provider.of<VisitorCafeLikeViewModel>(
-                                                      context,
-                                                      listen: false)
+                                                  context,
+                                                  listen: false)
                                                   .deleteCafeLike(viewModel
-                                                      .visitorCafeLikeModelList[
-                                                          index]
-                                                      .birthdayCafeId);
+                                                  .visitorCafeLikeModelList[
+                                              index]
+                                                  .birthdayCafeId);
                                               viewModel.visitorCafeLikeModelList
                                                   .removeAt(index);
                                             },
@@ -128,10 +127,10 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                 ),
                                 Container(
                                   padding:
-                                      const EdgeInsets.only(top: 10, left: 10),
+                                  const EdgeInsets.only(top: 10, left: 10),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                           '${viewModel.visitorCafeLikeModelList[index].artist.groupName.toString()} ${viewModel.visitorCafeLikeModelList[index].artist.name.toString()}',
@@ -145,7 +144,7 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                       ),
                                       BircaText(
                                           text:
-                                              '${viewModel.visitorCafeLikeModelList[index].startDate.toString().substring(0, viewModel.visitorCafeLikeModelList[index].startDate.toString().length - 9)}~${viewModel.visitorCafeLikeModelList[index].endDate.toString().substring(0, viewModel.visitorCafeLikeModelList[index].endDate.toString().length - 9)}',
+                                          '${viewModel.visitorCafeLikeModelList[index].startDate.toString().substring(0, viewModel.visitorCafeLikeModelList[index].startDate.toString().length - 9)}~${viewModel.visitorCafeLikeModelList[index].endDate.toString().substring(0, viewModel.visitorCafeLikeModelList[index].endDate.toString().length - 9)}',
                                           textSize: 12,
                                           textColor: Palette.gray10,
                                           fontFamily: 'Pretendard'),
@@ -157,7 +156,7 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                           BircaText(
                                               text: viewModel
                                                   .visitorCafeLikeModelList[
-                                                      index]
+                                              index]
                                                   .birthdayCafeName
                                                   .toString(),
                                               textSize: 12,
@@ -169,7 +168,7 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                           BircaText(
                                               text: viewModel
                                                   .visitorCafeLikeModelList[
-                                                      index]
+                                              index]
                                                   .twitterAccount
                                                   .toString(),
                                               textSize: 12,
@@ -182,7 +181,16 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                 )
                               ],
                             ),
-                          );
+                          ), onTap: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => VisitorCafeDetail(
+                                        cafeID: viewModel
+                                            .visitorCafeLikeModelList[index]
+                                            .birthdayCafeId)));
+                          },);
+
                         },
                       );
                     })))
