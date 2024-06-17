@@ -5,7 +5,6 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
 import '../../viewModel/visitor_cafe_home_view_model.dart';
 
 class VisitorCafeDetail extends StatefulWidget {
@@ -77,23 +76,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           color: Palette.primary,
                         ),
                         onTap: () {
-                          if (viewModel.birthdayCafeModel!.isLiked) {
-                            Provider.of<VisitorCafeHomeViewModel>(context,
-                                    listen: false)
-                                .dislike(id);
-
-                            setState(() {
-                              viewModel.birthdayCafeModel!.isLiked = false;
-                            });
-                          } else {
-                            Provider.of<VisitorCafeHomeViewModel>(context,
-                                    listen: false)
-                                .like(id);
-
-                            setState(() {
-                              viewModel.birthdayCafeModel!.isLiked = true;
-                            });
-                          }
+                         viewModel.changeIcon(id,context);
                         },
                       ),
                       BircaText(
