@@ -95,18 +95,21 @@ class _VisitorHome extends State<VisitorHome> {
                     shrinkWrap: true, // shrinkWrap을 true로 설정
                     itemCount: viewModel.homeArtistsList?.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
-                          padding: const EdgeInsets.only(right: 16),
-                          child: Column(
-                            children: [
-                              Image.network(viewModel
-                                      .homeArtistsList?[index].artistImage ??
-                                  ''),
-                              Text(viewModel
-                                      .homeArtistsList?[index].artistName ??
-                                  '')
-                            ],
-                          ));
+                      if(viewModel.homeArtistsList?[index].artistImage!=null){
+                        return Container(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: Column(
+                              children: [
+                                Image.network(viewModel
+                                    .homeArtistsList?[index].artistImage ??
+                                    ''),
+                                Text(viewModel
+                                    .homeArtistsList?[index].artistName ??
+                                    '')
+                              ],
+                            ));
+                      }
+                      return null;
                     },
                   ),
                 );
