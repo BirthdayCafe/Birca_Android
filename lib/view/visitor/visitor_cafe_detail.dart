@@ -55,54 +55,58 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
             onPressed: () async {
               await Provider.of<VisitorCafeHomeViewModel>(context,
                       listen: false)
-                  .getCafeHome(1,10,'','IN_PROGRESS')
+                  .getCafeHome(1, 10, '', 'IN_PROGRESS')
                   .then((value) => Navigator.pop(context));
             },
             icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
         actions: [
           Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
-              return Container(
-                margin: const EdgeInsets.only(top: 15, right: 30),
-                child: Column(
-                  children: [
-                    GestureDetector(
-                      child: Icon(
-                        viewModel.birthdayCafeModel!.isLiked
-                            ? Icons.favorite
-                            : Icons.favorite_border_outlined,
-                        color: Palette.primary,
+              if (viewModel.birthdayCafeModel == null) {
+                return const CircularProgressIndicator();
+              } else {
+                return Container(
+                  margin: const EdgeInsets.only(top: 15, right: 30),
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        child: Icon(
+                          viewModel.birthdayCafeModel!.isLiked
+                              ? Icons.favorite
+                              : Icons.favorite_border_outlined,
+                          color: Palette.primary,
+                        ),
+                        onTap: () {
+                          if (viewModel.birthdayCafeModel!.isLiked) {
+                            Provider.of<VisitorCafeHomeViewModel>(context,
+                                    listen: false)
+                                .dislike(id);
+
+                            setState(() {
+                              viewModel.birthdayCafeModel!.isLiked = false;
+                            });
+                          } else {
+                            Provider.of<VisitorCafeHomeViewModel>(context,
+                                    listen: false)
+                                .like(id);
+
+                            setState(() {
+                              viewModel.birthdayCafeModel!.isLiked = true;
+                            });
+                          }
+                        },
                       ),
-                      onTap: () {
-                        if (viewModel.birthdayCafeModel!.isLiked) {
-                          Provider.of<VisitorCafeHomeViewModel>(context,
-                                  listen: false)
-                              .dislike(id);
-
-                          setState(() {
-                            viewModel.birthdayCafeModel!.isLiked = false;
-                          });
-                        } else {
-                          Provider.of<VisitorCafeHomeViewModel>(context,
-                                  listen: false)
-                              .like(id);
-
-                          setState(() {
-                            viewModel.birthdayCafeModel!.isLiked = true;
-                          });
-                        }
-                      },
-                    ),
-                    BircaText(
-                        text:
-                            viewModel.birthdayCafeModel?.likeCount.toString() ??
-                                '',
-                        textSize: 10,
-                        textColor: Palette.gray03,
-                        fontFamily: 'Pretandard')
-                  ],
-                ),
-              );
+                      BircaText(
+                          text: viewModel.birthdayCafeModel?.likeCount
+                                  .toString() ??
+                              '',
+                          textSize: 10,
+                          textColor: Palette.gray03,
+                          fontFamily: 'Pretandard')
+                    ],
+                  ),
+                );
+              }
             },
           )
         ],
@@ -423,7 +427,8 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                         return const CircularProgressIndicator();
                       } else {
                         return ListView.builder(
-                            shrinkWrap: true, // shrinkWrap을 true로 설정
+                            shrinkWrap: true,
+                            // shrinkWrap을 true로 설정
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
                                 viewModel.birthdayCafeSpecialGoodsModel?.length,
