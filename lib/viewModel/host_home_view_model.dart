@@ -1,9 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/host_cafe_home_detail_model.dart';
 import 'package:birca/model/host_cafe_home_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HostHomeViewModel extends ChangeNotifier {
   Dio dio = Dio();
@@ -17,22 +19,22 @@ class HostHomeViewModel extends ChangeNotifier {
   HostCafeHomeDetailModel? get hostCafeHomeDetailModel =>
       _hostCafeHomeDetailModel;
 
+  static const storage = FlutterSecureStorage();
+  var baseUrl = dotenv.env['BASE_URL'];
+  var token = '';
+
   //host 홈 카페 가져오기
   Future<void> getHostHome(int cursor, int size, String name, bool liked,
       String startDate, String endDate) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzE2MjkwNDAxLCJleHAiOjE3MjE0NzQ0MDF9.8BaCgTdEVbBMf1tApT9le3_LtBU69QW6SESucv6jiM0';
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -113,19 +115,14 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 찜하기
   Future<void> postLike(int cafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzE2MjkwNDAxLCJleHAiOjE3MjE0NzQ0MDF9.8BaCgTdEVbBMf1tApT9le3_LtBU69QW6SESucv6jiM0';
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -175,19 +172,15 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 찜 취소
   Future<void> deleteLike(int cafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzE2MjkwNDAxLCJleHAiOjE3MjE0NzQ0MDF9.8BaCgTdEVbBMf1tApT9le3_LtBU69QW6SESucv6jiM0';
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -238,19 +231,15 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 상세
   Future<void> getCafeDetail(int cafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzE2MjkwNDAxLCJleHAiOjE3MjE0NzQ0MDF9.8BaCgTdEVbBMf1tApT9le3_LtBU69QW6SESucv6jiM0';
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -303,19 +292,14 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 대관 신청
   Future<void> postRequest(HostRequestModel hostRequestModel) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzE2MjkwNDAxLCJleHAiOjE3MjE0NzQ0MDF9.8BaCgTdEVbBMf1tApT9le3_LtBU69QW6SESucv6jiM0';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
