@@ -1,6 +1,6 @@
 class VisitorCafeHomeModel {
   int birthdayCafeId;
-  String mainImageUrl;
+  String? mainImageUrl;
   String startDate;
   String endDate;
   String birthdayCafeName;
@@ -33,7 +33,7 @@ class VisitorCafeHomeModel {
 }
 
 class Artist {
-  final String groupName;
+  final String? groupName;
   final String name;
 
   Artist({required this.groupName, required this.name});
