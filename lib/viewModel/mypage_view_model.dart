@@ -1,33 +1,33 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../model/my_page_model.dart';
 
 class MypageViewModel extends ChangeNotifier {
+
   MypageModel? _nickname;
 
   MypageModel? get nickname => _nickname;
 
   Dio dio = Dio();
 
-  // FlutterSecureStorage storage = const FlutterSecureStorage();
+  static const storage = FlutterSecureStorage();
   var baseUrl = dotenv.env['BASE_URL'];
+  var token = '';
 
   //닉네임 가져오기
   Future<void> getNickName() async {
-    var token = '';
-    token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
-    //토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
       requestBody: true,
@@ -70,4 +70,5 @@ class MypageViewModel extends ChangeNotifier {
       }
     }
   }
+
 }
