@@ -1,5 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:birca/widgets/bottom_nav_host.dart';
+import 'package:birca/widgets/bottom_nav_owner.dart';
+import 'package:birca/widgets/bottom_nav_visitor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,9 +20,6 @@ class Login extends StatefulWidget {
 }
 
 class _Login extends State<Login> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,10 +37,26 @@ class _Login extends State<Login> {
             ),
             GestureDetector(
               onTap: () async {
-                await kakaoLogin(context);
+                await kakaoLogin();
+
+                String role = await getRole();
+                if (!mounted) return;
+
+                if (role == 'VISITANT') {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const BottomNavVisitor()));
+                } else if (role == 'HOST') {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const BottomNavHost()));
+                } else if (role == 'OWNER') {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const BottomNavOwner()));
+                } else {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => const SelectFanOrCafeOwner()));
+                }
               },
-              child:
-                  Image.asset('lib/assets/image/kakao_login_medium_wide.png'),
+              child: Image.asset('lib/assets/image/kakao_login_medium_wide.png'),
             ),
             const SizedBox(
               height: 40,
@@ -59,11 +75,11 @@ class _Login extends State<Login> {
   }
 }
 
-Future<void> kakaoLogin(BuildContext context) async {
+Future<void> kakaoLogin() async {
   // 카카오 로그인 구현 예제
 
-// 카카오톡 실행 가능 여부 확인
-// 카카오톡 실행이 가능하면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
+  // 카카오톡 실행 가능 여부 확인
+  // 카카오톡 실행이 가능하면 카카오톡으로 로그인, 아니면 카카오계정으로 로그인
   if (await isKakaoTalkInstalled()) {
     try {
       //token
@@ -75,14 +91,7 @@ Future<void> kakaoLogin(BuildContext context) async {
           '\n이메일: ${user.kakaoAccount?.email}');
       log('카카오톡으로 로그인 성공 \n 토큰: ${token.accessToken}');
 
-       postKakaoToken(token.accessToken).then((_) {
-        // Navigate on success
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-            const SelectFanOrCafeOwner()));
-      }).catchError((error) {
-        log('fail');
-      });
+      await postKakaoToken(token.accessToken);
     } catch (error) {
       log('카카오톡으로 로그인 실패 $error');
 
@@ -101,15 +110,7 @@ Future<void> kakaoLogin(BuildContext context) async {
             '\n닉네임: ${user.kakaoAccount?.profile?.nickname}'
             '\n이메일: ${user.kakaoAccount?.email}');
         log('카카오계정으로 로그인 성공  \n 토큰: ${token.accessToken}');
-         postKakaoToken(token.accessToken).then((_) {
-          // Navigate on success
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) =>
-              const SelectFanOrCafeOwner()));
-        }).catchError((error) {
-          log('fail');
-        });
-
+        await postKakaoToken(token.accessToken);
       } catch (error) {
         log('카카오계정으로 로그인 실패 $error');
       }
@@ -125,17 +126,7 @@ Future<void> kakaoLogin(BuildContext context) async {
           '\n이메일: ${user.kakaoAccount?.email}');
       log('카카오계정으로 로그인 성공  \n 토큰: ${token.accessToken}');
 
-      await postKakaoToken(token.accessToken).then((_) {
-        // Navigate on success
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) =>
-            const SelectFanOrCafeOwner()));
-      }).catchError((error) {
-        log('fail');
-      });
-
-
-
+      await postKakaoToken(token.accessToken);
     } catch (error) {
       log('카카오계정으로 로그인 실패 $error');
     }
@@ -144,7 +135,6 @@ Future<void> kakaoLogin(BuildContext context) async {
 
 //post token
 Future<void> postKakaoToken(String token) async {
-
   const storage = FlutterSecureStorage();
 
   Dio dio = Dio();
@@ -152,28 +142,75 @@ Future<void> postKakaoToken(String token) async {
   var baseUrl = dotenv.env['BASE_URL'];
   log('token : $token');
 
-  try{
-    response = await dio.post('${baseUrl}api/v1/oauth/login/kakao',
-      data:{'accessToken' : token}
-      // options: Options(headers: {'Authorization': 'Bearer $token'})
-    );
+  try {
+    response = await dio
+        .post('${baseUrl}api/v1/oauth/login/kakao', data: {'accessToken': token});
 
     var kakaoLoginInfo = jsonEncode(response.data);
     log('kakaoLoginInfo : $kakaoLoginInfo');
 
-    await storage.write(key: 'kakaoLoginInfo', value: kakaoLoginInfo).then((value) => log('storage 저장완료'));
-
-
-  } catch (e){
+    await storage.write(key: 'kakaoLoginInfo', value: kakaoLoginInfo);
+  } catch (e) {
     log(e.toString());
-    // if(context.mounted){
-    //   Navigator.push(
-    //       context,
-    //       MaterialPageRoute(
-    //           builder: (context) => const SelectFanOrCafeOwner()));
-    // }
     throw Exception('Failed to login.');
+  }
+}
 
+Future<String> getRole() async {
+  Dio dio = Dio();
+
+  const storage = FlutterSecureStorage();
+  var baseUrl = dotenv.env['BASE_URL'];
+  var token = '';
+  var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+  // 토큰 가져오기
+  if (kakaoLoginInfo != null) {
+    Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    token = loginData['accessToken'].toString();
   }
 
+  // LogInterceptor 추가
+  dio.interceptors.add(LogInterceptor(
+    requestBody: true,
+    responseBody: true,
+  ));
+
+  try {
+    // API 엔드포인트 및 업로드
+    Response response = await dio.get('${baseUrl}api/v1/members/role',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+    // 서버 응답 출력
+    log('Response: ${response.data}');
+    // JSON 문자열을 Map으로 파싱
+    Map<String, dynamic> decodedResponse = response.data;
+
+    // "role" 값 추출
+    return decodedResponse['role'] as String;
+  } catch (e) {
+    if (e is DioException) {
+      // Dio exception handling
+      if (e.response != null) {
+        // Server responded with an error
+        if (e.response!.statusCode == 400) {
+          // Handle HTTP 400 Bad Request error
+          log('Bad Request - Server returned 400 status code');
+          throw Exception('Failed to getHostMyCafe');
+        } else {
+          // Handle other HTTP status codes
+          log('Server error - Status code: ${e.response!.statusCode}');
+          throw Exception('Failed to getHostMyCafe.');
+        }
+      } else {
+        // No response from the server (network error, timeout, etc.)
+        log('Dio error: ${e.message}');
+        throw Exception('Failed to getHostMyCafe.');
+      }
+    } else {
+      // Handle other exceptions if necessary
+      log('Error: $e');
+      throw Exception('Failed to getHostMyCafe.');
+    }
+  }
 }
