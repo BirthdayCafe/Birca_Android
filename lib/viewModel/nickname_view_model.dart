@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ui';
-
 import 'package:birca/designSystem/palette.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class NickNameViewModel extends ChangeNotifier{
-
+class NickNameViewModel extends ChangeNotifier {
   Dio dio = Dio();
   FlutterSecureStorage storage = const FlutterSecureStorage();
   var baseUrl = dotenv.env['BASE_URL'];
@@ -21,7 +18,6 @@ class NickNameViewModel extends ChangeNotifier{
 
   //닉네임 중복 확인 api
   Future<void> nickNameCheck(String nickname) async {
-
     var token = '';
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
@@ -31,25 +27,21 @@ class NickNameViewModel extends ChangeNotifier{
       token = loginData['accessToken'].toString();
     }
 
-
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
       requestBody: true,
       responseBody: true,
     ));
 
-
     try {
       // API 엔드포인트 및 업로드
-      Response response = await dio.get(
-          '${baseUrl}api/v1/join/check-nickname',
-          queryParameters: {'nickname' : nickname },
-          options: Options(headers: {'Authorization': 'Bearer $token'})
-      );
+      Response response = await dio.get('${baseUrl}api/v1/join/check-nickname',
+          queryParameters: {'nickname': nickname},
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       log(response.toString());
 
-      if(response.data['success']==false){
+      if (response.data['success'] == false) {
         isNickNameCheckOk = true;
 
         log('response.data = ${response.data['success']}');
@@ -59,11 +51,9 @@ class NickNameViewModel extends ChangeNotifier{
         log('response.data = ${response.data}');
 
         log('isNickNameCheckOk : $isNickNameCheckOk');
-
       }
 
       notifyListeners();
-
     } catch (e) {
       if (e is DioException) {
         // Dio exception handling
@@ -89,79 +79,71 @@ class NickNameViewModel extends ChangeNotifier{
         log('Error: $e');
       }
     }
-
-}
-
+  }
 
 //닉네임 등록 api
-Future<void> registerNickName(String nickname) async {
-  var token = '';
-  var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+  Future<void> registerNickName(String nickname) async {
+    var token = '';
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
-  //토큰 가져오기
-  if (kakaoLoginInfo != null) {
-    Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    token = loginData['accessToken'].toString();
-  }
-
-
-  // LogInterceptor 추가
-  dio.interceptors.add(LogInterceptor(
-    requestBody: true,
-    responseBody: true,
-  ));
-
-
-  try {
-    // API 엔드포인트 및 업로드
-    Response response = await dio.post(
-        '${baseUrl}api/v1/join/register-nickname',
-        data: {'nickname' : nickname},
-        options: Options(headers: {'Authorization': 'Bearer $token'})
-    );
-
-    log(response.toString());
-
-
-
-    notifyListeners();
-
-  } catch (e) {
-    if (e is DioException) {
-      // Dio exception handling
-      if (e.response != null) {
-        // Server responded with an error
-        if (e.response!.statusCode == 400) {
-          // Handle HTTP 400 Bad Request error
-          log('Bad Request - Server returned 400 status code');
-          log('Response data: ${e.response!.data}');
-          // Additional error handling logic here if needed
-        } else {
-          // Handle other HTTP status codes
-          log('Server error - Status code: ${e.response!.statusCode}');
-          log('Response data: ${e.response!.data}');
-          // Additional error handling logic here if needed
-        }
-      } else {
-        // No response from the server (network error, timeout, etc.)
-        log('Dio error: ${e.message}');
-      }
-    } else {
-      // Handle other exceptions if necessary
-      log('Error: $e');
+    //토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
     }
-  }
-}
 
-  void isBtnOk(bool isBtnOk){
-    log('isBtnOk $isBtnOk');
-      if(isBtnOk==true){
-        btnColor = Palette.primary;
-      } else {
-        btnColor = Palette.gray04;
-      }
+    // LogInterceptor 추가
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ));
+
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.post(
+          '${baseUrl}api/v1/join/register-nickname',
+          data: {'nickname': nickname},
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      log(response.toString());
 
       notifyListeners();
+    } catch (e) {
+      if (e is DioException) {
+        // Dio exception handling
+        if (e.response != null) {
+          // Server responded with an error
+          if (e.response!.statusCode == 400) {
+            // Handle HTTP 400 Bad Request error
+            log('Bad Request - Server returned 400 status code');
+            log('Response data: ${e.response!.data}');
+            // Additional error handling logic here if needed
+          } else {
+            // Handle other HTTP status codes
+            log('Server error - Status code: ${e.response!.statusCode}');
+            log('Response data: ${e.response!.data}');
+            // Additional error handling logic here if needed
+          }
+        } else {
+          // No response from the server (network error, timeout, etc.)
+          log('Dio error: ${e.message}');
+        }
+      } else {
+        // Handle other exceptions if necessary
+        log('Error: $e');
+      }
+    }
+  }
 
+  void isBtnOk(bool isBtnOk, BuildContext context) {
+    log('isBtnOk $isBtnOk');
+    if (isBtnOk == true) {
+      btnColor = Palette.primary;
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('사용 가능한 닉네임입니다.')));
+    } else {
+      btnColor = Palette.gray04;
+    }
+    notifyListeners();
   }
 }
