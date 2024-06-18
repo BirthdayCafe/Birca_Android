@@ -25,7 +25,7 @@ class _HostHome extends State<HostHome> {
   void initState() {
     super.initState();
     Provider.of<HostHomeViewModel>(context, listen: false)
-        .getHostHome(1, 10, "", false, "", "");
+        .getHostHome(0, 10, "", false, "", "");
   }
 
   var isSwitched = false;
@@ -120,7 +120,7 @@ class _HostHome extends State<HostHome> {
 
                                         if(_rangeStart==null&&_rangeEnd==null){
                                           viewModel.getHostHome(
-                                              1,
+                                              0,
                                               10,
                                               "",
                                               isSwitched,
@@ -128,7 +128,7 @@ class _HostHome extends State<HostHome> {
                                               '');
                                         } else {
                                           viewModel.getHostHome(
-                                              1,
+                                              0,
                                               10,
                                               "",
                                               isSwitched,
@@ -141,7 +141,7 @@ class _HostHome extends State<HostHome> {
                                       } else {
                                         if(_rangeStart==null&&_rangeEnd==null){
                                           viewModel.getHostHome(
-                                              1,
+                                              0,
                                               10,
                                               "",
                                               isSwitched,
@@ -149,7 +149,7 @@ class _HostHome extends State<HostHome> {
                                               '');
                                         } else {
                                           viewModel.getHostHome(
-                                              1,
+                                              0,
                                               10,
                                               "",
                                               isSwitched,
@@ -498,7 +498,7 @@ class _HostHome extends State<HostHome> {
                     });
                     await Provider.of<HostHomeViewModel>(context, listen: false)
                         .getHostHome(
-                            1,
+                            0,
                             10,
                             "",
                             isSwitched,
