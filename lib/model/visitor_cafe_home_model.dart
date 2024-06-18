@@ -60,7 +60,7 @@ class Cafe {
 
 
 class HomeArtists {
-  String? artistId;
+  int? artistId;
   String? artistName;
   String? artistImage;
 

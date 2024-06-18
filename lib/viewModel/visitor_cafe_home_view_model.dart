@@ -1,8 +1,11 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/visitor_cafe_home_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 
 class VisitorCafeHomeViewModel extends ChangeNotifier {
   Dio dio = Dio();
@@ -21,21 +24,21 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   List<HomeArtists>? get homeArtistsList => _homeArtistsList;
 
+  static const storage = FlutterSecureStorage();
+  var baseUrl = dotenv.env['BASE_URL'];
+  var token = '';
+
   //방문자 최애 아티스트 가져오기
   Future<void> getFavoriteArtist() async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
+
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -89,19 +92,14 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   //방문자 관심 아티스트 가져오기
   Future<void> getInterestArtist() async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -157,19 +155,14 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
   //방문자 홈 카페 가져오기
   Future<void> getCafeHome(
       int cursor, int size, String name, String progressState) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -232,19 +225,14 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   //방문자 검색
   Future<void> getCafeSearch(String progressState, String name) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -307,19 +295,16 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   //찜하기
   Future<void> like(int birthdayCafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
+
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -367,21 +352,17 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
     }
   }
 
+
   //찜 취소
   Future<void> dislike(int birthdayCafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -427,5 +408,24 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
         throw Exception('Failed to like.');
       }
     }
+  }
+
+  void heart(int id,int index,BuildContext context) {
+    if (visitorCafeHomeModelList![index].isLiked) {
+      Provider.of<VisitorCafeHomeViewModel>(context,
+          listen: false)
+          .dislike(id);
+
+      visitorCafeHomeModelList![index]
+          .isLiked = false;
+    } else {
+      Provider.of<VisitorCafeHomeViewModel>(context,
+          listen: false)
+          .like(id);
+
+      visitorCafeHomeModelList![index]
+          .isLiked = true;
+    }
+    notifyListeners();
   }
 }
