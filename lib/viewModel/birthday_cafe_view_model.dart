@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:birca/model/birthday_cafe_lucky_draws_model.dart';
@@ -8,6 +9,7 @@ import 'package:birca/viewModel/visitor_cafe_home_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -71,13 +73,6 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   TextEditingController get birthDayCafeNameController =>
       _birthDayCafeNameController;
-
-  //
-  // final TextEditingController _cafeNameController = TextEditingController();
-  // TextEditingController get cafeNameController=>_cafeNameController;
-
-  // final TextEditingController _artistController = TextEditingController();
-  // TextEditingController get artistController=>_artistController;
 
   final TextEditingController _twitterController = TextEditingController();
 
@@ -144,22 +139,20 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     _cafeID = cafeID;
     notifyListeners(); // 상태 변경 알림
   }
-
+  static const storage = FlutterSecureStorage();
+  var baseUrl = dotenv.env['BASE_URL'];
+  var token = '';
   //생일 카페 상세 가져오기
   Future<void> getBirthdayCafes(int birthdayCafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -175,8 +168,6 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       // 서버 응답 출력
       log('getBirthdayCafes Response: ${response.data}');
-
-      // final Map<String, dynamic> responseData = json.decode(response.data);
 
       _birthdayCafeModel = BirthdayCafeModel.fromJson(response.data);
 
@@ -213,19 +204,14 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 특전 조회
   Future<void> getSpecialGoods(int birthdayCafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -290,19 +276,14 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 메뉴 조회
   Future<void> getMenus(int birthdayCafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -365,20 +346,15 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 럭키드로우 조회
   Future<void> getLuckDraws(int birthdayCafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
-    //
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -442,19 +418,13 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 사진 편집
   Future<void> postImage(int cafeId, List<PickedFile> pickedFiles) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // PickedFile 리스트를 File 리스트로 변환
     List<File> cafeImages =
@@ -524,19 +494,14 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 대표 사진 편집
   Future<void> postMainImage(int cafeId, PickedFile pickedFile) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // PickedFile 리스트를 File 리스트로 변환
     File cafeImage = File(pickedFile.path);
@@ -603,19 +568,14 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   //생일카페 정보 수정
   Future<void> patchInfo(
       int cafeId, BirthdayCafeInfoModel birthdayCafeInfoModel) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -669,19 +629,14 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일카페 특전 수정
   Future<void> postSpecialGoods(int cafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -737,19 +692,14 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일카페 menu 수정
   Future<void> postMenus(int cafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -805,19 +755,14 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일카페 luckydraws 수정
   Future<void> postLuckyDraws(int cafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
 
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -874,19 +819,13 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   //생일카페 상태 수정
   Future<void> patchCafeState(
       int cafeId, String stateName, String state) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(

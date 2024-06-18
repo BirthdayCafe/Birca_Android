@@ -53,7 +53,6 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
       // 서버 응답 출력
       log('Response: ${response.data}');
-      _homeArtistsList = [];
 
       if (response.data != null) {
         _homeArtistsList?.add(HomeArtists.fromJson(response.data));

@@ -70,19 +70,19 @@ class SelectFavoriteArtistViewModel extends ChangeNotifier {
     getGroupArtist();
   }
 
-  Future<void> getSoloArtist() async {
-    const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
+  static const storage = FlutterSecureStorage();
+  var baseUrl = dotenv.env['BASE_URL'];
+  var token = '';
 
-    token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4";
+  Future<void> getSoloArtist() async {
+
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
+
 
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
@@ -100,17 +100,14 @@ class SelectFavoriteArtistViewModel extends ChangeNotifier {
   }
 
   Future<void> getGroupArtist() async {
-    const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
 
-    token =        "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4";
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
+
 
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
@@ -128,18 +125,13 @@ class SelectFavoriteArtistViewModel extends ChangeNotifier {
   }
 
   Future<void> getGroupMember(int groupId) async {
-    const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-    //
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-    //   token = loginData['accessToken'].toString();
-    // }
 
-    token =
-        "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4";
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
 
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
