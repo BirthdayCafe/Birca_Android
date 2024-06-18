@@ -102,7 +102,7 @@ class _VisitorHome extends State<VisitorHome> {
                               children: [
                                 Image.network(viewModel
                                     .homeArtistsList?[index].artistImage ??
-                                    ''),
+                                    '',fit: BoxFit.cover,scale: 20,),
                                 Text(viewModel
                                     .homeArtistsList?[index].artistName ??
                                     '')
