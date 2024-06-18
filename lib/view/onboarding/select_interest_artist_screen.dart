@@ -1,14 +1,11 @@
 import 'dart:developer';
-
 import 'package:birca/viewmodel/select_interest_artist_viewmodel.dart';
 import 'package:birca/widgets/appbar.dart';
 import 'package:birca/widgets/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../designSystem/palette.dart';
 import '../../widgets/button.dart';
-import '../../widgets/card.dart';
 import '../../widgets/progressbar.dart';
 import 'onboarding_visitor_complete.dart';
 
@@ -182,23 +179,27 @@ class SelectInterestArtistScreenState
                     width: double.infinity,
                     height: 126,
                     child: CustomPaint(
-                      painter: BubblePainter(idx: location),
                       child: Container(
-                        padding: const EdgeInsets.only(left: 20),
-                        child: Consumer<SelectInterestArtistViewModel>(
-                          builder: (context, model, _) => ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: List.generate(model.groupMemberCount, (index) =>
-                              GestureDetector(
-                                onTap: () {
-                                  model.updateSelectedArtist(model.groupMember![index]);
-                                },
-                                child: artistItem(model.groupMember![index].groupImage, model.groupMember![index].groupName),
-                              ),
-                            ),
-                          )
-                        )
-                      ),
+                          color: Palette.gray02,
+                          padding: const EdgeInsets.only(left: 20),
+                          child: Consumer<SelectInterestArtistViewModel>(
+                              builder: (context, model, _) => ListView(
+                                    scrollDirection: Axis.horizontal,
+                                    children: List.generate(
+                                      model.groupMemberCount,
+                                      (index) => GestureDetector(
+                                        onTap: () {
+                                          model.updateSelectedArtist(
+                                              model.groupMember![index]);
+                                        },
+                                        child: artistItem(
+                                            model
+                                                .groupMember![index].groupImage,
+                                            model
+                                                .groupMember![index].groupName),
+                                      ),
+                                    ),
+                                  ))),
                     ),
                   ),
                 )
@@ -220,23 +221,26 @@ class SelectInterestArtistScreenState
                   child: _groupArtistItem(index, itemIndex + 1),
                 )));
 
-  _groupArtistItem(int index, int location) => Consumer<SelectInterestArtistViewModel>(
-      builder: (context, model, _) => GestureDetector(
-            onTap: () {
-              model.getGroupMember(model.groupArtist![(index * 4 + location) - 1].groupId);
-              log("test: ${model.getGroupMember(model.groupArtist![(index * 4 + location) - 1].groupId)}");
-              setState(() {
-                if (expandedIndex == index) {
-                  expandedIndex = -1;
-                } else {
-                  expandedIndex = index;
-                  this.location = location;
-                }
-              });
-            },
-            child: artistItem(model.groupArtist![(index * 4 + location) - 1].groupImage,
-                model.groupArtist![(index * 4 + location) - 1].groupName),
-          ));
+  _groupArtistItem(int index, int location) =>
+      Consumer<SelectInterestArtistViewModel>(
+          builder: (context, model, _) => GestureDetector(
+                onTap: () {
+                  model.getGroupMember(
+                      model.groupArtist![(index * 4 + location) - 1].groupId);
+                  log("test: ${model.getGroupMember(model.groupArtist![(index * 4 + location) - 1].groupId)}");
+                  setState(() {
+                    if (expandedIndex == index) {
+                      expandedIndex = -1;
+                    } else {
+                      expandedIndex = index;
+                      this.location = location;
+                    }
+                  });
+                },
+                child: artistItem(
+                    model.groupArtist![(index * 4 + location) - 1].groupImage,
+                    model.groupArtist![(index * 4 + location) - 1].groupName),
+              ));
 
   _soloArtistBuilder() => Consumer<SelectInterestArtistViewModel>(
         builder: (context, model, _) => GridView.builder(
@@ -261,7 +265,7 @@ class SelectInterestArtistScreenState
 
   _bottomBar() => Consumer<SelectInterestArtistViewModel>(
       builder: (context, model, _) => Container(
-            color: Colors.white,
+            color: Palette.gray02,
             width: double.infinity,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -280,13 +284,13 @@ class SelectInterestArtistScreenState
                       textColor: Colors.white,
                       fontWeight: FontWeight.w500,
                       onPressed: () {
-                        if(model.selectedArtist.isNotEmpty) {
+                        if (model.selectedArtist.isNotEmpty) {
                           model.postInterestArtist();
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
-                                  const OnboardingVisitorComplete()));
+                                      const OnboardingVisitorComplete()));
                         }
                       },
                     )),
@@ -295,7 +299,7 @@ class SelectInterestArtistScreenState
                   onTap: () {
                     MaterialPageRoute(
                         builder: (context) =>
-                        const OnboardingVisitorComplete());
+                            const OnboardingVisitorComplete());
                   },
                   child: const Text(
                     "다음에 결정하기",
@@ -329,7 +333,8 @@ class SelectInterestArtistScreenState
                             model.removeSelectedArtist(
                                 model.selectedArtist[index]);
                           },
-                          child: artistItem(model.selectedArtist[index].groupImage,
+                          child: artistItem(
+                              model.selectedArtist[index].groupImage,
                               model.selectedArtist[index].groupName),
                         ));
                   },
