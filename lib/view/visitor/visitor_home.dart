@@ -26,7 +26,7 @@ class _VisitorHome extends State<VisitorHome> {
             Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
                 .getInterestArtist());
     Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-        .getCafeHome(1, 10, '', '');
+        .getCafeHome(0, 20, '', '');
   }
 
   String selectedRegion1 = '전체';
@@ -301,12 +301,12 @@ class _VisitorHome extends State<VisitorHome> {
                                               context,
                                               listen: false)
                                           .getCafeHome(
-                                              1, 10, '', 'IN_PROGRESS');
+                                              0, 20, '', 'IN_PROGRESS');
                                     } else {
                                       Provider.of<VisitorCafeHomeViewModel>(
                                               context,
                                               listen: false)
-                                          .getCafeHome(1, 10, '', '');
+                                          .getCafeHome(0, 20, '', '');
                                     }
                                   },
                                 )))
@@ -344,7 +344,6 @@ class _VisitorHome extends State<VisitorHome> {
                                 spreadRadius: 1,
                                 // 그림자 확산 정도
                                 blurRadius: 1, // 그림자의 흐림 정도
-                                // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
                               ),
                             ],
                           ),
@@ -371,7 +370,6 @@ class _VisitorHome extends State<VisitorHome> {
                                     const SizedBox(
                                       height: 10,
                                     ),
-                                    // Text('샤이니 민호'),
                                     BircaText(
                                         text:
                                             '${viewModel.visitorCafeHomeModelList?[index].artist.groupName.toString()} ${viewModel.visitorCafeHomeModelList?[index].artist.name.toString()}',
@@ -379,7 +377,6 @@ class _VisitorHome extends State<VisitorHome> {
                                         textColor: Palette.gray08,
                                         fontFamily: 'Pretendard'),
 
-                                    // Text('1월 1일~1월 2일'),
                                     BircaText(
                                       text:
                                           '${viewModel.visitorCafeHomeModelList?[index].startDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].startDate.toString().length - 9)}~${viewModel.visitorCafeHomeModelList![index].endDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].endDate.toString().length - 9)}',
