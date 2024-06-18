@@ -71,7 +71,7 @@ class _VisitorSearchResult extends State<VisitorSearchResult> {
                           height: 140,
                           width: 140,
                           child:
-                              Image.asset('lib/assets/image/img_cafe_test.png'),
+                              Image.network(viewModel.visitorCafeHomeModelList?[index].mainImageUrl??''),
                         ),
 
                         //카페 정보
@@ -149,26 +149,26 @@ class _VisitorSearchResult extends State<VisitorSearchResult> {
                                   : const Color(0xffF3F3F3),
                             ),
                             onTap: () {
-                              if (viewModel
-                                  .visitorCafeHomeModelList![index].isLiked) {
-                                Provider.of<VisitorCafeHomeViewModel>(context,
-                                        listen: false)
-                                    .dislike(viewModel
-                                        .visitorCafeHomeModelList![index]
-                                        .birthdayCafeId);
-
-                                viewModel.visitorCafeHomeModelList![index]
-                                    .isLiked = false;
-                              } else {
-                                Provider.of<VisitorCafeHomeViewModel>(context,
-                                        listen: false)
-                                    .like(viewModel
-                                        .visitorCafeHomeModelList![index]
-                                        .birthdayCafeId);
-
-                                viewModel.visitorCafeHomeModelList![index]
-                                    .isLiked = true;
-                              }
+                              // if (viewModel
+                              //     .visitorCafeHomeModelList![index].isLiked) {
+                              //   Provider.of<VisitorCafeHomeViewModel>(context,
+                              //           listen: false)
+                              //       .dislike(viewModel
+                              //           .visitorCafeHomeModelList![index]
+                              //           .birthdayCafeId);
+                              //
+                              //   viewModel.visitorCafeHomeModelList![index]
+                              //       .isLiked = false;
+                              // } else {
+                              //   Provider.of<VisitorCafeHomeViewModel>(context,
+                              //           listen: false)
+                              //       .like(viewModel
+                              //           .visitorCafeHomeModelList![index]
+                              //           .birthdayCafeId);
+                              //
+                              //   viewModel.visitorCafeHomeModelList![index]
+                              //       .isLiked = true;
+                              // }
                             })
                       ],
                     ),
