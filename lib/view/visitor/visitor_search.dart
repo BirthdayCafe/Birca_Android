@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
+import '../../viewModel/visitor_cafe_home_view_model.dart';
 
 class VisitorSearch extends StatefulWidget {
   const VisitorSearch({super.key});
@@ -27,8 +28,10 @@ class _VisitorSearch extends State<VisitorSearch> {
               child: Row(
                 children: [
                   IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
+                      onPressed: () async {
+                        await Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+                            .getCafeHome(1, 10, '', '').then((value) =>                         Navigator.pop(context)
+                        );
                       },
                       icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
                   Expanded(
