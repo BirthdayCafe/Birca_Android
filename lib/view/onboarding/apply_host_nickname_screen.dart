@@ -88,8 +88,8 @@ class _ApplyHostNickNameScreen extends State<ApplyHostNickNameScreen> {
                                   onChanged: (text) {
                                     viewModel.isNickNameCheckOk = false;
                                     log(viewModel.isNickNameCheckOk.toString());
-                                    viewModel
-                                        .isBtnOk(viewModel.isNickNameCheckOk);
+                                    viewModel.isBtnOk(
+                                        viewModel.isNickNameCheckOk, context);
                                   },
                                   decoration: const InputDecoration(
                                     hintText: '최대 10자',
@@ -124,7 +124,8 @@ class _ApplyHostNickNameScreen extends State<ApplyHostNickNameScreen> {
                                         listen: false)
                                     .nickNameCheck(nickNameController.text);
 
-                                viewModel.isBtnOk(viewModel.isNickNameCheckOk);
+                                viewModel.isBtnOk(
+                                    viewModel.isNickNameCheckOk, context);
                               }),
                         );
                       })
@@ -160,7 +161,6 @@ class _ApplyHostNickNameScreen extends State<ApplyHostNickNameScreen> {
                                 log('registerNickName fail');
                               });
                             }
-
                           },
                         );
                       }))
