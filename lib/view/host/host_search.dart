@@ -35,7 +35,7 @@ class _HostSearch extends State<HostSearch> {
                       onPressed: () async {
                         await Provider.of<HostHomeViewModel>(context,
                                 listen: false)
-                            .getHostHome(1, 3, "",false,"","")
+                            .getHostHome(0, 3, "",false,"","")
                             .then((value) => Navigator.pop(context));
                       },
                       icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
