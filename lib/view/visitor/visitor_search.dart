@@ -30,7 +30,7 @@ class _VisitorSearch extends State<VisitorSearch> {
                   IconButton(
                       onPressed: () async {
                         await Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-                            .getCafeHome(1, 10, '', '').then((value) =>                         Navigator.pop(context)
+                            .getCafeHome(0, 10, '', '').then((value) =>                         Navigator.pop(context)
                         );
                       },
                       icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
