@@ -9,6 +9,7 @@ class BirthdayCafeModel {
   String twitterAccount;
   int minimumVisitant;
   int maximumVisitant;
+  String businessHours;
   String congestionState;
   String visibility;
   String progressState;
@@ -27,6 +28,7 @@ class BirthdayCafeModel {
       required this.twitterAccount,
       required this.minimumVisitant,
       required this.maximumVisitant,
+      required this.businessHours,
       required this.congestionState,
       required this.visibility,
       required this.progressState,
@@ -46,6 +48,7 @@ class BirthdayCafeModel {
       twitterAccount: json['twitterAccount'],
       minimumVisitant: json['minimumVisitant'],
       maximumVisitant: json['maximumVisitant'],
+      businessHours: json['businessHours'],
       congestionState: json['congestionState'],
       visibility: json['visibility'],
       progressState: json['progressState'],

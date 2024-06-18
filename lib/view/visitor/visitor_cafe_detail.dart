@@ -148,17 +148,17 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           fontFamily: 'Pretendard',
                           fontSize: 14),
                     ),
-                    // SizedBox(
-                    //   height: 2,
-                    // ),
-                    // Text(
-                    //   '12:00 ~ 18:00',
-                    //   style: TextStyle(
-                    //       color: Palette.gray10,
-                    //       fontWeight: FontWeight.w500,
-                    //       fontFamily: 'Pretendard',
-                    //       fontSize: 14),
-                    // ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                     '${viewModel.birthdayCafeModel?.businessHours}',
+                      style: const TextStyle(
+                          color: Palette.gray10,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Pretendard',
+                          fontSize: 14),
+                    ),
                     const SizedBox(
                       height: 18,
                     ),
