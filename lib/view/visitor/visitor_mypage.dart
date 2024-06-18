@@ -3,6 +3,9 @@ import 'package:birca/widgets/bottom_nav_host.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../viewModel/mypage_view_model.dart';
 
 class VisitorMyPage extends StatefulWidget {
   const VisitorMyPage({super.key});
@@ -12,7 +15,11 @@ class VisitorMyPage extends StatefulWidget {
 }
 
 class _VisitorMyPage extends State<VisitorMyPage> {
-
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<MypageViewModel>(context, listen: false).getNickName();
+  }
 
   bool isSwitched = false;
 
@@ -48,8 +55,6 @@ class _VisitorMyPage extends State<VisitorMyPage> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
             width: double.infinity,
@@ -65,14 +70,17 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                 const SizedBox(
                   height: 13,
                 ),
-                const Text(
-                  '홍길동',
-                  style: TextStyle(
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 20,
-                      color: Colors.black),
-                ),
+                Consumer<MypageViewModel>(
+                    builder: (context, viewModel, widget) {
+                      return Text(
+                        viewModel.nickname?.nickname ?? '',
+                        style: const TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 20,
+                            color: Colors.black),
+                      );
+                    }),
                 const SizedBox(
                   height: 11,
                 ),

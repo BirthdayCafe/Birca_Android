@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/visitor_cafe_like_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class VisitorCafeLikeViewModel extends ChangeNotifier {
   Dio dio = Dio();
@@ -20,18 +18,19 @@ class VisitorCafeLikeViewModel extends ChangeNotifier {
 
   //찜한 카페 가져오기
   Future<void> getCafeLike() async {
-    const storage = FlutterSecureStorage();
+    // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
+    //
+    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    //
+    // //토큰 가져오기
+    // if (kakaoLoginInfo != null) {
+    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    //   token = loginData['accessToken'].toString();
+    // }
 
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-
-    //토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-      token = loginData['accessToken'].toString();
-    }
-
+    token = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
       requestBody: true,
@@ -46,6 +45,7 @@ class VisitorCafeLikeViewModel extends ChangeNotifier {
       // 서버 응답 출력
       log('Response: ${response.data}');
 
+      _visitorCafeLikeModelList = [];
       List<dynamic> jsonData = response.data;
       List<VisitorCafeLikeModel> cafeLikeModels =
           jsonData.map((e) => VisitorCafeLikeModel.fromJson(e)).toList();
@@ -83,20 +83,22 @@ class VisitorCafeLikeViewModel extends ChangeNotifier {
 
   //찜한 카페 삭제
   Future<void> deleteCafeLike(int index) async {
-    _visitorCafeLikeModelList.removeAt(index);
+    // _visitorCafeLikeModelList.removeAt(index);
     var token = '';
     notifyListeners();
 
-    const storage = FlutterSecureStorage();
+    // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
+    //
+    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    //
+    // //토큰 가져오기
+    // if (kakaoLoginInfo != null) {
+    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    //   token = loginData['accessToken'].toString();
+    // }
+    token = 'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-
-    //토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
-      token = loginData['accessToken'].toString();
-    }
 
     // LogInterceptor 추가
     dio.interceptors.add(LogInterceptor(
@@ -107,7 +109,7 @@ class VisitorCafeLikeViewModel extends ChangeNotifier {
     try {
       // API 엔드포인트 및 업로드
       Response response = await dio.delete(
-          '${baseUrl}api/v1/birthday-cafes/${_visitorCafeLikeModelList[index].birthdayCafeId}/like',
+          '${baseUrl}api/v1/birthday-cafes/$index/like',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       // 서버 응답 출력

@@ -21,12 +21,13 @@ class _VisitorHome extends State<VisitorHome> {
   void initState() {
     super.initState();
     Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-        .getCafeHome('IN_PROGRESS');
+        .getFavoriteArtist()
+        .then((value) =>
+            Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+                .getInterestArtist());
+    Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+        .getCafeHome(1, 10, '', '');
   }
-
-  var artistList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
-
-  // var cafeList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
 
   String selectedRegion1 = '전체';
   List<String> optionsRegion1 = ['전체', '서울'];
@@ -35,9 +36,6 @@ class _VisitorHome extends State<VisitorHome> {
   List<String> optionsRegion2 = ['시/군/구', '강남', '건대', '성수', '홍대'];
 
   bool isSwitched = false;
-
-  // String selectedValue = 'Option 1';
-  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +53,6 @@ class _VisitorHome extends State<VisitorHome> {
           ],
         ),
         body: SingleChildScrollView(
-          // padding: EdgeInsets.only(left: 16),
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -89,25 +85,35 @@ class _VisitorHome extends State<VisitorHome> {
               const SizedBox(
                 height: 16,
               ),
-              Container(
-                height: 100,
-                padding: const EdgeInsets.only(left: 16),
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true, // shrinkWrap을 true로 설정
-                  itemCount: artistList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                        padding: const EdgeInsets.only(right: 16),
-                        child: Column(
-                          children: [
-                            Image.asset('lib/assets/image/img_artist_test.png'),
-                            Text(artistList[index])
-                          ],
-                        ));
-                  },
-                ),
-              ),
+              Consumer<VisitorCafeHomeViewModel>(
+                  builder: (context, viewModel, widget) {
+                return Container(
+                  height: 100,
+                  padding: const EdgeInsets.only(left: 16),
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true, // shrinkWrap을 true로 설정
+                    itemCount: viewModel.homeArtistsList?.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      if(viewModel.homeArtistsList?[index].artistImage!=null){
+                        return Container(
+                            padding: const EdgeInsets.only(right: 16),
+                            child: Column(
+                              children: [
+                                Image.network(viewModel
+                                    .homeArtistsList?[index].artistImage ??
+                                    ''),
+                                Text(viewModel
+                                    .homeArtistsList?[index].artistName ??
+                                    '')
+                              ],
+                            ));
+                      }
+                      return null;
+                    },
+                  ),
+                );
+              }),
               Container(
                 height: 8,
                 color: Palette.gray02,
@@ -282,6 +288,18 @@ class _VisitorHome extends State<VisitorHome> {
                                     setState(() {
                                       isSwitched = value;
                                     });
+                                    if (isSwitched) {
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                              context,
+                                              listen: false)
+                                          .getCafeHome(
+                                              1, 10, '', 'IN_PROGRESS');
+                                    } else {
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                              context,
+                                              listen: false)
+                                          .getCafeHome(1, 10, '', '');
+                                    }
                                   },
                                 )))
                       ],

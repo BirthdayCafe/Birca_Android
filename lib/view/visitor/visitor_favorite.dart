@@ -1,4 +1,5 @@
 import 'package:birca/designSystem/text.dart';
+import 'package:birca/view/visitor/visitor_cafe_detail.dart';
 import 'package:birca/viewModel/visitor_cafe_like_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,12 @@ class VisitorFavorite extends StatefulWidget {
 }
 
 class _VisitorFavorite extends State<VisitorFavorite> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<VisitorCafeLikeViewModel>(context, listen: false).getCafeLike();
+  }
+
   bool isFavoriteExist = true;
 
   @override
@@ -46,25 +53,23 @@ class _VisitorFavorite extends State<VisitorFavorite> {
         ),
         body: isFavoriteExist
             ? Container(
-            width: double.infinity, // 화면 전체 너비
-            height: double.infinity, // 화면 전체 높이
-            color: const Color(0xffF7F7FA),
-            child: Container(
-                margin: const EdgeInsets.only(top: 23, left: 20, right: 20),
-                child: Consumer<VisitorCafeLikeViewModel>(
-                    builder: (context, viewModel, widget) {
+                width: double.infinity, // 화면 전체 너비
+                height: double.infinity, // 화면 전체 높이
+                color: const Color(0xffF7F7FA),
+                child: Container(
+                    margin: const EdgeInsets.only(top: 23, left: 20, right: 20),
+                    child: Consumer<VisitorCafeLikeViewModel>(
+                        builder: (context, viewModel, widget) {
                       return GridView.builder(
                         gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, // 그리드 열의 수
-                            crossAxisSpacing: 12.0, // 열 간의 간격
-                            mainAxisSpacing: 24.0, // 행 간의 간격
-                            childAspectRatio: 0.79),
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2, // 그리드 열의 수
+                                crossAxisSpacing: 12.0, // 열 간의 간격
+                                mainAxisSpacing: 24.0, // 행 간의 간격
+                                childAspectRatio: 0.79),
                         itemCount: viewModel.visitorCafeLikeModelList.length,
-                        // 그리드에 표시할 전체 아이템 수
-
                         itemBuilder: (BuildContext context, int index) {
-                          return Container(
+                          return GestureDetector(child: Container(
                             width: 180,
                             height: 415,
                             margin: const EdgeInsets.all(1.5),
@@ -89,7 +94,10 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                   child: Stack(
                                     children: [
                                       Image.network(
-                                        viewModel.visitorCafeLikeModelList[index].mainImageUrl.toString(),
+                                        viewModel
+                                            .visitorCafeLikeModelList[index]
+                                            .mainImageUrl
+                                            .toString(),
                                         fit: BoxFit.cover,
                                         height: 126,
                                         width: 180,
@@ -102,11 +110,16 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                               Icons.favorite,
                                               color: Palette.primary,
                                             ),
-                                            onPressed: () {
+                                            onPressed: () async {
                                               Provider.of<VisitorCafeLikeViewModel>(
                                                   context,
                                                   listen: false)
-                                                  .deleteCafeLike(index);
+                                                  .deleteCafeLike(viewModel
+                                                  .visitorCafeLikeModelList[
+                                              index]
+                                                  .birthdayCafeId);
+                                              viewModel.visitorCafeLikeModelList
+                                                  .removeAt(index);
                                             },
                                           ))
                                     ],
@@ -141,8 +154,11 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                       Row(
                                         children: [
                                           BircaText(
-                                              text:
-                                              viewModel.visitorCafeLikeModelList[index].birthdayCafeName.toString(),
+                                              text: viewModel
+                                                  .visitorCafeLikeModelList[
+                                              index]
+                                                  .birthdayCafeName
+                                                  .toString(),
                                               textSize: 12,
                                               textColor: Palette.gray06,
                                               fontFamily: 'Pretendard'),
@@ -150,8 +166,11 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                             width: 5,
                                           ),
                                           BircaText(
-                                              text:
-                                              viewModel.visitorCafeLikeModelList[index].twitterAccount.toString(),
+                                              text: viewModel
+                                                  .visitorCafeLikeModelList[
+                                              index]
+                                                  .twitterAccount
+                                                  .toString(),
                                               textSize: 12,
                                               textColor: Palette.gray06,
                                               fontFamily: 'Pretendard')
@@ -162,23 +181,32 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                 )
                               ],
                             ),
-                          );
+                          ), onTap: (){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => VisitorCafeDetail(
+                                        cafeID: viewModel
+                                            .visitorCafeLikeModelList[index]
+                                            .birthdayCafeId)));
+                          },);
+
                         },
                       );
                     })))
             : Container(
-          width: double.infinity, // 화면 전체 너비
-          height: double.infinity, // 화면 전체 높이
-          color: const Color(0xffF7F7FA),
+                width: double.infinity, // 화면 전체 너비
+                height: double.infinity, // 화면 전체 높이
+                color: const Color(0xffF7F7FA),
 
-          child: Container(
-            alignment: Alignment.center,
-            child: const BircaText(
-                text: '현재 찜한 카페가 없습니다',
-                textSize: 16,
-                textColor: Palette.gray06,
-                fontFamily: 'Pretendard'),
-          ),
-        ));
+                child: Container(
+                  alignment: Alignment.center,
+                  child: const BircaText(
+                      text: '현재 찜한 카페가 없습니다',
+                      textSize: 16,
+                      textColor: Palette.gray06,
+                      fontFamily: 'Pretendard'),
+                ),
+              ));
   }
 }

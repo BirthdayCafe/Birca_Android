@@ -4,10 +4,12 @@ import 'package:birca/model/birthday_cafe_lucky_draws_model.dart';
 import 'package:birca/model/birthday_cafe_menus_model.dart';
 import 'package:birca/model/birthday_cafe_model.dart';
 import 'package:birca/model/birthday_cafe_special_goods_model.dart';
+import 'package:birca/viewModel/visitor_cafe_home_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 class BirthdayCafeViewModel extends ChangeNotifier {
   Dio dio = Dio();
@@ -64,8 +66,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   List<TextEditingController> get luckyDrawsPrizeController =>
       _luckyDrawsPrizeController;
 
-  final TextEditingController _birthDayCafeNameController = TextEditingController();
-  TextEditingController get birthDayCafeNameController=>_birthDayCafeNameController;
+  final TextEditingController _birthDayCafeNameController =
+      TextEditingController();
+
+  TextEditingController get birthDayCafeNameController =>
+      _birthDayCafeNameController;
+
   //
   // final TextEditingController _cafeNameController = TextEditingController();
   // TextEditingController get cafeNameController=>_cafeNameController;
@@ -74,10 +80,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   // TextEditingController get artistController=>_artistController;
 
   final TextEditingController _twitterController = TextEditingController();
-  TextEditingController get twitterController=>_twitterController;
+
+  TextEditingController get twitterController => _twitterController;
 
   final TextEditingController _cafeAddressController = TextEditingController();
-  TextEditingController get cafeAddressController=>_cafeAddressController;
+
+  TextEditingController get cafeAddressController => _cafeAddressController;
 
   //현재 상태를 저장하는 변수
   final String _congestionState = 'UNKNOWN';
@@ -979,7 +987,6 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   void addGoods() {
     update();
 
-
     _goodsNameController.add(TextEditingController());
     _goodsDetailsController.add(TextEditingController());
     _birthdayCafeSpecialGoodsModel
@@ -1014,7 +1021,6 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   }
 
   void update() {
-
     for (int i = 0; i < birthdayCafeMenusModel!.length; i++) {
       birthdayCafeMenusModel![i].name = menuNameController[i].text;
       birthdayCafeMenusModel![i].details = menuDetailsController[i].text;
@@ -1033,10 +1039,24 @@ class BirthdayCafeViewModel extends ChangeNotifier {
           int.parse(luckyDrawsRankController[i].text);
     }
 
-
     birthdayCafeModel?.birthdayCafeName = birthDayCafeNameController.text;
     birthdayCafeModel?.twitterAccount = twitterController.text;
+  }
 
+  void changeIcon(int id, BuildContext context) {
+    if (birthdayCafeModel != null) {
+      if (birthdayCafeModel!.isLiked) {
+        Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+            .dislike(id);
 
+        birthdayCafeModel!.isLiked = false;
+        notifyListeners();
+      } else {
+        Provider.of<VisitorCafeHomeViewModel>(context, listen: false).like(id);
+
+        birthdayCafeModel!.isLiked = true;
+        notifyListeners();
+      }
+    }
   }
 }

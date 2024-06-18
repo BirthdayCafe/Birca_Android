@@ -18,8 +18,7 @@ class MypageViewModel extends ChangeNotifier {
   //닉네임 가져오기
   Future<void> getNickName() async {
     var token = '';
-    token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzE2MjkwNDAxLCJleHAiOjE3MjE0NzQ0MDF9.8BaCgTdEVbBMf1tApT9le3_LtBU69QW6SESucv6jiM0';
+    token ='eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzEyMjMxMzYwLCJleHAiOjE3MzAyMzEzNjB9.Rz0qqN10T-ZM2L0PC1hFd_UR5X9djywjhyiINTTd3M4';
 
     // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
