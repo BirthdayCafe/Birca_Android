@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:birca/view/onboarding/apply_visitor_nickname_screen.dart';
+import 'package:birca/viewModel/mypage_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../widgets/appbar.dart';
 import 'apply_host_nickname_screen.dart';
@@ -55,14 +56,14 @@ class SelectVisitorOrHost extends StatelessWidget {
                     children: [
                       GestureDetector(
                           onTap: () async {
-                           await postRoleChange('VISITANT');
-                            if(context.mounted){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const ApplyVisitorNickNameScreen()));
-                            }
-
+                            await Provider.of<MypageViewModel>(context,
+                                    listen: false)
+                                .postRoleChange('VISITANT')
+                                .then((value) => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ApplyVisitorNickNameScreen())));
                           },
                           child: Image.asset(
                               'lib/assets/image/img_fan_visitor.png')),
@@ -71,16 +72,17 @@ class SelectVisitorOrHost extends StatelessWidget {
                       ),
                       GestureDetector(
                           onTap: () async {
-                           await postRoleChange('HOST');
-                            if(context.mounted){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>  ApplyHostNickNameScreen()));
-                            }
+                            await Provider.of<MypageViewModel>(context,
+                                    listen: false)
+                                .postRoleChange('HOST')
+                                .then((value) => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ApplyHostNickNameScreen())));
                           },
                           child:
-                          Image.asset('lib/assets/image/img_fan_host.png')),
+                              Image.asset('lib/assets/image/img_fan_host.png')),
                     ],
                   )
                 ],
@@ -88,7 +90,6 @@ class SelectVisitorOrHost extends StatelessWidget {
             )));
   }
 }
-
 
 //post role change
 Future<void> postRoleChange(String role) async {
@@ -116,10 +117,7 @@ Future<void> postRoleChange(String role) async {
     log('$role 변경 ');
 
     log(response.data.toString());
-
-
   } catch (e) {
     log(e.toString());
-
   }
 }
