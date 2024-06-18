@@ -72,15 +72,15 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                 ),
                 Consumer<MypageViewModel>(
                     builder: (context, viewModel, widget) {
-                      return Text(
-                        viewModel.nickname?.nickname ?? '',
-                        style: const TextStyle(
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w600,
-                            fontSize: 20,
-                            color: Colors.black),
-                      );
-                    }),
+                  return Text(
+                    viewModel.nickname?.nickname ?? '',
+                    style: const TextStyle(
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 20,
+                        color: Colors.black),
+                  );
+                }),
                 const SizedBox(
                   height: 11,
                 ),
@@ -102,22 +102,22 @@ class _VisitorMyPage extends State<VisitorMyPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Container(
-                  padding: const EdgeInsets.only(top: 16,bottom: 16,left: 26,right: 26),
+                  padding: const EdgeInsets.only(
+                      top: 16, bottom: 16, left: 26, right: 26),
                   width: double.infinity,
                   color: Palette.primary,
-                  child:
-                  Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Text('주최자 전환',
+                      const Text(
+                        '주최자 전환',
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'Pretendard',
-                            color: Colors.white
-                        ),),
+                            color: Colors.white),
+                      ),
                       SizedBox(
                           height: 10,
                           child: Transform.scale(
@@ -126,6 +126,10 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                                 value: isSwitched,
                                 activeColor: Palette.primary,
                                 onChanged: (value) {
+                                  Provider.of<MypageViewModel>(context,
+                                          listen: false)
+                                      .postRoleChange('HOST');
+
                                   setState(() {
                                     isSwitched = value;
                                     Navigator.pushReplacement(
@@ -138,83 +142,83 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                               )))
                     ],
                   ),
-
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 16,bottom: 16,left: 26,right: 26),
+                  padding: const EdgeInsets.only(
+                      top: 16, bottom: 16, left: 26, right: 26),
                   width: double.infinity,
-                  child:
-
-                      const Text('서비스 이용 약관',
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            fontFamily: 'Pretendard',
-                            color: Colors.black
-                        ),),
+                  child: const Text(
+                    '서비스 이용 약관',
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: 'Pretendard',
+                        color: Colors.black),
+                  ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 10,right: 10),
+                  margin: const EdgeInsets.only(left: 10, right: 10),
                   height: 1,
                   width: double.infinity,
                   color: Palette.gray03,
                 ),
                 Container(
-                  padding: const EdgeInsets.only(top: 16,bottom: 16,left: 26,right: 26),
+                  padding: const EdgeInsets.only(
+                      top: 16, bottom: 16, left: 26, right: 26),
                   width: double.infinity,
-                  child:
-
-                  const Text('개인정보 처리 약관',
+                  child: const Text(
+                    '개인정보 처리 약관',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Pretendard',
-                        color: Colors.black
-                    ),),
+                        color: Colors.black),
+                  ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 10,right: 10),
+                  margin: const EdgeInsets.only(left: 10, right: 10),
                   height: 1,
                   width: double.infinity,
                   color: Palette.gray03,
-                ),Container(
-                  padding: const EdgeInsets.only(top: 16,bottom: 16,left: 26,right: 26),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(
+                      top: 16, bottom: 16, left: 26, right: 26),
                   width: double.infinity,
-                  child:
-
-                  const Text('로그아웃',
+                  child: const Text(
+                    '로그아웃',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Pretendard',
-                        color: Colors.black
-                    ),),
+                        color: Colors.black),
+                  ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 10,right: 10),
+                  margin: const EdgeInsets.only(left: 10, right: 10),
                   height: 1,
                   width: double.infinity,
                   color: Palette.gray03,
-                ),Container(
-                  padding: const EdgeInsets.only(top: 16,bottom: 16,left: 26,right: 26),
+                ),
+                Container(
+                  padding: const EdgeInsets.only(
+                      top: 16, bottom: 16, left: 26, right: 26),
                   width: double.infinity,
-                  child:
-
-                  const Text('앱 버전',
+                  child: const Text(
+                    '앱 버전',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                         fontFamily: 'Pretendard',
-                        color: Colors.black
-                    ),),
+                        color: Colors.black),
+                  ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 10,right: 10),
+                  margin: const EdgeInsets.only(left: 10, right: 10),
                   height: 1,
                   width: double.infinity,
                   color: Palette.gray03,
                 )
-
               ],
             ),
           )

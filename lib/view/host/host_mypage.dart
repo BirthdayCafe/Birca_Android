@@ -126,6 +126,10 @@ class _HostMyPage extends State<HostMyPage> {
                                 activeColor: const Color(0xFFFFC656),
                                 onChanged: (value) {
                                   setState(() {
+                                    Provider.of<MypageViewModel>(context,
+                                            listen: false)
+                                        .postRoleChange('VISITANT');
+
                                     isSwitched = value;
 
                                     Navigator.pushReplacement(
