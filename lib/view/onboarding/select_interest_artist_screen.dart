@@ -24,7 +24,7 @@ class SelectInterestArtistScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: bircaAppBar(() {}), body: _content());
+    return Scaffold(appBar: bircaAppBar(() {Navigator.pop(context);}), body: _content());
   }
 
   _content() =>
