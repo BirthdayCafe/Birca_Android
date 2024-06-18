@@ -95,16 +95,24 @@ class _VisitorHome extends State<VisitorHome> {
                     shrinkWrap: true, // shrinkWrap을 true로 설정
                     itemCount: viewModel.homeArtistsList?.length,
                     itemBuilder: (BuildContext context, int index) {
-                      if(viewModel.homeArtistsList?[index].artistImage!=null){
+                      if (viewModel.homeArtistsList?[index].artistImage !=
+                          null) {
                         return Container(
                             padding: const EdgeInsets.only(right: 16),
                             child: Column(
                               children: [
-                                Image.network(viewModel
-                                    .homeArtistsList?[index].artistImage ??
-                                    '',fit: BoxFit.cover,scale: 20,),
+                                ClipOval(
+                                  child: Image.network(
+                                    viewModel.homeArtistsList?[index]
+                                            .artistImage ??
+                                        '',
+                                    fit: BoxFit.cover,
+                                    width: 70, // 이미지의 너비
+                                    height: 70, // 이미지의 높이
+                                  ),
+                                ),
                                 Text(viewModel
-                                    .homeArtistsList?[index].artistName ??
+                                        .homeArtistsList?[index].artistName ??
                                     '')
                               ],
                             ));
