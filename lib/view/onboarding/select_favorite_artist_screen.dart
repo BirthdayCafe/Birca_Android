@@ -1,17 +1,12 @@
-import 'dart:developer';
-
 import 'package:birca/view/onboarding/select_interest_artist_screen.dart';
 import 'package:birca/widgets/appbar.dart';
 import 'package:birca/widgets/item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../designSystem/palette.dart';
 import '../../viewmodel/select_favorite_artist_viewmodel.dart';
 import '../../widgets/button.dart';
-import '../../widgets/card.dart';
 import '../../widgets/progressbar.dart';
-import 'onboarding_visitor_complete.dart';
 
 class SelectFavoriteArtistScreen extends StatefulWidget {
   const SelectFavoriteArtistScreen({super.key});
@@ -28,7 +23,7 @@ class SelectFavoriteArtistScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: bircaAppBar(() {}), body: _content());
+    return Scaffold(appBar: bircaAppBar(() {Navigator.pop(context);}), body: _content());
   }
 
   _content() =>
@@ -183,8 +178,8 @@ class SelectFavoriteArtistScreenState
                     width: double.infinity,
                     height: 126,
                     child: CustomPaint(
-                      painter: BubblePainter(idx: location),
                       child: Container(
+                        color: Palette.gray02,
                           padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Consumer<SelectFavoriteArtistViewModel>(
                               builder: (context, model, _) =>
@@ -274,7 +269,7 @@ class SelectFavoriteArtistScreenState
 
   _bottomBar() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
-          color: Colors.white,
+          color: Palette.gray02,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
