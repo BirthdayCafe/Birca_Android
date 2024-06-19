@@ -54,7 +54,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
             onPressed: () async {
               await Provider.of<VisitorCafeHomeViewModel>(context,
                       listen: false)
-                  .getCafeHome(1, 10, '', 'IN_PROGRESS')
+                  .getCafeHome(0, 10, '', 'IN_PROGRESS')
                   .then((value) => Navigator.pop(context));
             },
             icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
