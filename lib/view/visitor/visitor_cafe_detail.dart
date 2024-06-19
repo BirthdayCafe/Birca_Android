@@ -76,7 +76,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           color: Palette.primary,
                         ),
                         onTap: () {
-                         viewModel.changeIcon(id,context);
+                          viewModel.changeIcon(id, context);
                         },
                       ),
                       BircaText(
@@ -152,7 +152,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                       height: 2,
                     ),
                     Text(
-                     '${viewModel.birthdayCafeModel?.businessHours}',
+                      '${viewModel.birthdayCafeModel?.businessHours}',
                       style: const TextStyle(
                           color: Palette.gray10,
                           fontWeight: FontWeight.w500,
