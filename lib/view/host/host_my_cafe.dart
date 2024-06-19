@@ -83,7 +83,7 @@ class _HostCafe extends State<HostCafe> {
                           children: [
                             Image.network(
                                 viewModel
-                                    .hostMyCafeModelList![index].mainImageUrl??'',
+                                    .hostMyCafeModelList![index].mainImageUrl??'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
                                 height: 140,
                                 width: 210,
                                 fit: BoxFit.fill),
