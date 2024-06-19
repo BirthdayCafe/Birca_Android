@@ -20,7 +20,7 @@ class _HostSearchResult extends State<HostSearchResult> {
   void initState() {
     super.initState();
     Provider.of<HostHomeViewModel>(context, listen: false)
-        .getHostHome(0, 3, widget.keyword,false,"","");
+        .getHostHome(0, 10, widget.keyword,false,"","");
   }
 
   @override
@@ -126,40 +126,41 @@ class _HostSearchResult extends State<HostSearchResult> {
                         Expanded(child: Container()),
 
                         //heart
-                        Container(
-                            padding: const EdgeInsets.only(top: 8, right: 8),
-                            child: viewModel.hostCafeHomeModelList![index].liked
-                                ? GestureDetector(
-                                    child: const Icon(
-                                      Icons.favorite,
-                                      color: Palette.primary,
-                                    ),
-                                    onTap: () {
-                                      Provider.of<HostHomeViewModel>(context,
-                                              listen: false)
-                                          .deleteLike(viewModel
-                                              .hostCafeHomeModelList![index]
-                                              .cafeId)
-                                          .then((value) => viewModel
-                                              .hostCafeHomeModelList?[index]
-                                              .liked = false);
-                                    },
-                                  )
-                                : GestureDetector(
-                                    child: const Icon(
-                                      Icons.favorite,
-                                      color: Color(0xffF3F3F3),
-                                    ),
-                                    onTap: () {
-                                      Provider.of<HostHomeViewModel>(context,
-                                              listen: false)
-                                          .postLike(viewModel
-                                              .hostCafeHomeModelList![index]
-                                              .cafeId)
-                                          .then((value) => viewModel
-                                              .hostCafeHomeModelList?[index]
-                                              .liked = true);
-                                    }))
+                        // Container(
+                        //     padding: const EdgeInsets.only(top: 8, right: 8),
+                        //     child: viewModel.hostCafeHomeModelList![index].liked
+                        //         ? GestureDetector(
+                        //             child: const Icon(
+                        //               Icons.favorite,
+                        //               color: Palette.primary,
+                        //             ),
+                        //             onTap: () {
+                        //               // Provider.of<HostHomeViewModel>(context,
+                        //               //         listen: false)
+                        //               //     .deleteLike(viewModel
+                        //               //         .hostCafeHomeModelList![index]
+                        //               //         .cafeId)
+                        //               //     .then((value) => viewModel
+                        //               //         .hostCafeHomeModelList?[index]
+                        //               //         .liked = false);
+                        //
+                        //             },
+                        //           )
+                        //         : GestureDetector(
+                        //             child: const Icon(
+                        //               Icons.favorite,
+                        //               color: Color(0xffF3F3F3),
+                        //             ),
+                        //             onTap: () {
+                        //               // Provider.of<HostHomeViewModel>(context,
+                        //               //         listen: false)
+                        //               //     .postLike(viewModel
+                        //               //         .hostCafeHomeModelList![index]
+                        //               //         .cafeId)
+                        //               //     .then((value) => viewModel
+                        //               //         .hostCafeHomeModelList?[index]
+                        //               //         .liked = true);
+                        //             }))
                       ],
                     ),
                   ),
