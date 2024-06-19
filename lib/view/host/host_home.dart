@@ -39,6 +39,10 @@ class _HostHome extends State<HostHome> {
 
   @override
   Widget build(BuildContext context) {
+
+    hostDate =
+        '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}~${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
+
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
@@ -117,15 +121,10 @@ class _HostHome extends State<HostHome> {
                                       });
 
                                       if (isSwitched) {
-
-                                        if(_rangeStart==null&&_rangeEnd==null){
+                                        if (_rangeStart == null &&
+                                            _rangeEnd == null) {
                                           viewModel.getHostHome(
-                                              0,
-                                              10,
-                                              "",
-                                              isSwitched,
-                                              '',
-                                              '');
+                                              0, 10, "", isSwitched, '', '');
                                         } else {
                                           viewModel.getHostHome(
                                               0,
@@ -137,16 +136,11 @@ class _HostHome extends State<HostHome> {
                                               DateFormat('yyyy-MM-ddTHH:mm:ss')
                                                   .format(_rangeEnd!));
                                         }
-
                                       } else {
-                                        if(_rangeStart==null&&_rangeEnd==null){
+                                        if (_rangeStart == null &&
+                                            _rangeEnd == null) {
                                           viewModel.getHostHome(
-                                              0,
-                                              10,
-                                              "",
-                                              isSwitched,
-                                              '',
-                                              '');
+                                              0, 10, "", isSwitched, '', '');
                                         } else {
                                           viewModel.getHostHome(
                                               0,
