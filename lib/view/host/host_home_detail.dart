@@ -11,6 +11,7 @@ import '../../viewModel/host_home_view_model.dart';
 class HostHomeDetail extends StatefulWidget {
   final int cafeID;
 
+
   const HostHomeDetail({Key? key, required this.cafeID}) : super(key: key);
 
   @override
@@ -42,10 +43,8 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                 fontWeight: FontWeight.bold),
           ),
           leading: IconButton(
-              onPressed: () async {
-                await Provider.of<HostHomeViewModel>(context, listen: false)
-                    .getHostHome(0, 10, "", false, "", "")
-                    .then((value) => Navigator.pop(context));
+              onPressed: ()  {
+                 Navigator.pop(context);
               },
               icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
           actions: [
@@ -68,6 +67,14 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                                     .deleteLike(id);
                                 viewModel.hostCafeHomeDetailModel?.liked =
                                     false;
+
+                                viewModel.hostCafeHomeModelList?.firstWhere((element) {
+                                  if(element.cafeId==id){
+                                    element.liked=false;
+                                  }
+                                  return false;
+                                });
+
                               },
                             )
                           : GestureDetector(
@@ -80,6 +87,13 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                                         listen: false)
                                     .postLike(id);
                                 viewModel.hostCafeHomeDetailModel?.liked = true;
+
+                                viewModel.hostCafeHomeModelList?.firstWhere((element) {
+                                  if(element.cafeId==id){
+                                    element.liked=true;
+                                  }
+                                  return true;
+                                });
                               })),
                 );
               }
