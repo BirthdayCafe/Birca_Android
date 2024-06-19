@@ -3,7 +3,7 @@ class BirthdayCafeModel {
   Artist artist;
   String startDate;
   String endDate;
-  String birthdayCafeName;
+  String? birthdayCafeName;
   int likeCount;
   bool isLiked;
   String twitterAccount;
@@ -14,7 +14,7 @@ class BirthdayCafeModel {
   String visibility;
   String progressState;
   String specialGoodsStockState;
-  String mainImage;
+  String? mainImage;
   List<String> defaultImages;
 
   BirthdayCafeModel(
