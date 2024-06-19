@@ -137,39 +137,6 @@ class _VisitorSearchResult extends State<VisitorSearchResult> {
                         ),
 
                         Expanded(child: Container()),
-
-                        //heart
-                        GestureDetector(
-                            child: Icon(
-                              Icons.favorite,
-                              color: viewModel
-                                      .visitorCafeSearchModelList![index]
-                                      .isLiked
-                                  ? Palette.primary
-                                  : const Color(0xffF3F3F3),
-                            ),
-                            onTap: () {
-                              if (viewModel
-                                  .visitorCafeSearchModelList![index].isLiked) {
-                                Provider.of<VisitorCafeHomeViewModel>(context,
-                                        listen: false)
-                                    .dislike(viewModel
-                                        .visitorCafeSearchModelList![index]
-                                        .birthdayCafeId);
-
-                                viewModel.visitorCafeSearchModelList![index]
-                                    .isLiked = false;
-                              } else {
-                                Provider.of<VisitorCafeHomeViewModel>(context,
-                                        listen: false)
-                                    .like(viewModel
-                                        .visitorCafeSearchModelList![index]
-                                        .birthdayCafeId);
-
-                                viewModel.visitorCafeSearchModelList![index]
-                                    .isLiked = true;
-                              }
-                            })
                       ],
                     ),
                   ),
