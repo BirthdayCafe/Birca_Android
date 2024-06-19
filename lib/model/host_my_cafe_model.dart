@@ -3,7 +3,7 @@ class HostMyCafeModel {
   String? mainImageUrl;
   String startDate;
   String endDate;
-  String birthdayCafeName;
+  String? birthdayCafeName;
   String progressState;
   Artist artist;
 
