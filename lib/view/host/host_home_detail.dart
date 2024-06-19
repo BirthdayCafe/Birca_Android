@@ -42,40 +42,47 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                 fontWeight: FontWeight.bold),
           ),
           leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
+              onPressed: () async {
+                await Provider.of<HostHomeViewModel>(context, listen: false)
+                    .getHostHome(0, 10, "", false, "", "")
+                    .then((value) => Navigator.pop(context));
               },
               icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
           actions: [
             Consumer<HostHomeViewModel>(builder: (builder, viewModel, widget) {
-              return Container(
-                padding: const EdgeInsets.only(top: 10, right: 20),
-                child: GestureDetector(
-                    child: viewModel.hostCafeHomeDetailModel!.liked
-                        ? GestureDetector(
-                            child: const Icon(
-                              Icons.favorite,
-                              color: Palette.primary,
-                            ),
-                            onTap: () {
-                              Provider.of<HostHomeViewModel>(context,
-                                      listen: false)
-                                  .deleteLike(id);
-                              viewModel.hostCafeHomeDetailModel?.liked = false;
-                            },
-                          )
-                        : GestureDetector(
-                            child: const Icon(
-                              Icons.favorite,
-                              color: Color(0xffF3F3F3),
-                            ),
-                            onTap: () {
-                              Provider.of<HostHomeViewModel>(context,
-                                      listen: false)
-                                  .postLike(id);
-                              viewModel.hostCafeHomeDetailModel?.liked = true;
-                            })),
-              );
+              if (viewModel.hostCafeHomeDetailModel == null) {
+                return const CircularProgressIndicator();
+              } else {
+                return Container(
+                  padding: const EdgeInsets.only(top: 10, right: 20),
+                  child: GestureDetector(
+                      child: viewModel.hostCafeHomeDetailModel!.liked
+                          ? GestureDetector(
+                              child: const Icon(
+                                Icons.favorite,
+                                color: Palette.primary,
+                              ),
+                              onTap: () {
+                                Provider.of<HostHomeViewModel>(context,
+                                        listen: false)
+                                    .deleteLike(id);
+                                viewModel.hostCafeHomeDetailModel?.liked =
+                                    false;
+                              },
+                            )
+                          : GestureDetector(
+                              child: const Icon(
+                                Icons.favorite,
+                                color: Color(0xffF3F3F3),
+                              ),
+                              onTap: () {
+                                Provider.of<HostHomeViewModel>(context,
+                                        listen: false)
+                                    .postLike(id);
+                                viewModel.hostCafeHomeDetailModel?.liked = true;
+                              })),
+                );
+              }
             })
           ],
         ),
