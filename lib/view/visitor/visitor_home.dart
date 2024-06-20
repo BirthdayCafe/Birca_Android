@@ -105,7 +105,7 @@ class _VisitorHome extends State<VisitorHome> {
                                   child: Image.network(
                                     viewModel.homeArtistsList?[index]
                                             .artistImage ??
-                                        '',
+                                        'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
                                     fit: BoxFit.cover,
                                     width: 70, // 이미지의 너비
                                     height: 70, // 이미지의 높이
@@ -355,7 +355,7 @@ class _VisitorHome extends State<VisitorHome> {
                                 height: 140,
                                 width: 140,
                                 child: Image.network(
-                                  '${viewModel.visitorCafeHomeModelList?[index].mainImageUrl}',
+                                  viewModel.visitorCafeHomeModelList?[index].mainImageUrl??'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
                                   fit: BoxFit.cover,
                                 ),
                               ),

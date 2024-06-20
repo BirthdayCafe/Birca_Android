@@ -97,7 +97,7 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                                         viewModel
                                             .visitorCafeLikeModelList[index]
                                             .mainImageUrl
-                                            .toString(),
+                                            ??'https://placehold.co/180x126/F7F7FA/F7F7FA.jpg',
                                         fit: BoxFit.cover,
                                         height: 126,
                                         width: 180,
