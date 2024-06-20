@@ -132,20 +132,16 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   }
 
   Future<void> fetchData(int cafeID) async {
-    // 여기서 cafeID를 사용하여 해당 카페의 데이터를 가져옵니다.
-    // 예를 들어 네트워크 호출이나 데이터베이스 쿼리를 수행할 수 있습니다.
-    // cafeID를 사용하여 데이터를 가져옵니다.
-    // cafeID에 해당하는 데이터를 가져온 후 상태를 업데이트합니다.
     _cafeID = cafeID;
     notifyListeners(); // 상태 변경 알림
   }
+
   static const storage = FlutterSecureStorage();
   var baseUrl = dotenv.env['BASE_URL'];
   var token = '';
+
   //생일 카페 상세 가져오기
   Future<void> getBirthdayCafes(int birthdayCafeId) async {
-
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -154,11 +150,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -173,38 +165,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getBirthdayCafes');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getBirthdayCafes.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to getBirthdayCafes.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to getBirthdayCafes.');
-      }
+      errorCheck(e);
     }
   }
 
   //생일 카페 특전 조회
   Future<void> getSpecialGoods(int birthdayCafeId) async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -213,11 +179,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -245,38 +207,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getSpecialGoods');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getSpecialGoods.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to getSpecialGoods.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to getSpecialGoods.');
-      }
+      errorCheck(e);
     }
   }
 
   //생일 카페 메뉴 조회
   Future<void> getMenus(int birthdayCafeId) async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -285,11 +221,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -315,39 +247,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       }
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getMenus');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getMenus.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to getMenus.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to getMenus.');
-      }
+      errorCheck(e);
     }
   }
 
   //생일 카페 럭키드로우 조회
   Future<void> getLuckDraws(int birthdayCafeId) async {
-
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -356,11 +261,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -387,32 +288,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getLuckDraws');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getLuckDraws.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to getLuckDraws.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to getLuckDraws.');
-      }
+      errorCheck(e);
     }
   }
 
@@ -440,13 +316,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
             cafeImages[i].path,
           )));
     }
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
-
-    log(formData.toString());
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -463,38 +333,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to postImage');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to postImage.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to postImage.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to postImage.');
-      }
+      errorCheck(e);
     }
   }
 
   //생일 카페 대표 사진 편집
   Future<void> postMainImage(int cafeId, PickedFile pickedFile) async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -513,11 +357,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       )
     });
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     log(formData.toString());
 
@@ -536,39 +376,13 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to postImage');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to postImage.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to postImage.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to postImage.');
-      }
+      errorCheck(e);
     }
   }
 
   //생일카페 정보 수정
   Future<void> patchInfo(
       int cafeId, BirthdayCafeInfoModel birthdayCafeInfoModel) async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -577,11 +391,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -598,38 +408,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to patchInfo');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to patchInfo.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to patchInfo.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to patchInfo.');
-      }
+      errorCheck(e);
     }
   }
 
   //생일카페 특전 수정
   Future<void> postSpecialGoods(int cafeId) async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -638,11 +422,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
+
     List<Map<String, dynamic>>? jsonList =
         _birthdayCafeSpecialGoodsModel?.map((item) => item.toJson()).toList();
 
@@ -661,38 +442,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to postSpecialGoods');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to postSpecialGoods.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to postSpecialGoods.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to postSpecialGoods.');
-      }
+      errorCheck(e);
     }
   }
 
   //생일카페 menu 수정
   Future<void> postMenus(int cafeId) async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -701,11 +456,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
     List<Map<String, dynamic>>? jsonList =
         _birthdayCafeMenusModel?.map((item) => item.toJson()).toList();
 
@@ -724,38 +475,12 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to postMenus');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to postMenus.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to postMenus.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to postMenus.');
-      }
+      errorCheck(e);
     }
   }
 
   //생일카페 luckydraws 수정
   Future<void> postLuckyDraws(int cafeId) async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -763,12 +488,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
       token = loginData['accessToken'].toString();
     }
-
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
     List<Map<String, dynamic>>? jsonList =
         _birthdayCafeLuckyDrawsModel?.map((item) => item.toJson()).toList();
 
@@ -787,32 +507,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to postLuckyDraws');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to postLuckyDraws.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to postLuckyDraws.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to postLuckyDraws.');
-      }
+      errorCheck(e);
     }
   }
 
@@ -827,11 +522,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -848,32 +539,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to patchCafeState');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to patchCafeState.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to patchCafeState.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to patchCafeState.');
-      }
+      errorCheck(e);
     }
   }
 
@@ -997,5 +663,43 @@ class BirthdayCafeViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
+  }
+
+  //통신 error 검사
+  void errorCheck(e) {
+    if (e is DioException) {
+      // Dio exception handling
+      if (e.response != null) {
+        // Server responded with an error
+        if (e.response!.statusCode == 400) {
+          // Handle HTTP 400 Bad Request error
+          log('Bad Request - Server returned 400 status code');
+          throw Exception('Failed 1');
+
+          // Additional error handling logic here if needed
+        } else {
+          // Handle other HTTP status codes
+          log('Server error - Status code: ${e.response!.statusCode}');
+          throw Exception('Failed 2');
+          // Additional error handling logic here if needed
+        }
+      } else {
+        // No response from the server (network error, timeout, etc.)
+        log('Dio error: ${e.message}');
+        throw Exception('Failed 3');
+      }
+    } else {
+      // Handle other exceptions if necessary
+      log('Error: $e');
+      throw Exception('Failed 4');
+    }
+  }
+
+  //LogInterceptor 추가
+  void logInterceptor() {
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ));
   }
 }
