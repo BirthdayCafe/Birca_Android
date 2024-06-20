@@ -35,6 +35,9 @@ class _VisitorHome extends State<VisitorHome> {
   String selectedRegion2 = '시/군/구';
   List<String> optionsRegion2 = ['시/군/구', '강남', '건대', '성수', '홍대'];
 
+  int? nowArtist;
+  String nowArtistName ='';
+
   bool isSwitched = false;
 
   @override
@@ -97,25 +100,67 @@ class _VisitorHome extends State<VisitorHome> {
                     itemBuilder: (BuildContext context, int index) {
                       if (viewModel.homeArtistsList?[index].artistImage !=
                           null) {
+
+                        bool isSelected = nowArtist == index;
+
                         return Container(
                             padding: const EdgeInsets.only(right: 16),
-                            child: Column(
+                            child: GestureDetector(
+                              child: Column(
                               children: [
-                                ClipOval(
-                                  child: Image.network(
-                                    viewModel.homeArtistsList?[index]
-                                            .artistImage ??
-                                        'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
-                                    fit: BoxFit.cover,
-                                    width: 70, // 이미지의 너비
-                                    height: 70, // 이미지의 높이
+                                Container(
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: isSelected
+                                        ? Border.all(color: Palette.primary, width: 3.0)
+                                        : null,
+                                  ),
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      viewModel.homeArtistsList?[index].artistImage ??
+                                          'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
+                                      fit: BoxFit.cover,
+                                      width: 70,
+                                      height: 70,
+                                    ),
                                   ),
                                 ),
-                                Text(viewModel
-                                        .homeArtistsList?[index].artistName ??
-                                    '')
+                                Text(viewModel.homeArtistsList?[index].artistName ?? '')
                               ],
-                            ));
+                            ),onTap: (){
+
+                              setState(() {
+                                if (nowArtist == index) {
+                                  if(isSwitched){
+                                    Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+                                        .getCafeHome(0, 20, '', 'IN_PROGRESS');
+                                    nowArtist = null;
+                                  } else {
+                                    Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+                                        .getCafeHome(0, 20, '', '');
+                                    nowArtist = null;
+                                  }
+
+                                } else {
+                                  nowArtistName = viewModel.homeArtistsList?[index].artistName ?? '';
+
+                                  if(isSwitched){
+                                    nowArtist = index;
+                                    Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+                                        .getCafeHome(0, 20, nowArtistName, 'IN_PROGRESS');
+                                  } else {
+                                    nowArtist = index;
+                                    Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+                                        .getCafeHome(0, 20,nowArtistName, '');
+
+                                  }
+                                }
+                              });
+
+
+
+                            },)
+                            );
                       }
                       return null;
                     },
@@ -297,16 +342,34 @@ class _VisitorHome extends State<VisitorHome> {
                                       isSwitched = value;
                                     });
                                     if (isSwitched) {
-                                      Provider.of<VisitorCafeHomeViewModel>(
-                                              context,
-                                              listen: false)
-                                          .getCafeHome(
-                                              0, 20, '', 'IN_PROGRESS');
+
+                                      if(nowArtist==null){
+                                        Provider.of<VisitorCafeHomeViewModel>(
+                                            context,
+                                            listen: false)
+                                            .getCafeHome(
+                                            0, 20, '', 'IN_PROGRESS');
+                                      } else {
+                                        Provider.of<VisitorCafeHomeViewModel>(
+                                            context,
+                                            listen: false)
+                                            .getCafeHome(
+                                            0, 20, nowArtistName, 'IN_PROGRESS');
+                                      }
+
                                     } else {
-                                      Provider.of<VisitorCafeHomeViewModel>(
-                                              context,
-                                              listen: false)
-                                          .getCafeHome(0, 20, '', '');
+                                      if(nowArtist==null){
+                                        Provider.of<VisitorCafeHomeViewModel>(
+                                            context,
+                                            listen: false)
+                                            .getCafeHome(0, 20, '', '');
+                                      } else {
+                                        Provider.of<VisitorCafeHomeViewModel>(
+                                            context,
+                                            listen: false)
+                                            .getCafeHome(0, 20, nowArtistName, '');
+                                      }
+
                                     }
                                   },
                                 )))
@@ -355,7 +418,9 @@ class _VisitorHome extends State<VisitorHome> {
                                 height: 140,
                                 width: 140,
                                 child: Image.network(
-                                  viewModel.visitorCafeHomeModelList?[index].mainImageUrl??'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
+                                  viewModel.visitorCafeHomeModelList?[index]
+                                          .mainImageUrl ??
+                                      'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
                                   fit: BoxFit.cover,
                                 ),
                               ),
