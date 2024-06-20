@@ -1,11 +1,9 @@
-
 class HostCafeHomeDetailModel {
   bool liked;
   String name;
   String twitterAccount;
   String address;
   String businessHours;
-  List<RentalSchedule> rentalSchedules;
   List<String> cafeImages;
   List<CafeMenu> cafeMenus;
   List<CafeOption> cafeOptions;
@@ -16,7 +14,6 @@ class HostCafeHomeDetailModel {
     required this.twitterAccount,
     required this.address,
     required this.businessHours,
-    required this.rentalSchedules,
     required this.cafeImages,
     required this.cafeMenus,
     required this.cafeOptions,
@@ -29,21 +26,21 @@ class HostCafeHomeDetailModel {
       twitterAccount: json['twitterAccount'],
       address: json['address'],
       businessHours: json['businessHours'],
-      rentalSchedules: List<RentalSchedule>.from(json['rentalSchedules'].map((schedule) => RentalSchedule.fromJson(schedule))),
       cafeImages: List<String>.from(json['cafeImages']),
-      cafeMenus: List<CafeMenu>.from(json['cafeMenus'].map((menu) => CafeMenu.fromJson(menu))),
-      cafeOptions: List<CafeOption>.from(json['cafeOptions'].map((option) => CafeOption.fromJson(option))),
+      cafeMenus: List<CafeMenu>.from(
+          json['cafeMenus'].map((menu) => CafeMenu.fromJson(menu))),
+      cafeOptions: List<CafeOption>.from(
+          json['cafeOptions'].map((option) => CafeOption.fromJson(option))),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'liked':liked,
+      'liked': liked,
       'name': name,
       'twitterAccount': twitterAccount,
       'address': address,
       'businessHours': businessHours,
-      'rentalSchedules': rentalSchedules.map((schedule) => schedule.toJson()).toList(),
       'cafeImages': cafeImages,
       'cafeMenus': cafeMenus.map((menu) => menu.toJson()).toList(),
       'cafeOptions': cafeOptions.map((option) => option.toJson()).toList(),
@@ -52,25 +49,41 @@ class HostCafeHomeDetailModel {
 }
 
 class RentalSchedule {
-  String startDate;
-  String endDate;
+  int startYear;
+  int startMonth;
+  int startDay;
+  int endYear;
+  int endMonth;
+  int endDay;
 
   RentalSchedule({
-    required this.startDate,
-    required this.endDate,
+    required this.startYear,
+    required this.startMonth,
+    required this.startDay,
+    required this.endYear,
+    required this.endMonth,
+    required this.endDay,
   });
 
   factory RentalSchedule.fromJson(Map<String, dynamic> json) {
     return RentalSchedule(
-      startDate: json['startDate'],
-      endDate: json['endDate'],
+      startYear: json['startYear'],
+      startMonth: json['startMonth'],
+      startDay: json['startDay'],
+      endYear: json['endYear'],
+      endMonth: json['endMonth'],
+      endDay: json['endDay'],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'startDate': startDate,
-      'endDate': endDate,
+      'startYear': startYear,
+      'startMonth': startMonth,
+      'startDay': startDay,
+      'endYear': endYear,
+      'endMonth': endMonth,
+      'endDay': endDay,
     };
   }
 }
@@ -122,6 +135,7 @@ class CafeOption {
     };
   }
 }
+
 class HostRequestModel {
   final int artistId;
   final int cafeId;
