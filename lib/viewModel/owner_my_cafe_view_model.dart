@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
+import 'package:birca/model/api.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import '../model/owner_my_cafe_detail_model.dart';
 
 class OwnerMyCafeViewModel extends ChangeNotifier {
   Dio dio = Dio();
+  Api api = Api();
 
   OwnerMyCafeDetailModel? _ownerMyCafeDetailModel;
 
@@ -67,11 +69,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     //   token = loginData['accessToken'].toString();
     // }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    api.logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -95,32 +93,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getMyCafe');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getMyCafe.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to getMyCafe.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to getMyCafe.');
-      }
+      api.errorCheck(e);
     }
   }
 
@@ -141,11 +114,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     //   token = loginData['accessToken'].toString();
     // }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    api.logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -163,32 +132,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to patchMyCafe');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to patchMyCafe.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to patchMyCafe.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to patchMyCafe.');
-      }
+      api.errorCheck(e);
     }
   }
 
@@ -208,11 +152,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     //   token = loginData['accessToken'].toString();
     // }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    api.logInterceptor();
 
     List<Map<String, dynamic>>? jsonList = _ownerMyCafeDetailModel?.cafeOptions
         .map((item) => item.toJson())
@@ -228,32 +168,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to postOptions');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to postOptions.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to postOptions.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to postOptions.');
-      }
+      api.errorCheck(e);
     }
   }
 
@@ -273,11 +188,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     //   token = loginData['accessToken'].toString();
     // }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    api.logInterceptor();
 
     List<Map<String, dynamic>>? jsonList = _ownerMyCafeDetailModel?.cafeMenus
         .map((item) => item.toJson())
@@ -293,32 +204,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to postMenus');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to postMenus.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to postMenus.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to postMenus.');
-      }
+      api.errorCheck(e);
     }
   }
 
@@ -338,12 +224,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     //   token = loginData['accessToken'].toString();
     // }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
-
+    api.logInterceptor();
     try {
       // API 엔드포인트 및 업로드
       Response response = await dio.post(
@@ -358,32 +239,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to postDayOff');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to postDayOff.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to postDayOff.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to postDayOff.');
-      }
+      api.errorCheck(e);
     }
   }
 
@@ -413,11 +269,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
       formData.files.add(MapEntry(
           'cafeImages', await MultipartFile.fromFile(cafeImages[i].path)));
     }
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    api.logInterceptor();
 
     log(formData.toString());
 
@@ -436,32 +288,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to postImage');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to postImage.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to postImage.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to postImage.');
-      }
+      api.errorCheck(e);
     }
   }
 

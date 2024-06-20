@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:birca/model/api.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -9,6 +9,7 @@ import '../model/artist_search_model.dart';
 
 class ArtistSearchViewModel extends ChangeNotifier {
   Dio dio = Dio();
+  Api api = Api();
 
   List<ArtistSearchModel>? _artistSearchModelList;
 
@@ -28,11 +29,7 @@ class ArtistSearchViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    api.logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -55,32 +52,7 @@ class ArtistSearchViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getArtistSearch');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getArtistSearch.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to getArtistSearch.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to getArtistSearch.');
-      }
+      api.errorCheck(e);
     }
   }
 }

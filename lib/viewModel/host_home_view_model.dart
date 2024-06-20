@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:birca/model/api.dart';
 import 'package:birca/model/host_cafe_home_detail_model.dart';
 import 'package:birca/model/host_cafe_home_model.dart';
 import 'package:dio/dio.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HostHomeViewModel extends ChangeNotifier {
   Dio dio = Dio();
+  Api api = Api();
 
   List<HostCafeHomeModel>? _hostCafeHomeModelList;
 
@@ -42,7 +44,7 @@ class HostHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    logInterceptor();
+    api.logInterceptor();
 
     try {
       Response? response;
@@ -84,7 +86,7 @@ class HostHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      errorCheck(e);
+      api.errorCheck(e);
     }
   }
 
@@ -98,7 +100,7 @@ class HostHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    logInterceptor();
+    api.logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -111,7 +113,7 @@ class HostHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      errorCheck(e);
+      api.errorCheck(e);
     }
   }
 
@@ -125,7 +127,7 @@ class HostHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    logInterceptor();
+    api.logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -139,7 +141,7 @@ class HostHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      errorCheck(e);
+      api.errorCheck(e);
     }
   }
 
@@ -153,7 +155,7 @@ class HostHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    logInterceptor();
+    api.logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -169,7 +171,7 @@ class HostHomeViewModel extends ChangeNotifier {
       // _hostCafeHomeDetailModelList 추가
       notifyListeners();
     } catch (e) {
-      errorCheck(e);
+      api.errorCheck(e);
     }
   }
 
@@ -183,7 +185,7 @@ class HostHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    logInterceptor();
+    api.logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -196,7 +198,7 @@ class HostHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      errorCheck(e);
+      api.errorCheck(e);
     }
   }
 
@@ -209,7 +211,7 @@ class HostHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    logInterceptor();
+    api.logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -246,45 +248,7 @@ class HostHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      errorCheck(e);
+      api.errorCheck(e);
     }
-  }
-
-  //통신 error 검사
-  void errorCheck(e) {
-    if (e is DioException) {
-      // Dio exception handling
-      if (e.response != null) {
-        // Server responded with an error
-        if (e.response!.statusCode == 400) {
-          // Handle HTTP 400 Bad Request error
-          log('Bad Request - Server returned 400 status code');
-          throw Exception('Failed 1');
-
-          // Additional error handling logic here if needed
-        } else {
-          // Handle other HTTP status codes
-          log('Server error - Status code: ${e.response!.statusCode}');
-          throw Exception('Failed 2');
-          // Additional error handling logic here if needed
-        }
-      } else {
-        // No response from the server (network error, timeout, etc.)
-        log('Dio error: ${e.message}');
-        throw Exception('Failed 3');
-      }
-    } else {
-      // Handle other exceptions if necessary
-      log('Error: $e');
-      throw Exception('Failed 4');
-    }
-  }
-
-  //LogInterceptor 추가
-  void logInterceptor() {
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
   }
 }
