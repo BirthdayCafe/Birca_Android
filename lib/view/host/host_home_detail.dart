@@ -11,7 +11,6 @@ import '../../viewModel/host_home_view_model.dart';
 class HostHomeDetail extends StatefulWidget {
   final int cafeID;
 
-
   const HostHomeDetail({Key? key, required this.cafeID}) : super(key: key);
 
   @override
@@ -25,12 +24,16 @@ class _HostHomeDetail extends State<HostHomeDetail> {
   void initState() {
     id = widget.cafeID; // cafeID를 저장할 변수
     Provider.of<HostHomeViewModel>(context, listen: false).getCafeDetail(id);
+    Provider.of<HostHomeViewModel>(context, listen: false)
+        .getSchedule(id,DateTime.now().year, DateTime.now().month);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    DateTime _focusedDay = DateTime.now();
+
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
@@ -43,8 +46,8 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                 fontWeight: FontWeight.bold),
           ),
           leading: IconButton(
-              onPressed: ()  {
-                 Navigator.pop(context);
+              onPressed: () {
+                Navigator.pop(context);
               },
               icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
           actions: [
@@ -68,13 +71,13 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                                 viewModel.hostCafeHomeDetailModel?.liked =
                                     false;
 
-                                viewModel.hostCafeHomeModelList?.firstWhere((element) {
-                                  if(element.cafeId==id){
-                                    element.liked=false;
+                                viewModel.hostCafeHomeModelList
+                                    ?.firstWhere((element) {
+                                  if (element.cafeId == id) {
+                                    element.liked = false;
                                   }
                                   return false;
                                 });
-
                               },
                             )
                           : GestureDetector(
@@ -88,9 +91,10 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                                     .postLike(id);
                                 viewModel.hostCafeHomeDetailModel?.liked = true;
 
-                                viewModel.hostCafeHomeModelList?.firstWhere((element) {
-                                  if(element.cafeId==id){
-                                    element.liked=true;
+                                viewModel.hostCafeHomeModelList
+                                    ?.firstWhere((element) {
+                                  if (element.cafeId == id) {
+                                    element.liked = true;
                                   }
                                   return true;
                                 });
@@ -254,13 +258,49 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                       Container(
                         padding: const EdgeInsets.all(6),
                         child: TableCalendar(
+                          focusedDay: _focusedDay,
+
                           //오늘 날짜
-                          focusedDay: DateTime.now(),
                           firstDay: DateTime.now(),
                           lastDay: DateTime.utc(DateTime.now().year + 1),
 
                           headerStyle: const HeaderStyle(
-                              formatButtonVisible: false, titleCentered: true),
+                              titleTextStyle: TextStyle(
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                              formatButtonVisible: false, titleCentered: false,
+                              headerMargin: EdgeInsets.all(5),
+                              rightChevronVisible: false,
+                              leftChevronVisible:false
+                          ),
+
+                          onPageChanged: (focusedDay) {
+                            _focusedDay = focusedDay;
+                            viewModel.getSchedule(
+                                id,focusedDay.year, focusedDay.month);
+                          },
+                          availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
+
+                          calendarBuilders: CalendarBuilders(
+                              defaultBuilder: (context, day, focusedDay) {
+                            for (var range in viewModel.dateRanges) {
+                              if (day.isAfter(range['start']!) &&
+                                  day.isBefore(range['end']!
+                                      .add(const Duration(days: 1)))) {
+                                return
+                                  Container(
+                                    margin: const EdgeInsets.all(6.0),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      '${day.day}',
+                                      style: const TextStyle(color: Palette.gray03),
+                                    ),);
+                              }
+                            }
+                            return null;
+                          }),
                         ),
                       ),
                       const SizedBox(
