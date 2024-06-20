@@ -8,8 +8,10 @@ import '../../viewModel/owner_request_detail_view_model.dart';
 
 class OwnerRequestDetail extends StatefulWidget {
   final int cafeID;
+  final bool isRequestAccept;
 
-  const OwnerRequestDetail({Key? key, required this.cafeID}) : super(key: key);
+
+  const OwnerRequestDetail({Key? key, required this.cafeID,required this.isRequestAccept}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -29,10 +31,12 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
         .getRequestDetailHome(id);
   }
 
-  bool isRequestAccept = false;
 
   @override
   Widget build(BuildContext context) {
+
+    bool isRequestAccept = widget.isRequestAccept;
+
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,

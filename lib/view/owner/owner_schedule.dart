@@ -204,7 +204,7 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                                     OwnerRequestDetail(
                                         cafeID: viewModel
                                             .ownerScheduleModel!
-                                            .birthdayCafeId)));
+                                            .birthdayCafeId,isRequestAccept: true,)));
                       }
                     },
                   )

@@ -119,7 +119,7 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                                   builder: (context) => OwnerRequestDetail(
                                       cafeID: viewModel
                                           .ownerHomeModelList![index]
-                                          .birthdayCafeId)));
+                                          .birthdayCafeId,isRequestAccept: false,)));
                         },
                       );
                     }),
@@ -185,7 +185,7 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                                     builder: (context) => OwnerRequestDetail(
                                         cafeID: viewModel
                                             .ownerHomeModelList![index]
-                                            .birthdayCafeId)));
+                                            .birthdayCafeId,isRequestAccept: true,)));
                           });
                     }),
               ],
