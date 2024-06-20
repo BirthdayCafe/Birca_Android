@@ -83,7 +83,15 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                           .now()
                           .year + 1),
                       headerStyle: const HeaderStyle(
-                          formatButtonVisible: false, titleCentered: true),
+                        titleTextStyle: TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                          formatButtonVisible: false, titleCentered: false,
+                      headerMargin: EdgeInsets.all(5),
+                      rightChevronVisible: false,
+                      leftChevronVisible:false),
                       selectedDayPredicate: (day) {
                         return isSameDay(_selectedDay, day);
                       },
@@ -103,7 +111,7 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                         viewModel.getSchedule(
                             _focusedDay.year, _focusedDay.month);
                       },
-
+                      availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
                       calendarBuilders: CalendarBuilders(
                           defaultBuilder: (context, day, focusedDay) {
                             for (var range in viewModel.dateRanges) {
