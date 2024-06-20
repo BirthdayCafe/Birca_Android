@@ -37,14 +37,19 @@ class _HostHomeDetail extends State<HostHomeDetail> {
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
-          title: const Text(
-            '카페 이름',
-            style: TextStyle(
+          title:
+        Consumer<HostHomeViewModel>(builder: (builder, viewModel, widget) {
+          return  Text(
+            viewModel.hostCafeHomeDetailModel?.name??'',
+            style: const TextStyle(
                 fontSize: 16,
                 color: Palette.gray10,
                 fontFamily: 'Pretandard',
                 fontWeight: FontWeight.bold),
-          ),
+          );
+        }),
+
+
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
