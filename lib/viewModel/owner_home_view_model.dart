@@ -10,7 +10,6 @@ class OwnerHomeViewModel extends ChangeNotifier{
   Dio dio = Dio();
 
   List<OwnerHomeModel>? _ownerHomeModelList;
-
   List<OwnerHomeModel>? get ownerHomeModelList =>
       _ownerHomeModelList;
 
@@ -18,7 +17,7 @@ class OwnerHomeViewModel extends ChangeNotifier{
     _ownerHomeModelList = [];
   }
 
-  //주최자 카페 홈 가져오기
+  //홈 가져오기
   Future<void> getOwnerHome(String progressState) async {
     // const storage = FlutterSecureStorage();
     var baseUrl = dotenv.env['BASE_URL'];
