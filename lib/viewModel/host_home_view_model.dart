@@ -202,7 +202,7 @@ class HostHomeViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> getSchedule(int year, int month) async {
+  Future<void> getSchedule(int cafeId,int year, int month) async {
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -216,7 +216,7 @@ class HostHomeViewModel extends ChangeNotifier {
     try {
       // API 엔드포인트 및 업로드
       Response response = await dio.get(
-          '${baseUrl}api/v1/owners/birthday-cafes/schedules',
+          '${baseUrl}api/v1/cafes/$cafeId/schedules',
           queryParameters: {'year': year, 'month': month},
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
