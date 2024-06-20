@@ -30,7 +30,6 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   //방문자 최애 아티스트 가져오기
   Future<void> getFavoriteArtist() async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -39,12 +38,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -60,38 +54,12 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getCafeHome');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getCafeHome.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to getCafeHome.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to getCafeHome.');
-      }
+      errorCheck(e);
     }
   }
 
   //방문자 관심 아티스트 가져오기
   Future<void> getInterestArtist() async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -100,11 +68,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -122,39 +86,13 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getCafeHome');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getCafeHome.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to getCafeHome.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to getCafeHome.');
-      }
+      errorCheck(e);
     }
   }
 
   //방문자 홈 카페 가져오기
   Future<void> getCafeHome(
       int cursor, int size, String name, String progressState) async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -163,11 +101,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -193,38 +127,12 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getCafeHome');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getCafeHome.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to getCafeHome.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to getCafeHome.');
-      }
+      errorCheck(e);
     }
   }
 
   //방문자 검색
   Future<void> getCafeSearch(String progressState, String name) async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -233,11 +141,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -263,39 +167,12 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to getCafeSearch');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to getCafeSearch.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to getCafeSearch.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to getCafeSearch.');
-      }
+      errorCheck(e);
     }
   }
 
   //찜하기
   Future<void> like(int birthdayCafeId) async {
-
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -304,12 +181,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -322,39 +194,12 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to like');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to like.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to like.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to like.');
-      }
+      errorCheck(e);
     }
   }
 
-
   //찜 취소
   Future<void> dislike(int birthdayCafeId) async {
-
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
@@ -363,11 +208,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       token = loginData['accessToken'].toString();
     }
 
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드
@@ -380,51 +221,58 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            throw Exception('Failed to like');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            throw Exception('Failed to like.');
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to like.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to like.');
-      }
+      errorCheck(e);
     }
   }
 
-  void heart(int id,int index,BuildContext context) {
+  void heart(int id, int index, BuildContext context) {
     if (visitorCafeHomeModelList![index].isLiked) {
-      Provider.of<VisitorCafeHomeViewModel>(context,
-          listen: false)
-          .dislike(id);
+      Provider.of<VisitorCafeHomeViewModel>(context, listen: false).dislike(id);
 
-      visitorCafeHomeModelList![index]
-          .isLiked = false;
+      visitorCafeHomeModelList![index].isLiked = false;
     } else {
-      Provider.of<VisitorCafeHomeViewModel>(context,
-          listen: false)
-          .like(id);
+      Provider.of<VisitorCafeHomeViewModel>(context, listen: false).like(id);
 
-      visitorCafeHomeModelList![index]
-          .isLiked = true;
+      visitorCafeHomeModelList![index].isLiked = true;
     }
     notifyListeners();
+  }
+
+  //통신 error 검사
+  void errorCheck(e) {
+    if (e is DioException) {
+      // Dio exception handling
+      if (e.response != null) {
+        // Server responded with an error
+        if (e.response!.statusCode == 400) {
+          // Handle HTTP 400 Bad Request error
+          log('Bad Request - Server returned 400 status code');
+          throw Exception('Failed 1');
+
+          // Additional error handling logic here if needed
+        } else {
+          // Handle other HTTP status codes
+          log('Server error - Status code: ${e.response!.statusCode}');
+          throw Exception('Failed 2');
+          // Additional error handling logic here if needed
+        }
+      } else {
+        // No response from the server (network error, timeout, etc.)
+        log('Dio error: ${e.message}');
+        throw Exception('Failed 3');
+      }
+    } else {
+      // Handle other exceptions if necessary
+      log('Error: $e');
+      throw Exception('Failed 4');
+    }
+  }
+
+  //LogInterceptor 추가
+  void logInterceptor() {
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ));
   }
 }
