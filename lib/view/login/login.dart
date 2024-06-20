@@ -37,24 +37,24 @@ class _Login extends State<Login> {
             ),
             GestureDetector(
               onTap: () async {
-                await kakaoLogin();
+                await kakaoLogin(context);
 
-                String role = await getRole();
-                if (!mounted) return;
-
-                if (role == 'VISITANT') {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const BottomNavVisitor()));
-                } else if (role == 'HOST') {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const BottomNavHost()));
-                } else if (role == 'OWNER') {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const BottomNavOwner()));
-                } else {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => const SelectFanOrCafeOwner()));
-                }
+                // String role = await getRole();
+                // if (!mounted) return;
+                //
+                // if (role == 'VISITANT') {
+                //   Navigator.of(context).push(
+                //       MaterialPageRoute(builder: (context) => const BottomNavVisitor()));
+                // } else if (role == 'HOST') {
+                //   Navigator.of(context).push(
+                //       MaterialPageRoute(builder: (context) => const BottomNavHost()));
+                // } else if (role == 'OWNER') {
+                //   Navigator.of(context).push(
+                //       MaterialPageRoute(builder: (context) => const BottomNavOwner()));
+                // } else {
+                //   Navigator.of(context).push(
+                //       MaterialPageRoute(builder: (context) => const SelectFanOrCafeOwner()));
+                // }
               },
               child: Image.asset('lib/assets/image/kakao_login_medium_wide.png'),
             ),
@@ -75,7 +75,7 @@ class _Login extends State<Login> {
   }
 }
 
-Future<void> kakaoLogin() async {
+Future<void> kakaoLogin(BuildContext context) async {
   // 카카오 로그인 구현 예제
 
   // 카카오톡 실행 가능 여부 확인
@@ -91,7 +91,7 @@ Future<void> kakaoLogin() async {
           '\n이메일: ${user.kakaoAccount?.email}');
       log('카카오톡으로 로그인 성공 \n 토큰: ${token.accessToken}');
 
-      await postKakaoToken(token.accessToken);
+      await postKakaoToken(token.accessToken,context);
     } catch (error) {
       log('카카오톡으로 로그인 실패 $error');
 
@@ -110,7 +110,7 @@ Future<void> kakaoLogin() async {
             '\n닉네임: ${user.kakaoAccount?.profile?.nickname}'
             '\n이메일: ${user.kakaoAccount?.email}');
         log('카카오계정으로 로그인 성공  \n 토큰: ${token.accessToken}');
-        await postKakaoToken(token.accessToken);
+        await postKakaoToken(token.accessToken, context);
       } catch (error) {
         log('카카오계정으로 로그인 실패 $error');
       }
@@ -126,7 +126,7 @@ Future<void> kakaoLogin() async {
           '\n이메일: ${user.kakaoAccount?.email}');
       log('카카오계정으로 로그인 성공  \n 토큰: ${token.accessToken}');
 
-      await postKakaoToken(token.accessToken);
+      await postKakaoToken(token.accessToken, context);
     } catch (error) {
       log('카카오계정으로 로그인 실패 $error');
     }
@@ -134,7 +134,7 @@ Future<void> kakaoLogin() async {
 }
 
 //post token
-Future<void> postKakaoToken(String token) async {
+Future<void> postKakaoToken(String token,BuildContext context) async {
   const storage = FlutterSecureStorage();
 
   Dio dio = Dio();
@@ -149,7 +149,26 @@ Future<void> postKakaoToken(String token) async {
     var kakaoLoginInfo = jsonEncode(response.data);
     log('kakaoLoginInfo : $kakaoLoginInfo');
 
+
     await storage.write(key: 'kakaoLoginInfo', value: kakaoLoginInfo);
+
+    String role = await getRole();
+
+    if (role == 'VISITANT') {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const BottomNavVisitor()));
+    } else if (role == 'HOST') {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const BottomNavHost()));
+    } else if (role == 'OWNER') {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const BottomNavOwner()));
+    } else {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const SelectFanOrCafeOwner()));
+    }
+
+
   } catch (e) {
     log(e.toString());
     throw Exception('Failed to login.');
