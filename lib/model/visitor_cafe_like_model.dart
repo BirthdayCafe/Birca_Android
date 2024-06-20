@@ -1,6 +1,6 @@
 class VisitorCafeLikeModel {
   final int birthdayCafeId;
-  final String mainImageUrl;
+  final String? mainImageUrl;
   final String startDate;
   final String endDate;
   final String birthdayCafeName;
