@@ -27,6 +27,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   List<HomeArtists>? get homeArtistsList => _homeArtistsList;
 
+
   static const storage = FlutterSecureStorage();
   var baseUrl = dotenv.env['BASE_URL'];
   var token = '';
@@ -42,7 +43,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
     }
 
     api.logInterceptor();
-
+    _homeArtistsList =[];
     try {
       // API 엔드포인트 및 업로드
       Response response = await dio.get('${baseUrl}api/v1/artists/favorite',
@@ -86,6 +87,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
           jsonData.map((e) => HomeArtists.fromJson(e)).toList();
 
       homeArtistsList?.addAll(artists);
+
 
       notifyListeners();
     } catch (e) {
