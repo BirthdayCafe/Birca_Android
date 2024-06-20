@@ -356,12 +356,16 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                         firstDay: DateTime.now(),
                         lastDay: DateTime.utc(DateTime.now().year + 1),
 
-                        headerStyle: const HeaderStyle(
-                            formatButtonVisible: false, titleCentered: true),
-
-                        // rangeStartDay: _rangeStart,
-                        // rangeEndDay: _rangeEnd,
-                        // rangeSelectionMode: _rangeSelectionMode,
+                        headerStyle: const HeaderStyle(titleTextStyle: TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                            formatButtonVisible: false, titleCentered: false,
+                            headerMargin: EdgeInsets.all(5),
+                            rightChevronVisible: false,
+                            leftChevronVisible:false),
+                        availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
 
                         selectedDayPredicate: (day) {
                           return _selectedDates.any(
