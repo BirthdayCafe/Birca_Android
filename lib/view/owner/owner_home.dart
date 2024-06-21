@@ -33,6 +33,7 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false, // 자동으로 leading 버튼 생성 방지
           scrolledUnderElevation: 0,
           title: SvgPicture.asset('lib/assets/image/birca.svg'),
           bottom: TabBar(

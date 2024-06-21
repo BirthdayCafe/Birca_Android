@@ -25,6 +25,7 @@ class _HostCafe extends State<HostCafe> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false, // 자동으로 leading 버튼 생성 방지
           centerTitle: false, // 타이틀 왼쪽 정렬 설정
           scrolledUnderElevation: 0,
           title: RichText(

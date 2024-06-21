@@ -24,6 +24,7 @@ class _OwnerMyCafe extends State<OwnerMyCafe> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false, // 자동으로 leading 버튼 생성 방지
           scrolledUnderElevation: 0,
           title: const Text(
             '나의 카페',

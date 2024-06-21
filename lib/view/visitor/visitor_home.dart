@@ -45,6 +45,7 @@ class _VisitorHome extends State<VisitorHome> {
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
+          automaticallyImplyLeading: false, // 자동으로 leading 버튼 생성 방지
           title: SvgPicture.asset('lib/assets/image/birca.svg'),
           actions: [
             IconButton(

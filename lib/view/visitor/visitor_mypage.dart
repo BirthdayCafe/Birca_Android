@@ -27,6 +27,7 @@ class _VisitorMyPage extends State<VisitorMyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false, // 자동으로 leading 버튼 생성 방지
         title: const Row(
           children: [
             Text(

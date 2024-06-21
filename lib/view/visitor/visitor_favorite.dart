@@ -26,6 +26,7 @@ class _VisitorFavorite extends State<VisitorFavorite> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: false, // 타이틀 왼쪽 정렬 설정
+          automaticallyImplyLeading: false, // 자동으로 leading 버튼 생성 방지
           scrolledUnderElevation: 0,
           title: RichText(
             text: TextSpan(
