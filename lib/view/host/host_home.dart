@@ -21,11 +21,38 @@ class HostHome extends StatefulWidget {
 }
 
 class _HostHome extends State<HostHome> {
+
+  final ScrollController _scrollController = ScrollController();
+
+  String _name = '';
+  bool _liked = false;
+  String _startDate = '';
+  String _endDate = '';
+
   @override
   void initState() {
     super.initState();
     Provider.of<HostHomeViewModel>(context, listen: false)
         .getHostHome(0, 10, "", false, "", "");
+     _name = '';
+     _liked = false;
+     _startDate = '';
+     _endDate = '';
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _loadMoreCafes(_name, _liked,_startDate,_endDate);
+      }
+    });
+
+  }
+
+  void _loadMoreCafes(String name, bool liked,String startDate,String endDate) {
+    var viewModel =
+    Provider.of<HostHomeViewModel>(context, listen: false);
+    int lastCafeId = viewModel.hostCafeHomeModelList!.last.cafeId;
+    viewModel.updateHostHome(lastCafeId, 10, _name,_liked,_startDate,_endDate);
   }
 
   var isSwitched = false;
@@ -57,7 +84,9 @@ class _HostHome extends State<HostHome> {
                 icon: SvgPicture.asset('lib/assets/image/img_search.svg'))
           ],
         ),
-        body: SingleChildScrollView(child:
+        body: SingleChildScrollView(
+          controller: _scrollController,
+            child:
             Consumer<HostHomeViewModel>(builder: (context, viewModel, widget) {
           if (viewModel.hostCafeHomeModelList == null) {
             return const CircularProgressIndicator();
@@ -126,6 +155,10 @@ class _HostHome extends State<HostHome> {
                                             _rangeEnd == null) {
                                           viewModel.getHostHome(
                                               0, 10, "", isSwitched, '', '');
+                                          _name = '';
+                                          _liked = isSwitched;
+                                          _startDate = '';
+                                          _endDate = '';
                                         } else {
                                           viewModel.getHostHome(
                                               0,
@@ -136,12 +169,23 @@ class _HostHome extends State<HostHome> {
                                                   .format(_rangeStart!),
                                               DateFormat('yyyy-MM-ddTHH:mm:ss')
                                                   .format(_rangeEnd!));
+                                          _name = '';
+                                          _liked = isSwitched;
+                                          _startDate = DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                              .format(_rangeStart!);
+                                          _endDate = DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                              .format(_rangeEnd!);
                                         }
                                       } else {
                                         if (_rangeStart == null &&
                                             _rangeEnd == null) {
                                           viewModel.getHostHome(
                                               0, 10, "", isSwitched, '', '');
+
+                                          _name = '';
+                                          _liked = isSwitched;
+                                          _startDate = '';
+                                          _endDate = '';
                                         } else {
                                           viewModel.getHostHome(
                                               0,
@@ -152,6 +196,12 @@ class _HostHome extends State<HostHome> {
                                                   .format(_rangeStart!),
                                               DateFormat('yyyy-MM-ddTHH:mm:ss')
                                                   .format(_rangeEnd!));
+                                          _name = '';
+                                          _liked = isSwitched;
+                                          _startDate = DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                              .format(_rangeStart!);
+                                          _endDate = DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                              .format(_rangeEnd!);
                                         }
                                       }
                                     },
