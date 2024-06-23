@@ -17,6 +17,11 @@ class VisitorHome extends StatefulWidget {
 }
 
 class _VisitorHome extends State<VisitorHome> {
+  final ScrollController _scrollController = ScrollController();
+
+  String _name = '';
+  String _progressState = '';
+
   @override
   void initState() {
     super.initState();
@@ -26,7 +31,23 @@ class _VisitorHome extends State<VisitorHome> {
             Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
                 .getInterestArtist());
     Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-        .getCafeHome(0, 20, '', '');
+        .getCafeHome(0, 10, '', '');
+    _name = '';
+    _progressState = '';
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        _loadMoreCafes(_name, _progressState);
+      }
+    });
+  }
+
+  void _loadMoreCafes(String name, String progressState) {
+    var viewModel =
+        Provider.of<VisitorCafeHomeViewModel>(context, listen: false);
+    int lastCafeId = viewModel.visitorCafeHomeModelList!.last.birthdayCafeId;
+    viewModel.updateCafeHome(lastCafeId, 10, name, progressState);
   }
 
   String selectedRegion1 = '전체';
@@ -36,7 +57,7 @@ class _VisitorHome extends State<VisitorHome> {
   List<String> optionsRegion2 = ['시/군/구', '강남', '건대', '성수', '홍대'];
 
   int? nowArtist;
-  String nowArtistName ='';
+  String nowArtistName = '';
 
   bool isSwitched = false;
 
@@ -57,6 +78,7 @@ class _VisitorHome extends State<VisitorHome> {
           ],
         ),
         body: SingleChildScrollView(
+          controller: _scrollController,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -101,67 +123,86 @@ class _VisitorHome extends State<VisitorHome> {
                     itemBuilder: (BuildContext context, int index) {
                       if (viewModel.homeArtistsList?[index].artistImage !=
                           null) {
-
                         bool isSelected = nowArtist == index;
 
                         return Container(
                             padding: const EdgeInsets.only(right: 16),
                             child: GestureDetector(
                               child: Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    border: isSelected
-                                        ? Border.all(color: Palette.primary, width: 3.0)
-                                        : null,
-                                  ),
-                                  child: ClipOval(
-                                    child: Image.network(
-                                      viewModel.homeArtistsList?[index].artistImage ??
-                                          'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
-                                      fit: BoxFit.cover,
-                                      width: 70,
-                                      height: 70,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: isSelected
+                                          ? Border.all(
+                                              color: Palette.primary,
+                                              width: 3.0)
+                                          : null,
+                                    ),
+                                    child: ClipOval(
+                                      child: Image.network(
+                                        viewModel.homeArtistsList?[index]
+                                                .artistImage ??
+                                            'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
+                                        fit: BoxFit.cover,
+                                        width: 70,
+                                        height: 70,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Text(viewModel.homeArtistsList?[index].artistName ?? '')
-                              ],
-                            ),onTap: (){
-
-                              setState(() {
-                                if (nowArtist == index) {
-                                  if(isSwitched){
-                                    Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-                                        .getCafeHome(0, 20, '', 'IN_PROGRESS');
-                                    nowArtist = null;
+                                  Text(viewModel
+                                          .homeArtistsList?[index].artistName ??
+                                      '')
+                                ],
+                              ),
+                              onTap: () {
+                                setState(() {
+                                  if (nowArtist == index) {
+                                    if (isSwitched) {
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                              context,
+                                              listen: false)
+                                          .getCafeHome(0, 10, '', 'IN_PROGRESS');
+                                      _name = '';
+                                      _progressState = 'IN_PROGRESS';
+                                      nowArtist = null;
+                                    } else {
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                              context,
+                                              listen: false)
+                                          .getCafeHome(0, 10, '', '');
+                                      _name = '';
+                                      _progressState = '';
+                                      nowArtist = null;
+                                    }
                                   } else {
-                                    Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-                                        .getCafeHome(0, 20, '', '');
-                                    nowArtist = null;
+                                    nowArtistName = viewModel
+                                            .homeArtistsList?[index]
+                                            .artistName ??
+                                        '';
+
+                                    if (isSwitched) {
+                                      nowArtist = index;
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                              context,
+                                              listen: false)
+                                          .getCafeHome(0, 10, nowArtistName,
+                                              'IN_PROGRESS');
+                                      _name = nowArtistName;
+                                      _progressState = 'IN_PROGRESS';
+                                    } else {
+                                      nowArtist = index;
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                              context,
+                                              listen: false)
+                                          .getCafeHome(0, 10, nowArtistName, '');
+                                      _name = nowArtistName;
+                                      _progressState = '';
+                                    }
                                   }
-
-                                } else {
-                                  nowArtistName = viewModel.homeArtistsList?[index].artistName ?? '';
-
-                                  if(isSwitched){
-                                    nowArtist = index;
-                                    Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-                                        .getCafeHome(0, 20, nowArtistName, 'IN_PROGRESS');
-                                  } else {
-                                    nowArtist = index;
-                                    Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-                                        .getCafeHome(0, 20,nowArtistName, '');
-
-                                  }
-                                }
-                              });
-
-
-
-                            },)
-                            );
+                                });
+                              },
+                            ));
                       }
                       return null;
                     },
@@ -343,34 +384,40 @@ class _VisitorHome extends State<VisitorHome> {
                                       isSwitched = value;
                                     });
                                     if (isSwitched) {
-
-                                      if(nowArtist==null){
+                                      if (nowArtist == null) {
                                         Provider.of<VisitorCafeHomeViewModel>(
-                                            context,
-                                            listen: false)
+                                                context,
+                                                listen: false)
                                             .getCafeHome(
-                                            0, 20, '', 'IN_PROGRESS');
+                                                0, 10, '', 'IN_PROGRESS');
+                                        _name = '';
+                                        _progressState = 'IN_PROGRESS';
                                       } else {
                                         Provider.of<VisitorCafeHomeViewModel>(
-                                            context,
-                                            listen: false)
-                                            .getCafeHome(
-                                            0, 20, nowArtistName, 'IN_PROGRESS');
+                                                context,
+                                                listen: false)
+                                            .getCafeHome(0, 10, nowArtistName,
+                                                'IN_PROGRESS');
+                                        _name = nowArtistName;
+                                        _progressState = 'IN_PROGRESS';
                                       }
-
                                     } else {
-                                      if(nowArtist==null){
+                                      if (nowArtist == null) {
                                         Provider.of<VisitorCafeHomeViewModel>(
-                                            context,
-                                            listen: false)
-                                            .getCafeHome(0, 20, '', '');
+                                                context,
+                                                listen: false)
+                                            .getCafeHome(0, 10, '', '');
+                                        _name = '';
+                                        _progressState = '';
                                       } else {
                                         Provider.of<VisitorCafeHomeViewModel>(
-                                            context,
-                                            listen: false)
-                                            .getCafeHome(0, 20, nowArtistName, '');
+                                                context,
+                                                listen: false)
+                                            .getCafeHome(
+                                                0, 10, nowArtistName, '');
+                                        _name = nowArtistName;
+                                        _progressState = '';
                                       }
-
                                     }
                                   },
                                 )))
