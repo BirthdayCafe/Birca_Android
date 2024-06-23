@@ -6,7 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
-
 import '../model/api.dart';
 
 class VisitorCafeHomeViewModel extends ChangeNotifier {
@@ -27,7 +26,6 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   List<HomeArtists>? get homeArtistsList => _homeArtistsList;
 
-
   static const storage = FlutterSecureStorage();
   var baseUrl = dotenv.env['BASE_URL'];
   var token = '';
@@ -43,7 +41,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
     }
 
     api.logInterceptor();
-    _homeArtistsList =[];
+    _homeArtistsList = [];
     try {
       // API 엔드포인트 및 업로드
       Response response = await dio.get('${baseUrl}api/v1/artists/favorite',
@@ -88,7 +86,6 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
       homeArtistsList?.addAll(artists);
 
-
       notifyListeners();
     } catch (e) {
       api.errorCheck(e);
@@ -127,7 +124,45 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       List<VisitorCafeHomeModel> cafeHomeModels =
           jsonData.map((e) => VisitorCafeHomeModel.fromJson(e)).toList();
 
-      // _visitorCafeHomeModelList 추가
+      _visitorCafeHomeModelList?.addAll(cafeHomeModels);
+
+      notifyListeners();
+    } catch (e) {
+      api.errorCheck(e);
+    }
+  }
+
+  //방문자 카페 더 가져오기
+  Future<void> updateCafeHome(
+      int cursor, int size, String name, String progressState) async {
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
+
+    api.logInterceptor();
+
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.get('${baseUrl}api/v1/birthday-cafes',
+          queryParameters: {
+            'progressState': progressState,
+            'cursor': cursor,
+            'size': size,
+            'name': name,
+          },
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      // 서버 응답 출력
+      log('Response: ${response.data}');
+
+      List<dynamic> jsonData = response.data;
+      List<VisitorCafeHomeModel> cafeHomeModels =
+          jsonData.map((e) => VisitorCafeHomeModel.fromJson(e)).toList();
+
       _visitorCafeHomeModelList?.addAll(cafeHomeModels);
 
       notifyListeners();
@@ -161,13 +196,12 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
       // 서버 응답 출력
       log('Response: ${response.data}');
-      _visitorCafeSearchModelList = [];
 
       List<dynamic> jsonData = response.data;
       List<VisitorCafeHomeModel> cafeHomeModels =
           jsonData.map((e) => VisitorCafeHomeModel.fromJson(e)).toList();
 
-      // _visitorCafeHomeModelList 추가
+      _visitorCafeSearchModelList = [];
       _visitorCafeSearchModelList?.addAll(cafeHomeModels);
 
       notifyListeners();
