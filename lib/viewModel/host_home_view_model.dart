@@ -90,6 +90,61 @@ class HostHomeViewModel extends ChangeNotifier {
     }
   }
 
+  //load more
+  Future<void> updateHostHome(int cursor, int size, String name, bool liked,
+      String startDate, String endDate) async {
+    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+
+    // 토큰 가져오기
+    if (kakaoLoginInfo != null) {
+      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      token = loginData['accessToken'].toString();
+    }
+
+    api.logInterceptor();
+
+    try {
+      Response? response;
+      if (liked) {
+        // API 엔드포인트 및 업로드
+        response = await dio.get('${baseUrl}api/v1/cafes',
+            queryParameters: {
+              'startDate': startDate,
+              'endDate': endDate,
+              'liked': liked,
+              'cursor': cursor,
+              'size': size,
+              'name': name
+            },
+            options: Options(headers: {'Authorization': 'Bearer $token'}));
+      } else {
+        // API 엔드포인트 및 업로드
+        response = await dio.get('${baseUrl}api/v1/cafes',
+            queryParameters: {
+              'startDate': startDate,
+              'endDate': endDate,
+              'cursor': cursor,
+              'size': size,
+              'name': name
+            },
+            options: Options(headers: {'Authorization': 'Bearer $token'}));
+      }
+      // 서버 응답 출력
+      log('Response: ${response.data}');
+
+      List<dynamic> jsonData = response.data;
+      List<HostCafeHomeModel> cafeHomeModels =
+          jsonData.map((e) => HostCafeHomeModel.fromJson(e)).toList();
+
+      // _visitorCafeHomeModelList 추가
+      _hostCafeHomeModelList?.addAll(cafeHomeModels);
+
+      notifyListeners();
+    } catch (e) {
+      api.errorCheck(e);
+    }
+  }
+
   //카페 찜하기
   Future<void> postLike(int cafeId) async {
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
@@ -202,7 +257,7 @@ class HostHomeViewModel extends ChangeNotifier {
     }
   }
 
-  Future<void> getSchedule(int cafeId,int year, int month) async {
+  Future<void> getSchedule(int cafeId, int year, int month) async {
     var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
 
     // 토큰 가져오기
