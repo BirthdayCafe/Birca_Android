@@ -1,4 +1,4 @@
-package com.example.birca
+package com.birca.birca
 
 import io.flutter.embedding.android.FlutterActivity
 
