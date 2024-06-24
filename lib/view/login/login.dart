@@ -10,6 +10,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import '../onboarding/select_fan_or_cafe_owner.dart';
 
 class Login extends StatefulWidget {
@@ -39,22 +40,6 @@ class _Login extends State<Login> {
               onTap: () async {
                 await kakaoLogin(context);
 
-                // String role = await getRole();
-                // if (!mounted) return;
-                //
-                // if (role == 'VISITANT') {
-                //   Navigator.of(context).push(
-                //       MaterialPageRoute(builder: (context) => const BottomNavVisitor()));
-                // } else if (role == 'HOST') {
-                //   Navigator.of(context).push(
-                //       MaterialPageRoute(builder: (context) => const BottomNavHost()));
-                // } else if (role == 'OWNER') {
-                //   Navigator.of(context).push(
-                //       MaterialPageRoute(builder: (context) => const BottomNavOwner()));
-                // } else {
-                //   Navigator.of(context).push(
-                //       MaterialPageRoute(builder: (context) => const SelectFanOrCafeOwner()));
-                // }
               },
               child: Image.asset('lib/assets/image/kakao_login_medium_wide.png'),
             ),
@@ -62,7 +47,9 @@ class _Login extends State<Login> {
               height: 40,
             ),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                signInWithApple(context);
+              },
               child: Image.asset(
                 'lib/assets/image/apple_login.png',
                 width: 300,
@@ -231,5 +218,75 @@ Future<String> getRole() async {
       log('Error: $e');
       throw Exception('Failed to getHostMyCafe.');
     }
+  }
+
+
+}
+
+void signInWithApple(BuildContext context) async {
+  try {
+    final AuthorizationCredentialAppleID credential =
+    await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+      webAuthenticationOptions: WebAuthenticationOptions(
+        clientId: dotenv.env['APPLE_CLIENT_ID']!,
+        redirectUri: Uri.parse(''
+        ),
+      ),
+    );
+
+    log('credential.state = $credential');
+    log('credential.state = ${credential.email}');
+    log('credential.state = ${credential.userIdentifier}');
+
+
+    await postAppleToken(credential.identityToken??'', context);
+  } catch (error) {
+    print('error = $error');
+  }
+}
+
+//post token
+Future<void> postAppleToken(String token,BuildContext context) async {
+  const storage = FlutterSecureStorage();
+
+  Dio dio = Dio();
+  Response response;
+  var baseUrl = dotenv.env['BASE_URL'];
+  log('token : $token');
+
+  try {
+    response = await dio
+        .post('${baseUrl}api/v1/oauth/login/apple', data: {'accessToken': token});
+
+    var kakaoLoginInfo = jsonEncode(response.data);
+    log('kakaoLoginInfo : $kakaoLoginInfo');
+
+
+    await storage.write(key: 'kakaoLoginInfo', value: kakaoLoginInfo);
+
+    String role = await getRole();
+
+    if (role == 'VISITANT') {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const BottomNavVisitor()));
+    } else if (role == 'HOST') {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const BottomNavHost()));
+    } else if (role == 'OWNER') {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const BottomNavOwner()));
+    } else {
+      Navigator.of(context).push(
+          MaterialPageRoute(builder: (context) => const SelectFanOrCafeOwner()));
+    }
+
+
+  } catch (e) {
+    log(e.toString());
+    throw Exception('Failed to login.');
   }
 }

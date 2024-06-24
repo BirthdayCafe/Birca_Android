@@ -41,6 +41,8 @@ dependencies:
   # 카카오 전체 추가
   kakao_flutter_sdk: ^1.8.0
 
+  sign_in_with_apple: ^3.3.0
+
   #file picker
   file_picker: ^6.1.1
 

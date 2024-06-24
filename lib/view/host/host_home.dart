@@ -21,7 +21,6 @@ class HostHome extends StatefulWidget {
 }
 
 class _HostHome extends State<HostHome> {
-
   final ScrollController _scrollController = ScrollController();
 
   String _name = '';
@@ -34,25 +33,25 @@ class _HostHome extends State<HostHome> {
     super.initState();
     Provider.of<HostHomeViewModel>(context, listen: false)
         .getHostHome(0, 10, "", false, "", "");
-     _name = '';
-     _liked = false;
-     _startDate = '';
-     _endDate = '';
+    _name = '';
+    _liked = false;
+    _startDate = '';
+    _endDate = '';
 
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _loadMoreCafes(_name, _liked,_startDate,_endDate);
+        _loadMoreCafes(_name, _liked, _startDate, _endDate);
       }
     });
-
   }
 
-  void _loadMoreCafes(String name, bool liked,String startDate,String endDate) {
-    var viewModel =
-    Provider.of<HostHomeViewModel>(context, listen: false);
+  void _loadMoreCafes(
+      String name, bool liked, String startDate, String endDate) {
+    var viewModel = Provider.of<HostHomeViewModel>(context, listen: false);
     int lastCafeId = viewModel.hostCafeHomeModelList!.last.cafeId;
-    viewModel.updateHostHome(lastCafeId, 10, _name,_liked,_startDate,_endDate);
+    viewModel.updateHostHome(
+        lastCafeId, 10, _name, _liked, _startDate, _endDate);
   }
 
   var isSwitched = false;
@@ -66,7 +65,6 @@ class _HostHome extends State<HostHome> {
 
   @override
   Widget build(BuildContext context) {
-
     hostDate =
         '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}~${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
 
@@ -85,366 +83,378 @@ class _HostHome extends State<HostHome> {
           ],
         ),
         body: SingleChildScrollView(
-          controller: _scrollController,
-            child:
-            Consumer<HostHomeViewModel>(builder: (context, viewModel, widget) {
-          if (viewModel.hostCafeHomeModelList == null) {
-            return const CircularProgressIndicator();
-          } else {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(left: 16, right: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Row(
+            controller: _scrollController,
+            child: Consumer<HostHomeViewModel>(
+                builder: (context, viewModel, widget) {
+              if (viewModel.hostCafeHomeModelList == null) {
+                return const CircularProgressIndicator();
+              } else {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 16, right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          RichText(
-                            text: TextSpan(
-                                style: DefaultTextStyle.of(context).style,
-                                children: const [
-                                  TextSpan(
-                                    text: '대관 가능한',
-                                    style: TextStyle(
-                                      color: Palette.primary,
-                                      fontSize: 20,
-                                      decoration: TextDecoration.none,
-                                      fontFamily: 'Pretendard',
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' 카페',
-                                    style: TextStyle(
-                                        color: Palette.gray10,
-                                        fontSize: 20,
-                                        decoration: TextDecoration.none,
-                                        fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w500),
-                                  ),
-                                ]),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          const BircaText(
-                              text: '찜',
-                              textSize: 15,
-                              textColor: Palette.gray06,
-                              fontFamily: 'Pretendard'),
-                          SizedBox(
-                              height: 10,
-                              child: Transform.scale(
-                                  scale: 0.7,
-                                  child: CupertinoSwitch(
-                                    value: isSwitched,
-                                    activeColor: Palette.primary,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        isSwitched = value;
-                                      });
-
-                                      if (isSwitched) {
-                                        if (_rangeStart == null &&
-                                            _rangeEnd == null) {
-                                          viewModel.getHostHome(
-                                              0, 10, "", isSwitched, '', '');
-                                          _name = '';
-                                          _liked = isSwitched;
-                                          _startDate = '';
-                                          _endDate = '';
-                                        } else {
-                                          viewModel.getHostHome(
-                                              0,
-                                              10,
-                                              "",
-                                              isSwitched,
-                                              DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                                  .format(_rangeStart!),
-                                              DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                                  .format(_rangeEnd!));
-                                          _name = '';
-                                          _liked = isSwitched;
-                                          _startDate = DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                              .format(_rangeStart!);
-                                          _endDate = DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                              .format(_rangeEnd!);
-                                        }
-                                      } else {
-                                        if (_rangeStart == null &&
-                                            _rangeEnd == null) {
-                                          viewModel.getHostHome(
-                                              0, 10, "", isSwitched, '', '');
-
-                                          _name = '';
-                                          _liked = isSwitched;
-                                          _startDate = '';
-                                          _endDate = '';
-                                        } else {
-                                          viewModel.getHostHome(
-                                              0,
-                                              10,
-                                              "",
-                                              isSwitched,
-                                              DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                                  .format(_rangeStart!),
-                                              DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                                  .format(_rangeEnd!));
-                                          _name = '';
-                                          _liked = isSwitched;
-                                          _startDate = DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                              .format(_rangeStart!);
-                                          _endDate = DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                              .format(_rangeEnd!);
-                                        }
-                                      }
-                                    },
-                                  )))
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Consumer<HostHomeViewModel>(
-                    builder: (builder, viewModel, widget) {
-                  return Row(
-                    children: [
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      GestureDetector(
-                        child: Container(
-                          padding: const EdgeInsets.only(
-                              left: 12, right: 12, top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Palette.gray06,
-                              ),
-                              borderRadius: BorderRadius.circular(20)),
-                          child: Row(
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
                             children: [
-                              const Icon(
-                                Icons.calendar_today_outlined,
-                                color: Palette.gray10,
-                                size: 12,
+                              RichText(
+                                text: TextSpan(
+                                    style: DefaultTextStyle.of(context).style,
+                                    children: const [
+                                      TextSpan(
+                                        text: '대관 가능한',
+                                        style: TextStyle(
+                                          color: Palette.primary,
+                                          fontSize: 20,
+                                          decoration: TextDecoration.none,
+                                          fontFamily: 'Pretendard',
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text: ' 카페',
+                                        style: TextStyle(
+                                            color: Palette.gray10,
+                                            fontSize: 20,
+                                            decoration: TextDecoration.none,
+                                            fontFamily: 'Pretendard',
+                                            fontWeight: FontWeight.w500),
+                                      ),
+                                    ]),
                               ),
-                              const SizedBox(
-                                width: 3,
-                              ),
-                              BircaText(
-                                  text: hostDate,
-                                  textSize: 12,
-                                  textColor: Palette.gray10,
-                                  fontFamily: 'Pretendard')
                             ],
                           ),
-                        ),
-                        onTap: () {
-                          _showBottomDialogCalendar(context);
-                        },
+                          Row(
+                            children: [
+                              const BircaText(
+                                  text: '찜',
+                                  textSize: 15,
+                                  textColor: Palette.gray06,
+                                  fontFamily: 'Pretendard'),
+                              SizedBox(
+                                  height: 10,
+                                  child: Transform.scale(
+                                      scale: 0.7,
+                                      child: CupertinoSwitch(
+                                        value: isSwitched,
+                                        activeColor: Palette.primary,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            isSwitched = value;
+                                          });
+
+                                          if (isSwitched) {
+                                            if (_rangeStart == null &&
+                                                _rangeEnd == null) {
+                                              viewModel.getHostHome(0, 10, "",
+                                                  isSwitched, '', '');
+                                              _name = '';
+                                              _liked = isSwitched;
+                                              _startDate = '';
+                                              _endDate = '';
+                                            } else {
+                                              viewModel.getHostHome(
+                                                  0,
+                                                  10,
+                                                  "",
+                                                  isSwitched,
+                                                  DateFormat(
+                                                          'yyyy-MM-ddTHH:mm:ss')
+                                                      .format(_rangeStart!),
+                                                  DateFormat(
+                                                          'yyyy-MM-ddTHH:mm:ss')
+                                                      .format(_rangeEnd!));
+                                              _name = '';
+                                              _liked = isSwitched;
+                                              _startDate = DateFormat(
+                                                      'yyyy-MM-ddTHH:mm:ss')
+                                                  .format(_rangeStart!);
+                                              _endDate = DateFormat(
+                                                      'yyyy-MM-ddTHH:mm:ss')
+                                                  .format(_rangeEnd!);
+                                            }
+                                          } else {
+                                            if (_rangeStart == null &&
+                                                _rangeEnd == null) {
+                                              viewModel.getHostHome(0, 10, "",
+                                                  isSwitched, '', '');
+
+                                              _name = '';
+                                              _liked = isSwitched;
+                                              _startDate = '';
+                                              _endDate = '';
+                                            } else {
+                                              viewModel.getHostHome(
+                                                  0,
+                                                  10,
+                                                  "",
+                                                  isSwitched,
+                                                  DateFormat(
+                                                          'yyyy-MM-ddTHH:mm:ss')
+                                                      .format(_rangeStart!),
+                                                  DateFormat(
+                                                          'yyyy-MM-ddTHH:mm:ss')
+                                                      .format(_rangeEnd!));
+                                              _name = '';
+                                              _liked = isSwitched;
+                                              _startDate = DateFormat(
+                                                      'yyyy-MM-ddTHH:mm:ss')
+                                                  .format(_rangeStart!);
+                                              _endDate = DateFormat(
+                                                      'yyyy-MM-ddTHH:mm:ss')
+                                                  .format(_rangeEnd!);
+                                            }
+                                          }
+                                        },
+                                      )))
+                            ],
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 7,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            left: 12, right: 12, top: 5, bottom: 5),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Palette.gray06,
-                            ),
-                            borderRadius: BorderRadius.circular(20)),
-                        child: const Row(
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Palette.gray10,
-                              size: 12,
-                            ),
-                            SizedBox(
-                              width: 3,
-                            ),
-                            BircaText(
-                                text: '홍대',
-                                textSize: 12,
-                                textColor: Palette.gray10,
-                                fontFamily: 'Pretendard')
-                          ],
-                        ),
-                      )
-                    ],
-                  );
-                }),
-                const SizedBox(
-                  height: 30,
-                ),
-                Consumer<HostHomeViewModel>(
-                    builder: (builder, viewModel, widget) {
-                  if (viewModel.hostCafeHomeModelList == null) {
-                    return const CircularProgressIndicator();
-                  } else {
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.vertical,
-                        itemCount: viewModel.hostCafeHomeModelList?.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return GestureDetector(
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Consumer<HostHomeViewModel>(
+                        builder: (builder, viewModel, widget) {
+                      return Row(
+                        children: [
+                          const SizedBox(
+                            width: 16,
+                          ),
+                          GestureDetector(
                             child: Container(
-                              margin: const EdgeInsets.only(
-                                  left: 16, right: 16, bottom: 16),
+                              padding: const EdgeInsets.only(
+                                  left: 12, right: 12, top: 5, bottom: 5),
                               decoration: BoxDecoration(
-                                color: Colors.white, // Container의 배경색
-                                borderRadius: BorderRadius.circular(3),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.1),
-                                    // 그림자 색상
-                                    spreadRadius: 1,
-                                    // 그림자 확산 정도
-                                    blurRadius: 1, // 그림자의 흐림 정도
-                                    // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
+                                  border: Border.all(
+                                    color: Palette.gray06,
                                   ),
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Row(
+                                children: [
+                                  const Icon(
+                                    Icons.calendar_today_outlined,
+                                    color: Palette.gray10,
+                                    size: 12,
+                                  ),
+                                  const SizedBox(
+                                    width: 3,
+                                  ),
+                                  BircaText(
+                                      text: hostDate,
+                                      textSize: 12,
+                                      textColor: Palette.gray10,
+                                      fontFamily: 'Pretendard')
                                 ],
                               ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  //이미지
-                                  SizedBox(
-                                    height: 140,
-                                    width: 210,
-                                    child: Image.network(
-                                      viewModel.hostCafeHomeModelList![index]
-                                          .cafeImageUrl,
-                                      fit: BoxFit.fill,
-                                    ),
+                            ),
+                            onTap: () {
+                              _showBottomDialogCalendar(context);
+                            },
+                          ),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(
+                                left: 12, right: 12, top: 5, bottom: 5),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Palette.gray06,
+                                ),
+                                borderRadius: BorderRadius.circular(20)),
+                            child: const Row(
+                              children: [
+                                Icon(
+                                  Icons.location_on_outlined,
+                                  color: Palette.gray10,
+                                  size: 12,
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                BircaText(
+                                    text: '홍대',
+                                    textSize: 12,
+                                    textColor: Palette.gray10,
+                                    fontFamily: 'Pretendard')
+                              ],
+                            ),
+                          )
+                        ],
+                      );
+                    }),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Consumer<HostHomeViewModel>(
+                        builder: (builder, viewModel, widget) {
+                      if (viewModel.hostCafeHomeModelList == null) {
+                        return const CircularProgressIndicator();
+                      } else {
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            scrollDirection: Axis.vertical,
+                            itemCount: viewModel.hostCafeHomeModelList?.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return GestureDetector(
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 16, right: 16, bottom: 16),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white, // Container의 배경색
+                                    borderRadius: BorderRadius.circular(3),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(0.1),
+                                        // 그림자 색상
+                                        spreadRadius: 1,
+                                        // 그림자 확산 정도
+                                        blurRadius: 1, // 그림자의 흐림 정도
+                                        // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
+                                      ),
+                                    ],
                                   ),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      //이미지
+                                      SizedBox(
+                                        height: 140,
+                                        width: 210,
+                                        child: Image.network(
+                                          viewModel
+                                                  .hostCafeHomeModelList?[index]
+                                                  .cafeImageUrl ??
+                                              'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
 
-                                  //카페 정보
+                                      //카페 정보
 
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 10, top: 40),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${viewModel.hostCafeHomeModelList?[index].name}',
-                                          style: const TextStyle(
-                                              fontSize: 14,
-                                              color: Palette.gray10,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                        const SizedBox(
-                                          height: 21,
-                                        ),
-                                        Text(
-                                          '${viewModel.hostCafeHomeModelList?[index].twitterAccount}',
-                                          style: const TextStyle(
-                                              fontSize: 12,
-                                              color: Palette.gray08,
-                                              fontWeight: FontWeight.w400),
-                                        ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Row(
+                                      Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 10, top: 40),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            const Icon(
-                                              Icons.location_on_outlined,
-                                              color: Palette.gray08,
-                                              size: 12,
+                                            Text(
+                                              '${viewModel.hostCafeHomeModelList?[index].name}',
+                                              style: const TextStyle(
+                                                  fontSize: 14,
+                                                  color: Palette.gray10,
+                                                  fontWeight: FontWeight.w600),
+                                            ),
+                                            const SizedBox(
+                                              height: 21,
                                             ),
                                             Text(
-                                              '${viewModel.hostCafeHomeModelList?[index].address.substring(0, 10)}',
+                                              '${viewModel.hostCafeHomeModelList?[index].twitterAccount}',
                                               style: const TextStyle(
                                                   fontSize: 12,
                                                   color: Palette.gray08,
                                                   fontWeight: FontWeight.w400),
                                             ),
+                                            const SizedBox(
+                                              height: 5,
+                                            ),
+                                            Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.location_on_outlined,
+                                                  color: Palette.gray08,
+                                                  size: 12,
+                                                ),
+                                                Text(
+                                                  '${viewModel.hostCafeHomeModelList?[index].address.substring(0, 8)}',
+                                                  style: const TextStyle(
+                                                      fontSize: 12,
+                                                      color: Palette.gray08,
+                                                      fontWeight:
+                                                          FontWeight.w400),
+                                                ),
+                                              ],
+                                            ),
                                           ],
                                         ),
-                                      ],
-                                    ),
+                                      ),
+
+                                      Expanded(child: Container()),
+
+                                      //heart
+                                      Container(
+                                          padding: const EdgeInsets.only(
+                                              top: 8, right: 8),
+                                          child: viewModel
+                                                  .hostCafeHomeModelList![index]
+                                                  .liked
+                                              ? GestureDetector(
+                                                  child: const Icon(
+                                                    Icons.favorite,
+                                                    color: Palette.primary,
+                                                  ),
+                                                  onTap: () {
+                                                    Provider.of<HostHomeViewModel>(
+                                                            context,
+                                                            listen: false)
+                                                        .deleteLike(viewModel
+                                                            .hostCafeHomeModelList![
+                                                                index]
+                                                            .cafeId)
+                                                        .then((value) => viewModel
+                                                            .hostCafeHomeModelList?[
+                                                                index]
+                                                            .liked = false);
+                                                  },
+                                                )
+                                              : GestureDetector(
+                                                  child: const Icon(
+                                                    Icons.favorite,
+                                                    color: Color(0xffF3F3F3),
+                                                  ),
+                                                  onTap: () async {
+                                                    Provider.of<HostHomeViewModel>(
+                                                            context,
+                                                            listen: false)
+                                                        .postLike(viewModel
+                                                            .hostCafeHomeModelList![
+                                                                index]
+                                                            .cafeId)
+                                                        .then((value) => viewModel
+                                                            .hostCafeHomeModelList?[
+                                                                index]
+                                                            .liked = true);
+                                                  }))
+                                    ],
                                   ),
-
-                                  Expanded(child: Container()),
-
-                                  //heart
-                                  Container(
-                                      padding: const EdgeInsets.only(
-                                          top: 8, right: 8),
-                                      child: viewModel
-                                              .hostCafeHomeModelList![index]
-                                              .liked
-                                          ? GestureDetector(
-                                              child: const Icon(
-                                                Icons.favorite,
-                                                color: Palette.primary,
-                                              ),
-                                              onTap: () {
-                                                Provider.of<HostHomeViewModel>(
-                                                        context,
-                                                        listen: false)
-                                                    .deleteLike(viewModel
-                                                        .hostCafeHomeModelList![
-                                                            index]
-                                                        .cafeId)
-                                                    .then((value) => viewModel
-                                                        .hostCafeHomeModelList?[
-                                                            index]
-                                                        .liked = false);
-                                              },
-                                            )
-                                          : GestureDetector(
-                                              child: const Icon(
-                                                Icons.favorite,
-                                                color: Color(0xffF3F3F3),
-                                              ),
-                                              onTap: () async {
-                                                Provider.of<HostHomeViewModel>(
-                                                        context,
-                                                        listen: false)
-                                                    .postLike(viewModel
-                                                        .hostCafeHomeModelList![
-                                                            index]
-                                                        .cafeId)
-                                                    .then((value) => viewModel
-                                                        .hostCafeHomeModelList?[
-                                                            index]
-                                                        .liked = true);
-                                              }))
-                                ],
-                              ),
-                            ),
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HostHomeDetail(
-                                          cafeID: viewModel
-                                              .hostCafeHomeModelList![index]
-                                              .cafeId)));
-                            },
-                          );
-                        });
-                  }
-                }),
-              ],
-            );
-          }
-        })),
+                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HostHomeDetail(
+                                              cafeID: viewModel
+                                                  .hostCafeHomeModelList![index]
+                                                  .cafeId)));
+                                },
+                              );
+                            });
+                      }
+                    }),
+                  ],
+                );
+              }
+            })),
         floatingActionButton: SizedBox(
           width: 86,
           height: 38,
