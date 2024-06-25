@@ -1,9 +1,11 @@
+import 'package:birca/view/onboarding/select_favorite_artist_screen.dart';
 import 'package:birca/viewModel/mypage_view_model.dart';
 import 'package:birca/widgets/bottom_nav_visitor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
+import '../../viewModel/visitor_cafe_home_view_model.dart';
 import '../../widgets/button.dart';
 
 class HostMyPage extends StatefulWidget {
@@ -118,29 +120,42 @@ class _HostMyPage extends State<HostMyPage> {
                             fontFamily: 'Pretendard',
                             color: Colors.white),
                       ),
-                      SizedBox(
-                          height: 10,
-                          child: Transform.scale(
-                              scale: 0.7,
-                              child: CupertinoSwitch(
-                                value: isSwitched,
-                                activeColor: const Color(0xFFFFC656),
-                                onChanged: (value) {
-                                  setState(() {
-                                    Provider.of<MypageViewModel>(context,
-                                            listen: false)
-                                        .postRoleChange('VISITANT');
+                      Consumer<VisitorCafeHomeViewModel>(
+                          builder: (context, viewModel, widget) {
+                        return SizedBox(
+                            height: 10,
+                            child: Transform.scale(
+                                scale: 0.7,
+                                child: CupertinoSwitch(
+                                  value: isSwitched,
+                                  activeColor: const Color(0xFFFFC656),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      Provider.of<MypageViewModel>(context,
+                                              listen: false)
+                                          .postRoleChange('VISITANT');
 
-                                    isSwitched = value;
+                                      isSwitched = value;
 
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const BottomNavVisitor()));
-                                  });
-                                },
-                              )))
+                                      if (viewModel
+                                              .homeArtistsList?[0].artistId ==
+                                          null) {
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const SelectFavoriteArtistScreen()));
+                                      } else {
+                                        Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const BottomNavVisitor()));
+                                      }
+                                    });
+                                  },
+                                )));
+                      }),
                     ],
                   ),
                 ),
