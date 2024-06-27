@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:birca/model/api.dart';
+import 'package:birca/view/onboarding/onboarding_cafe_owner_complete.dart';
 import 'package:birca/widgets/bottom_nav_host.dart';
 import 'package:birca/widgets/bottom_nav_owner.dart';
 import 'package:birca/widgets/bottom_nav_visitor.dart';
@@ -19,6 +21,7 @@ class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _Login();
 }
+Api api = Api();
 
 class _Login extends State<Login> {
   @override
@@ -140,6 +143,7 @@ Future<void> postKakaoToken(String token,BuildContext context) async {
     await storage.write(key: 'loginToken', value: loginToken);
 
     String role = await getRole();
+    String check = await licenseCheck();
 
     if (role == 'VISITANT') {
       Navigator.of(context).push(
@@ -148,8 +152,16 @@ Future<void> postKakaoToken(String token,BuildContext context) async {
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => const BottomNavHost()));
     } else if (role == 'OWNER') {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const BottomNavOwner()));
+
+      if(check=='YES'){
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const BottomNavOwner()));
+      } else {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const OnboardingCafeOwnerComplete()));
+      }
+
+
     } else {
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => const SelectFanOrCafeOwner()));
@@ -277,8 +289,16 @@ Future<void> postAppleToken(String token,BuildContext context) async {
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => const BottomNavHost()));
     } else if (role == 'OWNER') {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const BottomNavOwner()));
+
+      // var check = await licenseCheck();
+      // if(check=='YES'){
+      //   Navigator.of(context).push(
+      //       MaterialPageRoute(builder: (context) => const BottomNavOwner()));
+      // } else {
+      //   Navigator.of(context).push(
+      //       MaterialPageRoute(builder: (context) => const OnboardingCafeOwnerComplete()));
+      // }
+
     } else {
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => const SelectFanOrCafeOwner()));
@@ -289,4 +309,66 @@ Future<void> postAppleToken(String token,BuildContext context) async {
     log(e.toString());
     throw Exception('Failed to login.');
   }
+}
+
+Future<String> licenseCheck() async {
+  Dio dio = Dio();
+
+  const storage = FlutterSecureStorage();
+  var baseUrl = dotenv.env['BASE_URL'];
+  var token = '';
+  var loginToken = await storage.read(key: 'loginToken');
+
+  // 토큰 가져오기
+  if (loginToken != null) {
+    Map<String, dynamic> loginData = json.decode(loginToken);
+    token = loginData['accessToken'].toString();
+  }
+
+  api.logInterceptor();
+
+  try {
+    // API 엔드포인트 및 업로드
+    Response response = await dio.get('${baseUrl}api/v1/business-license/status',
+        options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+    // 서버 응답 출력
+    log('Response: ${response.data}');
+    // JSON 문자열을 Map으로 파싱
+    Map<String, dynamic> decodedResponse = response.data;
+
+    var registrationApproved = decodedResponse['registrationApproved'] as bool;
+    if(registrationApproved){
+      return "YES";
+    } else {
+      return "NO";
+
+    }
+  } catch (e) {
+    if (e is DioException) {
+      // Dio exception handling
+      if (e.response != null) {
+        // Server responded with an error
+        if (e.response!.statusCode == 400) {
+          // Handle HTTP 400 Bad Request error
+          log('Bad Request - Server returned 400 status code');
+          throw Exception('Failed to licenseCheck');
+        } else {
+          // Handle other HTTP status codes
+          log('Server error - Status code: ${e.response!.statusCode}');
+          throw Exception('Failed to licenseCheck.');
+        }
+      } else {
+        // No response from the server (network error, timeout, etc.)
+        log('Dio error: ${e.message}');
+        throw Exception('Failed to licenseCheck.');
+      }
+    } else {
+      // Handle other exceptions if necessary
+      log('Error: $e');
+      throw Exception('Failed to licenseCheck.');
+    }
+  }
+
+
 }

@@ -1,12 +1,7 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:birca/view/onboarding/onboarding_cafe_owner.dart';
 import 'package:birca/view/onboarding/select_visitor_or_host.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../designSystem/palette.dart';
 import '../../widgets/appbar.dart';
 
@@ -78,13 +73,14 @@ class _SelectFanOrCafeOwner extends State<SelectFanOrCafeOwner> {
                       ),
                       GestureDetector(
                           onTap: () async {
-                            await postRoleChange('OWNER');
-                            if(context.mounted){
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const OnboardingCafeOwner()));
-                            }
+                            // await postRoleChange('OWNER');
+                            // if(context.mounted){
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OnboardingCafeOwner()));
+                            // }
                           },
                           child: Image.asset(
                               'lib/assets/image/img_cafe_owner.png')),
@@ -93,36 +89,5 @@ class _SelectFanOrCafeOwner extends State<SelectFanOrCafeOwner> {
                 ],
               ),
             )));
-  }
-}
-
-//post role change
-Future<void> postRoleChange(String role) async {
-  const storage = FlutterSecureStorage();
-
-  Dio dio = Dio();
-  Response response;
-  var baseUrl = dotenv.env['BASE_URL'];
-  Map<String, dynamic>? loginData;
-  String? token = '';
-  var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
-
-  //토큰 가져오기
-  if (kakaoLoginInfo != null) {
-    loginData = json.decode(kakaoLoginInfo);
-    token = loginData?['accessToken'].toString();
-  }
-
-  try {
-    response = await dio.post('${baseUrl}api/v1/members/role-change',
-        data: {'role': role},
-        options: Options(headers: {'Authorization': 'Bearer $token'}));
-    // log('kakaoLoginInfo : $kakaoLoginInfo');
-
-    log(response.data.toString());
-
-  } catch (e) {
-    log(e.toString());
-
   }
 }
