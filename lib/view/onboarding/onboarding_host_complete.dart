@@ -3,6 +3,9 @@ import 'package:birca/widgets/bottom_nav_host.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
+import '../../viewModel/mypage_view_model.dart';
 
 class OnboardingHostComplete extends StatelessWidget {
   const OnboardingHostComplete({super.key});
@@ -77,11 +80,17 @@ class OnboardingHostComplete extends StatelessWidget {
               fontSize: 18,
               textColor: Colors.white,
               fontWeight: FontWeight.normal,
-              onPressed: () {
+              onPressed: () async {
+                await Provider.of<MypageViewModel>(context,
+                        listen: false)
+                    .postRoleChange('HOST')
+                    .then((value) =>
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const BottomNavHost()));
+                        builder: (context) =>
+                        const BottomNavHost())));
+
               },
             ),
           )

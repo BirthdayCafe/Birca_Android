@@ -3,6 +3,9 @@ import 'package:birca/widgets/bottom_nav_visitor.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
+import '../../viewModel/mypage_view_model.dart';
 
 class OnboardingVisitorComplete extends StatelessWidget {
   const OnboardingVisitorComplete({super.key});
@@ -77,12 +80,17 @@ class OnboardingVisitorComplete extends StatelessWidget {
               fontSize: 18,
               textColor: Colors.white,
               fontWeight: FontWeight.normal,
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BottomNavVisitor()),
-                      (Route<dynamic> route) => false,
-                );
+              onPressed: () async {
+                await Provider.of<MypageViewModel>(context,
+                    listen: false)
+                    .postRoleChange('VISITOR')
+                    .then((value) =>
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                            const BottomNavVisitor())));
+
               },
             ),
           )

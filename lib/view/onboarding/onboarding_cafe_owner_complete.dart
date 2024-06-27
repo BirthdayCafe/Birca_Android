@@ -1,3 +1,4 @@
+import 'package:birca/view/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../designSystem/palette.dart';
@@ -44,12 +45,15 @@ class OnboardingCafeOwnerComplete extends StatelessWidget {
               SizedBox(
                   width: 300,
                   child: FilledButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => const Login()));
+                    },
                     style: FilledButton.styleFrom(
                       backgroundColor: Palette.primary,
                     ),
                     child: const Text(
-                      '계정 요청하기',
+                      '완료하기',
                       style: TextStyle(color: Colors.white),
                     ),
                   )),
