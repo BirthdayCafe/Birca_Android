@@ -1,5 +1,4 @@
 import 'package:birca/designSystem/palette.dart';
-import 'package:birca/view/host/host_chatting.dart';
 import 'package:birca/view/host/host_home.dart';
 import 'package:birca/view/host/host_my_cafe.dart';
 import 'package:birca/view/host/host_mypage.dart';
@@ -20,7 +19,6 @@ class _BottomNavHost extends State<BottomNavHost> {
   //위젯 선언
   final List<Widget> _widgetOptions = <Widget>[
     const HostHome(),
-    const HostChatting(),
     const HostCafe(),
     const HostMyPage()
   ];
@@ -42,7 +40,6 @@ class _BottomNavHost extends State<BottomNavHost> {
 
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled,size: 30,) ,label:'홈' ),
-          BottomNavigationBarItem(icon: Icon(Icons.chat,size: 30) ,label:'채팅' ),
           BottomNavigationBarItem(icon: Icon(Icons.cake_rounded,size: 30) ,label:'생일카페' ),
           BottomNavigationBarItem(icon: Icon(Icons.perm_identity,size: 30) ,label:'마이페이지' ),],
 

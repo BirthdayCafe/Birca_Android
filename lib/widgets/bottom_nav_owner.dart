@@ -1,7 +1,6 @@
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/view/owner/owner_schedule.dart';
 import 'package:flutter/material.dart';
-import '../view/owner/owner_chatting.dart';
 import '../view/owner/owner_home.dart';
 import '../view/owner/owner_mypage.dart';
 
@@ -20,7 +19,6 @@ class _BottomNavOwner extends State<BottomNavOwner> {
   //위젯 선언
   final List<Widget> _widgetOptions = <Widget>[
     const OwnerHome(),
-    const OwnerChatting(),
     const OwnerSchedule(),
     const OwnerMypage()
   ];
@@ -42,7 +40,6 @@ class _BottomNavOwner extends State<BottomNavOwner> {
 
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled,size: 30,) ,label:'홈' ),
-          BottomNavigationBarItem(icon: Icon(Icons.chat,size: 30) ,label:'채팅' ),
           BottomNavigationBarItem(icon: Icon(Icons.calendar_month_rounded,size: 30) ,label:'스케줄' ),
           BottomNavigationBarItem(icon: Icon(Icons.perm_identity,size: 30) ,label:'마이페이지' ),],
 
