@@ -68,13 +68,46 @@ class MypageViewModel extends ChangeNotifier {
       response = await dio.post('${baseUrl}api/v1/members/role-change',
           data: {'role': role},
           options: Options(headers: {'Authorization': 'Bearer $token'}));
-      // log('loginToken : $loginToken');
 
       log('$role 변경 ');
 
       log(response.data.toString());
     } catch (e) {
       api.errorCheck(e);
+    }
+  }
+
+  Future<String> getRole() async {
+    var token = '';
+    var loginToken = await storage.read(key: 'loginToken');
+
+    // 토큰 가져오기
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
+      token = loginData['accessToken'].toString();
+    }
+
+    // LogInterceptor 추가
+    dio.interceptors.add(LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+    ));
+
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.get('${baseUrl}api/v1/members/role',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      // 서버 응답 출력
+      log('Response: ${response.data}');
+      // JSON 문자열을 Map으로 파싱
+      Map<String, dynamic> decodedResponse = response.data;
+
+      // "role" 값 추출
+      return decodedResponse['role'] as String;
+    } catch (e) {
+      api.errorCheck(e);
+      throw Exception('Failed to getRole.');
     }
   }
 }
