@@ -1,13 +1,18 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/api.dart';
 import 'package:birca/model/owner_request_detail_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class OwnerRequestDetailViewModel extends ChangeNotifier {
   Dio dio = Dio();
   Api api = Api();
+  static const storage = FlutterSecureStorage();
+  var baseUrl = dotenv.env['BASE_URL'];
+  var token = '';
 
   OwnerRequestDetailModel? _ownerRequestDetailModel;
 
@@ -16,20 +21,13 @@ class OwnerRequestDetailViewModel extends ChangeNotifier {
 
   //사장님 대관 요청 상세 가져오기
   Future<void> getRequestDetailHome(int birthdayCafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    //
-    // var loginToken = await storage.read(key: 'loginToken');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    // if (loginToken != null) {
-    //   Map<String, dynamic> loginData = json.decode(loginToken);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4';
-
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
+      token = loginData['accessToken'].toString();
+    }
 
     api.logInterceptor();
     try {
@@ -52,19 +50,13 @@ class OwnerRequestDetailViewModel extends ChangeNotifier {
 
   //생일 카페 신청 수락
   Future<void> postApprove(int birthdayCafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    //
-    // var loginToken = await storage.read(key: 'loginToken');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    // if (loginToken != null) {
-    //   Map<String, dynamic> loginData = json.decode(loginToken);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4';
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
+      token = loginData['accessToken'].toString();
+    }
 
     api.logInterceptor();
 
@@ -85,19 +77,13 @@ class OwnerRequestDetailViewModel extends ChangeNotifier {
 
   //생일 카페 신청 수락
   Future<void> postCancel(int birthdayCafeId) async {
-    // const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    //
-    // var loginToken = await storage.read(key: 'loginToken');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    // if (loginToken != null) {
-    //   Map<String, dynamic> loginData = json.decode(loginToken);
-    //   token = loginData['accessToken'].toString();
-    // }
-    token =
-        'eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4';
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
+      token = loginData['accessToken'].toString();
+    }
 
     api.logInterceptor();
 
@@ -115,5 +101,4 @@ class OwnerRequestDetailViewModel extends ChangeNotifier {
       api.errorCheck(e);
     }
   }
-
 }
