@@ -318,6 +318,9 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
     );
 
     if (result != null) {
+
+      _showLoadingDialog(context);
+
       //post business license
       const storage = FlutterSecureStorage();
       var baseUrl = dotenv.env['BASE_URL'];
@@ -394,6 +397,8 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
           log('Error: $e');
           throw Exception('Failed to upload.');
         }
+      } finally{
+        _hideLoadingDialog(context);
       }
     } else {
       // 사용자가 선택을 취소한 경우
@@ -457,4 +462,19 @@ Future<void> postCafeApply(FormData applyData) async {
       throw Exception('Failed to login.');
     }
   }
+}
+void _showLoadingDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    },
+  );
+}
+
+void _hideLoadingDialog(BuildContext context) {
+  Navigator.of(context).pop();
 }
