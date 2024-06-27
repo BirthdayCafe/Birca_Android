@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/api.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:birca/view/onboarding/onboarding_cafe_owner_complete.dart';
 import 'package:birca/widgets/bottom_nav_host.dart';
 import 'package:birca/widgets/bottom_nav_owner.dart';
@@ -12,7 +13,9 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
+import 'package:provider/provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+import '../../viewModel/mypage_view_model.dart';
 import '../onboarding/select_fan_or_cafe_owner.dart';
 
 class Login extends StatefulWidget {
@@ -21,7 +24,10 @@ class Login extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _Login();
 }
+
 Api api = Api();
+Dio dio = Dio();
+var baseUrl = dotenv.env['BASE_URL'];
 
 class _Login extends State<Login> {
   @override
@@ -42,9 +48,9 @@ class _Login extends State<Login> {
             GestureDetector(
               onTap: () async {
                 await kakaoLogin(context);
-
               },
-              child: Image.asset('lib/assets/image/kakao_login_medium_wide.png'),
+              child:
+                  Image.asset('lib/assets/image/kakao_login_medium_wide.png'),
             ),
             const SizedBox(
               height: 40,
@@ -81,7 +87,7 @@ Future<void> kakaoLogin(BuildContext context) async {
           '\n이메일: ${user.kakaoAccount?.email}');
       log('카카오톡으로 로그인 성공 \n 토큰: ${token.accessToken}');
 
-      await postKakaoToken(token.accessToken,context);
+      await postKakaoToken(token.accessToken, context);
     } catch (error) {
       log('카카오톡으로 로그인 실패 $error');
 
@@ -124,129 +130,62 @@ Future<void> kakaoLogin(BuildContext context) async {
 }
 
 //post token
-Future<void> postKakaoToken(String token,BuildContext context) async {
+Future<void> postKakaoToken(String token, BuildContext context) async {
   const storage = FlutterSecureStorage();
 
-  Dio dio = Dio();
   Response response;
   var baseUrl = dotenv.env['BASE_URL'];
   log('token : $token');
 
   try {
-    response = await dio
-        .post('${baseUrl}api/v1/oauth/login/kakao', data: {'accessToken': token});
+    response = await dio.post('${baseUrl}api/v1/oauth/login/kakao',
+        data: {'accessToken': token});
 
     var loginToken = jsonEncode(response.data);
     log('loginToken : $loginToken');
 
-
     await storage.write(key: 'loginToken', value: loginToken);
 
-    String role = await getRole();
-    String check = await licenseCheck();
+    String role = await Provider.of<MypageViewModel>(context,
+        listen: false).getRole();
 
     if (role == 'VISITANT') {
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => const BottomNavVisitor()));
     } else if (role == 'HOST') {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const BottomNavHost()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const BottomNavHost()));
     } else if (role == 'OWNER') {
+      var check = await licenseCheck();
 
-      if(check=='YES'){
+      if (check == 'YES') {
         Navigator.of(context).push(
             MaterialPageRoute(builder: (context) => const BottomNavOwner()));
       } else {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const OnboardingCafeOwnerComplete()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const OnboardingCafeOwnerComplete()));
       }
-
-
     } else {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const SelectFanOrCafeOwner()));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const SelectFanOrCafeOwner()));
     }
-
-
   } catch (e) {
     log(e.toString());
     throw Exception('Failed to login.');
   }
 }
 
-Future<String> getRole() async {
-  Dio dio = Dio();
-
-  const storage = FlutterSecureStorage();
-  var baseUrl = dotenv.env['BASE_URL'];
-  var token = '';
-  var loginToken = await storage.read(key: 'loginToken');
-
-  // 토큰 가져오기
-  if (loginToken != null) {
-    Map<String, dynamic> loginData = json.decode(loginToken);
-    token = loginData['accessToken'].toString();
-  }
-
-  // LogInterceptor 추가
-  dio.interceptors.add(LogInterceptor(
-    requestBody: true,
-    responseBody: true,
-  ));
-
-  try {
-    // API 엔드포인트 및 업로드
-    Response response = await dio.get('${baseUrl}api/v1/members/role',
-        options: Options(headers: {'Authorization': 'Bearer $token'}));
-
-    // 서버 응답 출력
-    log('Response: ${response.data}');
-    // JSON 문자열을 Map으로 파싱
-    Map<String, dynamic> decodedResponse = response.data;
-
-    // "role" 값 추출
-    return decodedResponse['role'] as String;
-  } catch (e) {
-    if (e is DioException) {
-      // Dio exception handling
-      if (e.response != null) {
-        // Server responded with an error
-        if (e.response!.statusCode == 400) {
-          // Handle HTTP 400 Bad Request error
-          log('Bad Request - Server returned 400 status code');
-          throw Exception('Failed to getHostMyCafe');
-        } else {
-          // Handle other HTTP status codes
-          log('Server error - Status code: ${e.response!.statusCode}');
-          throw Exception('Failed to getHostMyCafe.');
-        }
-      } else {
-        // No response from the server (network error, timeout, etc.)
-        log('Dio error: ${e.message}');
-        throw Exception('Failed to getHostMyCafe.');
-      }
-    } else {
-      // Handle other exceptions if necessary
-      log('Error: $e');
-      throw Exception('Failed to getHostMyCafe.');
-    }
-  }
-
-
-}
-
 void signInWithApple(BuildContext context) async {
   try {
     final AuthorizationCredentialAppleID credential =
-    await SignInWithApple.getAppleIDCredential(
+        await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
       ],
       webAuthenticationOptions: WebAuthenticationOptions(
         clientId: dotenv.env['APPLE_CLIENT_ID']!,
-        redirectUri: Uri.parse(''
-        ),
+        redirectUri: Uri.parse(''),
       ),
     );
 
@@ -254,15 +193,14 @@ void signInWithApple(BuildContext context) async {
     log('credential.state = ${credential.email}');
     log('credential.state = ${credential.userIdentifier}');
 
-
-    await postAppleToken(credential.identityToken??'', context);
+    await postAppleToken(credential.identityToken ?? '', context);
   } catch (error) {
     print('error = $error');
   }
 }
 
 //post token
-Future<void> postAppleToken(String token,BuildContext context) async {
+Future<void> postAppleToken(String token, BuildContext context) async {
   const storage = FlutterSecureStorage();
 
   Dio dio = Dio();
@@ -271,40 +209,36 @@ Future<void> postAppleToken(String token,BuildContext context) async {
   log('token : $token');
 
   try {
-    response = await dio
-        .post('${baseUrl}api/v1/oauth/login/apple', data: {'accessToken': token});
+    response = await dio.post('${baseUrl}api/v1/oauth/login/apple',
+        data: {'accessToken': token});
 
     var loginToken = jsonEncode(response.data);
     log('loginToken : $loginToken');
 
-
     await storage.write(key: 'loginToken', value: loginToken);
 
-    String role = await getRole();
+    String role = await Provider.of<MypageViewModel>(context,
+        listen: false).getRole();
 
     if (role == 'VISITANT') {
       Navigator.of(context).push(
           MaterialPageRoute(builder: (context) => const BottomNavVisitor()));
     } else if (role == 'HOST') {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const BottomNavHost()));
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const BottomNavHost()));
     } else if (role == 'OWNER') {
-
-      // var check = await licenseCheck();
-      // if(check=='YES'){
-      //   Navigator.of(context).push(
-      //       MaterialPageRoute(builder: (context) => const BottomNavOwner()));
-      // } else {
-      //   Navigator.of(context).push(
-      //       MaterialPageRoute(builder: (context) => const OnboardingCafeOwnerComplete()));
-      // }
-
+      var check = await licenseCheck();
+      if (check == 'YES') {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const BottomNavOwner()));
+      } else {
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const OnboardingCafeOwnerComplete()));
+      }
     } else {
-      Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => const SelectFanOrCafeOwner()));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const SelectFanOrCafeOwner()));
     }
-
-
   } catch (e) {
     log(e.toString());
     throw Exception('Failed to login.');
@@ -312,24 +246,15 @@ Future<void> postAppleToken(String token,BuildContext context) async {
 }
 
 Future<String> licenseCheck() async {
-  Dio dio = Dio();
-
-  const storage = FlutterSecureStorage();
-  var baseUrl = dotenv.env['BASE_URL'];
-  var token = '';
-  var loginToken = await storage.read(key: 'loginToken');
-
-  // 토큰 가져오기
-  if (loginToken != null) {
-    Map<String, dynamic> loginData = json.decode(loginToken);
-    token = loginData['accessToken'].toString();
-  }
+  Token tokenInstance = Token();
+  String token = await tokenInstance.getToken();
 
   api.logInterceptor();
 
   try {
     // API 엔드포인트 및 업로드
-    Response response = await dio.get('${baseUrl}api/v1/business-license/status',
+    Response response = await dio.get(
+        '${baseUrl}api/v1/business-license/status',
         options: Options(headers: {'Authorization': 'Bearer $token'}));
 
     // 서버 응답 출력
@@ -338,37 +263,13 @@ Future<String> licenseCheck() async {
     Map<String, dynamic> decodedResponse = response.data;
 
     var registrationApproved = decodedResponse['registrationApproved'] as bool;
-    if(registrationApproved){
+    if (registrationApproved) {
       return "YES";
     } else {
       return "NO";
-
     }
   } catch (e) {
-    if (e is DioException) {
-      // Dio exception handling
-      if (e.response != null) {
-        // Server responded with an error
-        if (e.response!.statusCode == 400) {
-          // Handle HTTP 400 Bad Request error
-          log('Bad Request - Server returned 400 status code');
-          throw Exception('Failed to licenseCheck');
-        } else {
-          // Handle other HTTP status codes
-          log('Server error - Status code: ${e.response!.statusCode}');
-          throw Exception('Failed to licenseCheck.');
-        }
-      } else {
-        // No response from the server (network error, timeout, etc.)
-        log('Dio error: ${e.message}');
-        throw Exception('Failed to licenseCheck.');
-      }
-    } else {
-      // Handle other exceptions if necessary
-      log('Error: $e');
-      throw Exception('Failed to licenseCheck.');
-    }
+    api.errorCheck(e);
+    throw Exception('Failed to licenseCheck.');
   }
-
-
 }

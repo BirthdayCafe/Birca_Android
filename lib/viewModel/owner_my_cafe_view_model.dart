@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:birca/model/api.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import '../model/owner_my_cafe_detail_model.dart';
 
@@ -14,9 +14,8 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
   Dio dio = Dio();
   Api api = Api();
 
-  static const storage = FlutterSecureStorage();
+  Token tokenInstance = Token();
   var baseUrl = dotenv.env['BASE_URL'];
-  var token = '';
 
   OwnerMyCafeDetailModel? _ownerMyCafeDetailModel;
 
@@ -60,14 +59,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //사장님 나의 카페 가져오기
   Future<void> getMyCafe() async {
-
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -100,14 +92,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
   //사장님 카페 기본 정보 수정
   Future<void> patchMyCafe(
       String cafeName, String cafeAddress, String twitter, String hours) async {
-
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -133,14 +118,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //사장님 카페 옵션 수정
   Future<void> postOptions() async {
-
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -164,15 +142,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //사장님 카페 menu 수정
   Future<void> postMenus() async {
-
-
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -196,14 +166,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //사장님 휴무일 편집
   Future<void> postDayOff(int cafeId, Map<String, dynamic> data) async {
-
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
     try {
@@ -226,13 +189,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //사장님 카페 사진 편집
   Future<void> postImage(int cafeId, List<PickedFile> pickedFiles) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     // PickedFile 리스트를 File 리스트로 변환
     List<File> cafeImages =

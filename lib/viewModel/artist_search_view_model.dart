@@ -1,33 +1,24 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/api.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../model/artist_search_model.dart';
 
 class ArtistSearchViewModel extends ChangeNotifier {
   Dio dio = Dio();
   Api api = Api();
+  Token tokenInstance =Token();
+  var baseUrl = dotenv.env['BASE_URL'];
 
   List<ArtistSearchModel>? _artistSearchModelList;
-
   List<ArtistSearchModel>? get artistSearchModelList => _artistSearchModelList;
 
-  static const storage = FlutterSecureStorage();
-  var baseUrl = dotenv.env['BASE_URL'];
-  var token = '';
 
   //아티스트 검색 결과
   Future<void> getArtistSearch(String artistName) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    //토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -47,7 +38,6 @@ class ArtistSearchViewModel extends ChangeNotifier {
       List<ArtistSearchModel> artistSearcheModels =
           jsonData.map((e) => ArtistSearchModel.fromJson(e)).toList();
 
-      // _visitorCafeHomeModelList 추가
       _artistSearchModelList?.addAll(artistSearcheModels);
 
       notifyListeners();

@@ -1,16 +1,16 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/visitor_cafe_like_model.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../model/api.dart';
 
 class VisitorCafeLikeViewModel extends ChangeNotifier {
   Dio dio = Dio();
   Api api = Api();
+  Token tokenInstance = Token();
 
   List<VisitorCafeLikeModel> _visitorCafeLikeModelList = [];
 
@@ -27,13 +27,8 @@ class VisitorCafeLikeViewModel extends ChangeNotifier {
 
   //찜한 카페 가져오기
   Future<void> getCafeLike() async {
-    var loginToken = await storage.read(key: 'loginToken');
+    String token = await tokenInstance.getToken();
 
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
     api.logInterceptor();
 
     try {
@@ -57,13 +52,8 @@ class VisitorCafeLikeViewModel extends ChangeNotifier {
 
   //찜한 카페 삭제
   Future<void> deleteCafeLike(int index) async {
-    var loginToken = await storage.read(key: 'loginToken');
+    String token = await tokenInstance.getToken();
 
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
     notifyListeners();
 
     api.logInterceptor();

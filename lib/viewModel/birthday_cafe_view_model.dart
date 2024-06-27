@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 import 'package:birca/model/api.dart';
@@ -6,6 +5,7 @@ import 'package:birca/model/birthday_cafe_lucky_draws_model.dart';
 import 'package:birca/model/birthday_cafe_menus_model.dart';
 import 'package:birca/model/birthday_cafe_model.dart';
 import 'package:birca/model/birthday_cafe_special_goods_model.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:birca/viewModel/visitor_cafe_home_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 
 class BirthdayCafeViewModel extends ChangeNotifier {
   Dio dio = Dio();
-  Api api =Api();
+  Api api = Api();
 
   int? _cafeID;
 
@@ -118,7 +118,6 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //로딩 상태 관리
   bool _isLoading = false;
-
   bool get isLoading => _isLoading;
 
   void setLoading(bool value) {
@@ -140,17 +139,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   static const storage = FlutterSecureStorage();
   var baseUrl = dotenv.env['BASE_URL'];
-  var token = '';
+  Token tokenInstance = Token();
 
   //생일 카페 상세 가져오기
   Future<void> getBirthdayCafes(int birthdayCafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -173,13 +166,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 특전 조회
   Future<void> getSpecialGoods(int birthdayCafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -215,13 +202,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 메뉴 조회
   Future<void> getMenus(int birthdayCafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -255,13 +236,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 럭키드로우 조회
   Future<void> getLuckDraws(int birthdayCafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -296,13 +271,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 사진 편집
   Future<void> postImage(int cafeId, List<PickedFile> pickedFiles) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     // PickedFile 리스트를 File 리스트로 변환
     List<File> cafeImages =
@@ -341,13 +310,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 대표 사진 편집
   Future<void> postMainImage(int cafeId, PickedFile pickedFile) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     // PickedFile 리스트를 File 리스트로 변환
     File cafeImage = File(pickedFile.path);
@@ -385,13 +348,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   //생일카페 정보 수정
   Future<void> patchInfo(
       int cafeId, BirthdayCafeInfoModel birthdayCafeInfoModel) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -416,13 +373,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일카페 특전 수정
   Future<void> postSpecialGoods(int cafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -450,13 +401,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일카페 menu 수정
   Future<void> postMenus(int cafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
     List<Map<String, dynamic>>? jsonList =
@@ -483,13 +428,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일카페 luckydraws 수정
   Future<void> postLuckyDraws(int cafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
+    String token = await tokenInstance.getToken();
 
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
     api.logInterceptor();
     List<Map<String, dynamic>>? jsonList =
         _birthdayCafeLuckyDrawsModel?.map((item) => item.toJson()).toList();
@@ -516,13 +456,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   //생일카페 상태 수정
   Future<void> patchCafeState(
       int cafeId, String stateName, String state) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -666,5 +600,4 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       }
     }
   }
-
 }

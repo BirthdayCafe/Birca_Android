@@ -83,7 +83,7 @@ class OnboardingVisitorComplete extends StatelessWidget {
               onPressed: () async {
                 await Provider.of<MypageViewModel>(context,
                     listen: false)
-                    .postRoleChange('VISITOR')
+                    .postRoleChange('VISITANT')
                     .then((value) =>
                     Navigator.push(
                         context,

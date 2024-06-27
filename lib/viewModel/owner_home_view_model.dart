@@ -1,17 +1,16 @@
-import 'dart:convert';
 import 'dart:developer';
-
+import 'package:birca/view/login/token.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../model/api.dart';
 import '../model/owner_home_model.dart';
 
 class OwnerHomeViewModel extends ChangeNotifier{
   Dio dio = Dio();
   Api api = Api();
+  Token tokenInstance = Token();
+  var baseUrl = dotenv.env['BASE_URL'];
 
   List<OwnerHomeModel>? _ownerHomeModelList;
   List<OwnerHomeModel>? get ownerHomeModelList =>
@@ -23,17 +22,7 @@ class OwnerHomeViewModel extends ChangeNotifier{
 
   //홈 가져오기
   Future<void> getOwnerHome(String progressState) async {
-    const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    //
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 

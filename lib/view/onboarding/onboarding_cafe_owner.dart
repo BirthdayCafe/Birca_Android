@@ -10,6 +10,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
+import '../../viewModel/mypage_view_model.dart';
 import '../../widgets/appbar.dart';
 import 'onboarding_cafe_owner_complete.dart';
 
@@ -280,6 +281,10 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                                   'address': address.text
                                 });
 
+                                await Provider.of<MypageViewModel>(context,
+                                    listen: false)
+                                    .postRoleChange('OWNER');
+
                                 await postCafeApply(applyData).then((_) {
                                   // Navigate on success
                                   Navigator.of(context).push(MaterialPageRoute(
@@ -318,11 +323,11 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
       var baseUrl = dotenv.env['BASE_URL'];
 
       var token = '';
-      var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+      var loginToken = await storage.read(key: 'loginToken');
 
       //토큰 가져오기
-      if (kakaoLoginInfo != null) {
-        Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      if (loginToken != null) {
+        Map<String, dynamic> loginData = json.decode(loginToken);
         token = loginData['accessToken'].toString();
       }
 
@@ -407,11 +412,11 @@ Future<void> postCafeApply(FormData applyData) async {
   var baseUrl = dotenv.env['BASE_URL'];
 
   var token = '';
-  var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+  var loginToken = await storage.read(key: 'loginToken');
 
   //토큰 가져오기
-  if (kakaoLoginInfo != null) {
-    Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+  if (loginToken != null) {
+    Map<String, dynamic> loginData = json.decode(loginToken);
     token = loginData['accessToken'].toString();
   }
 

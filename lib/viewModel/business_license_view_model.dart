@@ -1,16 +1,19 @@
-import 'dart:convert';
 import 'dart:developer';
+import 'package:birca/model/api.dart';
 import 'package:birca/model/businessLicenseModel.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 //오류 수정
 class BusinessLicenseViewModel extends ChangeNotifier {
   Dio dio = Dio();
+  Token tokenInstance = Token();
+  Api api = Api();
+  var baseUrl = dotenv.env['BASE_URL'];
 
   String? _filePath;
 
@@ -40,17 +43,8 @@ class BusinessLicenseViewModel extends ChangeNotifier {
 
     if (result != null) {
       //post business license
-      const storage = FlutterSecureStorage();
-      var baseUrl = dotenv.env['BASE_URL'];
 
-      var token = '';
-      var loginToken = await storage.read(key: 'loginToken');
-
-      //토큰 가져오기
-      if (loginToken != null) {
-        Map<String, dynamic> loginData = json.decode(loginToken);
-        token = loginData['accessToken'].toString();
-      }
+      String token = await tokenInstance.getToken();
 
       _filePath = result.files.single.path!;
       _fileName = result.files.single.name;
@@ -62,10 +56,7 @@ class BusinessLicenseViewModel extends ChangeNotifier {
       });
 
       // LogInterceptor 추가
-      dio.interceptors.add(LogInterceptor(
-        requestBody: true,
-        responseBody: true,
-      ));
+      api.logInterceptor();
 
       //파일 전송 api
       try {
@@ -74,15 +65,6 @@ class BusinessLicenseViewModel extends ChangeNotifier {
             '${baseUrl}api/v1/cafes/license-read',
             data: businessLicense,
             options: Options(headers: {'Authorization': 'Bearer $token'}));
-
-        // 서버 응답 출력
-        log('Response: ${response.data}');
-
-        // log('cafeName: ${response.data['cafeName'].runtimeType}');
-        // log('businessLicenseNumber: ${response.data['businessLicenseNumber'].runtimeType}');
-        // log('owner: ${response.data['owner'].runtimeType}');
-        // log('address: ${response.data['address'].runtimeType}');
-        // log('uploadCount: ${response.data['uploadCount'].runtimeType}');
 
         _businessLicenseModel = BusinessLicenseModel(
             cafeName: response.data['cafeName'],
@@ -105,32 +87,7 @@ class BusinessLicenseViewModel extends ChangeNotifier {
 
         notifyListeners();
       } catch (e) {
-        if (e is DioException) {
-          // Dio exception handling
-          if (e.response != null) {
-            // Server responded with an error
-            if (e.response!.statusCode == 400) {
-              // Handle HTTP 400 Bad Request error
-              log('Bad Request - Server returned 400 status code');
-              throw Exception('Failed to upload business license.');
-
-              // Additional error handling logic here if needed
-            } else {
-              // Handle other HTTP status codes
-              log('Server error - Status code: ${e.response!.statusCode}');
-              throw Exception('Failed to upload business license.');
-              // Additional error handling logic here if needed
-            }
-          } else {
-            // No response from the server (network error, timeout, etc.)
-            log('Dio error: ${e.message}');
-            throw Exception('Failed to upload business license.');
-          }
-        } else {
-          // Handle other exceptions if necessary
-          log('Error: $e');
-          throw Exception('Failed to upload business license.');
-        }
+        api.errorCheck(e);
       }
     } else {
       // 사용자가 선택을 취소한 경우
@@ -141,23 +98,10 @@ class BusinessLicenseViewModel extends ChangeNotifier {
   }
 
   Future<void> postCafeApply(FormData applyData) async {
-    const storage = FlutterSecureStorage();
-
-    Dio dio = Dio();
-    Response response;
-    var baseUrl = dotenv.env['BASE_URL'];
-
-    var token = '';
-    var loginToken = await storage.read(key: 'loginToken');
-
-    //토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     try {
-      response = await dio.post('${baseUrl}api/v1/cafes/apply',
+      Response response = await dio.post('${baseUrl}api/v1/cafes/apply',
           data: applyData,
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
@@ -165,35 +109,7 @@ class BusinessLicenseViewModel extends ChangeNotifier {
 
       log("전송 성공");
     } catch (e) {
-      if (e is DioException) {
-        // Dio exception handling
-        if (e.response != null) {
-          // Server responded with an error
-          if (e.response!.statusCode == 400) {
-            // Handle HTTP 400 Bad Request error
-            log('Bad Request - Server returned 400 status code');
-            log('Response data: ${e.response!.data}');
-            throw Exception('Failed to apply cafe.');
-
-            // Additional error handling logic here if needed
-          } else {
-            // Handle other HTTP status codes
-            log('Server error - Status code: ${e.response!.statusCode}');
-            log('Response data: ${e.response!.data}');
-            throw Exception('Failed to apply cafe.');
-
-            // Additional error handling logic here if needed
-          }
-        } else {
-          // No response from the server (network error, timeout, etc.)
-          log('Dio error: ${e.message}');
-          throw Exception('Failed to apply cafe.');
-        }
-      } else {
-        // Handle other exceptions if necessary
-        log('Error: $e');
-        throw Exception('Failed to apply cafe.');
-      }
+      api.errorCheck(e);
     }
   }
 

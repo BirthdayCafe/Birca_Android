@@ -1,17 +1,18 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/owner_schedule_model.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 import '../model/api.dart';
 
 class OwnerScheduleViewModel extends ChangeNotifier {
   Dio dio = Dio();
   Api api = Api();
+  Token tokenInstance = Token();
+
   static const storage = FlutterSecureStorage();
   var baseUrl = dotenv.env['BASE_URL'];
   var token = '';
@@ -31,13 +32,7 @@ class OwnerScheduleViewModel extends ChangeNotifier {
 
   //사장님 스케줄 추가
   Future<void> postSchedule(OwnerScheduleAddModel ownerScheduleAddModel) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -59,13 +54,7 @@ class OwnerScheduleViewModel extends ChangeNotifier {
 
   //사장님 스케줄 가져오기
   Future<void> getScheduleDetail(String dateTime) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -93,13 +82,7 @@ class OwnerScheduleViewModel extends ChangeNotifier {
 
   //사장님 예약 날짜 가져오기
   Future<void> getSchedule(int year, int month) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 

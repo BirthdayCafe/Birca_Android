@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -6,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../model/api.dart';
 import '../model/my_page_model.dart';
+import '../view/login/token.dart';
 
 class MypageViewModel extends ChangeNotifier {
   MypageModel? _nickname;
@@ -14,6 +14,7 @@ class MypageViewModel extends ChangeNotifier {
 
   Dio dio = Dio();
   Api api = Api();
+  Token tokenInstance = Token();
 
   static const storage = FlutterSecureStorage();
   var baseUrl = dotenv.env['BASE_URL'];
@@ -21,13 +22,8 @@ class MypageViewModel extends ChangeNotifier {
 
   //닉네임 가져오기
   Future<void> getNickName() async {
-    var loginToken = await storage.read(key: 'loginToken');
+    String token = await tokenInstance.getToken();
 
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
     api.logInterceptor();
 
     try {
@@ -47,25 +43,12 @@ class MypageViewModel extends ChangeNotifier {
 
   //post role change
   Future<void> postRoleChange(String role) async {
-    const storage = FlutterSecureStorage();
-
-    Dio dio = Dio();
-    Response response;
-    var baseUrl = dotenv.env['BASE_URL'];
-
-    var token = '';
-    var loginToken = await storage.read(key: 'loginToken');
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
-    //토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
-
     try {
-      response = await dio.post('${baseUrl}api/v1/members/role-change',
+      Response response = await dio.post('${baseUrl}api/v1/members/role-change',
           data: {'role': role},
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
@@ -78,20 +61,9 @@ class MypageViewModel extends ChangeNotifier {
   }
 
   Future<String> getRole() async {
-    var token = '';
-    var loginToken = await storage.read(key: 'loginToken');
+    String token = await tokenInstance.getToken();
 
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
-
-    // LogInterceptor 추가
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-    ));
+    api.logInterceptor();
 
     try {
       // API 엔드포인트 및 업로드

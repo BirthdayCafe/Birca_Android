@@ -1,8 +1,8 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/api.dart';
 import 'package:birca/model/host_cafe_home_detail_model.dart';
 import 'package:birca/model/host_cafe_home_model.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,6 +11,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class HostHomeViewModel extends ChangeNotifier {
   Dio dio = Dio();
   Api api = Api();
+  Token tokenInstance = Token();
 
   List<HostCafeHomeModel>? _hostCafeHomeModelList;
 
@@ -36,13 +37,7 @@ class HostHomeViewModel extends ChangeNotifier {
   //host 홈 카페 가져오기
   Future<void> getHostHome(int cursor, int size, String name, bool liked,
       String startDate, String endDate) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -93,13 +88,7 @@ class HostHomeViewModel extends ChangeNotifier {
   //load more
   Future<void> updateHostHome(int cursor, int size, String name, bool liked,
       String startDate, String endDate) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -147,13 +136,7 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 찜하기
   Future<void> postLike(int cafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -174,13 +157,7 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 찜 취소
   Future<void> deleteLike(int cafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -202,13 +179,7 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 상세
   Future<void> getCafeDetail(int cafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -232,13 +203,7 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 대관 신청
   Future<void> postRequest(HostRequestModel hostRequestModel) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -258,13 +223,7 @@ class HostHomeViewModel extends ChangeNotifier {
   }
 
   Future<void> getSchedule(int cafeId, int year, int month) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
