@@ -7,24 +7,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
 //오류 수정
 class BusinessLicenseViewModel extends ChangeNotifier {
   Dio dio = Dio();
 
   String? _filePath;
+
   String? get filePath => _filePath;
 
   String? _fileName;
+
   String? get fileName => _fileName;
 
   BusinessLicenseModel? _businessLicenseModel;
+
   BusinessLicenseModel? get businessLicenseModel => _businessLicenseModel;
 
   TextEditingController _cafeName = TextEditingController();
+
   TextEditingController get cafeName => _cafeName;
 
-  TextEditingController businessLicenseNumber= TextEditingController();
-  TextEditingController owner= TextEditingController();
+  TextEditingController businessLicenseNumber = TextEditingController();
+  TextEditingController owner = TextEditingController();
   TextEditingController address = TextEditingController();
 
   Future<void> pickFile() async {
@@ -39,11 +44,11 @@ class BusinessLicenseViewModel extends ChangeNotifier {
       var baseUrl = dotenv.env['BASE_URL'];
 
       var token = '';
-      var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+      var loginToken = await storage.read(key: 'loginToken');
 
       //토큰 가져오기
-      if (kakaoLoginInfo != null) {
-        Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+      if (loginToken != null) {
+        Map<String, dynamic> loginData = json.decode(loginToken);
         token = loginData['accessToken'].toString();
       }
 
@@ -68,12 +73,10 @@ class BusinessLicenseViewModel extends ChangeNotifier {
         Response response = await dio.post(
             '${baseUrl}api/v1/cafes/license-read',
             data: businessLicense,
-            options: Options(headers: {'Authorization': 'Bearer $token'})
-            );
+            options: Options(headers: {'Authorization': 'Bearer $token'}));
 
         // 서버 응답 출력
         log('Response: ${response.data}');
-
 
         // log('cafeName: ${response.data['cafeName'].runtimeType}');
         // log('businessLicenseNumber: ${response.data['businessLicenseNumber'].runtimeType}');
@@ -86,13 +89,13 @@ class BusinessLicenseViewModel extends ChangeNotifier {
             businessLicenseNumber: response.data['businessLicenseNumber'],
             owner: response.data['owner'],
             address: response.data['address'],
-            uploadCount:
-                int.parse(response.data['uploadCount'].toString()));
+            uploadCount: int.parse(response.data['uploadCount'].toString()));
 
         // cafeName.text = _businessLicenseModel!.cafeName.toString();
 
         cafeName.text = _businessLicenseModel!.cafeName.toString();
-        businessLicenseNumber.text = _businessLicenseModel!.businessLicenseNumber.toString();
+        businessLicenseNumber.text =
+            _businessLicenseModel!.businessLicenseNumber.toString();
         owner.text = _businessLicenseModel!.owner.toString();
         address.text = _businessLicenseModel!.address.toString();
 
@@ -100,9 +103,7 @@ class BusinessLicenseViewModel extends ChangeNotifier {
         log('owner.text.text : ${owner.text}');
         log('address.text.text : ${address.text}');
 
-
         notifyListeners();
-
       } catch (e) {
         if (e is DioException) {
           // Dio exception handling
@@ -124,13 +125,11 @@ class BusinessLicenseViewModel extends ChangeNotifier {
             // No response from the server (network error, timeout, etc.)
             log('Dio error: ${e.message}');
             throw Exception('Failed to upload business license.');
-
           }
         } else {
           // Handle other exceptions if necessary
           log('Error: $e');
           throw Exception('Failed to upload business license.');
-
         }
       }
     } else {
@@ -138,7 +137,6 @@ class BusinessLicenseViewModel extends ChangeNotifier {
       log("파일 선택이 취소되었습니다.");
       // log(_uploadCount.toString());
       throw Exception('Failed to upload business license.');
-
     }
   }
 
@@ -150,11 +148,11 @@ class BusinessLicenseViewModel extends ChangeNotifier {
     var baseUrl = dotenv.env['BASE_URL'];
 
     var token = '';
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     //토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -202,7 +200,7 @@ class BusinessLicenseViewModel extends ChangeNotifier {
   void showChat() {
     Fluttertoast.showToast(
         msg:
-        '카페의 사업자등록증을 업로드하면 아래의 정보가 자동으로 기입됩니다.\n사업자 등록증은 5회까지 업로드 가능합니다.\n5회를 초과할 시 업로드 제한되니 신중하게 진행해주세요.',
+            '카페의 사업자등록증을 업로드하면 아래의 정보가 자동으로 기입됩니다.\n사업자 등록증은 5회까지 업로드 가능합니다.\n5회를 초과할 시 업로드 제한되니 신중하게 진행해주세요.',
         gravity: ToastGravity.CENTER,
         textColor: Colors.white,
         timeInSecForIosWeb: 3,
@@ -211,7 +209,12 @@ class BusinessLicenseViewModel extends ChangeNotifier {
   }
 
   void resetData() {
-    _businessLicenseModel = BusinessLicenseModel(cafeName: '', businessLicenseNumber: '', owner: '', address: '', uploadCount: 0);
+    _businessLicenseModel = BusinessLicenseModel(
+        cafeName: '',
+        businessLicenseNumber: '',
+        owner: '',
+        address: '',
+        uploadCount: 0);
     // Add any other properties that need to be reset
     // ...
     _fileName = '';

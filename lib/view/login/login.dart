@@ -133,11 +133,11 @@ Future<void> postKakaoToken(String token,BuildContext context) async {
     response = await dio
         .post('${baseUrl}api/v1/oauth/login/kakao', data: {'accessToken': token});
 
-    var kakaoLoginInfo = jsonEncode(response.data);
-    log('kakaoLoginInfo : $kakaoLoginInfo');
+    var loginToken = jsonEncode(response.data);
+    log('loginToken : $loginToken');
 
 
-    await storage.write(key: 'kakaoLoginInfo', value: kakaoLoginInfo);
+    await storage.write(key: 'loginToken', value: loginToken);
 
     String role = await getRole();
 
@@ -168,11 +168,11 @@ Future<String> getRole() async {
   const storage = FlutterSecureStorage();
   var baseUrl = dotenv.env['BASE_URL'];
   var token = '';
-  var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+  var loginToken = await storage.read(key: 'loginToken');
 
   // 토큰 가져오기
-  if (kakaoLoginInfo != null) {
-    Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+  if (loginToken != null) {
+    Map<String, dynamic> loginData = json.decode(loginToken);
     token = loginData['accessToken'].toString();
   }
 
@@ -262,11 +262,11 @@ Future<void> postAppleToken(String token,BuildContext context) async {
     response = await dio
         .post('${baseUrl}api/v1/oauth/login/apple', data: {'accessToken': token});
 
-    var kakaoLoginInfo = jsonEncode(response.data);
-    log('kakaoLoginInfo : $kakaoLoginInfo');
+    var loginToken = jsonEncode(response.data);
+    log('loginToken : $loginToken');
 
 
-    await storage.write(key: 'kakaoLoginInfo', value: kakaoLoginInfo);
+    await storage.write(key: 'loginToken', value: loginToken);
 
     String role = await getRole();
 

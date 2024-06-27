@@ -21,11 +21,11 @@ class MypageViewModel extends ChangeNotifier {
 
   //닉네임 가져오기
   Future<void> getNickName() async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
     api.logInterceptor();
@@ -54,13 +54,13 @@ class MypageViewModel extends ChangeNotifier {
     var baseUrl = dotenv.env['BASE_URL'];
 
     var token = '';
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     api.logInterceptor();
 
     //토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -68,7 +68,7 @@ class MypageViewModel extends ChangeNotifier {
       response = await dio.post('${baseUrl}api/v1/members/role-change',
           data: {'role': role},
           options: Options(headers: {'Authorization': 'Bearer $token'}));
-      // log('kakaoLoginInfo : $kakaoLoginInfo');
+      // log('loginToken : $loginToken');
 
       log('$role 변경 ');
 

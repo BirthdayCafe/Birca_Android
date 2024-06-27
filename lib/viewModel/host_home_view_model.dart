@@ -36,11 +36,11 @@ class HostHomeViewModel extends ChangeNotifier {
   //host 홈 카페 가져오기
   Future<void> getHostHome(int cursor, int size, String name, bool liked,
       String startDate, String endDate) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -93,11 +93,11 @@ class HostHomeViewModel extends ChangeNotifier {
   //load more
   Future<void> updateHostHome(int cursor, int size, String name, bool liked,
       String startDate, String endDate) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -147,11 +147,11 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 찜하기
   Future<void> postLike(int cafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -174,11 +174,11 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 찜 취소
   Future<void> deleteLike(int cafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -202,11 +202,11 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 상세
   Future<void> getCafeDetail(int cafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -232,11 +232,11 @@ class HostHomeViewModel extends ChangeNotifier {
 
   //카페 대관 신청
   Future<void> postRequest(HostRequestModel hostRequestModel) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -258,11 +258,11 @@ class HostHomeViewModel extends ChangeNotifier {
   }
 
   Future<void> getSchedule(int cafeId, int year, int month) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 

@@ -144,11 +144,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 상세 가져오기
   Future<void> getBirthdayCafes(int birthdayCafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -173,11 +173,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 특전 조회
   Future<void> getSpecialGoods(int birthdayCafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -215,11 +215,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 메뉴 조회
   Future<void> getMenus(int birthdayCafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -255,11 +255,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 럭키드로우 조회
   Future<void> getLuckDraws(int birthdayCafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -296,11 +296,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 사진 편집
   Future<void> postImage(int cafeId, List<PickedFile> pickedFiles) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -341,11 +341,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 대표 사진 편집
   Future<void> postMainImage(int cafeId, PickedFile pickedFile) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -385,11 +385,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   //생일카페 정보 수정
   Future<void> patchInfo(
       int cafeId, BirthdayCafeInfoModel birthdayCafeInfoModel) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -416,11 +416,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일카페 특전 수정
   Future<void> postSpecialGoods(int cafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -450,11 +450,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일카페 menu 수정
   Future<void> postMenus(int cafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -483,11 +483,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일카페 luckydraws 수정
   Future<void> postLuckyDraws(int cafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
     api.logInterceptor();
@@ -516,11 +516,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   //생일카페 상태 수정
   Future<void> patchCafeState(
       int cafeId, String stateName, String state) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 

@@ -31,11 +31,11 @@ class OwnerScheduleViewModel extends ChangeNotifier {
 
     token =
         "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4";
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    // var loginToken = await storage.read(key: 'loginToken');
     //
     // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    // if (loginToken != null) {
+    //   Map<String, dynamic> loginData = json.decode(loginToken);
     //   token = loginData['accessToken'].toString();
     // }
 
@@ -65,11 +65,11 @@ class OwnerScheduleViewModel extends ChangeNotifier {
 
     token =
         "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4";
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    // var loginToken = await storage.read(key: 'loginToken');
     //
     // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    // if (loginToken != null) {
+    //   Map<String, dynamic> loginData = json.decode(loginToken);
     //   token = loginData['accessToken'].toString();
     // }
 
@@ -105,11 +105,11 @@ class OwnerScheduleViewModel extends ChangeNotifier {
 
     token =
     "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MywiaWF0IjoxNzE1NjQ4MTk1LCJleHAiOjE3MjA4MzIxOTV9.yFY9Y18aPo4t1XA5ANsnfvqqnJsmq7kalNfj7FcGEi4";
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    // var loginToken = await storage.read(key: 'loginToken');
     //
     // // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    // if (loginToken != null) {
+    //   Map<String, dynamic> loginData = json.decode(loginToken);
     //   token = loginData['accessToken'].toString();
     // }
 

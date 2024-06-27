@@ -20,11 +20,11 @@ class OwnerRequestDetailViewModel extends ChangeNotifier {
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
     //
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    // var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    // if (loginToken != null) {
+    //   Map<String, dynamic> loginData = json.decode(loginToken);
     //   token = loginData['accessToken'].toString();
     // }
     token =
@@ -56,11 +56,11 @@ class OwnerRequestDetailViewModel extends ChangeNotifier {
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
     //
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    // var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    // if (loginToken != null) {
+    //   Map<String, dynamic> loginData = json.decode(loginToken);
     //   token = loginData['accessToken'].toString();
     // }
     token =
@@ -89,11 +89,11 @@ class OwnerRequestDetailViewModel extends ChangeNotifier {
     var baseUrl = dotenv.env['BASE_URL'];
     var token = '';
     //
-    // var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    // var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    // if (kakaoLoginInfo != null) {
-    //   Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    // if (loginToken != null) {
+    //   Map<String, dynamic> loginData = json.decode(loginToken);
     //   token = loginData['accessToken'].toString();
     // }
     token =

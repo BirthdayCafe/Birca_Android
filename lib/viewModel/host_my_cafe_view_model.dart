@@ -39,11 +39,11 @@ class HostMyCafeViewModel extends ChangeNotifier {
 
   //주최자 나의 생일 카페 목록 가져오기
   Future<void> getHostMyCafe() async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
@@ -73,11 +73,11 @@ class HostMyCafeViewModel extends ChangeNotifier {
 
   //주최자 나의 생일 카페 대관 신청 취소 가져오기
   Future<void> postCancel(int cafeId) async {
-    var kakaoLoginInfo = await storage.read(key: 'kakaoLoginInfo');
+    var loginToken = await storage.read(key: 'loginToken');
 
     // 토큰 가져오기
-    if (kakaoLoginInfo != null) {
-      Map<String, dynamic> loginData = json.decode(kakaoLoginInfo);
+    if (loginToken != null) {
+      Map<String, dynamic> loginData = json.decode(loginToken);
       token = loginData['accessToken'].toString();
     }
 
