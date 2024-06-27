@@ -1,15 +1,16 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:birca/model/group_artist_model.dart';
 import 'package:birca/model/solo_artist_model.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SelectInterestArtistViewModel extends ChangeNotifier {
   Dio dio = Dio();
+  Token tokenInstance = Token();
+  var baseUrl = dotenv.env['BASE_URL'];
+
   List<SoloArtistModel>? _soloArtist;
 
   List<SoloArtistModel>? get soloArtist => _soloArtist;
@@ -71,15 +72,7 @@ class SelectInterestArtistViewModel extends ChangeNotifier {
   }
 
   Future<void> getSoloArtist() async {
-    const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    var loginToken = await storage.read(key: 'loginToken');
-
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
@@ -97,15 +90,7 @@ class SelectInterestArtistViewModel extends ChangeNotifier {
   }
 
   Future<void> getGroupArtist() async {
-    const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    var loginToken = await storage.read(key: 'loginToken');
-
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
@@ -123,15 +108,7 @@ class SelectInterestArtistViewModel extends ChangeNotifier {
   }
 
   Future<void> getGroupMember(int groupId) async {
-    const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    var loginToken = await storage.read(key: 'loginToken');
-
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
@@ -150,15 +127,7 @@ class SelectInterestArtistViewModel extends ChangeNotifier {
   }
 
   Future<void> postInterestArtist() async {
-    const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    var loginToken = await storage.read(key: 'loginToken');
-
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     List<Map<String, dynamic>> artistIdList = _selectedArtist.map((artist) {
       return {'artistId': artist.groupId};

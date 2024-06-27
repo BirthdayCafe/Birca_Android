@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:birca/model/group_artist_model.dart';
 import 'package:birca/model/solo_artist_model.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -10,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class SelectFavoriteArtistViewModel extends ChangeNotifier {
   Dio dio = Dio();
+  Token tokenInstance = Token();
   List<SoloArtistModel>? _soloArtist;
 
   List<SoloArtistModel>? get soloArtist => _soloArtist;
@@ -75,14 +75,7 @@ class SelectFavoriteArtistViewModel extends ChangeNotifier {
   var token = '';
 
   Future<void> getSoloArtist() async {
-
-    var loginToken = await storage.read(key: 'loginToken');
-
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
-
+    String token = await tokenInstance.getToken();
 
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
@@ -100,14 +93,7 @@ class SelectFavoriteArtistViewModel extends ChangeNotifier {
   }
 
   Future<void> getGroupArtist() async {
-
-    var loginToken = await storage.read(key: 'loginToken');
-
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
-
+    String token = await tokenInstance.getToken();
 
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
@@ -125,13 +111,7 @@ class SelectFavoriteArtistViewModel extends ChangeNotifier {
   }
 
   Future<void> getGroupMember(int groupId) async {
-
-    var loginToken = await storage.read(key: 'loginToken');
-
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
@@ -150,15 +130,7 @@ class SelectFavoriteArtistViewModel extends ChangeNotifier {
   }
 
   Future<void> postFavoriteArtist() async {
-    const storage = FlutterSecureStorage();
-    var baseUrl = dotenv.env['BASE_URL'];
-    var token = '';
-    var loginToken = await storage.read(key: 'loginToken');
-
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 

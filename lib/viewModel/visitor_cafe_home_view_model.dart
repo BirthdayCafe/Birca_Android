@@ -1,6 +1,6 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/model/visitor_cafe_home_model.dart';
+import 'package:birca/view/login/token.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -11,6 +11,7 @@ import '../model/api.dart';
 class VisitorCafeHomeViewModel extends ChangeNotifier {
   Dio dio = Dio();
   Api api = Api();
+  Token tokenInstance = Token();
 
   List<VisitorCafeHomeModel>? _visitorCafeHomeModelList;
 
@@ -32,13 +33,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   //방문자 최애 아티스트 가져오기
   Future<void> getFavoriteArtist() async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
     _homeArtistsList = [];
@@ -62,13 +57,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   //방문자 관심 아티스트 가져오기
   Future<void> getInterestArtist() async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -95,13 +84,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
   //방문자 홈 카페 가져오기
   Future<void> getCafeHome(
       int cursor, int size, String name, String progressState) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -135,13 +118,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
   //방문자 카페 더 가져오기
   Future<void> updateCafeHome(
       int cursor, int size, String name, String progressState) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -173,13 +150,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   //방문자 검색
   Future<void> getCafeSearch(String progressState, String name) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -212,13 +183,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   //찜하기
   Future<void> like(int birthdayCafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
@@ -239,13 +204,7 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
 
   //찜 취소
   Future<void> dislike(int birthdayCafeId) async {
-    var loginToken = await storage.read(key: 'loginToken');
-
-    // 토큰 가져오기
-    if (loginToken != null) {
-      Map<String, dynamic> loginData = json.decode(loginToken);
-      token = loginData['accessToken'].toString();
-    }
+    String token = await tokenInstance.getToken();
 
     api.logInterceptor();
 
