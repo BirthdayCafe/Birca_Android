@@ -137,21 +137,31 @@ class _HostMyPage extends State<HostMyPage> {
 
                                       isSwitched = value;
 
-                                      if (viewModel
-                                              .homeArtistsList?[0].artistId ==
-                                          null) {
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const SelectFavoriteArtistScreen()));
-                                      } else {
-                                        Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const BottomNavVisitor()));
+                                      Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+                                          .getFavoriteArtist()
+                                          .then((value) async {
+                                        await Provider.of<VisitorCafeHomeViewModel>(context, listen: false).getInterestArtist();
+
+                                        if (viewModel
+                                            .homeArtistsList?[0].artistId ==
+                                            null) {
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                  const SelectFavoriteArtistScreen()));
+                                        } else {
+                                          Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                  const BottomNavVisitor()));
+                                        }
+
                                       }
+                                      );
+
+
                                     });
                                   },
                                 )));
