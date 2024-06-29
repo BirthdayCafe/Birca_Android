@@ -31,8 +31,13 @@ class _HostHome extends State<HostHome> {
   @override
   void initState() {
     super.initState();
-    Provider.of<HostHomeViewModel>(context, listen: false)
-        .getHostHome(0, 10, "", false, "", "");
+    Provider.of<HostHomeViewModel>(context, listen: false).getHostHome(
+        0,
+        10,
+        "",
+        false,
+        DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now()),
+        DateFormat('yyyy-MM-ddTHH:mm:ss').format(DateTime.now()));
     _name = '';
     _liked = false;
     _startDate = '';
@@ -55,7 +60,8 @@ class _HostHome extends State<HostHome> {
   }
 
   var isSwitched = false;
-  String hostDate = '';
+
+  // String hostDate = '';
 
   RangeSelectionMode _rangeSelectionMode = RangeSelectionMode.toggledOn;
   DateTime? _selectedDay;
@@ -65,8 +71,8 @@ class _HostHome extends State<HostHome> {
 
   @override
   Widget build(BuildContext context) {
-    hostDate =
-        '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}~${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
+    // hostDate =
+    //     '${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}~${DateTime.now().year}.${DateTime.now().month}.${DateTime.now().day}';
 
     return Scaffold(
         appBar: AppBar(
@@ -247,7 +253,7 @@ class _HostHome extends State<HostHome> {
                                     width: 3,
                                   ),
                                   BircaText(
-                                      text: hostDate,
+                                      text: '${viewModel.hostDate}',
                                       textSize: 12,
                                       textColor: Palette.gray10,
                                       fontFamily: 'Pretendard')
@@ -261,32 +267,32 @@ class _HostHome extends State<HostHome> {
                           const SizedBox(
                             width: 7,
                           ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                                left: 12, right: 12, top: 5, bottom: 5),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Palette.gray06,
-                                ),
-                                borderRadius: BorderRadius.circular(20)),
-                            child: const Row(
-                              children: [
-                                Icon(
-                                  Icons.location_on_outlined,
-                                  color: Palette.gray10,
-                                  size: 12,
-                                ),
-                                SizedBox(
-                                  width: 3,
-                                ),
-                                BircaText(
-                                    text: '홍대',
-                                    textSize: 12,
-                                    textColor: Palette.gray10,
-                                    fontFamily: 'Pretendard')
-                              ],
-                            ),
-                          )
+                          // Container(
+                          //   padding: const EdgeInsets.only(
+                          //       left: 12, right: 12, top: 5, bottom: 5),
+                          //   decoration: BoxDecoration(
+                          //       border: Border.all(
+                          //         color: Palette.gray06,
+                          //       ),
+                          //       borderRadius: BorderRadius.circular(20)),
+                          //   child: const Row(
+                          //     children: [
+                          //       Icon(
+                          //         Icons.location_on_outlined,
+                          //         color: Palette.gray10,
+                          //         size: 12,
+                          //       ),
+                          //       SizedBox(
+                          //         width: 3,
+                          //       ),
+                          //       BircaText(
+                          //           text: '홍대',
+                          //           textSize: 12,
+                          //           textColor: Palette.gray10,
+                          //           fontFamily: 'Pretendard')
+                          //     ],
+                          //   ),
+                          // )
                         ],
                       );
                     }),
@@ -309,7 +315,8 @@ class _HostHome extends State<HostHome> {
                                   margin: const EdgeInsets.only(
                                       left: 16, right: 16, bottom: 16),
                                   decoration: BoxDecoration(
-                                    color: Colors.white, // Container의 배경색
+                                    color: Colors.white,
+                                    // Container의 배경색
                                     borderRadius: BorderRadius.circular(3),
                                     boxShadow: [
                                       BoxShadow(
@@ -486,7 +493,7 @@ class _HostHome extends State<HostHome> {
   }
 
   void _showBottomDialogCalendar(BuildContext context) async {
-    var hostDate1 = await showModalBottomSheet(
+    showModalBottomSheet(
         context: context,
         builder: (context) {
           return StatefulBuilder(
@@ -546,11 +553,15 @@ class _HostHome extends State<HostHome> {
                   height: 46,
                   onPressed: () async {
                     _rangeEnd ??= _rangeStart;
-                    setState(() {
-                      hostDate =
-                          '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
-                      // print(hostDate);
-                    });
+
+                    var newHostDate =
+                        '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
+                    // log(hostDate);
+
+                    _startDate =
+                        DateFormat('yyyy-MM-ddTHH:mm:ss').format(_rangeStart!);
+                    _endDate =
+                        DateFormat('yyyy-MM-ddTHH:mm:ss').format(_rangeEnd!);
                     await Provider.of<HostHomeViewModel>(context, listen: false)
                         .getHostHome(
                             0,
@@ -561,18 +572,13 @@ class _HostHome extends State<HostHome> {
                                 .format(_rangeStart!),
                             DateFormat('yyyy-MM-ddTHH:mm:ss')
                                 .format(_rangeEnd!))
-                        .then((value) => Navigator.of(context).pop(hostDate));
+                        .then(
+                            (value) => Navigator.of(context).pop(newHostDate));
                   },
                 ),
               ],
             );
           });
         });
-
-    if (hostDate1 != null) {
-      setState(() {
-        hostDate = hostDate1;
-      });
-    }
   }
 }
