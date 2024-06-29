@@ -85,15 +85,15 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                 const SizedBox(
                   height: 11,
                 ),
-                const BircaOutLinedButton(
-                    text: '프로필 편집',
-                    radiusColor: Palette.primary,
-                    backgroundColor: Colors.white,
-                    width: 100,
-                    height: 33,
-                    radius: 15,
-                    textColor: Palette.primary,
-                    textSize: 15)
+                // const BircaOutLinedButton(
+                //     text: '프로필 편집',
+                //     radiusColor: Palette.primary,
+                //     backgroundColor: Colors.white,
+                //     width: 100,
+                //     height: 33,
+                //     radius: 15,
+                //     textColor: Palette.primary,
+                //     textSize: 15)
               ],
             ),
           ),
