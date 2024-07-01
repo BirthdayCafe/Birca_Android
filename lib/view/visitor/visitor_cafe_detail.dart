@@ -127,7 +127,15 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           fontSize: 14),
                     ),
                     const SizedBox(
-                      height: 18,
+                      height: 9,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 1,
+                      color: Palette.gray03,
+                    ),
+                    const SizedBox(
+                      height: 9,
                     ),
                     const Text(
                       '날짜 및 운영 시간',
@@ -160,7 +168,15 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           fontSize: 14),
                     ),
                     const SizedBox(
-                      height: 18,
+                      height: 9,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 1,
+                      color: Palette.gray03,
+                    ),
+                    const SizedBox(
+                      height: 9,
                     ),
                     const Text(
                       '카페 이름',
@@ -194,7 +210,15 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           fontSize: 14),
                     ),
                     const SizedBox(
-                      height: 18,
+                      height: 9,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 1,
+                      color: Palette.gray03,
+                    ),
+                    const SizedBox(
+                      height: 9,
                     ),
                   ],
                 ),
@@ -277,7 +301,15 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                       ],
                     ),
                     const SizedBox(
-                      height: 18,
+                      height: 9,
+                    ),
+                    Container(
+                      width: double.infinity,
+                      height: 1,
+                      color: Palette.gray03,
+                    ),
+                    const SizedBox(
+                      height: 9,
                     ),
                     const Text(
                       '실시간 혼잡도 및 특전',
