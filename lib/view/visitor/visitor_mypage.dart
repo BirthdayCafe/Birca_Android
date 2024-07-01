@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../viewModel/mypage_view_model.dart';
+import '../../widgets/privacy_policy.dart';
+import '../../widgets/service_policy.dart';
 
 class VisitorMyPage extends StatefulWidget {
   const VisitorMyPage({super.key});
@@ -145,18 +147,26 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                     ],
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(
-                      top: 16, bottom: 16, left: 26, right: 26),
-                  width: double.infinity,
-                  child: const Text(
-                    '서비스 이용 약관',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Pretendard',
-                        color: Colors.black),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 16, left: 26, right: 26),
+                    width: double.infinity,
+                    child: const Text(
+                      '서비스 이용 약관',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Pretendard',
+                          color: Colors.black),
+                    ),
                   ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ServicePolicy()));
+                  },
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
@@ -165,17 +175,31 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                   color: Palette.gray03,
                 ),
                 Container(
-                  padding: const EdgeInsets.only(
-                      top: 16, bottom: 16, left: 26, right: 26),
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  height: 1,
                   width: double.infinity,
-                  child: const Text(
-                    '개인정보 처리 약관',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Pretendard',
-                        color: Colors.black),
+                  color: Palette.gray03,
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 16, left: 26, right: 26),
+                    width: double.infinity,
+                    child: const Text(
+                      '개인 정보 처리 방침',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Pretendard',
+                          color: Colors.black),
+                    ),
                   ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const PrivacyPolicy()));
+                  },
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
