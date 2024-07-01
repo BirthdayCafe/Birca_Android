@@ -1,9 +1,9 @@
 class OwnerMyCafeDetailModel {
   int cafeId;
-  String cafeName;
-  String cafeAddress;
-  String twitterAccount;
-  String businessHours;
+  String? cafeName;
+  String? cafeAddress;
+  String? twitterAccount;
+  String? businessHours;
   List<MenuModel> cafeMenus;
   List<OptionModel> cafeOptions;
   List<String> cafeImages;
