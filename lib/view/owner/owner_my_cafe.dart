@@ -76,7 +76,7 @@ class _OwnerMyCafe extends State<OwnerMyCafe> {
                           height: 20,
                         ),
                         Text(
-                          '${viewModel.ownerMyCafeDetailModel?.cafeName}',
+                          viewModel.ownerMyCafeDetailModel?.cafeName??'입력해주세요',
                           style: const TextStyle(
                               fontSize: 18,
                               color: Palette.gray10,
@@ -103,7 +103,7 @@ class _OwnerMyCafe extends State<OwnerMyCafe> {
                               fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          '${viewModel.ownerMyCafeDetailModel?.twitterAccount}',
+                          viewModel.ownerMyCafeDetailModel?.twitterAccount??'입력해주세요',
                           style: const TextStyle(
                               fontSize: 14,
                               color: Palette.gray08,
@@ -157,7 +157,7 @@ class _OwnerMyCafe extends State<OwnerMyCafe> {
                               fontWeight: FontWeight.w700),
                         ),
                         Text(
-                          '${viewModel.ownerMyCafeDetailModel?.businessHours}',
+                          viewModel.ownerMyCafeDetailModel?.businessHours??'입력해주세요',
                           style: const TextStyle(
                               fontSize: 14,
                               color: Palette.gray08,
