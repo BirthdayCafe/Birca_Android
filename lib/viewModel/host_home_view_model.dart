@@ -83,7 +83,6 @@ class HostHomeViewModel extends ChangeNotifier {
       List<HostCafeHomeModel> cafeHomeModels =
           jsonData.map((e) => HostCafeHomeModel.fromJson(e)).toList();
 
-      // _visitorCafeHomeModelList 추가
       _hostCafeHomeModelList?.addAll(cafeHomeModels);
 
       if (startDate == '' || endDate == '') {
@@ -157,7 +156,7 @@ class HostHomeViewModel extends ChangeNotifier {
     try {
       // API 엔드포인트 및 업로드
       Response response = await dio.post('${baseUrl}api/v1/cafes/$cafeId/like',
-          queryParameters: {},
+          // queryParameters: {},
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       // 서버 응답 출력
