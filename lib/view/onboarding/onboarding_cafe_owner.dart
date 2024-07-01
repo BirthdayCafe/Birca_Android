@@ -130,11 +130,7 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                       height: 36,
                       child: OutlinedButton(
                         onPressed: () {
-                          // if (upload < 5) {
                           _pickFile();
-                          // } else {
-                          //   log('사용 횟수 종료');
-                          // }
                         },
                         style: OutlinedButton.styleFrom(
                             padding: EdgeInsets.zero,
@@ -282,7 +278,7 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                                 });
 
                                 await Provider.of<MypageViewModel>(context,
-                                    listen: false)
+                                        listen: false)
                                     .postRoleChange('OWNER');
 
                                 await postCafeApply(applyData).then((_) {
@@ -318,7 +314,6 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
     );
 
     if (result != null) {
-
       _showLoadingDialog(context);
 
       //post business license
@@ -351,22 +346,28 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
         Response response = await dio.post(
             '${baseUrl}api/v1/cafes/license-read',
             data: businessLicense,
-            options: Options(headers: {'Authorization': 'Bearer $token'})
-            // options: Options(headers: {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJpZCI6MSwiaWF0IjoxNzA4MzE1MTk4LCJleHAiOjE3MDg0OTUxOTh9.5XD5tY3q0-PBH9nkPCFEOnrONM6xVR8wcLuoTX8idk8'})
-            );
+            options: Options(headers: {'Authorization': 'Bearer $token'}));
 
         // 서버 응답 출력
         log('Response: ${response.data}');
-        setState(() {
-          // upload++;
-          isFileUpload = true;
-          cafeName.text = response.data['cafeName'];
-          businessLicenseNumber.text = response.data['businessLicenseNumber'];
-          owner.text = response.data['owner'];
-          address.text = response.data['address'];
-          upload = response.data['uploadCount'];
-          _updateButtonState();
-        });
+
+        if (response.data['businessLicenseNumber'] == null) {
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text('유효한 사업자등록증이 아닙니다.')));
+        } else if (response.data['uploadCount'] > 5) {
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('업로드 제한 횟수를 초과하셨습니다.')));
+        } else {
+          setState(() {
+            isFileUpload = true;
+            cafeName.text = response.data['cafeName'];
+            businessLicenseNumber.text = response.data['businessLicenseNumber'];
+            owner.text = response.data['owner'];
+            address.text = response.data['address'];
+            upload = response.data['uploadCount'];
+            _updateButtonState();
+          });
+        }
       } catch (e) {
         if (e is DioException) {
           // Dio exception handling
@@ -397,7 +398,7 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
           log('Error: $e');
           throw Exception('Failed to upload.');
         }
-      } finally{
+      } finally {
         _hideLoadingDialog(context);
       }
     } else {
@@ -463,6 +464,7 @@ Future<void> postCafeApply(FormData applyData) async {
     }
   }
 }
+
 void _showLoadingDialog(BuildContext context) {
   showDialog(
     context: context,
