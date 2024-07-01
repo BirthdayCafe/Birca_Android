@@ -181,25 +181,30 @@ class SelectInterestArtistScreenState
                     child: CustomPaint(
                       child: Container(
                           color: Palette.gray02,
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 20,right: 20),
                           child: Consumer<SelectInterestArtistViewModel>(
-                              builder: (context, model, _) => ListView(
-                                    scrollDirection: Axis.horizontal,
-                                    children: List.generate(
-                                      model.groupMemberCount,
-                                      (index) => GestureDetector(
-                                        onTap: () {
-                                          model.updateSelectedArtist(
-                                              model.groupMember![index]);
-                                        },
-                                        child: artistItem(
-                                            model
-                                                .groupMember![index].groupImage,
-                                            model
-                                                .groupMember![index].groupName),
-                                      ),
+                              builder: (context, model, _) => ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: model.groupMemberCount,
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return const SizedBox(
+                                      width: 20); // 각 아이템 사이의 간격 설정
+                                },
+                                itemBuilder:
+                                    (BuildContext context, int index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      model.updateSelectedArtist(
+                                          model.groupMember![index]);
+                                    },
+                                    child: artistItem(
+                                      model.groupMember![index].groupImage,
+                                      model.groupMember![index].groupName,
                                     ),
-                                  ))),
+                                  );
+                                },
+                              ))),
                     ),
                   ),
                 )
