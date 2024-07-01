@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../viewModel/visitor_cafe_home_view_model.dart';
+import '../../widgets/app_version.dart';
 import '../../widgets/button.dart';
 
 class HostMyPage extends StatefulWidget {
@@ -207,18 +208,26 @@ class _HostMyPage extends State<HostMyPage> {
                   width: double.infinity,
                   color: Palette.gray03,
                 ),
-                Container(
-                  padding: const EdgeInsets.only(
-                      top: 16, bottom: 16, left: 26, right: 26),
-                  width: double.infinity,
-                  child: const Text(
-                    '앱 버전',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Pretendard',
-                        color: Colors.black),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 16, left: 26, right: 26),
+                    width: double.infinity,
+                    child: const Text(
+                      '앱 버전',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Pretendard',
+                          color: Colors.black),
+                    ),
                   ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const AppVersion()));
+                  },
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
