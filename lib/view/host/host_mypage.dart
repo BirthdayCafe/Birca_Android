@@ -212,25 +212,6 @@ class _HostMyPage extends State<HostMyPage> {
                       top: 16, bottom: 16, left: 26, right: 26),
                   width: double.infinity,
                   child: const Text(
-                    '로그아웃',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Pretendard',
-                        color: Colors.black),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 10, right: 10),
-                  height: 1,
-                  width: double.infinity,
-                  color: Palette.gray03,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(
-                      top: 16, bottom: 16, left: 26, right: 26),
-                  width: double.infinity,
-                  child: const Text(
                     '앱 버전',
                     style: TextStyle(
                         fontSize: 16,
