@@ -719,10 +719,14 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
     List<PickedFile>? images = await _picker.getMultiImage();
 
     if (images != null) {
+      _showLoadingDialog(context);
+
       if (images.length > 5) {
+        _hideLoadingDialog(context);
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('You can select up to 5 images.')));
+            const SnackBar(content: Text('사진은 5장까지 선택할 수 있습니다.')));
         log(_selectedImages.toString());
+
       } else {
         setState(() async {
           _selectedImages =
@@ -733,9 +737,26 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
               .then((value) =>
                   Provider.of<OwnerMyCafeViewModel>(context, listen: false)
                       .getMyCafe());
-          log(_selectedImages.toString());
+          // log(_selectedImages.toString());
+          _hideLoadingDialog(context);
         });
       }
     }
   }
+}
+
+void _showLoadingDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    },
+  );
+}
+
+void _hideLoadingDialog(BuildContext context) {
+  Navigator.of(context).pop();
 }
