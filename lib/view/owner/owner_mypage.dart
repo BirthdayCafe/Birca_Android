@@ -3,11 +3,9 @@ import 'package:birca/viewModel/mypage_view_model.dart';
 import 'package:birca/widgets/privacy_policy.dart';
 import 'package:birca/widgets/service_policy.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../widgets/app_version.dart';
-import '../../widgets/button.dart';
 
 class OwnerMypage extends StatefulWidget {
   const OwnerMypage({super.key});
@@ -47,94 +45,94 @@ class _OwnerMypage extends State<OwnerMypage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
 
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Palette.gray03),
-                ),
-                const SizedBox(
-                  height: 13,
-                ),
-                Consumer<MypageViewModel>(builder: (context,viewModel,widget){
-                  return Text(
-                    '${viewModel.nickname?.nickname}',
-                    style: const TextStyle(
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 20,
-                        color: Colors.black),
-                  );
-                }) ,
-                const SizedBox(
-                  height: 11,
-                ),
-                BircaOutLinedButton(
-                  text: '프로필 편집',
-                  radiusColor: Palette.primary,
-                  backgroundColor: Colors.white,
-                  width: 100,
-                  height: 33,
-                  radius: 15,
-                  textColor: Palette.primary,
-                  textSize: 15,
-                  onPressed: () {
-                    showDialog(
-                        context: context, builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: SvgPicture.asset('lib/assets/image/birca.svg'),
-                        contentPadding: const EdgeInsets.all(14,),
-                          backgroundColor: Colors.white,
-                          alignment: Alignment.center,
-                           content:
-                               const TextField(
-                                 style: TextStyle(
-                                   fontWeight: FontWeight.w500,
-                                     fontFamily: 'Pretendard',
-                                     fontSize: 20,
-                                     color: Colors.black,
-
-                                 ),
-
-                           ),
-                        actions: [
-                          Row(
-                            children: [
-                              BircaOutLinedButton(
-                                text: '취소',
-                                radiusColor: Palette.gray03,
-                                backgroundColor: Colors.white,
-                                width: 120,
-                                height: 30,
-                                radius: 6,
-                                textColor: Colors.black,
-                                textSize: 20,
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },),
-                              const SizedBox(width: 10,),
-                              BircaOutLinedButton(text: '저장',
-                                radiusColor: Palette.primary,
-                                backgroundColor: Palette.primary,
-                                width: 120,
-                                height: 30,
-                                radius: 6,
-                                textColor: Colors.white,
-                                textSize: 20,
-                                onPressed: (){},)
-
-                            ],
-                          )
-                        ],
-                      );
-                    });
-                  },)
+                // Container(
+                //   width: 100,
+                //   height: 100,
+                //   decoration: const BoxDecoration(
+                //       shape: BoxShape.circle, color: Palette.gray03),
+                // ),
+                // const SizedBox(
+                //   height: 13,
+                // ),
+                // Consumer<MypageViewModel>(builder: (context,viewModel,widget){
+                //   return Text(
+                //     '${viewModel.nickname?.nickname}',
+                //     style: const TextStyle(
+                //         fontFamily: 'Pretendard',
+                //         fontWeight: FontWeight.w600,
+                //         fontSize: 20,
+                //         color: Colors.black),
+                //   );
+                // }) ,
+                // const SizedBox(
+                //   height: 11,
+                // ),
+                // BircaOutLinedButton(
+                //   text: '프로필 편집',
+                //   radiusColor: Palette.primary,
+                //   backgroundColor: Colors.white,
+                //   width: 100,
+                //   height: 33,
+                //   radius: 15,
+                //   textColor: Palette.primary,
+                //   textSize: 15,
+                //   onPressed: () {
+                //     showDialog(
+                //         context: context, builder: (BuildContext context) {
+                //       return AlertDialog(
+                //         title: SvgPicture.asset('lib/assets/image/birca.svg'),
+                //         contentPadding: const EdgeInsets.all(14,),
+                //           backgroundColor: Colors.white,
+                //           alignment: Alignment.center,
+                //            content:
+                //                const TextField(
+                //                  style: TextStyle(
+                //                    fontWeight: FontWeight.w500,
+                //                      fontFamily: 'Pretendard',
+                //                      fontSize: 20,
+                //                      color: Colors.black,
+                //
+                //                  ),
+                //
+                //            ),
+                //         actions: [
+                //           Row(
+                //             children: [
+                //               BircaOutLinedButton(
+                //                 text: '취소',
+                //                 radiusColor: Palette.gray03,
+                //                 backgroundColor: Colors.white,
+                //                 width: 120,
+                //                 height: 30,
+                //                 radius: 6,
+                //                 textColor: Colors.black,
+                //                 textSize: 20,
+                //                 onPressed: () {
+                //                   Navigator.of(context).pop();
+                //                 },),
+                //               const SizedBox(width: 10,),
+                //               BircaOutLinedButton(text: '저장',
+                //                 radiusColor: Palette.primary,
+                //                 backgroundColor: Palette.primary,
+                //                 width: 120,
+                //                 height: 30,
+                //                 radius: 6,
+                //                 textColor: Colors.white,
+                //                 textSize: 20,
+                //                 onPressed: (){},)
+                //
+                //             ],
+                //           )
+                //         ],
+                //       );
+                //     });
+                //   },)
               ],
             ),
           ),
