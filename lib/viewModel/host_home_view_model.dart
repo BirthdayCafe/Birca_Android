@@ -31,8 +31,8 @@ class HostHomeViewModel extends ChangeNotifier {
   List<Map<String, DateTime>> get dateRanges => _dateRanges;
 
   String? _hostDate;
-  String? get hostDate => _hostDate;
 
+  String? get hostDate => _hostDate;
 
   static const storage = FlutterSecureStorage();
   var baseUrl = dotenv.env['BASE_URL'];
@@ -86,7 +86,13 @@ class HostHomeViewModel extends ChangeNotifier {
       // _visitorCafeHomeModelList 추가
       _hostCafeHomeModelList?.addAll(cafeHomeModels);
 
-      _hostDate = '${startDate.substring(0,10)} ~ ${endDate.substring(0,10)}';
+      if (startDate == '' || endDate == '') {
+        _hostDate = '전체';
+      } else {
+        _hostDate =
+            '${startDate.substring(0, 10)} ~ ${endDate.substring(0, 10)}';
+      }
+      log('hostDFate$_hostDate');
       notifyListeners();
     } catch (e) {
       api.errorCheck(e);
