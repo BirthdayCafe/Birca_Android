@@ -5,7 +5,7 @@ class OwnerRequestDetailModel {
   Artist artist;
   int? minimumVisitant;
   int? maximumVisitant;
-  String twitterAccount;
+  String? twitterAccount;
   String hostPhoneNumber;
 
   OwnerRequestDetailModel(
