@@ -1,9 +1,9 @@
 class HostCafeHomeModel {
   int cafeId;
   bool liked;
-  String name;
-  String cafeImageUrl;
-  String twitterAccount;
+  String? name;
+  String? cafeImageUrl;
+  String? twitterAccount;
   String address;
 
   HostCafeHomeModel({
