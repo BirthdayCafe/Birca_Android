@@ -652,7 +652,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                 child: Container(
                   width: double.infinity,
                   height: 40,
-                  color: Palette.gray04,
+                  color: Palette.primary,
                   alignment: Alignment.center,
                   child: const Text(
                     '저장하기',
