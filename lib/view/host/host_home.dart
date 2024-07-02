@@ -292,7 +292,7 @@ class _HostHome extends State<HostHome> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            '${viewModel.hostCafeHomeModelList?[index].name}',
+                                            viewModel.hostCafeHomeModelList?[index].name??'',
                                             style: const TextStyle(
                                                 fontSize: 14,
                                                 color: Palette.gray10,
@@ -302,7 +302,7 @@ class _HostHome extends State<HostHome> {
                                             height: 21,
                                           ),
                                           Text(
-                                            '${viewModel.hostCafeHomeModelList?[index].twitterAccount}',
+                                            viewModel.hostCafeHomeModelList?[index].twitterAccount??'',
                                             style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Palette.gray08,

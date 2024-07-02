@@ -145,7 +145,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                         height: 20,
                       ),
                       Text(
-                        '${viewModel.hostCafeHomeDetailModel?.name}',
+                        viewModel.hostCafeHomeDetailModel?.name??'',
                         style: const TextStyle(
                             fontSize: 18,
                             color: Palette.gray10,
@@ -172,7 +172,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                             fontWeight: FontWeight.w700),
                       ),
                       Text(
-                        '${viewModel.hostCafeHomeDetailModel?.twitterAccount}',
+                        viewModel.hostCafeHomeDetailModel?.twitterAccount??'',
                         style: const TextStyle(
                             fontSize: 14,
                             color: Palette.gray08,
