@@ -3,8 +3,8 @@ class OwnerRequestDetailModel {
   String startDate;
   String endDate;
   Artist artist;
-  int minimumVisitant;
-  int maximumVisitant;
+  int? minimumVisitant;
+  int? maximumVisitant;
   String twitterAccount;
   String hostPhoneNumber;
 

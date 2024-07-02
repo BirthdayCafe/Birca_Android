@@ -1,9 +1,9 @@
 class HostCafeHomeDetailModel {
   bool liked;
-  String name;
-  String twitterAccount;
-  String address;
-  String businessHours;
+  String? name;
+  String? twitterAccount;
+  String? address;
+  String? businessHours;
   List<String> cafeImages;
   List<CafeMenu> cafeMenus;
   List<CafeOption> cafeOptions;
