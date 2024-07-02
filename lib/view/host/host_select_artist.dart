@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../viewmodel/select_favorite_artist_viewmodel.dart';
 import '../../widgets/button.dart';
-import '../../widgets/card.dart';
 
 class HostSelectArtist extends StatefulWidget {
   const HostSelectArtist({super.key});
@@ -160,8 +159,8 @@ class _HostSelectArtist extends State<HostSelectArtist> {
                     width: double.infinity,
                     height: 126,
                     child: CustomPaint(
-                      painter: BubblePainter(idx: location),
                       child: Container(
+                          color: Palette.gray02,
                           padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Consumer<SelectFavoriteArtistViewModel>(
                               builder: (context, model, _) =>
@@ -251,7 +250,7 @@ class _HostSelectArtist extends State<HostSelectArtist> {
 
   _bottomBar() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
-          color: Colors.white,
+          color: Palette.gray02,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -285,6 +284,8 @@ class _HostSelectArtist extends State<HostSelectArtist> {
 
   _selectedArtist() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
+
+
             padding: const EdgeInsets.only(top: 24, bottom: 24, left: 24),
             alignment: Alignment.centerLeft,
             child: SingleChildScrollView(
@@ -300,7 +301,7 @@ class _HostSelectArtist extends State<HostSelectArtist> {
                             model.removeSelectedArtist(
                                 model.selectedArtist[index]);
                           },
-                          child: artistItem(
+                          child: artistSelectedItem(
                               model.selectedArtist[index].groupImage,
                               model.selectedArtist[index].groupName),
                         ));

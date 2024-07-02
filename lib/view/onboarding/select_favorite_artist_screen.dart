@@ -335,7 +335,7 @@ class SelectFavoriteArtistScreenState
                             model.removeSelectedArtist(
                                 model.selectedArtist[index]);
                           },
-                          child: artistItem(
+                          child: artistSelectedItem(
                               model.selectedArtist[index].groupImage,
                               model.selectedArtist[index].groupName),
                         ));

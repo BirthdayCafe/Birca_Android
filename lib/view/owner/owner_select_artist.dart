@@ -253,7 +253,7 @@ class _OwnerSelectArtist
 
   _bottomBar() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
-          color: Colors.white,
+          color: Palette.gray02,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -277,17 +277,7 @@ class _OwnerSelectArtist
                           'id': model.selectedArtist[0].groupId,
                           'artist': model.selectedArtist[0].groupName,
                         };
-
-
                         Navigator.pop(context,data);
-                        // model.postFavoriteArtist();
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) =>
-                        //             const SelectInterestArtistScreen()));
-
-
                       }
                     },
                   )),
@@ -312,7 +302,7 @@ class _OwnerSelectArtist
                             model.removeSelectedArtist(
                                 model.selectedArtist[index]);
                           },
-                          child: artistItem(
+                          child: artistSelectedItem(
                               model.selectedArtist[index].groupImage,
                               model.selectedArtist[index].groupName),
                         ));
