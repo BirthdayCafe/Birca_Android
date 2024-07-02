@@ -299,21 +299,21 @@ class SelectFavoriteArtistScreenState
                     },
                   )),
               const SizedBox(height: 20),
-              GestureDetector(
-                onTap: () {
-                  MaterialPageRoute(
-                      builder: (context) => const SelectInterestArtistScreen());
-                },
-                child: const Text(
-                  "다음에 결정하기",
-                  style: TextStyle(
-                    color: Palette.gray06,
-                    fontFamily: 'Pretendard',
-                    decoration: TextDecoration.underline,
-                    decorationColor: Palette.gray06,
-                  ),
-                ),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     MaterialPageRoute(
+              //         builder: (context) => const SelectInterestArtistScreen());
+              //   },
+              //   child: const Text(
+              //     "다음에 결정하기",
+              //     style: TextStyle(
+              //       color: Palette.gray06,
+              //       fontFamily: 'Pretendard',
+              //       decoration: TextDecoration.underline,
+              //       decorationColor: Palette.gray06,
+              //     ),
+              //   ),
+              // ),
               const SizedBox(height: 66),
             ],
           )));
