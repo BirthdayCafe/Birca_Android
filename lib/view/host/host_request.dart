@@ -351,26 +351,51 @@ class _HostRequest extends State<HostRequest> {
                     ),
                   ),
                   onTap: () async {
-                    await Provider.of<HostHomeViewModel>(context,
-                        listen: false)
-                        .postRequest(
-                      HostRequestModel(artistId: artistId, cafeId: widget.cafeID,
-                        startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
-                            .format(_rangeStart!),
-                        endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
-                            .format(_rangeEnd!),
-                        minimumVisitant:
-                        int.parse(minimumVisitantsController.text),
-                        maximumVisitant:
-                        int.parse(maximumVisitantsController.text),
-                        twitterAccount: twitterAccountController.text,
-                        hostPhoneNumber: hostPhoneNumberController.text)
-                    )
-                        .then((value) {
-                      ScaffoldMessenger.of(context)
-                          .showSnackBar(const SnackBar(content: Text('신청 완료')));
-                      Navigator.pop(context);
-                    });
+
+                    if(hostPhoneNumberController.text==''){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('000-0000-0000 형식으로 전화번호를 입력해주세요!')));
+                    } else if(artistId==0){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('아티스트를 선택해주세요!')));
+                  } else if(_rangeStart==null){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('날짜를 선택해주세요!')));
+                    } else if(_rangeEnd==null){
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('날짜를 선택해주세요!')));
+                    }  else {
+
+                      if(minimumVisitantsController.text==''){
+                        minimumVisitantsController.text='0';
+                      }
+
+                      if(maximumVisitantsController.text==''){
+                        maximumVisitantsController.text='0';
+                      }
+
+                      await Provider.of<HostHomeViewModel>(context,
+                          listen: false)
+                          .postRequest(
+                          HostRequestModel(artistId: artistId, cafeId: widget.cafeID,
+                              startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                  .format(_rangeStart!),
+                              endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                  .format(_rangeEnd!),
+                              minimumVisitant:
+                              int.parse(minimumVisitantsController.text),
+                              maximumVisitant:
+                              int.parse(maximumVisitantsController.text),
+                              twitterAccount: twitterAccountController.text,
+                              hostPhoneNumber: hostPhoneNumberController.text)
+                      )
+                          .then((value) {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(content: Text('신청 완료')));
+                        Navigator.pop(context);
+                      });
+                    }
+
                   },
                 )
               ],
