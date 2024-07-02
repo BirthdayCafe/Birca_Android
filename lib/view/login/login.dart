@@ -50,10 +50,15 @@ class _Login extends State<Login> {
                 await kakaoLogin(context);
               },
               child:
-                  Image.asset('lib/assets/image/kakao_login_medium_wide.png'),
+                  Container(
+                    child: SvgPicture.asset('lib/assets/image/kakaoLogin.svg'),
+                    width: 300
+                    ,
+                  )
+
             ),
             const SizedBox(
-              height: 40,
+              height: 20,
             ),
             GestureDetector(
               onTap: () {
