@@ -126,8 +126,18 @@ class _OwnerSelectArtist
             ],
           ),
         ),
-        _bottomBar()
-      ]);
+        Container(
+            child: _bottomBar(),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ))      ]);
 
   _groupArtistBuilder(SelectFavoriteArtistViewModel model) => ListView.builder(
         physics: const ClampingScrollPhysics(),
@@ -253,7 +263,7 @@ class _OwnerSelectArtist
 
   _bottomBar() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
-          color: Palette.gray02,
+          color: Colors.white,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

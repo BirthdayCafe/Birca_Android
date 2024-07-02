@@ -123,7 +123,18 @@ class _HostSelectArtist extends State<HostSelectArtist> {
             ],
           ),
         ),
-        _bottomBar()
+        Container(
+            child: _bottomBar(),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ))
       ]);
 
   _groupArtistBuilder(SelectFavoriteArtistViewModel model) => ListView.builder(
@@ -250,7 +261,7 @@ class _HostSelectArtist extends State<HostSelectArtist> {
 
   _bottomBar() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
-          color: Palette.gray02,
+          color: Colors.white,
           width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -284,8 +295,6 @@ class _HostSelectArtist extends State<HostSelectArtist> {
 
   _selectedArtist() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
-
-
             padding: const EdgeInsets.only(top: 24, bottom: 24, left: 24),
             alignment: Alignment.centerLeft,
             child: SingleChildScrollView(
