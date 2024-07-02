@@ -210,20 +210,20 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                               const InputDecoration(border: InputBorder.none),
                         ),
                       ),
-                      const SizedBox(
-                        width: 11,
-                      ),
-                      BircaOutLinedButton(
-                        text: '장소 선택',
-                        radiusColor: Palette.primary,
-                        width: 80,
-                        height: 36,
-                        radius: 6,
-                        textColor: Palette.primary,
-                        textSize: 14,
-                        onPressed: () {},
-                        backgroundColor: Colors.white,
-                      )
+                      // const SizedBox(
+                      //   width: 11,
+                      // ),
+                      // BircaOutLinedButton(
+                      //   text: '장소 선택',
+                      //   radiusColor: Palette.primary,
+                      //   width: 80,
+                      //   height: 36,
+                      //   radius: 6,
+                      //   textColor: Palette.primary,
+                      //   textSize: 14,
+                      //   onPressed: () {},
+                      //   backgroundColor: Colors.white,
+                      // )
                     ]),
                     const SizedBox(
                       height: 20,
