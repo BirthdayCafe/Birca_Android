@@ -277,11 +277,17 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                                   radius: 6,
                                   textColor: Palette.primary,
                                   textSize: 14,
-                                  onPressed: () {
-                                    Provider.of<OwnerRequestDetailViewModel>(
+                                  onPressed: () async {
+                                   await Provider.of<OwnerRequestDetailViewModel>(
                                             context,
                                             listen: false)
-                                        .postCancel(id);
+                                        .postCancel(id).then((value) {
+
+                                     Provider.of<OwnerHomeViewModel>(context, listen: false)
+                                         .getOwnerHome("RENTAL_PENDING");
+                                     Navigator.pop(context);
+                                   });
+
                                   },
                                 ),
                               ],
