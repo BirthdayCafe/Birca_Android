@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
@@ -258,14 +260,18 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                                   radius: 6,
                                   textColor: Colors.white,
                                   textSize: 14,
-                                  onPressed: () {
+                                  onPressed: () async{
                                     Provider.of<OwnerRequestDetailViewModel>(
                                             context,
                                             listen: false)
-                                        .postApprove(id);
-                                    setState(() {
-                                      isRequestAccept = true;
+                                        .postApprove(id).then((value) {
+                                      Provider.of<OwnerHomeViewModel>(context, listen: false)
+                                          .getOwnerHome("RENTAL_PENDING");
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          const SnackBar(content: Text('요청이 수락되었습니다.')));
                                     });
+
                                   },
                                 ),
                                 BircaOutLinedButton(
@@ -286,6 +292,8 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                                      Provider.of<OwnerHomeViewModel>(context, listen: false)
                                          .getOwnerHome("RENTAL_PENDING");
                                      Navigator.pop(context);
+                                     ScaffoldMessenger.of(context).showSnackBar(
+                                         const SnackBar(content: Text('요청이 취소되었습니다.')));
                                    });
 
                                   },
