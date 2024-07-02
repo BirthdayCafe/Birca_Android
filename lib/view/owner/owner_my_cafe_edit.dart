@@ -677,31 +677,37 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
 
                  viewModel.update();
 
-                  await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
-                      .postDayOff(
-                          viewModel.ownerMyCafeDetailModel!.cafeId, data);
-                 await Provider.of<OwnerMyCafeViewModel>(context,
-                      listen: false).postMenus();
-                  await Provider.of<OwnerMyCafeViewModel>(context,
-                      listen: false).postOptions();
+                 if(viewModel.ownerMyCafeDetailModel?.cafeImages==[]){
+                   ScaffoldMessenger.of(context).showSnackBar(
+                       const SnackBar(content: Text('사진을 선택해주세요!')));
+                 } else {
+                   await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                       .postDayOff(
+                       viewModel.ownerMyCafeDetailModel!.cafeId, data);
+                   await Provider.of<OwnerMyCafeViewModel>(context,
+                       listen: false).postMenus();
+                   await Provider.of<OwnerMyCafeViewModel>(context,
+                       listen: false).postOptions();
 
-                  await Provider.of<OwnerMyCafeViewModel>(context,
-                          listen: false)
-                      .patchMyCafe(
-                    viewModel.cafeNameController.text,
-                    viewModel.cafeAddressController.text,
-                    viewModel.twitterAccountController.text,
-                    viewModel.businessHoursController.text,
-                  )
-                      .then((_) {
-                    log(dateStrings.toString());
-                    // Navigate on success
-                    Provider.of<OwnerMyCafeViewModel>(context, listen: false)
-                        .getMyCafe();
-                    Navigator.pop(context);
-                  }).catchError((error) {
-                    log('fail');
-                  });
+                   await Provider.of<OwnerMyCafeViewModel>(context,
+                       listen: false)
+                       .patchMyCafe(
+                     viewModel.cafeNameController.text,
+                     viewModel.cafeAddressController.text,
+                     viewModel.twitterAccountController.text,
+                     viewModel.businessHoursController.text,
+                   )
+                       .then((_) {
+                     log(dateStrings.toString());
+                     // Navigate on success
+                     Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                         .getMyCafe();
+                     Navigator.pop(context);
+                   }).catchError((error) {
+                     log('fail');
+                   });
+                 }
+
                 },
               ),
               const SizedBox(
