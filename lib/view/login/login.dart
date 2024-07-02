@@ -46,17 +46,13 @@ class _Login extends State<Login> {
               height: 64,
             ),
             GestureDetector(
-              onTap: () async {
-                await kakaoLogin(context);
-              },
-              child:
-                  Container(
-                    child: SvgPicture.asset('lib/assets/image/kakaoLogin.svg'),
-                    width: 300
-                    ,
-                  )
-
-            ),
+                onTap: () async {
+                  await kakaoLogin(context);
+                },
+                child: SizedBox(
+                  width: 300,
+                  child: SvgPicture.asset('lib/assets/image/kakaoLogin.svg'),
+                )),
             const SizedBox(
               height: 20,
             ),
@@ -151,8 +147,8 @@ Future<void> postKakaoToken(String token, BuildContext context) async {
 
     await storage.write(key: 'loginToken', value: loginToken);
 
-    String role = await Provider.of<MypageViewModel>(context,
-        listen: false).getRole();
+    String role =
+        await Provider.of<MypageViewModel>(context, listen: false).getRole();
 
     if (role == 'VISITANT') {
       Navigator.of(context).push(
@@ -222,8 +218,8 @@ Future<void> postAppleToken(String token, BuildContext context) async {
 
     await storage.write(key: 'loginToken', value: loginToken);
 
-    String role = await Provider.of<MypageViewModel>(context,
-        listen: false).getRole();
+    String role =
+        await Provider.of<MypageViewModel>(context, listen: false).getRole();
 
     if (role == 'VISITANT') {
       Navigator.of(context).push(
