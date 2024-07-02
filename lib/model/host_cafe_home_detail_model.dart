@@ -141,9 +141,9 @@ class HostRequestModel {
   final int cafeId;
   final String startDate;
   final String endDate;
-  final int minimumVisitant;
-  final int maximumVisitant;
-  final String twitterAccount;
+  final int? minimumVisitant;
+  final int? maximumVisitant;
+  final String? twitterAccount;
   final String hostPhoneNumber;
 
   HostRequestModel({
