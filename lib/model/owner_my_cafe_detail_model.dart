@@ -7,6 +7,8 @@ class OwnerMyCafeDetailModel {
   List<MenuModel> cafeMenus;
   List<OptionModel> cafeOptions;
   List<String> cafeImages;
+  List<String> dayOffDates;
+
 
   OwnerMyCafeDetailModel({
     required this.cafeId,
@@ -17,12 +19,15 @@ class OwnerMyCafeDetailModel {
     required this.cafeMenus,
     required this.cafeOptions,
     required this.cafeImages,
+    required this.dayOffDates,
+
   });
 
   factory OwnerMyCafeDetailModel.fromJson(Map<String, dynamic> json) {
     List<dynamic> menuList = json['cafeMenus'] ?? [];
     List<dynamic> optionList = json['cafeOptions'] ?? [];
     List<dynamic> imageList = json['cafeImages'] ?? [];
+    List<dynamic> dayOffDates = json['dayOffDates'] ?? [];
 
     return OwnerMyCafeDetailModel(
         cafeId: json['cafeId'],
@@ -33,7 +38,9 @@ class OwnerMyCafeDetailModel {
         cafeMenus: menuList.map((menu) => MenuModel.fromJson(menu)).toList(),
         cafeOptions:
             optionList.map((option) => OptionModel.fromJson(option)).toList(),
-        cafeImages: imageList.map((image) => image.toString()).toList());
+        cafeImages: imageList.map((image) => image.toString()).toList(),
+    dayOffDates: dayOffDates.map((image) => image.toString()).toList());
+
   }
 
   Map<String, dynamic> toJson() {

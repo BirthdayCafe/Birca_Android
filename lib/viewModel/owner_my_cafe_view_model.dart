@@ -168,6 +168,7 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
   Future<void> postDayOff(int cafeId, Map<String, dynamic> data) async {
     String token = await tokenInstance.getToken();
 
+    log('postdayoff ${data.toString()}');
     api.logInterceptor();
     try {
       // API 엔드포인트 및 업로드

@@ -197,17 +197,20 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     ),
                     Row(children: [
                       Container(
-                        width: 238,
-                        height: 36,
+                        width: 300,
+                        height: 40,
                         decoration: BoxDecoration(
                           border: Border.all(color: const Color(0xffD7D8DC)),
                           borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
                         ),
                         alignment: Alignment.center,
                         child: TextField(
+
                           controller: viewModel.cafeAddressController,
                           decoration:
-                              const InputDecoration(border: InputBorder.none),
+                              const InputDecoration(border: InputBorder.none,
+                                contentPadding: EdgeInsets.zero
+                              ),
                         ),
                       ),
                       // const SizedBox(
@@ -237,20 +240,12 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                       height: 20,
                     ),
                     const Text(
-                      '대여 가능 날짜',
+                      '운영 시간',
                       style: TextStyle(
                           fontSize: 16,
                           color: Palette.gray10,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700),
-                    ),
-                    const Text(
-                      '운영 시간',
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Palette.gray08,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w500),
                     ),
                     Row(
                       children: [
@@ -268,32 +263,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                             ),
                           ),
                         ),
-                        // Text(
-                        //   "부터",
-                        //   style: TextStyle(
-                        //       color: Palette.gray08,
-                        //       fontSize: 14,
-                        //       fontFamily: 'Pretendard',
-                        //       fontWeight: FontWeight.w500),
-                        // ),
-                        // SizedBox(
-                        //   width: 115,
-                        //   height: 36,
-                        //   child: TextField(
-                        //     textAlign: TextAlign.center,
-                        //     decoration: InputDecoration(
-                        //       hintText: "오전 9시",
-                        //       focusedBorder: UnderlineInputBorder(
-                        //         // 활성화된 상태의 밑줄 색상
-                        //         borderSide: BorderSide(color: Palette.primary),
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
                       ],
-                    ),
-                    const SizedBox(
-                      height: 20,
                     ),
                     const SizedBox(
                       height: 20,
@@ -301,7 +271,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     const Text(
                       '운영 불가능한 날짜 선택',
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 16,
                           color: Palette.gray10,
                           fontFamily: 'Pretendard',
                           fontWeight: FontWeight.w700),
@@ -351,6 +321,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           color: Palette.gray02),
                       padding: const EdgeInsets.all(6),
                       child: TableCalendar(
+
+
                         //오늘 날짜
                         focusedDay: _focusedDay,
                         firstDay: DateTime.now(),
@@ -392,6 +364,24 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                             });
                           }
                         },
+
+                        calendarBuilders: CalendarBuilders(
+                            defaultBuilder: (context, day, focusedDay) {
+                              for (var range in viewModel.ownerMyCafeDetailModel!.dayOffDates) {
+                               DateTime time = DateTime.parse(range);
+                                if (day==time) {
+                                  return
+                                    Container(
+                                      margin: const EdgeInsets.all(6.0),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '${day.day}',
+                                        style: const TextStyle(color: Palette.gray03),
+                                      ),);
+                                }
+                              }
+                              return null;
+                            }),
                       ),
                     ),
                     const SizedBox(
