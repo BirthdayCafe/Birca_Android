@@ -15,14 +15,13 @@ class OwnerMypage extends StatefulWidget {
 }
 
 class _OwnerMypage extends State<OwnerMypage> {
-
   @override
   void initState() {
     super.initState();
 
-    Provider.of<MypageViewModel>(context, listen: false)
-        .getNickName();
+    Provider.of<MypageViewModel>(context, listen: false).getNickName();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +49,6 @@ class _OwnerMypage extends State<OwnerMypage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-
                 // Container(
                 //   width: 100,
                 //   height: 100,
@@ -143,30 +141,26 @@ class _OwnerMypage extends State<OwnerMypage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(
-                      top: 16, bottom: 16, left: 26, right: 26),
-                  width: double.infinity,
-                  child: GestureDetector(
-                    child: const Text(
-                      '내 카페',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: 'Pretendard',
-                          color: Colors.black),
-                    ),
-                    onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const OwnerMyCafe( )));
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 16, left: 26, right: 26),
+                    width: double.infinity,
+                    child: GestureDetector(
+                      child: const Text(
+                        '내 카페',
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: 'Pretendard',
+                            color: Colors.black),
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const OwnerMyCafe()));
+                      },
+                    )),
 
-                    },
-                  )
-                ),
-                Container(
-                  margin: const EdgeInsets.only(left: 10, right: 10),
-                  height: 1,
-                  width: double.infinity,
-                  color: Palette.gray03,
-                ),
                 Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
                   height: 1,
@@ -200,12 +194,7 @@ class _OwnerMypage extends State<OwnerMypage> {
                   width: double.infinity,
                   color: Palette.gray03,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 10, right: 10),
-                  height: 1,
-                  width: double.infinity,
-                  color: Palette.gray03,
-                ),
+
                 GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.only(

@@ -199,12 +199,6 @@ class _HostMyPage extends State<HostMyPage> {
                   width: double.infinity,
                   color: Palette.gray03,
                 ),
-                Container(
-                  margin: const EdgeInsets.only(left: 10, right: 10),
-                  height: 1,
-                  width: double.infinity,
-                  color: Palette.gray03,
-                ),
                 GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.only(
