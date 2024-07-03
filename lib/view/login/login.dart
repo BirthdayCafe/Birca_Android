@@ -34,40 +34,38 @@ class _Login extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('lib/assets/image/img_logo.png'),
-            const SizedBox(
-              height: 10,
-            ),
-            SvgPicture.asset('lib/assets/image/img_logo_text.svg'),
-            const SizedBox(
-              height: 64,
-            ),
-            GestureDetector(
-                onTap: () async {
-                  await kakaoLogin(context);
-                },
-                child: SizedBox(
-                  width: 300,
-                  child: SvgPicture.asset('lib/assets/image/kakaoLogin.svg'),
-                )),
-            const SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: () {
-                signInWithApple(context);
-              },
-              child: Image.asset(
-                'lib/assets/image/apple_login.png',
-                width: 300,
-              ),
-            ),
-          ],
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            Image.asset('lib/assets/image/img_logo.png', width: 130,
+            height: 120,),
+          const SizedBox(
+            height: 10,
+          ), 
+          SvgPicture.asset('lib/assets/image/img_logo_text.svg'),
+      const SizedBox(
+        height: 141,
+      ),
+      GestureDetector(
+          onTap: () async {
+            await kakaoLogin(context);
+          },
+          child: SizedBox(
+            width: 300,
+            child: SvgPicture.asset('lib/assets/image/kakaoLogin.svg'),
+          )),
+      GestureDetector(
+        onTap: () {
+          signInWithApple(context);
+        },
+        child: Image.asset(
+          'lib/assets/image/apple_login.png',
+          width: 300,
         ),
       ),
+      ],
+    ),)
+    ,
     );
   }
 }
@@ -148,7 +146,7 @@ Future<void> postKakaoToken(String token, BuildContext context) async {
     await storage.write(key: 'loginToken', value: loginToken);
 
     String role =
-        await Provider.of<MypageViewModel>(context, listen: false).getRole();
+    await Provider.of<MypageViewModel>(context, listen: false).getRole();
 
     if (role == 'VISITANT') {
       Navigator.of(context).push(
@@ -179,7 +177,7 @@ Future<void> postKakaoToken(String token, BuildContext context) async {
 void signInWithApple(BuildContext context) async {
   try {
     final AuthorizationCredentialAppleID credential =
-        await SignInWithApple.getAppleIDCredential(
+    await SignInWithApple.getAppleIDCredential(
       scopes: [
         AppleIDAuthorizationScopes.email,
         AppleIDAuthorizationScopes.fullName,
@@ -219,7 +217,7 @@ Future<void> postAppleToken(String token, BuildContext context) async {
     await storage.write(key: 'loginToken', value: loginToken);
 
     String role =
-        await Provider.of<MypageViewModel>(context, listen: false).getRole();
+    await Provider.of<MypageViewModel>(context, listen: false).getRole();
 
     if (role == 'VISITANT') {
       Navigator.of(context).push(
