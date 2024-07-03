@@ -1,9 +1,7 @@
 import 'package:birca/view/owner/owner_my_cafe.dart';
-import 'package:birca/viewModel/mypage_view_model.dart';
 import 'package:birca/widgets/privacy_policy.dart';
 import 'package:birca/widgets/service_policy.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../widgets/app_version.dart';
 
@@ -19,7 +17,6 @@ class _OwnerMypage extends State<OwnerMypage> {
   void initState() {
     super.initState();
 
-    Provider.of<MypageViewModel>(context, listen: false).getNickName();
   }
 
   @override
