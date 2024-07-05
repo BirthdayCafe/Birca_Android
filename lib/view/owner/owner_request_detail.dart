@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
@@ -92,35 +90,35 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                     const SizedBox(
                       height: 24,
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 14),
-                      child: const Text(
-                        "신청자",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'Pretendard',
-                            color: Palette.gray10),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 14),
-                      child: const Text("홍길동",
-                          style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              fontFamily: 'Pretendard',
-                              color: Palette.gray10)),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 14, right: 183),
-                      child: const Divider(
-                        color: Palette.gray03,
-                      ),
-                    ),
+                    // Container(
+                    //   margin: const EdgeInsets.only(left: 14),
+                    //   child: const Text(
+                    //     "신청자",
+                    //     style: TextStyle(
+                    //         fontSize: 16,
+                    //         fontWeight: FontWeight.w700,
+                    //         fontFamily: 'Pretendard',
+                    //         color: Palette.gray10),
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Container(
+                    //   margin: const EdgeInsets.only(left: 14),
+                    //   child: const Text("홍길동",
+                    //       style: TextStyle(
+                    //           fontSize: 16,
+                    //           fontWeight: FontWeight.w700,
+                    //           fontFamily: 'Pretendard',
+                    //           color: Palette.gray10)),
+                    // ),
+                    // Container(
+                    //   margin: const EdgeInsets.only(left: 14, right: 183),
+                    //   child: const Divider(
+                    //     color: Palette.gray03,
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 24,
                     ),
