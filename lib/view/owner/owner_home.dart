@@ -27,7 +27,6 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
         .getOwnerHome("RENTAL_PENDING");
   }
 
-  var requestList = ['aaa', 'bbb', 'cc', 'd', 'e', 'f', 'g' 'h', 'i', 'j'];
 
   @override
   Widget build(BuildContext context) {
