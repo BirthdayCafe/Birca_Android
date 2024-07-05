@@ -55,7 +55,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
         title: Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
           viewModel.birthDayCafeNameController.text =
-              viewModel.birthdayCafeModel?.birthdayCafeName ?? '';
+              viewModel.birthdayCafeModel?.birthdayCafeName ?? '생일 카페 이름';
           return TextField(
               controller: viewModel.birthDayCafeNameController,
               decoration: const InputDecoration(
