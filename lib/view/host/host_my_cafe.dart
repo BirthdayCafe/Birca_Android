@@ -145,9 +145,9 @@ class _HostCafe extends State<HostCafe> {
                                               height: 17,
                                             ),
                                             Text(
-                                              '${viewModel
+                                              viewModel
                                                   .hostMyCafeModelList?[index]
-                                                  .birthdayCafeName}',
+                                                  .birthdayCafeName??'카페 이름을 입력해주세요',
                                               style: const TextStyle(
                                                   fontSize: 10,
                                                   color: Palette.gray08,
