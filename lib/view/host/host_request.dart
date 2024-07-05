@@ -78,6 +78,7 @@ class _HostRequest extends State<HostRequest> {
                     margin: const EdgeInsets.only(left: 14),
                     child: TextField(
                       controller: artistController,
+                      enabled: false,
                       style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
