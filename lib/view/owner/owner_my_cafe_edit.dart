@@ -6,7 +6,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:table_calendar/table_calendar.dart';
 import '../../designSystem/palette.dart';
 import '../../viewModel/owner_my_cafe_view_model.dart';
 import '../../widgets/button.dart';
@@ -26,18 +25,22 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
     Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
   }
 
+
+
   List<MenuModel> cafeMenu = [];
   List<OptionModel> cafeOptions = [];
 
   bool isDateChecked = false;
   bool isCountChecked = false;
-
-  DateTime? _selectedDay;
-  DateTime _focusedDay = DateTime.now();
+  //
+  // DateTime? _selectedDay;
+  // DateTime _focusedDay = DateTime.now();
 
   final List<DateTime> _selectedDates = [];
   final ImagePicker _picker = ImagePicker();
   List<PickedFile> _selectedImages = [];
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +76,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
           cafeMenu.addAll(viewModel.ownerMyCafeDetailModel!.cafeMenus);
 
           cafeOptions.addAll(viewModel.ownerMyCafeDetailModel!.cafeOptions);
+
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -312,78 +316,78 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                             ),
                           ]),
                     ),
-                    const SizedBox(
-                      height: 19,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Palette.gray02),
-                      padding: const EdgeInsets.all(6),
-                      child: TableCalendar(
-
-
-                        //오늘 날짜
-                        focusedDay: _focusedDay,
-                        firstDay: DateTime.now(),
-                        lastDay: DateTime.utc(DateTime.now().year + 1),
-
-                        headerStyle: const HeaderStyle(titleTextStyle: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                            formatButtonVisible: false, titleCentered: false,
-                            headerMargin: EdgeInsets.all(5),
-                            rightChevronVisible: false,
-                            leftChevronVisible:false),
-                        availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
-
-                        selectedDayPredicate: (day) {
-                          return _selectedDates.any(
-                              (selectedDate) => isSameDay(selectedDate, day));
-                        },
-
-                        onDaySelected: (selectedDay, focusedDay) {
-                          if (!isSameDay(_selectedDay, selectedDay)) {
-                            setState(() {
-                              _selectedDay = selectedDay;
-                              _focusedDay = focusedDay;
-
-                              if (_selectedDates.any(
-                                  (date) => isSameDay(date, selectedDay))) {
-                                // 이미 선택된 날짜이면 리스트에서 제거
-                                _selectedDates.removeWhere(
-                                    (date) => isSameDay(date, selectedDay));
-                              } else {
-                                // 선택되지 않은 날짜이면 리스트에 추가
-                                _selectedDates.add(selectedDay);
-                              }
-
-                              log(_selectedDates.toString());
-                            });
-                          }
-                        },
-
-                        calendarBuilders: CalendarBuilders(
-                            defaultBuilder: (context, day, focusedDay) {
-                              for (var range in viewModel.ownerMyCafeDetailModel!.dayOffDates) {
-                               DateTime time = DateTime.parse(range);
-                                if (day==time) {
-                                  return
-                                    Container(
-                                      margin: const EdgeInsets.all(6.0),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        '${day.day}',
-                                        style: const TextStyle(color: Palette.gray03),
-                                      ),);
-                                }
-                              }
-                              return null;
-                            }),
-                      ),
-                    ),
+                    // const SizedBox(
+                    //   height: 19,
+                    // ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(5),
+                    //       color: Palette.gray02),
+                    //   padding: const EdgeInsets.all(6),
+                    //   child: TableCalendar(
+                    //
+                    //
+                    //     //오늘 날짜
+                    //     focusedDay: _focusedDay,
+                    //     firstDay: DateTime.now(),
+                    //     lastDay: DateTime.utc(DateTime.now().year + 1),
+                    //
+                    //     headerStyle: const HeaderStyle(titleTextStyle: TextStyle(
+                    //       fontSize: 17.0,
+                    //       fontWeight: FontWeight.bold,
+                    //       color: Colors.black,
+                    //     ),
+                    //         formatButtonVisible: false, titleCentered: false,
+                    //         headerMargin: EdgeInsets.all(5),
+                    //         rightChevronVisible: false,
+                    //         leftChevronVisible:false),
+                    //     availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
+                    //
+                    //     selectedDayPredicate: (day) {
+                    //       return _selectedDates.any(
+                    //           (selectedDate) => isSameDay(selectedDate, day));
+                    //     },
+                    //
+                    //     onDaySelected: (selectedDay, focusedDay) {
+                    //       if (!isSameDay(_selectedDay, selectedDay)) {
+                    //         setState(() {
+                    //           _selectedDay = selectedDay;
+                    //           _focusedDay = focusedDay;
+                    //
+                    //           if (_selectedDates.any(
+                    //               (date) => isSameDay(date, selectedDay))) {
+                    //             // 이미 선택된 날짜이면 리스트에서 제거
+                    //             _selectedDates.removeWhere(
+                    //                 (date) => isSameDay(date, selectedDay));
+                    //           } else {
+                    //             // 선택되지 않은 날짜이면 리스트에 추가
+                    //             _selectedDates.add(selectedDay);
+                    //           }
+                    //
+                    //           log(_selectedDates.toString());
+                    //         });
+                    //       }
+                    //     },
+                    //
+                    //     calendarBuilders: CalendarBuilders(
+                    //         defaultBuilder: (context, day, focusedDay) {
+                    //           for (var range in viewModel.ownerMyCafeDetailModel!.dayOffDates) {
+                    //            DateTime time = DateTime.parse(range);
+                    //             if (day==time) {
+                    //               return
+                    //                 Container(
+                    //                   margin: const EdgeInsets.all(6.0),
+                    //                   alignment: Alignment.center,
+                    //                   child: Text(
+                    //                     '${day.day}',
+                    //                     style: const TextStyle(color: Palette.gray03),
+                    //                   ),);
+                    //             }
+                    //           }
+                    //           return null;
+                    //         }),
+                    //   ),
+                    // ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -756,3 +760,4 @@ void _showLoadingDialog(BuildContext context) {
 void _hideLoadingDialog(BuildContext context) {
   Navigator.of(context).pop();
 }
+
