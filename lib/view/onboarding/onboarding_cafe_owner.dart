@@ -367,6 +367,9 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
             upload = response.data['uploadCount'];
             _updateButtonState();
           });
+
+          ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('잘못 스캔된 정보는 수정할 수 있습니다.')));
         }
       } catch (e) {
         if (e is DioException) {
