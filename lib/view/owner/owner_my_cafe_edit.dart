@@ -69,9 +69,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
           viewModel.cafeAddressController.text =
               '${viewModel.ownerMyCafeDetailModel?.cafeAddress}';
           viewModel.businessHoursController.text =
-              '${viewModel.ownerMyCafeDetailModel?.businessHours}';
+              viewModel.ownerMyCafeDetailModel?.businessHours??'00시~00시';
           viewModel.twitterAccountController.text =
-              '${viewModel.ownerMyCafeDetailModel?.twitterAccount}';
+              viewModel.ownerMyCafeDetailModel?.twitterAccount??'@';
 
           cafeMenu.addAll(viewModel.ownerMyCafeDetailModel!.cafeMenus);
 
