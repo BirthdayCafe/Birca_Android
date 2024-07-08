@@ -44,7 +44,7 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
           title: Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
               return Text(
-                viewModel.birthdayCafeModel?.birthdayCafeName.toString() ?? '생일 카페 이름',
+                viewModel.birthdayCafeModel?.birthdayCafeName  ?? '생일 카페 이름',
                 style: const TextStyle(
                     fontSize: 16,
                     color: Palette.gray10,
