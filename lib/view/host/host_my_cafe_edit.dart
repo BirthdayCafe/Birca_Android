@@ -55,7 +55,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
         title: Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
           viewModel.birthDayCafeNameController.text =
-              viewModel.birthdayCafeModel?.birthdayCafeName ?? '생일 카페 이름';
+              viewModel.birthdayCafeModel?.birthdayCafeName ?? '';
           return TextField(
               controller: viewModel.birthDayCafeNameController,
               decoration: const InputDecoration(
@@ -79,7 +79,13 @@ class _HostCafeEdit extends State<HostCafeEdit> {
               // '${viewModel.birthdayCafeModel!.artist.groupName} ${viewModel.birthdayCafeModel!.artist.name}';
               viewModel. twitterController.text = viewModel.birthdayCafeModel!.twitterAccount;
               // viewModel. cafeAddressController.text =
-              viewModel.birthdayCafeModel!.cafe.address;
+              // viewModel.birthdayCafeModel!.cafe.address;
+
+              if(viewModel.birthdayCafeModel!.visibility=='PUBLIC'){
+                isSwitched = true;
+              } else {
+                isSwitched = false;
+              }
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,10 +136,21 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                               child: CupertinoSwitch(
                                 value: isSwitched,
                                 activeColor: Palette.primary,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isSwitched = value;
-                                  });
+                                onChanged: (value) async {
+
+                                  if(isSwitched){
+                                    await Provider.of<BirthdayCafeViewModel>(context,
+                                        listen: false)
+                                        .patchCafeState(id, 'visibility', 'PRIVATE');
+                                    viewModel.birthdayCafeModel!.visibility = 'PRIVATE';
+
+                                  } else {
+                                    await Provider.of<BirthdayCafeViewModel>(context,
+                                        listen: false)
+                                        .patchCafeState(id, 'visibility', 'PUBLIC');
+                                    viewModel.birthdayCafeModel!.visibility = 'PUBLIC';
+
+                                  }
                                 },
                               ))),
                     ],
@@ -268,12 +285,14 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           fontWeight: FontWeight.w700,
                           fontSize: 16),
                     ),
-                    const TextField(
-                      // controller: viewModel.artistController,
-                      decoration: InputDecoration(
-                        hintText: '아티스트 및 그룹명',
-                        border: UnderlineInputBorder(), // 밑줄 추가
-                      ),
+                     const SizedBox(
+                       height: 10,
+                     ),
+                     Text(
+                       '${viewModel.birthdayCafeModel?.artist.groupName} ${viewModel.birthdayCafeModel?.artist.name}',
+                       style: const TextStyle(
+                         fontSize: 16
+                       ),
                     ),
                     const SizedBox(
                       height: 26,
@@ -321,24 +340,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         ),
                       ),
                     ]),
-                    const SizedBox(
-                      height: 26,
-                    ),
-                    const Text(
-                      '카페 위치',
-                      style: TextStyle(
-                          color: Palette.gray10,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16),
-                    ),
-                    TextField(
-                      controller: viewModel.cafeAddressController,
-                      decoration: const InputDecoration(
-                        hintText: '서울 특별시~~',
-                        border: UnderlineInputBorder(), // 밑줄 추가
-                      ),
-                    ),
                     const SizedBox(
                       height: 26,
                     ),
@@ -730,7 +731,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                       height: 90,
                       width: 90,
                       child: Image.network(
-                        viewModel.birthdayCafeModel?.mainImage ?? '',
+                        viewModel.birthdayCafeModel?.mainImage ??
+                            'https://placehold.co/90x90/F7F7FA/F7F7FA.jpg',
+
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -939,12 +942,14 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                 onPressed: () async {
                   await Provider.of<BirthdayCafeViewModel>(context,
                           listen: false)
-                      .patchCafeState(id, 'congestion', 'SMOOTH')
-                      .then((value) {
-                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                        .getBirthdayCafes(id);
-                    Navigator.pop(context);
-                  });
+                      .patchCafeState(id, 'congestion', 'SMOOTH');
+                  //     .then((value) {
+                  //   Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  //       .getBirthdayCafes(id);
+                  //   Navigator.pop(context);
+                  // });
+
+
                 },
               ),
               SimpleDialogOption(
