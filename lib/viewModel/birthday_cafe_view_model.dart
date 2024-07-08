@@ -561,6 +561,10 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateInfo(){
+    birthdayCafeModel?.birthdayCafeName = birthDayCafeNameController.text.toString();
+    birthdayCafeModel?.twitterAccount = twitterController.text.toString();
+  }
   void update() {
     for (int i = 0; i < birthdayCafeMenusModel!.length; i++) {
       birthdayCafeMenusModel![i].name = menuNameController[i].text;
