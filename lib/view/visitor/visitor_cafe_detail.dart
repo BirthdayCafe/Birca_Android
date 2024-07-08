@@ -5,7 +5,6 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import '../../viewModel/visitor_cafe_home_view_model.dart';
 
 class VisitorCafeDetail extends StatefulWidget {
   final int cafeID;
@@ -52,10 +51,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
         ),
         leading: IconButton(
             onPressed: () async {
-              await Provider.of<VisitorCafeHomeViewModel>(context,
-                      listen: false)
-                  .getCafeHome(0, 10, '', 'IN_PROGRESS')
-                  .then((value) => Navigator.pop(context));
+              Navigator.pop(context);
             },
             icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
         actions: [
