@@ -10,8 +10,9 @@ class OwnerRequestDetail extends StatefulWidget {
   final int cafeID;
   final bool isRequestAccept;
 
-
-  const OwnerRequestDetail({Key? key, required this.cafeID,required this.isRequestAccept}) : super(key: key);
+  const OwnerRequestDetail(
+      {Key? key, required this.cafeID, required this.isRequestAccept})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -31,10 +32,8 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
         .getRequestDetailHome(id);
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     bool isRequestAccept = widget.isRequestAccept;
 
     return Scaffold(
@@ -90,35 +89,36 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                     const SizedBox(
                       height: 24,
                     ),
-                    // Container(
-                    //   margin: const EdgeInsets.only(left: 14),
-                    //   child: const Text(
-                    //     "신청자",
-                    //     style: TextStyle(
-                    //         fontSize: 16,
-                    //         fontWeight: FontWeight.w700,
-                    //         fontFamily: 'Pretendard',
-                    //         color: Palette.gray10),
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // Container(
-                    //   margin: const EdgeInsets.only(left: 14),
-                    //   child: const Text("홍길동",
-                    //       style: TextStyle(
-                    //           fontSize: 16,
-                    //           fontWeight: FontWeight.w700,
-                    //           fontFamily: 'Pretendard',
-                    //           color: Palette.gray10)),
-                    // ),
-                    // Container(
-                    //   margin: const EdgeInsets.only(left: 14, right: 183),
-                    //   child: const Divider(
-                    //     color: Palette.gray03,
-                    //   ),
-                    // ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 14),
+                      child: const Text(
+                        "신청자",
+                        style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'Pretendard',
+                            color: Palette.gray10),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 14),
+                      child: Text(
+                          viewModel.ownerRequestDetailModel?.nickname ?? '',
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'Pretendard',
+                              color: Palette.gray10)),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(left: 14, right: 183),
+                      child: const Divider(
+                        color: Palette.gray03,
+                      ),
+                    ),
                     const SizedBox(
                       height: 24,
                     ),
@@ -258,18 +258,20 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                                   radius: 6,
                                   textColor: Colors.white,
                                   textSize: 14,
-                                  onPressed: () async{
+                                  onPressed: () async {
                                     Provider.of<OwnerRequestDetailViewModel>(
                                             context,
                                             listen: false)
-                                        .postApprove(id).then((value) {
-                                      Provider.of<OwnerHomeViewModel>(context, listen: false)
+                                        .postApprove(id)
+                                        .then((value) {
+                                      Provider.of<OwnerHomeViewModel>(context,
+                                              listen: false)
                                           .getOwnerHome("RENTAL_PENDING");
                                       Navigator.pop(context);
-                                      ScaffoldMessenger.of(context).showSnackBar(
-                                          const SnackBar(content: Text('요청이 수락되었습니다.')));
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text('요청이 수락되었습니다.')));
                                     });
-
                                   },
                                 ),
                                 BircaOutLinedButton(
@@ -282,18 +284,20 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                                   textColor: Palette.primary,
                                   textSize: 14,
                                   onPressed: () async {
-                                   await Provider.of<OwnerRequestDetailViewModel>(
+                                    await Provider.of<
+                                                OwnerRequestDetailViewModel>(
                                             context,
                                             listen: false)
-                                        .postCancel(id).then((value) {
-
-                                     Provider.of<OwnerHomeViewModel>(context, listen: false)
-                                         .getOwnerHome("RENTAL_PENDING");
-                                     Navigator.pop(context);
-                                     ScaffoldMessenger.of(context).showSnackBar(
-                                         const SnackBar(content: Text('요청이 취소되었습니다.')));
-                                   });
-
+                                        .postCancel(id)
+                                        .then((value) {
+                                      Provider.of<OwnerHomeViewModel>(context,
+                                              listen: false)
+                                          .getOwnerHome("RENTAL_PENDING");
+                                      Navigator.pop(context);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text('요청이 취소되었습니다.')));
+                                    });
                                   },
                                 ),
                               ],

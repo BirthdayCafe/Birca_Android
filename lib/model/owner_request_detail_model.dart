@@ -1,4 +1,5 @@
 class OwnerRequestDetailModel {
+  String nickname;
   int birthdayCafeId;
   String startDate;
   String endDate;
@@ -9,7 +10,8 @@ class OwnerRequestDetailModel {
   String hostPhoneNumber;
 
   OwnerRequestDetailModel(
-      {required this.birthdayCafeId,
+      {required this.nickname,
+      required this.birthdayCafeId,
       required this.minimumVisitant,
       required this.maximumVisitant,
       required this.startDate,
@@ -20,6 +22,7 @@ class OwnerRequestDetailModel {
 
   factory OwnerRequestDetailModel.fromJson(Map<String, dynamic> json) {
     return OwnerRequestDetailModel(
+        nickname: json['nickname'],
         birthdayCafeId: json['birthdayCafeId'],
         minimumVisitant: json['minimumVisitant'],
         maximumVisitant: json['maximumVisitant'],
