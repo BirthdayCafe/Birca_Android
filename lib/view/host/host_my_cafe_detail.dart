@@ -312,6 +312,26 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                             height: 18,
                           ),
                           const Text(
+                            '대표 사진',
+                            style: TextStyle(
+                                color: Palette.gray10,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Pretendard',
+                                fontSize: 16),
+                          ),
+                          const SizedBox(
+                            height: 18,
+                          ),
+                          SizedBox(
+                            height: 90,
+                            width: 90,
+                            child: Image.network(
+                              viewModel.birthdayCafeModel?.mainImage ??
+                                  'https://placehold.co/90x90/F7F7FA/F7F7FA.jpg',
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          const Text(
                             '사진',
                             style: TextStyle(
                                 color: Palette.gray10,
