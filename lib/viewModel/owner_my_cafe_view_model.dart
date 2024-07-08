@@ -190,6 +190,9 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //사장님 카페 사진 편집
   Future<void> postImage(int cafeId, List<PickedFile> pickedFiles) async {
+
+    patchMyCafe(cafeNameController.text, cafeAddressController.text, twitterAccountController.text, businessHoursController.text);
+
     String token = await tokenInstance.getToken();
 
     // PickedFile 리스트를 File 리스트로 변환
@@ -203,8 +206,6 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
           'cafeImages', await MultipartFile.fromFile(cafeImages[i].path)));
     }
     api.logInterceptor();
-
-    log(formData.toString());
 
     try {
       // API 엔드포인트 및 업로드

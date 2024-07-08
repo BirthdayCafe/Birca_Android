@@ -113,7 +113,6 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                   textSize: 10,
                   onPressed: () async {
                     _pickImages(viewModel.ownerMyCafeDetailModel!.cafeId);
-                    // List<PickedFile>? images = await picker.getMultiImage();
                   },
                 ),
               ),
@@ -235,11 +234,11 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      width: double.infinity,
-                      height: 1,
-                      color: Palette.gray03,
-                    ),
+                    // Container(
+                    //   width: double.infinity,
+                    //   height: 1,
+                    //   color: Palette.gray03,
+                    // ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -272,50 +271,50 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Text(
-                      '운영 불가능한 날짜 선택',
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Palette.gray10,
-                          fontFamily: 'Pretendard',
-                          fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                          style: DefaultTextStyle.of(context).style,
-                          children: const [
-                            TextSpan(
-                              text: '* 대여',
-                              style: TextStyle(
-                                  color: Palette.gray08,
-                                  fontSize: 10,
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500),
-                            ),
-                            TextSpan(
-                              text: ' 불가능',
-                              style: TextStyle(
-                                  color: Colors.red,
-                                  fontSize: 10,
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w700),
-                            ),
-                            TextSpan(
-                              text: '한 날짜를 설정해주세요.',
-                              style: TextStyle(
-                                  color: Palette.gray08,
-                                  fontSize: 10,
-                                  decoration: TextDecoration.none,
-                                  fontFamily: 'Pretendard',
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          ]),
-                    ),
+                    // const Text(
+                    //   '운영 불가능한 날짜 선택',
+                    //   style: TextStyle(
+                    //       fontSize: 16,
+                    //       color: Palette.gray10,
+                    //       fontFamily: 'Pretendard',
+                    //       fontWeight: FontWeight.w700),
+                    // ),
+                    // const SizedBox(
+                    //   height: 5,
+                    // ),
+                    // RichText(
+                    //   text: TextSpan(
+                    //       style: DefaultTextStyle.of(context).style,
+                    //       children: const [
+                    //         TextSpan(
+                    //           text: '* 대여',
+                    //           style: TextStyle(
+                    //               color: Palette.gray08,
+                    //               fontSize: 10,
+                    //               decoration: TextDecoration.none,
+                    //               fontFamily: 'Pretendard',
+                    //               fontWeight: FontWeight.w500),
+                    //         ),
+                    //         TextSpan(
+                    //           text: ' 불가능',
+                    //           style: TextStyle(
+                    //               color: Colors.red,
+                    //               fontSize: 10,
+                    //               decoration: TextDecoration.none,
+                    //               fontFamily: 'Pretendard',
+                    //               fontWeight: FontWeight.w700),
+                    //         ),
+                    //         TextSpan(
+                    //           text: '한 날짜를 설정해주세요.',
+                    //           style: TextStyle(
+                    //               color: Palette.gray08,
+                    //               fontSize: 10,
+                    //               decoration: TextDecoration.none,
+                    //               fontFamily: 'Pretendard',
+                    //               fontWeight: FontWeight.w500),
+                    //         ),
+                    //       ]),
+                    // ),
                     // const SizedBox(
                     //   height: 19,
                     // ),
@@ -388,14 +387,14 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     //         }),
                     //   ),
                     // ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 1,
-                      color: Palette.gray03,
-                    ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Container(
+                    //   width: double.infinity,
+                    //   height: 1,
+                    //   color: Palette.gray03,
+                    // ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -675,9 +674,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                    ScaffoldMessenger.of(context).showSnackBar(
                        const SnackBar(content: Text('사진을 선택해주세요!')));
                  } else {
-                   await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
-                       .postDayOff(
-                       viewModel.ownerMyCafeDetailModel!.cafeId, data);
+                   // await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                   //     .postDayOff(
+                   //     viewModel.ownerMyCafeDetailModel!.cafeId, data);
                    await Provider.of<OwnerMyCafeViewModel>(context,
                        listen: false).postMenus();
                    await Provider.of<OwnerMyCafeViewModel>(context,
@@ -722,13 +721,17 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
       _showLoadingDialog(context);
 
       if (images.length > 5) {
+
+
+        log('사진은 5장까지 선택할 수 있습니다.');
         _hideLoadingDialog(context);
+
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('사진은 5장까지 선택할 수 있습니다.')));
-        log(_selectedImages.toString());
 
       } else {
-        setState(() async {
+
+
           _selectedImages =
               images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
 
@@ -739,8 +742,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                       .getMyCafe());
           // log(_selectedImages.toString());
           _hideLoadingDialog(context);
-        });
+
       }
+
     }
   }
 }
