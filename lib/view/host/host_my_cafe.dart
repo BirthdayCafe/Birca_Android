@@ -82,141 +82,282 @@ class _HostCafe extends State<HostCafe> {
                         stateTextColor = Palette.primary;
                     }
 
-                    return GestureDetector(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Container의 배경색
-                          borderRadius: BorderRadius.circular(6),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.1), // 그림자 색상
-                              spreadRadius: 2, // 그림자 확산 정도
-                              blurRadius: 2, // 그림자의 흐림 정도
-                              // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
-                            ),
-                          ],
-                        ),
-                        margin: const EdgeInsets.only(
-                            top: 16, bottom: 16, left: 16, right: 16),
-                        height: 140,
-                        child: Row(
-                          children: [
-                            Image.network(
-                                viewModel.hostMyCafeModelList![index]
-                                        .mainImageUrl ??
-                                    'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
-                                height: 140,
-                                width: 210,
-                                fit: BoxFit.fill),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            Expanded(
-                                child: Stack(
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(
-                                      height: 35,
-                                    ),
-                                    Text(
-                                      '${viewModel.hostMyCafeModelList?[index].artist.groupName} ${viewModel.hostMyCafeModelList?[index].artist.name}',
-                                      style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Palette.primary,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: "Pretendard"),
-                                    ),
-                                    const SizedBox(
-                                      height: 4,
-                                    ),
-                                    Text(
-                                      '${viewModel.hostMyCafeModelList?[index].startDate.toString().substring(0, viewModel.hostMyCafeModelList![index].startDate.toString().length - 9)} ~ ${viewModel.hostMyCafeModelList?[index].endDate.toString().substring(0, viewModel.hostMyCafeModelList![index].endDate.toString().length - 9)}',
-                                      style: const TextStyle(
-                                          fontSize: 10,
-                                          color: Palette.gray10,
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: "Pretendard"),
-                                    ),
-                                    const SizedBox(
-                                      height: 17,
-                                    ),
-                                    Text(
-                                      viewModel.hostMyCafeModelList?[index]
-                                              .birthdayCafeName ??
-                                          '카페 이름을 입력해주세요',
-                                      style: const TextStyle(
-                                          fontSize: 10,
-                                          color: Palette.gray08,
-                                          fontWeight: FontWeight.w400,
-                                          fontFamily: "Pretendard"),
-                                    ),
-                                  ],
+                    if (viewModel.hostMyCafeModelList?[index].progressState ==
+                        'RENTAL_CANCELED'||viewModel.hostMyCafeModelList?[index].progressState ==
+                        'FINISHED') {
+                      return Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white, // Container의 배경색
+                              borderRadius: BorderRadius.circular(6),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  // 그림자 색상
+                                  spreadRadius: 2,
+                                  // 그림자 확산 정도
+                                  blurRadius: 2, // 그림자의 흐림 정도
+                                  // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
                                 ),
-                                Positioned(
-                                    top: 6,
-                                    right: 6,
-                                    child: Container(
-                                        padding: const EdgeInsets.only(
-                                            top: 2,
-                                            bottom: 2,
-                                            right: 8,
-                                            left: 6),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(12),
-                                            color: stateBackgroundColor),
-                                        child: Row(
-                                          children: [
-                                            Icon(
-                                              Icons.circle,
-                                              color: stateIconColor,
-                                              size: 10,
-                                            ),
-                                            const SizedBox(
-                                              width: 4,
-                                            ),
-                                            Text(
-                                                viewModel
-                                                    .getProgressStateInKorean(
-                                                        viewModel
-                                                            .hostMyCafeModelList![
-                                                                index]
-                                                            .progressState),
-                                                style: TextStyle(
-                                                    fontSize: 10,
-                                                    color: stateTextColor))
-                                          ],
-                                        )))
                               ],
-                            ))
-                          ],
+                            ),
+                            margin: const EdgeInsets.only(
+                                top: 16, bottom: 16, left: 16, right: 16),
+                            height: 140,
+                            child: Row(
+                              children: [
+                                Image.network(
+                                    viewModel.hostMyCafeModelList![index]
+                                            .mainImageUrl ??
+                                        'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
+                                    height: 140,
+                                    width: 210,
+                                    fit: BoxFit.fill),
+                                const SizedBox(
+                                  width: 12,
+                                ),
+                                Expanded(
+                                    child: Stack(
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(
+                                          height: 35,
+                                        ),
+                                        Text(
+                                          '${viewModel.hostMyCafeModelList?[index].artist.groupName} ${viewModel.hostMyCafeModelList?[index].artist.name}',
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Palette.primary,
+                                              fontWeight: FontWeight.w700,
+                                              fontFamily: "Pretendard"),
+                                        ),
+                                        const SizedBox(
+                                          height: 4,
+                                        ),
+                                        Text(
+                                          '${viewModel.hostMyCafeModelList?[index].startDate.toString().substring(0, viewModel.hostMyCafeModelList![index].startDate.toString().length - 9)} ~ ${viewModel.hostMyCafeModelList?[index].endDate.toString().substring(0, viewModel.hostMyCafeModelList![index].endDate.toString().length - 9)}',
+                                          style: const TextStyle(
+                                              fontSize: 10,
+                                              color: Palette.gray10,
+                                              fontWeight: FontWeight.w500,
+                                              fontFamily: "Pretendard"),
+                                        ),
+                                        const SizedBox(
+                                          height: 17,
+                                        ),
+                                        Text(
+                                          viewModel.hostMyCafeModelList?[index]
+                                                  .birthdayCafeName ??
+                                              '카페 이름을 입력해주세요',
+                                          style: const TextStyle(
+                                              fontSize: 10,
+                                              color: Palette.gray08,
+                                              fontWeight: FontWeight.w400,
+                                              fontFamily: "Pretendard"),
+                                        ),
+                                      ],
+                                    ),
+                                    Positioned(
+                                        top: 6,
+                                        right: 6,
+                                        child: Container(
+                                            padding: const EdgeInsets.only(
+                                                top: 2,
+                                                bottom: 2,
+                                                right: 8,
+                                                left: 6),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                                color: stateBackgroundColor),
+                                            child: Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.circle,
+                                                  color: stateIconColor,
+                                                  size: 10,
+                                                ),
+                                                const SizedBox(
+                                                  width: 4,
+                                                ),
+                                                Text(
+                                                    viewModel
+                                                        .getProgressStateInKorean(
+                                                            viewModel
+                                                                .hostMyCafeModelList![
+                                                                    index]
+                                                                .progressState),
+                                                    style: TextStyle(
+                                                        fontSize: 10,
+                                                        color: stateTextColor))
+                                              ],
+                                            )))
+                                  ],
+                                ))
+                              ],
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            height: 140,
+                            margin: const EdgeInsets.only(
+                                top: 16, bottom: 16, left: 16, right: 16),
+                            // color: Palette.gray08,
+                            color: Colors.black.withOpacity(0.7), // 투명도 조절
+
+                            child: const Text(
+                              '운영이 종료되었습니다.',
+                              style: TextStyle(
+                                  fontSize: 14,
+                              color: Colors.white),
+                            ),
+                          )
+                        ],
+                      );
+                    } else {
+                      return GestureDetector(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Container의 배경색
+                            borderRadius: BorderRadius.circular(6),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                // 그림자 색상
+                                spreadRadius: 2,
+                                // 그림자 확산 정도
+                                blurRadius: 2, // 그림자의 흐림 정도
+                                // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
+                              ),
+                            ],
+                          ),
+                          margin: const EdgeInsets.only(
+                              top: 16, bottom: 16, left: 16, right: 16),
+                          height: 140,
+                          child: Row(
+                            children: [
+                              Image.network(
+                                  viewModel.hostMyCafeModelList![index]
+                                          .mainImageUrl ??
+                                      'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
+                                  height: 140,
+                                  width: 210,
+                                  fit: BoxFit.fill),
+                              const SizedBox(
+                                width: 12,
+                              ),
+                              Expanded(
+                                  child: Stack(
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      const SizedBox(
+                                        height: 35,
+                                      ),
+                                      Text(
+                                        '${viewModel.hostMyCafeModelList?[index].artist.groupName} ${viewModel.hostMyCafeModelList?[index].artist.name}',
+                                        style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Palette.primary,
+                                            fontWeight: FontWeight.w700,
+                                            fontFamily: "Pretendard"),
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        '${viewModel.hostMyCafeModelList?[index].startDate.toString().substring(0, viewModel.hostMyCafeModelList![index].startDate.toString().length - 9)} ~ ${viewModel.hostMyCafeModelList?[index].endDate.toString().substring(0, viewModel.hostMyCafeModelList![index].endDate.toString().length - 9)}',
+                                        style: const TextStyle(
+                                            fontSize: 10,
+                                            color: Palette.gray10,
+                                            fontWeight: FontWeight.w500,
+                                            fontFamily: "Pretendard"),
+                                      ),
+                                      const SizedBox(
+                                        height: 17,
+                                      ),
+                                      Text(
+                                        viewModel.hostMyCafeModelList?[index]
+                                                .birthdayCafeName ??
+                                            '카페 이름을 입력해주세요',
+                                        style: const TextStyle(
+                                            fontSize: 10,
+                                            color: Palette.gray08,
+                                            fontWeight: FontWeight.w400,
+                                            fontFamily: "Pretendard"),
+                                      ),
+                                    ],
+                                  ),
+                                  Positioned(
+                                      top: 6,
+                                      right: 6,
+                                      child: Container(
+                                          padding: const EdgeInsets.only(
+                                              top: 2,
+                                              bottom: 2,
+                                              right: 8,
+                                              left: 6),
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                              color: stateBackgroundColor),
+                                          child: Row(
+                                            children: [
+                                              Icon(
+                                                Icons.circle,
+                                                color: stateIconColor,
+                                                size: 10,
+                                              ),
+                                              const SizedBox(
+                                                width: 4,
+                                              ),
+                                              Text(
+                                                  viewModel
+                                                      .getProgressStateInKorean(
+                                                          viewModel
+                                                              .hostMyCafeModelList![
+                                                                  index]
+                                                              .progressState),
+                                                  style: TextStyle(
+                                                      fontSize: 10,
+                                                      color: stateTextColor))
+                                            ],
+                                          )))
+                                ],
+                              ))
+                            ],
+                          ),
                         ),
-                      ),
-                      onTap: () {
-                        if (viewModel
-                                .hostMyCafeModelList![index].progressState ==
-                            'RENTAL_PENDING') {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('승인 대기 중 입니다.')));
-                        } else if (viewModel
-                                .hostMyCafeModelList![index].progressState ==
-                            'RENTAL_APPROVED') {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => HostMyCafeDetail(
-                                      cafeID: viewModel
-                                          .hostMyCafeModelList![index]
-                                          .birthdayCafeId)));
-                        }
-                      },
-                      onLongPress: () {
-                        _openCancelDialog(viewModel
-                            .hostMyCafeModelList![index].birthdayCafeId);
-                      },
-                    );
+                        onTap: () {
+                          if (viewModel
+                                  .hostMyCafeModelList![index].progressState ==
+                              'RENTAL_PENDING') {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('승인 대기 중 입니다.')));
+                          } else if (viewModel
+                                  .hostMyCafeModelList![index].progressState ==
+                              'RENTAL_APPROVED') {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HostMyCafeDetail(
+                                        cafeID: viewModel
+                                            .hostMyCafeModelList![index]
+                                            .birthdayCafeId)));
+                          }
+                        },
+                        onLongPress: () {
+                          _openCancelDialog(viewModel
+                              .hostMyCafeModelList![index].birthdayCafeId);
+                        },
+                      );
+                    }
                   }),
             );
           } else {
