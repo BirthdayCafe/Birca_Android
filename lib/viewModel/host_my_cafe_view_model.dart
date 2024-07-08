@@ -16,6 +16,7 @@ class HostMyCafeViewModel extends ChangeNotifier {
 
   List<HostMyCafeModel>? get hostMyCafeModelList => _hostMyCafeModelList;
 
+
   HostMyCafeViewModel() {
     _hostMyCafeModelList = [];
   }
