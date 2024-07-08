@@ -271,6 +271,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 사진 편집
   Future<void> postImage(int cafeId, List<PickedFile> pickedFiles) async {
+
+    patchInfo(cafeId, BirthdayCafeInfoModel(birthdayCafeName: birthDayCafeNameController.text,birthdayCafeTwitterAccount: twitterController.text));
     String token = await tokenInstance.getToken();
 
     // PickedFile 리스트를 File 리스트로 변환
@@ -310,6 +312,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 대표 사진 편집
   Future<void> postMainImage(int cafeId, PickedFile pickedFile) async {
+    patchInfo(cafeId, BirthdayCafeInfoModel(birthdayCafeName: birthDayCafeNameController.text,birthdayCafeTwitterAccount: twitterController.text));
+
     String token = await tokenInstance.getToken();
 
     // PickedFile 리스트를 File 리스트로 변환
@@ -456,6 +460,9 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   //생일카페 상태 수정
   Future<void> patchCafeState(
       int cafeId, String stateName, String state) async {
+
+    patchInfo(cafeId, BirthdayCafeInfoModel(birthdayCafeName: birthDayCafeNameController.text,birthdayCafeTwitterAccount: twitterController.text));
+
     String token = await tokenInstance.getToken();
 
     api.logInterceptor();

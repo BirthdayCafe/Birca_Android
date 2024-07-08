@@ -137,20 +137,22 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                 value: isSwitched,
                                 activeColor: Palette.primary,
                                 onChanged: (value) async {
+                                  viewModel.updateInfo();
 
                                   if(isSwitched){
-                                    await Provider.of<BirthdayCafeViewModel>(context,
+                                    Provider.of<BirthdayCafeViewModel>(context,
                                         listen: false)
                                         .patchCafeState(id, 'visibility', 'PRIVATE');
                                     viewModel.birthdayCafeModel!.visibility = 'PRIVATE';
 
                                   } else {
-                                    await Provider.of<BirthdayCafeViewModel>(context,
+                                    Provider.of<BirthdayCafeViewModel>(context,
                                         listen: false)
                                         .patchCafeState(id, 'visibility', 'PUBLIC');
                                     viewModel.birthdayCafeModel!.visibility = 'PUBLIC';
 
                                   }
+
                                 },
                               ))),
                     ],
@@ -218,6 +220,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                               fontFamily: 'Pretendard'),
                         ),
                         onTap: () async {
+                         viewModel.updateInfo();
                           if (viewModel.birthdayCafeModel?.progressState ==
                               'IN_PROGRESS') {
                             _selectCongestionState();
@@ -257,7 +260,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Pretendard'),
                         ),
-                        onTap: () {
+                        onTap: () async {
+                          viewModel.updateInfo();
+
                           if (viewModel.birthdayCafeModel?.progressState ==
                               'IN_PROGRESS') {
                             _selectGoodsState();
@@ -749,7 +754,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                       radius: 6,
                       textColor: Palette.primary,
                       textSize: 14,
-                      onPressed: () {
+                      onPressed: () async {
+                        viewModel.updateInfo();
                         _pickMainImages(id);
                       },
                     ),
@@ -811,7 +817,10 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                       radius: 6,
                       textColor: Palette.primary,
                       textSize: 14,
-                      onPressed: () {
+                      onPressed: () async  {
+                        viewModel.updateInfo();
+
+
                         _pickImages(id);
                       },
                     ),
@@ -919,6 +928,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   Future<void> _pickMainImages(int cafeId) async {
     PickedFile? image = await _picker.getImage(source: ImageSource.gallery);
 
+
     if (image != null) {
       setState(() async {
         await Provider.of<BirthdayCafeViewModel>(context, listen: false)
@@ -927,6 +937,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                 Provider.of<BirthdayCafeViewModel>(context, listen: false)
                     .getBirthdayCafes(id));
       });
+
     }
   }
 
@@ -942,13 +953,12 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                 onPressed: () async {
                   await Provider.of<BirthdayCafeViewModel>(context,
                           listen: false)
-                      .patchCafeState(id, 'congestion', 'SMOOTH');
-                  //     .then((value) {
-                  //   Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                  //       .getBirthdayCafes(id);
-                  //   Navigator.pop(context);
-                  // });
-
+                      .patchCafeState(id, 'congestion', 'SMOOTH')
+                      .then((value) {
+                    Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                        .getBirthdayCafes(id);
+                    Navigator.pop(context);
+                  });
 
                 },
               ),
