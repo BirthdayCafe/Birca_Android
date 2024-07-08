@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:birca/designSystem/palette.dart';
 import 'package:birca/designSystem/text.dart';
 import 'package:birca/view/host/host_my_cafe_edit.dart';
@@ -58,37 +57,7 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                 Navigator.pop(context);
               },
               icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
-          actions: [
-            Consumer<BirthdayCafeViewModel>(
-              builder: (context, viewModel, widget) {
-                return Container(
-                  margin: const EdgeInsets.only(top: 10, right: 20),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        child: Icon(
-                          viewModel.birthdayCafeModel?.isLiked ?? false
-                              ? Icons.favorite
-                              : Icons.favorite_border_outlined,
-                          color: Palette.primary,
-                        ),
-                        onTap: () {
-                          log('touch');
-                        },
-                      ),
-                      BircaText(
-                          text: viewModel.birthdayCafeModel?.likeCount
-                                  .toString() ??
-                              '',
-                          textSize: 10,
-                          textColor: Palette.gray03,
-                          fontFamily: 'Pretandard')
-                    ],
-                  ),
-                );
-              },
-            )
-          ],
+
         ),
         body: SingleChildScrollView(child: Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
