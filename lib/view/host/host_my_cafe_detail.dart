@@ -331,6 +331,9 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                               fit: BoxFit.cover,
                             ),
                           ),
+                          const SizedBox(
+                            height: 18,
+                          ),
                           const Text(
                             '사진',
                             style: TextStyle(
