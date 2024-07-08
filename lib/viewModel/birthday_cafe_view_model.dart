@@ -84,6 +84,10 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   TextEditingController get cafeAddressController => _cafeAddressController;
 
+  String _visibility = '';
+  String get visibility => _visibility;
+
+
   //현재 상태를 저장하는 변수
   final String _congestionState = 'UNKNOWN';
   final String _specialGoodsState = 'UNKNOWN';
@@ -158,6 +162,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       _birthdayCafeModel = BirthdayCafeModel.fromJson(response.data);
 
+      if(_birthdayCafeModel!.visibility=='PUBLIC'){
+        _visibility = '공개';
+      } else {
+        _visibility = '비공개';
+      }
       notifyListeners();
     } catch (e) {
       api.errorCheck(e);
@@ -464,7 +473,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     patchInfo(cafeId, BirthdayCafeInfoModel(birthdayCafeName: birthDayCafeNameController.text,birthdayCafeTwitterAccount: twitterController.text));
 
     String token = await tokenInstance.getToken();
-
+    if(_birthdayCafeModel!.visibility=='PUBLIC'){
+      _visibility = '공개';
+    } else {
+      _visibility = '비공개';
+    }
     api.logInterceptor();
 
     try {

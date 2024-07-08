@@ -75,17 +75,18 @@ class _HostCafeEdit extends State<HostCafeEdit> {
       body: SingleChildScrollView(
         child: Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
-              // viewModel. artistController.text =
-              // '${viewModel.birthdayCafeModel!.artist.groupName} ${viewModel.birthdayCafeModel!.artist.name}';
-              viewModel. twitterController.text = viewModel.birthdayCafeModel!.twitterAccount;
-              // viewModel. cafeAddressController.text =
-              // viewModel.birthdayCafeModel!.cafe.address;
+          // viewModel. artistController.text =
+          // '${viewModel.birthdayCafeModel!.artist.groupName} ${viewModel.birthdayCafeModel!.artist.name}';
+          viewModel.twitterController.text =
+              viewModel.birthdayCafeModel!.twitterAccount;
+          // viewModel. cafeAddressController.text =
+          // viewModel.birthdayCafeModel!.cafe.address;
 
-              if(viewModel.birthdayCafeModel!.visibility=='PUBLIC'){
-                isSwitched = true;
-              } else {
-                isSwitched = false;
-              }
+          if (viewModel.birthdayCafeModel!.visibility == 'PUBLIC') {
+            isSwitched = true;
+          } else {
+            isSwitched = false;
+          }
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +114,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                     },
                   )),
               Container(
-                  padding: const EdgeInsets.only(left: 20, right: 17, top: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 17, top: 10),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -130,8 +131,14 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         ),
                       ),
                       SizedBox(
-                          height: 10,
-                          child: Transform.scale(
+                          child: Row(
+                        children: [
+                          Text(
+                            viewModel.visibility,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                          Transform.scale(
                               scale: 0.7,
                               child: CupertinoSwitch(
                                 value: isSwitched,
@@ -139,26 +146,29 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                 onChanged: (value) async {
                                   viewModel.updateInfo();
 
-                                  if(isSwitched){
+                                  if (isSwitched) {
                                     Provider.of<BirthdayCafeViewModel>(context,
-                                        listen: false)
-                                        .patchCafeState(id, 'visibility', 'PRIVATE');
-                                    viewModel.birthdayCafeModel!.visibility = 'PRIVATE';
-
+                                            listen: false)
+                                        .patchCafeState(
+                                            id, 'visibility', 'PRIVATE');
+                                    viewModel.birthdayCafeModel!.visibility =
+                                        'PRIVATE';
                                   } else {
                                     Provider.of<BirthdayCafeViewModel>(context,
-                                        listen: false)
-                                        .patchCafeState(id, 'visibility', 'PUBLIC');
-                                    viewModel.birthdayCafeModel!.visibility = 'PUBLIC';
-
+                                            listen: false)
+                                        .patchCafeState(
+                                            id, 'visibility', 'PUBLIC');
+                                    viewModel.birthdayCafeModel!.visibility =
+                                        'PUBLIC';
                                   }
-
                                 },
-                              ))),
+                              ))
+                        ],
+                      )),
                     ],
                   )),
               const SizedBox(
-                height: 20,
+                height: 10,
               ),
               Container(
                 width: double.infinity,
@@ -220,7 +230,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                               fontFamily: 'Pretendard'),
                         ),
                         onTap: () async {
-                         viewModel.updateInfo();
+                          viewModel.updateInfo();
                           if (viewModel.birthdayCafeModel?.progressState ==
                               'IN_PROGRESS') {
                             _selectCongestionState();
@@ -290,14 +300,12 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           fontWeight: FontWeight.w700,
                           fontSize: 16),
                     ),
-                     const SizedBox(
-                       height: 10,
-                     ),
-                     Text(
-                       '${viewModel.birthdayCafeModel?.artist.groupName} ${viewModel.birthdayCafeModel?.artist.name}',
-                       style: const TextStyle(
-                         fontSize: 16
-                       ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '${viewModel.birthdayCafeModel?.artist.groupName} ${viewModel.birthdayCafeModel?.artist.name}',
+                      style: const TextStyle(fontSize: 16),
                     ),
                     const SizedBox(
                       height: 26,
@@ -738,7 +746,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                       child: Image.network(
                         viewModel.birthdayCafeModel?.mainImage ??
                             'https://placehold.co/90x90/F7F7FA/F7F7FA.jpg',
-
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -817,9 +824,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                       radius: 6,
                       textColor: Palette.primary,
                       textSize: 14,
-                      onPressed: () async  {
+                      onPressed: () async {
                         viewModel.updateInfo();
-
 
                         _pickImages(id);
                       },
@@ -872,8 +878,10 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                   .patchInfo(
                       id,
                       BirthdayCafeInfoModel(
-                          birthdayCafeName: viewModel.birthDayCafeNameController.text,
-                          birthdayCafeTwitterAccount: viewModel.twitterController.text))
+                          birthdayCafeName:
+                              viewModel.birthDayCafeNameController.text,
+                          birthdayCafeTwitterAccount:
+                              viewModel.twitterController.text))
                   .then((value) {
                 Provider.of<BirthdayCafeViewModel>(context, listen: false)
                     .fetchData(id);
@@ -928,7 +936,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
   Future<void> _pickMainImages(int cafeId) async {
     PickedFile? image = await _picker.getImage(source: ImageSource.gallery);
 
-
     if (image != null) {
       setState(() async {
         await Provider.of<BirthdayCafeViewModel>(context, listen: false)
@@ -937,7 +944,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                 Provider.of<BirthdayCafeViewModel>(context, listen: false)
                     .getBirthdayCafes(id));
       });
-
     }
   }
 
@@ -959,7 +965,6 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         .getBirthdayCafes(id);
                     Navigator.pop(context);
                   });
-
                 },
               ),
               SimpleDialogOption(
