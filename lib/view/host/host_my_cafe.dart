@@ -80,11 +80,22 @@ class _HostCafe extends State<HostCafe> {
                         stateBackgroundColor = const Color(0xFFFEC7C7);
                         stateIconColor = Palette.primary;
                         stateTextColor = Palette.primary;
+                      case 'RENTAL_CANCELED':
+                        stateBackgroundColor = Palette.gray03;
+                        stateIconColor = Palette.gray06;
+                        stateTextColor = Palette.gray06;
                     }
 
                     if (viewModel.hostMyCafeModelList?[index].progressState ==
                         'RENTAL_CANCELED'||viewModel.hostMyCafeModelList?[index].progressState ==
                         'FINISHED') {
+                      String message ='';
+                      if(viewModel.hostMyCafeModelList?[index].progressState=='RENTAL_CANCELED'){
+                        message = '취소되었습니다.';
+                      } else {
+                        message = '운영이 종료되었습니다.';
+
+                      }
                       return Stack(
                         children: [
                           Container(
@@ -103,7 +114,7 @@ class _HostCafe extends State<HostCafe> {
                               ],
                             ),
                             margin: const EdgeInsets.only(
-                                top: 16, bottom: 16, left: 16, right: 16),
+                                top: 8, bottom: 8, left: 16, right: 16),
                             height: 140,
                             child: Row(
                               children: [
@@ -205,13 +216,14 @@ class _HostCafe extends State<HostCafe> {
                             alignment: Alignment.center,
                             height: 140,
                             margin: const EdgeInsets.only(
-                                top: 16, bottom: 16, left: 16, right: 16),
-                            // color: Palette.gray08,
-                            color: Colors.black.withOpacity(0.7), // 투명도 조절
-
-                            child: const Text(
-                              '운영이 종료되었습니다.',
-                              style: TextStyle(
+                                top: 8, bottom: 8, left: 16, right: 16),
+                            decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.7), // 투명도 조절
+                              borderRadius: BorderRadius.circular(6)
+                            ),
+                            child:  Text(
+                              message,
+                              style: const TextStyle(
                                   fontSize: 14,
                               color: Colors.white),
                             ),
@@ -236,7 +248,7 @@ class _HostCafe extends State<HostCafe> {
                             ],
                           ),
                           margin: const EdgeInsets.only(
-                              top: 16, bottom: 16, left: 16, right: 16),
+                              top: 8, bottom: 8, left: 16, right: 16),
                           height: 140,
                           child: Row(
                             children: [
