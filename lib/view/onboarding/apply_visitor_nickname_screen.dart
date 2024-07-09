@@ -120,12 +120,17 @@ class _ApplyVisitorNickNameScreen extends State<ApplyVisitorNickNameScreen> {
                               textSize: 14,
                               backgroundColor: Palette.white,
                               onPressed: () async {
-                                await Provider.of<NickNameViewModel>(context,
-                                        listen: false)
-                                    .nickNameCheck(nickNameController.text);
 
-                                viewModel.isBtnOk(
-                                    viewModel.isNickNameCheckOk, context);
+                                if(nickNameController.text.length>10){
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(const SnackBar(content: Text('10글자 이내로 작성해주세요.')));
+                                } else {
+                                  await Provider.of<NickNameViewModel>(context,
+                                      listen: false)
+                                      .nickNameCheck(nickNameController.text);
+                                  viewModel.isBtnOk(
+                                      viewModel.isNickNameCheckOk, context);
+                                }
                               }),
                         );
                       })
