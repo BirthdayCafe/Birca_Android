@@ -59,200 +59,200 @@ class _OwnerSchedule extends State<OwnerSchedule> {
         ),
         body: SingleChildScrollView(child: Consumer<OwnerScheduleViewModel>(
             builder: (context, viewModel, widget) {
-              //
-              // TextEditingController memoController = TextEditingController();
-              // int memoCount = memoController.text.length;
 
-          return Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(
-                    left: 25, right: 25, top: 10, bottom: 13),
-                child: TableCalendar(
-                  //오늘 날짜
-                  focusedDay: _focusedDay,
-                  firstDay: DateTime.utc(DateTime.now().year - 1),
-                  lastDay: DateTime.utc(DateTime.now().year + 1),
-                  headerStyle: const HeaderStyle(
-                      titleTextStyle: TextStyle(
-                        fontSize: 17.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                      formatButtonVisible: false,
-                      titleCentered: false,
-                      headerMargin: EdgeInsets.all(5),
-                      rightChevronVisible: false,
-                      leftChevronVisible: false),
-                  selectedDayPredicate: (day) {
-                    return isSameDay(_selectedDay, day);
-                  },
-                  onDaySelected: (selectedDay, focusedDay) {
-                    if (!isSameDay(_selectedDay, selectedDay)) {
-                      setState(() {
-                        _selectedDay = selectedDay;
-                        _focusedDay = focusedDay;
-                        viewModel.getScheduleDetail(
-                            DateFormat('yyyy-MM-ddT00:00:00')
-                                .format(_selectedDay!));
-                      });
-                    }
-                  },
-                  onPageChanged: (focusedDay) {
-                    _focusedDay = focusedDay;
-                    viewModel.getSchedule(_focusedDay.year, _focusedDay.month);
-                  },
-                  availableGestures: AvailableGestures.horizontalSwipe,
-                  // Enable horizontal swipe
-                  calendarBuilders: CalendarBuilders(
-                      defaultBuilder: (context, day, focusedDay) {
-                    for (var range in viewModel.dateRanges) {
-                      if (day.isAfter(range['start']!) &&
-                          day.isBefore(
-                              range['end']!.add(const Duration(days: 1)))) {
-                        return Container(
-                          margin: const EdgeInsets.all(6.0),
-                          alignment: Alignment.center,
-                          decoration: const BoxDecoration(
-                              color: Palette.primary, shape: BoxShape.circle),
-                          child: Text(
-                            '${day.day}',
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                        );
-                      }
-                    }
-                    return null;
-                  }),
-                  calendarStyle: CalendarStyle(
-                      // isTodayHighlighted: false,
-                      selectedDecoration: BoxDecoration(
-                          color: Colors.blue.withOpacity(0.5),
-                          shape: BoxShape.circle)),
-                ),
-              ),
-              GestureDetector(
-                child: Container(
-                  // height: 140,
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(left: 14, right: 14, top: 19),
-                  padding:
-                      const EdgeInsets.only(left: 26, top: 31, bottom: 28.5),
-                  decoration: BoxDecoration(
-                    color: Palette.gray02, // Container의 배경색
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "아티스트 : ${viewModel.ownerScheduleModel?.artist.groupName ?? ""} ${viewModel.ownerScheduleModel?.artist.name ?? ""}",
-                        style: const TextStyle(
-                            color: Palette.primary,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14),
-                      ),
-                      const SizedBox(
-                        height: 13.5,
-                      ),
-                      Text(
-                        "닉네임 : ${viewModel.ownerScheduleModel?.nickname ?? ""}",
-                        style: const TextStyle(
-                            color: Palette.gray10,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14),
-                      ),
-                      const SizedBox(
-                        height: 13.5,
-                      ),
-                      Text(
-                        "일정 : ${viewModel.ownerScheduleModel?.startDate.substring(0, 10) ?? ""} ~ ${viewModel.ownerScheduleModel?.endDate.substring(0, 10) ?? ""}",
-                        style: const TextStyle(
-                            color: Palette.gray10,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w500,
-                            fontSize: 14),
-                      )
-                    ],
-                  ),
-                ),
-                onTap: () {
-                  if (viewModel.ownerScheduleModel != null) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => OwnerRequestDetail(
-                                  cafeID: viewModel
-                                      .ownerScheduleModel!.birthdayCafeId,
-                                  isRequestAccept: true,
-                                )));
-                  }
-                },
-              ),
-              const SizedBox(
-                height: 5,
-              ),
-              Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(left: 14, right: 14, top: 19),
+            return Column(
+              children: [
+                Container(
                   padding: const EdgeInsets.only(
-                      left: 26, top: 15, bottom: 15, right: 26),
-                  decoration: BoxDecoration(
-                    color: Palette.gray02, // Container의 배경색
-                    borderRadius: BorderRadius.circular(6),
+                      left: 25, right: 25, top: 10, bottom: 13),
+                  child: TableCalendar(
+                    //오늘 날짜
+                    focusedDay: _focusedDay,
+                    firstDay: DateTime.utc(DateTime.now().year - 1),
+                    lastDay: DateTime.utc(DateTime.now().year + 1),
+                    headerStyle: const HeaderStyle(
+                        titleTextStyle: TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                        formatButtonVisible: false,
+                        titleCentered: false,
+                        headerMargin: EdgeInsets.all(5),
+                        rightChevronVisible: false,
+                        leftChevronVisible: false),
+                    selectedDayPredicate: (day) {
+                      return isSameDay(_selectedDay, day);
+                    },
+                    onDaySelected: (selectedDay, focusedDay) {
+                      if (!isSameDay(_selectedDay, selectedDay)) {
+                        setState(() {
+                          _selectedDay = selectedDay;
+                          _focusedDay = focusedDay;
+                          viewModel.getScheduleDetail(
+                              DateFormat('yyyy-MM-ddT00:00:00')
+                                  .format(_selectedDay!));
+                        });
+                      }
+                    },
+                    onPageChanged: (focusedDay) {
+                      _focusedDay = focusedDay;
+                      viewModel.getSchedule(
+                          _focusedDay.year, _focusedDay.month);
+                    },
+                    availableGestures: AvailableGestures.horizontalSwipe,
+                    // Enable horizontal swipe
+                    calendarBuilders: CalendarBuilders(
+                        defaultBuilder: (context, day, focusedDay) {
+                      for (var range in viewModel.dateRanges) {
+                        if (day.isAfter(range['start']!) &&
+                            day.isBefore(
+                                range['end']!.add(const Duration(days: 1)))) {
+                          return Container(
+                            margin: const EdgeInsets.all(6.0),
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                                color: Palette.primary, shape: BoxShape.circle),
+                            child: Text(
+                              '${day.day}',
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          );
+                        }
+                      }
+                      return null;
+                    }),
+                    calendarStyle: CalendarStyle(
+                        // isTodayHighlighted: false,
+                        selectedDecoration: BoxDecoration(
+                            color: Colors.blue.withOpacity(0.5),
+                            shape: BoxShape.circle)),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            '메모',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Pretendard'),
-                          ),
-                          BircaOutLinedButton(
-                            text: '저장하기',
-                            radiusColor: Palette.primary,
-                            backgroundColor: Palette.primary,
-                            width: 60,
-                            height: 30,
-                            radius: 5,
-                            textColor: Colors.white,
-                            textSize: 12,
-                            onPressed: () {
-                              ScaffoldMessenger.of(context)
-                                  .showSnackBar(const SnackBar(content: Text('저장 완료')));                            },
-                          )
-                        ],
-                      ),
-                      TextField(
-                        // controller: viewModel.memoController,
-                        maxLength: 500,
-                        maxLines: 10,
-                        onChanged: (text){
-                          viewModel.updateMemo();
-                          log(text);
-                        },
-                        decoration: const InputDecoration(
-                            hintText: '메모를 입력해주세요.',
-                            hintStyle: TextStyle(
-                                fontSize: 14, fontFamily: 'Pretendard'),
-                            // counterText:
-                            //     'viewModel.memoController.text.length/500',
-                            border: UnderlineInputBorder(
-                              borderSide: BorderSide.none,
-                            )),
-                      )
-                    ],
-                  ))
-            ],
-          );
+                ),
+                GestureDetector(
+                  child: Container(
+                    // height: 140,
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(left: 14, right: 14, top: 19),
+                    padding:
+                        const EdgeInsets.only(left: 26, top: 31, bottom: 28.5),
+                    decoration: BoxDecoration(
+                      color: Palette.gray02, // Container의 배경색
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "아티스트 : ${viewModel.ownerScheduleModel?.artist.groupName ?? ""} ${viewModel.ownerScheduleModel?.artist.name ?? ""}",
+                          style: const TextStyle(
+                              color: Palette.primary,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w700,
+                              fontSize: 14),
+                        ),
+                        const SizedBox(
+                          height: 13.5,
+                        ),
+                        Text(
+                          "닉네임 : ${viewModel.ownerScheduleModel?.nickname ?? ""}",
+                          style: const TextStyle(
+                              color: Palette.gray10,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14),
+                        ),
+                        const SizedBox(
+                          height: 13.5,
+                        ),
+                        Text(
+                          "일정 : ${viewModel.ownerScheduleModel?.startDate.substring(0, 10) ?? ""} ~ ${viewModel.ownerScheduleModel?.endDate.substring(0, 10) ?? ""}",
+                          style: const TextStyle(
+                              color: Palette.gray10,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w500,
+                              fontSize: 14),
+                        )
+                      ],
+                    ),
+                  ),
+                  onTap: () {
+                    if (viewModel.ownerScheduleModel != null) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => OwnerRequestDetail(
+                                    cafeID: viewModel
+                                        .ownerScheduleModel!.birthdayCafeId,
+                                    isRequestAccept: true,
+                                  )));
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 5,
+                ),
+                Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(left: 14, right: 14, top: 19),
+                    padding: const EdgeInsets.only(
+                        left: 26, top: 15, bottom: 15, right: 26),
+                    decoration: BoxDecoration(
+                      color: Palette.gray02, // Container의 배경색
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              '메모',
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: 'Pretendard'),
+                            ),
+                            BircaOutLinedButton(
+                              text: '저장하기',
+                              radiusColor: Palette.primary,
+                              backgroundColor: Palette.primary,
+                              width: 60,
+                              height: 30,
+                              radius: 5,
+                              textColor: Colors.white,
+                              textSize: 12,
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('저장 완료')));
+                              },
+                            )
+                          ],
+                        ),
+                        TextField(
+                          controller: viewModel.memoController,
+                          maxLength: 500,
+                          maxLines: 10,
+                          onChanged: (text) {
+                            viewModel.updateMemo();
+                            log(text);
+                          },
+                          decoration:  InputDecoration(
+                              hintText: '메모를 입력해주세요.',
+                              hintStyle: const TextStyle(
+                                  fontSize: 14, fontFamily: 'Pretendard'),
+                              counterText:
+                                  '${viewModel.memoController.text.length}/500',
+                              border: const UnderlineInputBorder(
+                                borderSide: BorderSide.none,
+                              )),
+                        )
+                      ],
+                    ))
+              ],
+            );
+
         })),
         floatingActionButton: SizedBox(
           width: 40,
