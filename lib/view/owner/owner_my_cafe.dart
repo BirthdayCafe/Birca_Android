@@ -310,6 +310,7 @@ class _OwnerMyCafe extends State<OwnerMyCafe> {
           width: 40,
           height: 40,
           child: FloatingActionButton(
+              shape: const CircleBorder(),
               backgroundColor: Palette.primary,
               onPressed: () {
                 Navigator.push(

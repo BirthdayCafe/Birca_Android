@@ -29,13 +29,9 @@ class _OwnerSchedule extends State<OwnerSchedule> {
     super.initState();
     Provider.of<OwnerScheduleViewModel>(context, listen: false)
         .getScheduleDetail(
-        DateFormat('yyyy-MM-ddT00:00:00').format(DateTime.now()));
+            DateFormat('yyyy-MM-ddT00:00:00').format(DateTime.now()));
     Provider.of<OwnerScheduleViewModel>(context, listen: false)
-        .getSchedule(DateTime
-        .now()
-        .year, DateTime
-        .now()
-        .month);
+        .getSchedule(DateTime.now().year, DateTime.now().month);
   }
 
   @override
@@ -43,10 +39,10 @@ class _OwnerSchedule extends State<OwnerSchedule> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false, // 자동으로 leading 버튼 생성 방지
-          title: Row(
+          title: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
+              Text(
                 '스케줄',
                 style: TextStyle(
                     fontSize: 20,
@@ -54,165 +50,160 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                     fontFamily: 'Pretendard',
                     color: Palette.primary),
               ),
-              IconButton(
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const OwnerScheduleAdd()));
-                  },
-                  icon: const Icon(
-                    Icons.add,
-                    size: 30,
-                  ))
             ],
           ),
           centerTitle: false,
         ),
         body: SingleChildScrollView(child: Consumer<OwnerScheduleViewModel>(
             builder: (context, viewModel, widget) {
-              return Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 25, right: 25, top: 10, bottom: 13),
-                    child: TableCalendar(
-                      //오늘 날짜
-                      focusedDay: _focusedDay,
-                      firstDay: DateTime.utc(DateTime
-                          .now()
-                          .year - 1),
-                      lastDay: DateTime.utc(DateTime
-                          .now()
-                          .year + 1),
-                      headerStyle: const HeaderStyle(
-                        titleTextStyle: TextStyle(
-                          fontSize: 17.0,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                        ),
-                          formatButtonVisible: false, titleCentered: false,
+          return Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.only(
+                    left: 25, right: 25, top: 10, bottom: 13),
+                child: TableCalendar(
+                  //오늘 날짜
+                  focusedDay: _focusedDay,
+                  firstDay: DateTime.utc(DateTime.now().year - 1),
+                  lastDay: DateTime.utc(DateTime.now().year + 1),
+                  headerStyle: const HeaderStyle(
+                      titleTextStyle: TextStyle(
+                        fontSize: 17.0,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                      formatButtonVisible: false,
+                      titleCentered: false,
                       headerMargin: EdgeInsets.all(5),
                       rightChevronVisible: false,
-                      leftChevronVisible:false),
-                      selectedDayPredicate: (day) {
-                        return isSameDay(_selectedDay, day);
-                      },
-                      onDaySelected: (selectedDay, focusedDay) {
-                        if (!isSameDay(_selectedDay, selectedDay)) {
-                          setState(() {
-                            _selectedDay = selectedDay;
-                            _focusedDay = focusedDay;
-                            viewModel.getScheduleDetail(
-                                DateFormat('yyyy-MM-ddT00:00:00')
-                                    .format(_selectedDay!));
-                          });
-                        }
-                      },
-                      onPageChanged: (focusedDay) {
+                      leftChevronVisible: false),
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDay, day);
+                  },
+                  onDaySelected: (selectedDay, focusedDay) {
+                    if (!isSameDay(_selectedDay, selectedDay)) {
+                      setState(() {
+                        _selectedDay = selectedDay;
                         _focusedDay = focusedDay;
-                        viewModel.getSchedule(
-                            _focusedDay.year, _focusedDay.month);
-                      },
-                      availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
-                      calendarBuilders: CalendarBuilders(
-                          defaultBuilder: (context, day, focusedDay) {
-                            for (var range in viewModel.dateRanges) {
-                              if (day.isAfter(range['start']!) &&
-                                  day.isBefore(
-                                      range['end']!.add(
-                                          const Duration(days: 1)))) {
-                                return Container(
-                                  margin: const EdgeInsets.all(6.0),
-                                  alignment: Alignment.center,
-                                  decoration: const BoxDecoration(
-                                      color: Palette.primary,
-                                      shape: BoxShape.circle),
-                                  child: Text(
-                                  '${day.day}',
-                                  style: const TextStyle(color: Colors.white),
-                                ),);
-                          }
-                          }
-                            return
-                            null;
-                          }),
-                      calendarStyle: CalendarStyle(
-                        // isTodayHighlighted: false,
-                          selectedDecoration: BoxDecoration(
-                              color: Colors.blue.withOpacity(0.5),
-                              shape: BoxShape.circle)),
-                    ),
-                  ),
-                  GestureDetector(
-                    child: Container(
-                      // height: 140,
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(
-                          left: 14, right: 14, top: 19),
-                      padding:
-                      const EdgeInsets.only(left: 26, top: 31, bottom: 28.5),
-                      decoration: BoxDecoration(
-                        color: Palette.gray02, // Container의 배경색
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "아티스트 : ${viewModel.ownerScheduleModel?.artist
-                                .groupName ?? ""} ${viewModel.ownerScheduleModel
-                                ?.artist.name ?? ""}",
-                            style: const TextStyle(
-                                color: Palette.primary,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w700,
-                                fontSize: 14),
+                        viewModel.getScheduleDetail(
+                            DateFormat('yyyy-MM-ddT00:00:00')
+                                .format(_selectedDay!));
+                      });
+                    }
+                  },
+                  onPageChanged: (focusedDay) {
+                    _focusedDay = focusedDay;
+                    viewModel.getSchedule(_focusedDay.year, _focusedDay.month);
+                  },
+                  availableGestures: AvailableGestures.horizontalSwipe,
+                  // Enable horizontal swipe
+                  calendarBuilders: CalendarBuilders(
+                      defaultBuilder: (context, day, focusedDay) {
+                    for (var range in viewModel.dateRanges) {
+                      if (day.isAfter(range['start']!) &&
+                          day.isBefore(
+                              range['end']!.add(const Duration(days: 1)))) {
+                        return Container(
+                          margin: const EdgeInsets.all(6.0),
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                              color: Palette.primary, shape: BoxShape.circle),
+                          child: Text(
+                            '${day.day}',
+                            style: const TextStyle(color: Colors.white),
                           ),
-                          const SizedBox(
-                            height: 13.5,
-                          ),
-                          Text(
-                            "닉네임 : ${viewModel.ownerScheduleModel?.nickname ??
-                                ""}",
-                            style: const TextStyle(
-                                color: Palette.gray10,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14),
-                          ),
-                          const SizedBox(
-                            height: 13.5,
-                          ),
-                          Text(
-                            "일정 : ${viewModel.ownerScheduleModel?.startDate
-                                .substring(0, 10) ?? ""} ~ ${viewModel
-                                .ownerScheduleModel?.endDate.substring(0, 10) ??
-                                ""}",
-                            style: const TextStyle(
-                                color: Palette.gray10,
-                                fontFamily: 'Pretendard',
-                                fontWeight: FontWeight.w500,
-                                fontSize: 14),
-                          )
-                        ],
-                      ),
-                    ),
-                    onTap: () {
-                      if (viewModel.ownerScheduleModel != null) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    OwnerRequestDetail(
-                                        cafeID: viewModel
-                                            .ownerScheduleModel!
-                                            .birthdayCafeId,isRequestAccept: true,)));
+                        );
                       }
-                    },
-                  )
-                ],
-              );
-            })));
+                    }
+                    return null;
+                  }),
+                  calendarStyle: CalendarStyle(
+                      // isTodayHighlighted: false,
+                      selectedDecoration: BoxDecoration(
+                          color: Colors.blue.withOpacity(0.5),
+                          shape: BoxShape.circle)),
+                ),
+              ),
+              GestureDetector(
+                child: Container(
+                  // height: 140,
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(left: 14, right: 14, top: 19),
+                  padding:
+                      const EdgeInsets.only(left: 26, top: 31, bottom: 28.5),
+                  decoration: BoxDecoration(
+                    color: Palette.gray02, // Container의 배경색
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "아티스트 : ${viewModel.ownerScheduleModel?.artist.groupName ?? ""} ${viewModel.ownerScheduleModel?.artist.name ?? ""}",
+                        style: const TextStyle(
+                            color: Palette.primary,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14),
+                      ),
+                      const SizedBox(
+                        height: 13.5,
+                      ),
+                      Text(
+                        "닉네임 : ${viewModel.ownerScheduleModel?.nickname ?? ""}",
+                        style: const TextStyle(
+                            color: Palette.gray10,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14),
+                      ),
+                      const SizedBox(
+                        height: 13.5,
+                      ),
+                      Text(
+                        "일정 : ${viewModel.ownerScheduleModel?.startDate.substring(0, 10) ?? ""} ~ ${viewModel.ownerScheduleModel?.endDate.substring(0, 10) ?? ""}",
+                        style: const TextStyle(
+                            color: Palette.gray10,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w500,
+                            fontSize: 14),
+                      )
+                    ],
+                  ),
+                ),
+                onTap: () {
+                  if (viewModel.ownerScheduleModel != null) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => OwnerRequestDetail(
+                                  cafeID: viewModel
+                                      .ownerScheduleModel!.birthdayCafeId,
+                                  isRequestAccept: true,
+                                )));
+                  }
+                },
+              )
+            ],
+          );
+        })),
+        floatingActionButton: SizedBox(
+          width: 40,
+          height: 40,
+          child: FloatingActionButton(
+              shape: const CircleBorder(),
+              backgroundColor: Palette.primary,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const OwnerScheduleAdd()));
+              },
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 35,
+              )),
+        ));
   }
 }
