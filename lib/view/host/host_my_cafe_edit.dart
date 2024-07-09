@@ -75,12 +75,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
       body: SingleChildScrollView(
         child: Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
-          // viewModel. artistController.text =
-          // '${viewModel.birthdayCafeModel!.artist.groupName} ${viewModel.birthdayCafeModel!.artist.name}';
           viewModel.twitterController.text =
               viewModel.birthdayCafeModel!.twitterAccount;
-          // viewModel. cafeAddressController.text =
-          // viewModel.birthdayCafeModel!.cafe.address;
 
           if (viewModel.birthdayCafeModel!.visibility == 'PUBLIC') {
             isSwitched = true;
