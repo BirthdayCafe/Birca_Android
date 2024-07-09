@@ -79,7 +79,9 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                     child: TableCalendar(
                       //오늘 날짜
                       focusedDay: _focusedDay,
-                      firstDay: DateTime.now(),
+                      firstDay: DateTime.utc(DateTime
+                          .now()
+                          .year - 1),
                       lastDay: DateTime.utc(DateTime
                           .now()
                           .year + 1),
