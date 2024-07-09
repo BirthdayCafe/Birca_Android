@@ -30,6 +30,9 @@ class OwnerScheduleViewModel extends ChangeNotifier {
 
   List<Map<String, DateTime>> get dateRanges => _dateRanges;
 
+  // final TextEditingController _memoController = TextEditingController();
+  // TextEditingController get memoController => _memoController;
+
   //사장님 스케줄 추가
   Future<void> postSchedule(OwnerScheduleAddModel ownerScheduleAddModel) async {
     String token = await tokenInstance.getToken();
@@ -124,5 +127,9 @@ class OwnerScheduleViewModel extends ChangeNotifier {
     } catch (e) {
       api.errorCheck(e);
     }
+  }
+
+  void updateMemo() {
+    notifyListeners();
   }
 }

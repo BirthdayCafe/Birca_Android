@@ -1,5 +1,7 @@
+import 'dart:developer';
 import 'package:birca/view/owner/owner_request_detail.dart';
 import 'package:birca/view/owner/owner_schedule_add.dart';
+import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -38,6 +40,7 @@ class _OwnerSchedule extends State<OwnerSchedule> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          scrolledUnderElevation: 0,
           automaticallyImplyLeading: false, // 자동으로 leading 버튼 생성 방지
           title: const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -56,6 +59,10 @@ class _OwnerSchedule extends State<OwnerSchedule> {
         ),
         body: SingleChildScrollView(child: Consumer<OwnerScheduleViewModel>(
             builder: (context, viewModel, widget) {
+              //
+              // TextEditingController memoController = TextEditingController();
+              // int memoCount = memoController.text.length;
+
           return Column(
             children: [
               Container(
@@ -183,7 +190,67 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                                 )));
                   }
                 },
-              )
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Container(
+                  width: double.infinity,
+                  margin: const EdgeInsets.only(left: 14, right: 14, top: 19),
+                  padding: const EdgeInsets.only(
+                      left: 26, top: 15, bottom: 15, right: 26),
+                  decoration: BoxDecoration(
+                    color: Palette.gray02, // Container의 배경색
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            '메모',
+                            style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Pretendard'),
+                          ),
+                          BircaOutLinedButton(
+                            text: '저장하기',
+                            radiusColor: Palette.primary,
+                            backgroundColor: Palette.primary,
+                            width: 60,
+                            height: 30,
+                            radius: 5,
+                            textColor: Colors.white,
+                            textSize: 12,
+                            onPressed: () {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(content: Text('저장 완료')));                            },
+                          )
+                        ],
+                      ),
+                      TextField(
+                        // controller: viewModel.memoController,
+                        maxLength: 500,
+                        maxLines: 10,
+                        onChanged: (text){
+                          viewModel.updateMemo();
+                          log(text);
+                        },
+                        decoration: const InputDecoration(
+                            hintText: '메모를 입력해주세요.',
+                            hintStyle: TextStyle(
+                                fontSize: 14, fontFamily: 'Pretendard'),
+                            // counterText:
+                            //     'viewModel.memoController.text.length/500',
+                            border: UnderlineInputBorder(
+                              borderSide: BorderSide.none,
+                            )),
+                      )
+                    ],
+                  ))
             ],
           );
         })),
