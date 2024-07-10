@@ -26,10 +26,8 @@ class _VisitorHome extends State<VisitorHome> {
   void initState() {
     super.initState();
     Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-        .getFavoriteArtist()
-        .then((value) =>
-            Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-                .getInterestArtist());
+        .getFavoriteArtist();
+
     Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
         .getCafeHome(0, 10, '', '');
     _name = '';

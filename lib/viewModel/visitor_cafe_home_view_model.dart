@@ -43,11 +43,12 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       // 서버 응답 출력
-      log('Response: ${response.data}');
+      log('getFavoriteArtist: ${response.data}');
 
-      if(!homeArtistsList!.contains(HomeArtists.fromJson(response.data))){
         homeArtistsList?.add(HomeArtists.fromJson(response.data));
-      }
+
+        getInterestArtist();
+      log('getFavoriteArtist id: ${homeArtistsList![0].artistId}');
 
       notifyListeners();
     } catch (e) {
@@ -67,14 +68,14 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
       // 서버 응답 출력
-      log('Response: ${response.data}');
+      log('getInterestArtist: ${response.data}');
 
       List<dynamic> jsonData = response.data;
       List<HomeArtists> artists =
           jsonData.map((e) => HomeArtists.fromJson(e)).toList();
 
       for(int i=0; i<artists.length;i++){
-        if(!homeArtistsList!.contains(artists[i])){
+        if(homeArtistsList![0].artistId!=artists[i].artistId){
           homeArtistsList?.add(artists[i]);
         }
       }
