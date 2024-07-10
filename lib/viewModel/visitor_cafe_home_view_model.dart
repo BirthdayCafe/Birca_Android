@@ -45,8 +45,8 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       // 서버 응답 출력
       log('Response: ${response.data}');
 
-      if (response.data != null) {
-        _homeArtistsList?.add(HomeArtists.fromJson(response.data));
+      if(!homeArtistsList!.contains(HomeArtists.fromJson(response.data))){
+        homeArtistsList?.add(HomeArtists.fromJson(response.data));
       }
 
       notifyListeners();
@@ -73,7 +73,12 @@ class VisitorCafeHomeViewModel extends ChangeNotifier {
       List<HomeArtists> artists =
           jsonData.map((e) => HomeArtists.fromJson(e)).toList();
 
-      homeArtistsList?.addAll(artists);
+      for(int i=0; i<artists.length;i++){
+        if(!homeArtistsList!.contains(artists[i])){
+          homeArtistsList?.add(artists[i]);
+        }
+      }
+      // homeArtistsList?.addAll(artists);
 
       notifyListeners();
     } catch (e) {
