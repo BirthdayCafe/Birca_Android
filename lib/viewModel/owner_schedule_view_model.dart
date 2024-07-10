@@ -38,6 +38,12 @@ class OwnerScheduleViewModel extends ChangeNotifier {
 
   int? get nowBirthdayCafeId => _nowBirthdayCafeId;
 
+  bool _isScheduleExist = false;
+  bool get isScheduleExist=>  _isScheduleExist;
+
+
+
+
   //사장님 스케줄 추가
   Future<void> postSchedule(OwnerScheduleAddModel ownerScheduleAddModel) async {
     String token = await tokenInstance.getToken();
@@ -81,8 +87,10 @@ class OwnerScheduleViewModel extends ChangeNotifier {
       if (response.data != null && response.data.isNotEmpty) {
         _ownerScheduleModel = OwnerScheduleModel.fromJson(response.data);
         _nowBirthdayCafeId = _ownerScheduleModel!.birthdayCafeId;
+        _isScheduleExist = true;
       } else {
         _nowBirthdayCafeId = 0;
+        _isScheduleExist = false;
       }
 
       notifyListeners();
