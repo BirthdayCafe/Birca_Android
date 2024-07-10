@@ -39,10 +39,8 @@ class OwnerScheduleViewModel extends ChangeNotifier {
   int? get nowBirthdayCafeId => _nowBirthdayCafeId;
 
   bool _isScheduleExist = false;
-  bool get isScheduleExist=>  _isScheduleExist;
 
-
-
+  bool get isScheduleExist => _isScheduleExist;
 
   //사장님 스케줄 추가
   Future<void> postSchedule(OwnerScheduleAddModel ownerScheduleAddModel) async {
