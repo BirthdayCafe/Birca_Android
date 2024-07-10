@@ -31,7 +31,12 @@ class OwnerScheduleViewModel extends ChangeNotifier {
   List<Map<String, DateTime>> get dateRanges => _dateRanges;
 
   final TextEditingController _memoController = TextEditingController();
+
   TextEditingController get memoController => _memoController;
+
+  int? _nowBirthdayCafeId;
+
+  int? get nowBirthdayCafeId => _nowBirthdayCafeId;
 
   //사장님 스케줄 추가
   Future<void> postSchedule(OwnerScheduleAddModel ownerScheduleAddModel) async {
@@ -75,9 +80,30 @@ class OwnerScheduleViewModel extends ChangeNotifier {
 
       if (response.data != null && response.data.isNotEmpty) {
         _ownerScheduleModel = OwnerScheduleModel.fromJson(response.data);
+        _nowBirthdayCafeId = _ownerScheduleModel!.birthdayCafeId;
+      } else {
+        _nowBirthdayCafeId = 0;
       }
 
       notifyListeners();
+    } catch (e) {
+      api.errorCheck(e);
+    }
+  }
+
+  Future<void> postMemo() async {
+    String token = await tokenInstance.getToken();
+    api.logInterceptor();
+
+    log(_nowBirthdayCafeId.toString());
+    try {
+      Response response = await dio.post(
+          '${baseUrl}api/v1/$_nowBirthdayCafeId/memo',
+          data: {'content': memoController.text},
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+      notifyListeners();
+
+      log(response.data);
     } catch (e) {
       api.errorCheck(e);
     }

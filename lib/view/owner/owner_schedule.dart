@@ -38,6 +38,7 @@ class _OwnerSchedule extends State<OwnerSchedule> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
@@ -59,8 +60,7 @@ class _OwnerSchedule extends State<OwnerSchedule> {
         ),
         body: SingleChildScrollView(child: Consumer<OwnerScheduleViewModel>(
             builder: (context, viewModel, widget) {
-
-            return Column(
+              return Column(
               children: [
                 Container(
                   padding: const EdgeInsets.only(
@@ -86,10 +86,10 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                     },
                     onDaySelected: (selectedDay, focusedDay) {
                       if (!isSameDay(_selectedDay, selectedDay)) {
-                        setState(() {
+                        setState(() async {
                           _selectedDay = selectedDay;
                           _focusedDay = focusedDay;
-                          viewModel.getScheduleDetail(
+                        await viewModel.getScheduleDetail(
                               DateFormat('yyyy-MM-ddT00:00:00')
                                   .format(_selectedDay!));
                         });
@@ -224,8 +224,16 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                               textColor: Colors.white,
                               textSize: 12,
                               onPressed: () {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('저장 완료')));
+
+                                if(viewModel.nowBirthdayCafeId==0){
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('카페가 있어야 메모할 수 있습니다.')));
+                                } else {
+                                  viewModel.postMemo();
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text('저장 완료')));
+                                }
+
                               },
                             )
                           ],
