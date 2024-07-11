@@ -271,14 +271,19 @@ class _HostHome extends State<HostHome> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     //이미지
-                                    SizedBox(
-                                      height: 140,
-                                      width: 210,
-                                      child: Image.network(
-                                        viewModel.hostCafeHomeModelList?[index]
-                                                .cafeImageUrl ??
-                                            'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
-                                        fit: BoxFit.cover,
+
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(6),
+                                      child: SizedBox(
+                                        height: 140,
+                                        width: 210,
+                                        child: Image.network(
+                                          viewModel
+                                                  .hostCafeHomeModelList?[index]
+                                                  .cafeImageUrl ??
+                                              'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
 
@@ -340,14 +345,32 @@ class _HostHome extends State<HostHome> {
                                                           fontWeight:
                                                               FontWeight.w400),
                                                     )
-                                                  : Text(
-                                                      '${viewModel.hostCafeHomeModelList?[index].address}',
-                                                      style: const TextStyle(
-                                                          fontSize: 12,
-                                                          color: Palette.gray08,
-                                                          fontWeight:
-                                                              FontWeight.w400),
-                                                    )
+                                                  : viewModel
+                                                              .hostCafeHomeModelList![
+                                                                  index]
+                                                              .address
+                                                              .length >=
+                                                          8
+                                                      ? Text(
+                                                          '${viewModel.hostCafeHomeModelList?[index].address.substring(0, 8)}',
+                                                          style: const TextStyle(
+                                                              fontSize: 12,
+                                                              color: Palette
+                                                                  .gray08,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400),
+                                                        )
+                                                      : Text(
+                                                          '${viewModel.hostCafeHomeModelList?[index].address}',
+                                                          style: const TextStyle(
+                                                              fontSize: 12,
+                                                              color: Palette
+                                                                  .gray08,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400),
+                                                        )
                                             ],
                                           ),
                                         ],

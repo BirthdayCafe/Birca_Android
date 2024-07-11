@@ -140,14 +140,21 @@ class _VisitorHome extends State<VisitorHome> {
                                               .artistImage ??
                                           'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
                                       fit: BoxFit.cover,
-                                      width: 70,
-                                      height: 70,
+                                      width: 60,
+                                      height: 60,
                                     ),
                                   ),
                                 ),
-                                Text(viewModel
-                                        .homeArtistsList?[index].artistName ??
-                                    '')
+                                const SizedBox(
+                                  height: 6,
+                                ),
+                                Text(
+                                  viewModel
+                                          .homeArtistsList?[index].artistName ??
+                                      '',
+                                  style: const TextStyle(
+                                      fontSize: 12, fontFamily: 'Pretendard'),
+                                )
                               ],
                             ),
                             onTap: () {
@@ -465,17 +472,19 @@ class _VisitorHome extends State<VisitorHome> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             //이미지
-                            SizedBox(
-                              height: 140,
-                              width: 140,
-                              child: Image.network(
-                                viewModel.visitorCafeHomeModelList?[index]
-                                        .mainImageUrl ??
-                                    'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
-                                fit: BoxFit.cover,
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(6),
+                              child: SizedBox(
+                                height: 140,
+                                width: 140,
+                                child: Image.network(
+                                  viewModel.visitorCafeHomeModelList?[index]
+                                          .mainImageUrl ??
+                                      'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
-
                             //카페 정보
                             Container(
                               height: 140,
