@@ -704,7 +704,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
   Future<void> _pickImages(int cafeId) async {
     // final List<XFile> pickedFiles = await _picker.pickMultiImage();
     List<PickedFile>? images = await _picker.getMultiImage();
-
+    var viewModel = Provider.of<OwnerMyCafeViewModel>(context,
+        listen: false);
     if (images != null) {
       _showLoadingDialog(context);
 
@@ -720,15 +721,28 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
       } else {
 
 
+
           _selectedImages =
               images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
+           Provider.of<OwnerMyCafeViewModel>(context,
+              listen: false).postMenus();
+           Provider.of<OwnerMyCafeViewModel>(context,
+              listen: false).postOptions();
+
+           Provider.of<OwnerMyCafeViewModel>(context,
+              listen: false)
+              .patchMyCafe(
+            viewModel.cafeNameController.text,
+            viewModel.cafeAddressController.text,
+            viewModel.twitterAccountController.text,
+            viewModel.businessHoursController.text,
+          );
 
           await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
               .postImage(cafeId, _selectedImages)
               .then((value) =>
                   Provider.of<OwnerMyCafeViewModel>(context, listen: false)
                       .getMyCafe());
-          // log(_selectedImages.toString());
           _hideLoadingDialog(context);
 
       }
