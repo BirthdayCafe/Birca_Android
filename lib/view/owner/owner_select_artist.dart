@@ -110,7 +110,7 @@ class _OwnerSelectArtist
           ],
         ),
         const SizedBox(
-          height: 40,
+          height: 35,
         ),
         Expanded(
           child: Column(
@@ -119,7 +119,7 @@ class _OwnerSelectArtist
                   builder: (context, model, _) => Visibility(
                         visible: model.isSelectGroupArtist,
                         replacement: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
                             child: _soloArtistBuilder()),
                         child: Expanded(child: _groupArtistBuilder(model)),
                       )),

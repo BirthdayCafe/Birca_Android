@@ -126,7 +126,7 @@ class SelectFavoriteArtistScreenState
           ],
         ),
         const SizedBox(
-          height: 40,
+          height: 35,
         ),
         Expanded(
           child: Column(
@@ -135,7 +135,7 @@ class SelectFavoriteArtistScreenState
                   builder: (context, model, _) => Visibility(
                         visible: model.isSelectGroupArtist,
                         replacement: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            padding: const EdgeInsets.symmetric(horizontal: 14),
                             child: _soloArtistBuilder()),
                         child: Expanded(child: _groupArtistBuilder(model)),
                       )),
@@ -257,25 +257,40 @@ class SelectFavoriteArtistScreenState
               ));
 
   _soloArtistBuilder() => Consumer<SelectFavoriteArtistViewModel>(
-        builder: (context, model, _) => GridView.builder(
-          physics: const ClampingScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: model.soloArtistCount,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            mainAxisSpacing: 18,
-          ),
-          itemBuilder: (context, index) {
-            return GestureDetector(
-              onTap: () {
-                model.updateSelectedArtist(model.soloArtist![index]);
-              },
-              child: artistItem(model.soloArtist![index].groupImage,
-                  model.soloArtist![index].groupName),
-            );
-          },
-        ),
-      );
+    builder: (context, model, _) => ListView.builder(
+      physics: const ClampingScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: (model.soloArtistCount / 4).ceil(),
+      itemBuilder: (context, index) {
+        return Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: List.generate(4, (i) {
+                int actualIndex = index * 4 + i;
+                if (actualIndex < model.soloArtistCount) {
+                  return Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        model.updateSelectedArtist(model.soloArtist![actualIndex]);
+                      },
+                      child: artistItem(
+                        model.soloArtist![actualIndex].groupImage,
+                        model.soloArtist![actualIndex].groupName,
+                      ),
+                    ),
+                  );
+                } else {
+                  return Expanded(child: Container()); // 빈 공간 채우기
+                }
+              }),
+            ),
+            const SizedBox(height: 30), // 각 행 사이의 간격
+          ],
+        );
+      },
+    ),
+  );
 
   _bottomBar() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
