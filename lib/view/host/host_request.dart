@@ -21,6 +21,16 @@ class HostRequest extends StatefulWidget {
 }
 
 class _HostRequest extends State<HostRequest> {
+
+  @override
+  void initState() {
+    super.initState();
+
+    int id = widget.cafeID;
+
+    Provider.of<HostHomeViewModel>(context, listen: false)
+        .getSchedule(id,DateTime.now().year, DateTime.now().month);
+  }
   TextEditingController artistController = TextEditingController();
   TextEditingController minimumVisitantsController = TextEditingController();
   TextEditingController maximumVisitantsController = TextEditingController();
@@ -412,19 +422,31 @@ class _HostRequest extends State<HostRequest> {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
                 //
+
+                var viewModel =     Provider.of<HostHomeViewModel>(context, listen: false);
+
                 return Column(
                   children: [
                     Container(
-                      padding: const EdgeInsets.only(
-                          left: 25, right: 25, top: 10, bottom: 13),
+                      padding: const EdgeInsets.all(6),
                       child: TableCalendar(
-                        //오늘 날짜
                         focusedDay: _focusedDay,
+
+                        //오늘 날짜
                         firstDay: DateTime.now(),
                         lastDay: DateTime.utc(DateTime.now().year + 1),
 
                         headerStyle: const HeaderStyle(
-                            formatButtonVisible: false, titleCentered: true),
+                            titleTextStyle: TextStyle(
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            formatButtonVisible: false, titleCentered: false,
+                            headerMargin: EdgeInsets.all(5),
+                            rightChevronVisible: false,
+                            leftChevronVisible:false
+                        ),
 
                         rangeStartDay: _rangeStart,
                         rangeEndDay: _rangeEnd,
@@ -446,7 +468,6 @@ class _HostRequest extends State<HostRequest> {
                             });
                           }
                         },
-
                         //달력 날짜 범위 선택
                         onRangeSelected: (start, end, focusedDay) {
                           setState(() {
@@ -458,6 +479,35 @@ class _HostRequest extends State<HostRequest> {
                             // print('start : $_rangeStart / end : $_rangeEnd ');
                           });
                         },
+
+                        onPageChanged: (focusedDay) {
+                          _focusedDay = focusedDay;
+                          viewModel.getSchedule(
+                              widget.cafeID,focusedDay.year, focusedDay.month);
+                        },
+                        availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
+
+                        calendarBuilders: CalendarBuilders(
+                            defaultBuilder: (context, day, focusedDay) {
+                              for (var range in viewModel.dateRanges) {
+                                if (day.isAfter(range['start']!) &&
+                                    day.isBefore(range['end']!
+                                        .add(const Duration(days: 1)))) {
+                                  return GestureDetector(
+                                    child: Container(
+                                      margin: const EdgeInsets.all(6.0),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '${day.day}',
+                                        style: const TextStyle(color: Palette.gray03),
+                                      ),)
+                                    ,onTap: (){},
+                                  );
+
+                                }
+                              }
+                              return null;
+                            }),
                       ),
                     ),
                     BircaFilledButton(
