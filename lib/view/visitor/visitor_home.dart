@@ -80,13 +80,14 @@ class _VisitorHome extends State<VisitorHome> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
+              color: const Color(0xffFFFFFF),
               padding: const EdgeInsets.only(left: 16),
               child: RichText(
                 text: TextSpan(
                     style: DefaultTextStyle.of(context).style,
                     children: const [
                       TextSpan(
-                        text: '아티스트',
+                        text: '나의 아티스트',
                         style: TextStyle(
                             color: Palette.primary,
                             fontSize: 18,
@@ -105,12 +106,14 @@ class _VisitorHome extends State<VisitorHome> {
                     ]),
               ),
             ),
-            const SizedBox(
+             Container(
+              color: const Color(0xffFFFFFF),
               height: 16,
             ),
             Consumer<VisitorCafeHomeViewModel>(
                 builder: (context, viewModel, widget) {
               return Container(
+                color: const Color(0xffFFFFFF),
                 height: 100,
                 padding: const EdgeInsets.only(left: 16),
                 child: ListView.builder(
@@ -219,6 +222,8 @@ class _VisitorHome extends State<VisitorHome> {
             ),
             Container(
               margin: const EdgeInsets.only(left: 16, right: 16),
+              color: const Color(0xffFFFFFF),
+
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -366,7 +371,7 @@ class _VisitorHome extends State<VisitorHome> {
                               size: 12,
                             ),
                             BircaText(
-                                text: '전체',
+                                text: '서울',
                                 textSize: 12,
                                 textColor: Palette.gray10,
                                 fontFamily: 'Pretendard')
@@ -442,159 +447,163 @@ class _VisitorHome extends State<VisitorHome> {
               if (viewModel.visitorCafeHomeModelList == null) {
                 return const CircularProgressIndicator();
               } else {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  itemCount: viewModel.visitorCafeHomeModelList!.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return GestureDetector(
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            left: 16, right: 16, bottom: 16),
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.white, // Container의 배경색
-                          borderRadius: BorderRadius.circular(3),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              // 그림자 색상
-                              spreadRadius: 1,
-                              // 그림자 확산 정도
-                              blurRadius: 1, // 그림자의 흐림 정도
-                            ),
-                          ],
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //이미지
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(6),
-                              child: SizedBox(
-                                height: 140,
-                                width: 140,
-                                child: Image.network(
-                                  viewModel.visitorCafeHomeModelList?[index]
-                                          .mainImageUrl ??
-                                      'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
-                                  fit: BoxFit.cover,
+                return Container(
+                  color: const Color(0xffFFFFFF),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemCount: viewModel.visitorCafeHomeModelList!.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return GestureDetector(
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                              left: 16, right: 16, bottom: 16),
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: Colors.white, // Container의 배경색
+                            borderRadius: BorderRadius.circular(3),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.1),
+                                // 그림자 색상
+                                spreadRadius: 1,
+                                // 그림자 확산 정도
+                                blurRadius: 1, // 그림자의 흐림 정도
+                              ),
+                            ],
+                          ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //이미지
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(6),
+                                child: SizedBox(
+                                  height: 140,
+                                  width: 140,
+                                  child: Image.network(
+                                    viewModel.visitorCafeHomeModelList?[index]
+                                        .mainImageUrl ??
+                                        'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                            ),
-                            //카페 정보
-                            Container(
-                              height: 140,
-                              margin: const EdgeInsets.only(left: 14),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  BircaText(
+                              //카페 정보
+                              Container(
+                                height: 140,
+                                margin: const EdgeInsets.only(left: 14),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    BircaText(
+                                        text:
+                                        '${viewModel.visitorCafeHomeModelList?[index].artist.groupName.toString()} ${viewModel.visitorCafeHomeModelList?[index].artist.name.toString()}',
+                                        textSize: 12,
+                                        textColor: Palette.gray08,
+                                        fontFamily: 'Pretendard'),
+
+                                    BircaText(
                                       text:
-                                          '${viewModel.visitorCafeHomeModelList?[index].artist.groupName.toString()} ${viewModel.visitorCafeHomeModelList?[index].artist.name.toString()}',
+                                      '${viewModel.visitorCafeHomeModelList?[index].startDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].startDate.toString().length - 9)}~${viewModel.visitorCafeHomeModelList![index].endDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].endDate.toString().length - 9)}',
                                       textSize: 12,
                                       textColor: Palette.gray08,
-                                      fontFamily: 'Pretendard'),
+                                      fontFamily: 'Pretendard',
+                                    ),
+                                    // Text('카페 이름'),
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Text(
+                                      viewModel.visitorCafeHomeModelList![index]
+                                          .birthdayCafeName,
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black),
+                                    ),
 
-                                  BircaText(
-                                    text:
-                                        '${viewModel.visitorCafeHomeModelList?[index].startDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].startDate.toString().length - 9)}~${viewModel.visitorCafeHomeModelList![index].endDate.toString().substring(0, viewModel.visitorCafeHomeModelList![index].endDate.toString().length - 9)}',
-                                    textSize: 12,
-                                    textColor: Palette.gray08,
-                                    fontFamily: 'Pretendard',
-                                  ),
-                                  // Text('카페 이름'),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    viewModel.visitorCafeHomeModelList![index]
-                                        .birthdayCafeName,
-                                    style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black),
-                                  ),
-
-                                  Expanded(child: Container()),
-                                  Row(
-                                    children: [
-                                      const Icon(
-                                        Icons.location_on_outlined,
-                                        color: Palette.gray08,
-                                        size: 20,
-                                      ),
-                                      Text(
-                                        '${viewModel.visitorCafeHomeModelList![index].cafe.address.substring(0, 14)}...',
-                                        style: const TextStyle(
+                                    Expanded(child: Container()),
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.location_on_outlined,
                                           color: Palette.gray08,
-                                          fontSize: 12,
-                                          decoration: TextDecoration.underline,
-                                          decorationStyle: TextDecorationStyle
-                                              .solid, // 밑줄의 스타일
+                                          size: 20,
                                         ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-
-                            Expanded(child: Container()),
-
-                            //heart
-                            GestureDetector(
-                                child: Icon(
-                                  Icons.favorite,
-                                  color: viewModel
-                                          .visitorCafeHomeModelList![index]
-                                          .isLiked
-                                      ? Palette.primary
-                                      : const Color(0xffF3F3F3),
+                                        Text(
+                                          '${viewModel.visitorCafeHomeModelList![index].cafe.address.substring(0, 14)}...',
+                                          style: const TextStyle(
+                                            color: Palette.gray08,
+                                            fontSize: 12,
+                                            decoration: TextDecoration.underline,
+                                            decorationStyle: TextDecorationStyle
+                                                .solid, // 밑줄의 스타일
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ],
                                 ),
-                                onTap: () {
-                                  if (viewModel.visitorCafeHomeModelList![index]
-                                      .isLiked) {
-                                    Provider.of<VisitorCafeHomeViewModel>(
-                                            context,
-                                            listen: false)
-                                        .dislike(viewModel
-                                            .visitorCafeHomeModelList![index]
-                                            .birthdayCafeId);
+                              ),
 
-                                    viewModel.visitorCafeHomeModelList![index]
-                                        .isLiked = false;
-                                  } else {
-                                    Provider.of<VisitorCafeHomeViewModel>(
-                                            context,
-                                            listen: false)
-                                        .like(viewModel
-                                            .visitorCafeHomeModelList![index]
-                                            .birthdayCafeId);
+                              Expanded(child: Container()),
 
-                                    viewModel.visitorCafeHomeModelList![index]
-                                        .isLiked = true;
-                                  }
-                                })
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => VisitorCafeDetail(
-                                    cafeID: viewModel
+                              //heart
+                              GestureDetector(
+                                  child: Icon(
+                                    Icons.favorite,
+                                    color: viewModel
                                         .visitorCafeHomeModelList![index]
-                                        .birthdayCafeId)));
-                      },
-                    );
-                  },
-                );
+                                        .isLiked
+                                        ? Palette.primary
+                                        : const Color(0xffF3F3F3),
+                                  ),
+                                  onTap: () {
+                                    if (viewModel.visitorCafeHomeModelList![index]
+                                        .isLiked) {
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                          context,
+                                          listen: false)
+                                          .dislike(viewModel
+                                          .visitorCafeHomeModelList![index]
+                                          .birthdayCafeId);
+
+                                      viewModel.visitorCafeHomeModelList![index]
+                                          .isLiked = false;
+                                    } else {
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                          context,
+                                          listen: false)
+                                          .like(viewModel
+                                          .visitorCafeHomeModelList![index]
+                                          .birthdayCafeId);
+
+                                      viewModel.visitorCafeHomeModelList![index]
+                                          .isLiked = true;
+                                    }
+                                  })
+                            ],
+                          ),
+                        ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VisitorCafeDetail(
+                                      cafeID: viewModel
+                                          .visitorCafeHomeModelList![index]
+                                          .birthdayCafeId)));
+                        },
+                      );
+                    },
+                  )
+                ) ;
+
               }
             })
           ],

@@ -17,6 +17,9 @@ class VisitorCafeLikeViewModel extends ChangeNotifier {
   List<VisitorCafeLikeModel> get visitorCafeLikeModelList =>
       _visitorCafeLikeModelList;
 
+   bool _isFavoriteExist = false;
+  bool get isFavoriteExist => _isFavoriteExist;
+
   VisitorCafeLikeViewModel() {
     getCafeLike();
   }
@@ -44,6 +47,7 @@ class VisitorCafeLikeViewModel extends ChangeNotifier {
       List<VisitorCafeLikeModel> cafeLikeModels =
           jsonData.map((e) => VisitorCafeLikeModel.fromJson(e)).toList();
       _visitorCafeLikeModelList = cafeLikeModels;
+
       notifyListeners();
     } catch (e) {
       api.errorCheck(e);

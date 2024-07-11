@@ -19,10 +19,10 @@ class _VisitorFavorite extends State<VisitorFavorite> {
     Provider.of<VisitorCafeLikeViewModel>(context, listen: false).getCafeLike();
   }
 
-  bool isFavoriteExist = true;
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           centerTitle: false, // 타이틀 왼쪽 정렬 설정
@@ -52,11 +52,11 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                 ]),
           ),
         ),
-        body: isFavoriteExist
-            ? Container(
+        body:
+        Container(
                 width: double.infinity, // 화면 전체 너비
                 height: double.infinity, // 화면 전체 높이
-                color: const Color(0xffF7F7FA),
+                color: const Color(0xffFFFFFF),
                 child: Container(
                     margin: const EdgeInsets.only(top: 23, left: 20, right: 20),
                     child: Consumer<VisitorCafeLikeViewModel>(
@@ -195,19 +195,6 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                         },
                       );
                     })))
-            : Container(
-                width: double.infinity, // 화면 전체 너비
-                height: double.infinity, // 화면 전체 높이
-                color: const Color(0xffF7F7FA),
-
-                child: Container(
-                  alignment: Alignment.center,
-                  child: const BircaText(
-                      text: '현재 찜한 카페가 없습니다',
-                      textSize: 16,
-                      textColor: Palette.gray06,
-                      fontFamily: 'Pretendard'),
-                ),
-              ));
+            );
   }
 }
