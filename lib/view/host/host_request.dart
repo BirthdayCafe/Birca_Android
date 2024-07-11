@@ -431,6 +431,7 @@ class _HostRequest extends State<HostRequest> {
                       padding: const EdgeInsets.all(6),
                       child: TableCalendar(
                         focusedDay: _focusedDay,
+                        locale: 'ko_KR', // Set the locale to Korean
 
                         //오늘 날짜
                         firstDay: DateTime.now(),

@@ -41,6 +41,13 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
   String artist = "";
 
   @override
+  void initState() {
+    super.initState();
+    Provider.of<OwnerScheduleViewModel>(context, listen: false)
+        .getSchedule(DateTime.now().year, DateTime.now().month);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -381,75 +388,116 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
         builder: (context) {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-            //
-            return Column(
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(
-                      left: 25, right: 25, top: 10, bottom: 13),
-                  child: TableCalendar(
-                    //오늘 날짜
-                    focusedDay: _focusedDay,
-                    firstDay: DateTime.now(),
-                    lastDay: DateTime.utc(DateTime.now().year + 1),
+                //
 
-                    headerStyle: const HeaderStyle(
-                        formatButtonVisible: false, titleCentered: true),
+                var viewModel =     Provider.of<OwnerScheduleViewModel>(context, listen: false);
 
-                    rangeStartDay: _rangeStart,
-                    rangeEndDay: _rangeEnd,
-                    rangeSelectionMode: _rangeSelectionMode,
+                return Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(6),
+                      child: TableCalendar(
+                        focusedDay: _focusedDay,
+                        locale: 'ko_KR', // Set the locale to Korean
 
-                    selectedDayPredicate: (day) {
-                      return isSameDay(_selectedDay, day);
-                    },
+                        //오늘 날짜
+                        firstDay: DateTime.now(),
+                        lastDay: DateTime.utc(DateTime.now().year + 1),
 
-                    onDaySelected: (selectedDay, focusedDay) {
-                      if (!isSameDay(_selectedDay, selectedDay)) {
+                        headerStyle: const HeaderStyle(
+                            titleTextStyle: TextStyle(
+                              fontSize: 17.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                            formatButtonVisible: false, titleCentered: false,
+                            headerMargin: EdgeInsets.all(5),
+                            rightChevronVisible: false,
+                            leftChevronVisible:false
+                        ),
+
+                        rangeStartDay: _rangeStart,
+                        rangeEndDay: _rangeEnd,
+                        rangeSelectionMode: _rangeSelectionMode,
+
+                        selectedDayPredicate: (day) {
+                          return isSameDay(_selectedDay, day);
+                        },
+
+                        onDaySelected: (selectedDay, focusedDay) {
+                          if (!isSameDay(_selectedDay, selectedDay)) {
+                            setState(() {
+                              _selectedDay = selectedDay;
+                              _focusedDay =
+                                  focusedDay; // update `_focusedDay` here as well
+                              _rangeStart = null; // Important to clean those
+                              _rangeEnd = null;
+                              _rangeSelectionMode = RangeSelectionMode.toggledOff;
+                            });
+                          }
+                        },
+                        //달력 날짜 범위 선택
+                        onRangeSelected: (start, end, focusedDay) {
+                          setState(() {
+                            _selectedDay = null;
+                            _focusedDay = focusedDay;
+                            _rangeStart = start;
+                            _rangeEnd = end;
+                            _rangeSelectionMode = RangeSelectionMode.toggledOn;
+                            // print('start : $_rangeStart / end : $_rangeEnd ');
+                          });
+                        },
+
+                        onPageChanged: (focusedDay) {
+                          _focusedDay = focusedDay;
+                          viewModel.getSchedule(
+                             focusedDay.year, focusedDay.month);
+                        },
+                        availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
+
+                        calendarBuilders: CalendarBuilders(
+                            defaultBuilder: (context, day, focusedDay) {
+                              for (var range in viewModel.dateRanges) {
+                                if (day.isAfter(range['start']!) &&
+                                    day.isBefore(range['end']!
+                                        .add(const Duration(days: 1)))) {
+                                  return GestureDetector(
+                                    child: Container(
+                                      margin: const EdgeInsets.all(6.0),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '${day.day}',
+                                        style: const TextStyle(color: Palette.gray03),
+                                      ),)
+                                    ,onTap: (){},
+                                  );
+
+                                }
+                              }
+                              return null;
+                            }),
+                      ),
+                    ),
+                    BircaFilledButton(
+                      text: '적용하기',
+                      color: Palette.primary,
+                      width: 300,
+                      height: 46,
+                      onPressed: () {
+                        //날짜를 하나만 선택 했을 시
+                        _rangeEnd ??= _rangeStart;
                         setState(() {
-                          _selectedDay = selectedDay;
-                          _focusedDay =
-                              focusedDay; // update `_focusedDay` here as well
-                          _rangeStart = null; // Important to clean those
-                          _rangeEnd = null;
-                          _rangeSelectionMode = RangeSelectionMode.toggledOff;
-                        });
-                      }
-                    },
-
-                    //달력 날짜 범위 선택
-                    onRangeSelected: (start, end, focusedDay) {
-                      setState(() {
-                        _selectedDay = null;
-                        _focusedDay = focusedDay;
-                        _rangeStart = start;
-                        _rangeEnd = end;
-                        _rangeSelectionMode = RangeSelectionMode.toggledOn;
-                        // print('start : $_rangeStart / end : $_rangeEnd ');
-                      });
-                    },
-                  ),
-                ),
-                BircaFilledButton(
-                  text: '적용하기',
-                  color: Palette.primary,
-                  width: 300,
-                  height: 46,
-                  onPressed: () {
-                    //날짜를 하나만 선택 했을 시
-                    _rangeEnd ??= _rangeStart;
-                    setState(() {
-                      hostDate =
+                          hostDate =
                           '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
-                      // print(hostDate);
-                    });
+                          // print(hostDate);
+                        });
 
-                    Navigator.of(context).pop(hostDate);
-                  },
-                ),
-              ],
-            );
-          });
+                        Navigator.of(context).pop(hostDate);
+                      },
+                    ),
+                  ],
+                );
+              });
         });
 
     if (hostDate1 != null) {

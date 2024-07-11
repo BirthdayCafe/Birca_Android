@@ -287,7 +287,8 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                                       builder: (context) =>
                                           const OnboardingCafeOwnerComplete()));
                                 }).catchError((error) {
-                                  log('fail');
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                       SnackBar(content: Text('국세청에 등록되지 않은 사업자등록번호입니다.')));
                                 });
                               }
                             : null,

@@ -66,6 +66,8 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                 padding: const EdgeInsets.only(
                     left: 25, right: 25, top: 10, bottom: 13),
                 child: TableCalendar(
+                  locale: 'ko_KR', // Set the locale to Korean
+
                   //오늘 날짜
                   focusedDay: _focusedDay,
                   firstDay: DateTime.utc(DateTime.now().year - 1),
