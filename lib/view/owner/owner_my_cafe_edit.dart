@@ -198,39 +198,25 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     const SizedBox(
                       height: 16,
                     ),
-                    Row(children: [
                       Container(
-                        width: 300,
+                        width: 330,
                         height: 40,
+                        padding: const EdgeInsets.only(bottom: 2,left: 5),
                         decoration: BoxDecoration(
                           border: Border.all(color: const Color(0xffD7D8DC)),
                           borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
                         ),
                         alignment: Alignment.center,
-                        child: TextField(
-
-                          controller: viewModel.cafeAddressController,
-                          decoration:
-                              const InputDecoration(border: InputBorder.none,
-                                contentPadding: EdgeInsets.zero
-                              ),
-                        ),
+                        child:
+                          TextField(
+                            textAlign: TextAlign.start,
+                            controller: viewModel.cafeAddressController,
+                            decoration:
+                            const InputDecoration(border: InputBorder.none,
+                            ),
+                        )
                       ),
-                      // const SizedBox(
-                      //   width: 11,
-                      // ),
-                      // BircaOutLinedButton(
-                      //   text: '장소 선택',
-                      //   radiusColor: Palette.primary,
-                      //   width: 80,
-                      //   height: 36,
-                      //   radius: 6,
-                      //   textColor: Palette.primary,
-                      //   textSize: 14,
-                      //   onPressed: () {},
-                      //   backgroundColor: Colors.white,
-                      // )
-                    ]),
+
                     const SizedBox(
                       height: 20,
                     ),
@@ -500,6 +486,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                       ],
                                     ));
                               }),
+                          const SizedBox(height: 10,),
                           BircaOutLinedButton(
                             text: '추가하기',
                             radiusColor: Palette.gray02,
@@ -619,6 +606,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                       ],
                                     ));
                               }),
+                          const SizedBox(height: 10,),
                           BircaOutLinedButton(
                             text: '추가하기',
                             radiusColor: Palette.gray02,
@@ -664,9 +652,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                       .toList();
 
                   // 데이터 정의
-                  final Map<String, dynamic> data = {
-                    "datOffDates": dateStrings,
-                  };
+                  // final Map<String, dynamic> data = {
+                  //   "datOffDates": dateStrings,
+                  // };
 
                  viewModel.update();
 
