@@ -17,6 +17,7 @@ import 'package:birca/viewModel/nickname_view_model.dart';
 import 'package:birca/viewModel/visitor_search_result_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:kakao_flutter_sdk/kakao_flutter_sdk.dart';
 import 'package:provider/provider.dart';
 import 'designSystem/palette.dart';
@@ -62,6 +63,16 @@ class Birca extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', 'US'), // English
+        Locale('ko', 'KR'), // Korean
+      ],
+      locale: const Locale('ko', 'KR'), // Set default locale to Korean
       debugShowCheckedModeBanner: false,
       title: 'Birca',
       theme: ThemeData(
