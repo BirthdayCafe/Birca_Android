@@ -292,7 +292,11 @@ class _HostHome extends State<HostHome> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            viewModel.hostCafeHomeModelList?[index].name??'',
+                                            viewModel
+                                                    .hostCafeHomeModelList?[
+                                                        index]
+                                                    .name ??
+                                                '',
                                             style: const TextStyle(
                                                 fontSize: 14,
                                                 color: Palette.gray10,
@@ -302,7 +306,11 @@ class _HostHome extends State<HostHome> {
                                             height: 21,
                                           ),
                                           Text(
-                                            viewModel.hostCafeHomeModelList?[index].twitterAccount??'',
+                                            viewModel
+                                                    .hostCafeHomeModelList?[
+                                                        index]
+                                                    .twitterAccount ??
+                                                '',
                                             style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Palette.gray08,
@@ -318,14 +326,28 @@ class _HostHome extends State<HostHome> {
                                                 color: Palette.gray08,
                                                 size: 12,
                                               ),
-                                              Text(
-                                                '${viewModel.hostCafeHomeModelList?[index].address.substring(0, 8)}',
-                                                style: const TextStyle(
-                                                    fontSize: 12,
-                                                    color: Palette.gray08,
-                                                    fontWeight:
-                                                        FontWeight.w400),
-                                              ),
+                                              viewModel
+                                                          .hostCafeHomeModelList![
+                                                              index]
+                                                          .address
+                                                          .length >=
+                                                      8
+                                                  ? Text(
+                                                      '${viewModel.hostCafeHomeModelList?[index].address.substring(0, 8)}',
+                                                      style: const TextStyle(
+                                                          fontSize: 12,
+                                                          color: Palette.gray08,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    )
+                                                  : Text(
+                                                      '${viewModel.hostCafeHomeModelList?[index].address}',
+                                                      style: const TextStyle(
+                                                          fontSize: 12,
+                                                          color: Palette.gray08,
+                                                          fontWeight:
+                                                              FontWeight.w400),
+                                                    )
                                             ],
                                           ),
                                         ],
