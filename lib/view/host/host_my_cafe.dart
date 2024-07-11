@@ -139,7 +139,7 @@ class _HostCafe extends State<HostCafe> {
                                           height: 35,
                                         ),
                                         Text(
-                                          '${viewModel.hostMyCafeModelList?[index].artist.groupName} ${viewModel.hostMyCafeModelList?[index].artist.name}',
+                                          '${viewModel.hostMyCafeModelList?[index].artist.groupName??''} ${viewModel.hostMyCafeModelList?[index].artist.name}',
                                           style: const TextStyle(
                                               fontSize: 12,
                                               color: Palette.primary,

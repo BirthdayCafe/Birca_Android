@@ -1,5 +1,5 @@
 class Artist {
-  String groupName;
+  String? groupName;
   String name;
 
   Artist({

@@ -75,13 +75,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           viewModel.changeIcon(id, context);
                         },
                       ),
-                      BircaText(
-                          text: viewModel.birthdayCafeModel?.likeCount
-                                  .toString() ??
-                              '',
-                          textSize: 10,
-                          textColor: Palette.gray03,
-                          fontFamily: 'Pretandard')
+
                     ],
                   ),
                 );

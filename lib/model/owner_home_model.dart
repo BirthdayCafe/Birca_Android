@@ -25,7 +25,7 @@ class OwnerHomeModel {
 }
 
 class Artist {
-  final String groupName;
+  final String? groupName;
   final String name;
 
   Artist({required this.groupName, required this.name});

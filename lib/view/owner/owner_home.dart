@@ -80,7 +80,7 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "${viewModel.ownerHomeModelList?[index].artist.groupName} ${viewModel.ownerHomeModelList?[index].artist.name}",
+                                "${viewModel.ownerHomeModelList?[index].artist.groupName??''} ${viewModel.ownerHomeModelList?[index].artist.name}",
                                 style: const TextStyle(
                                     color: Palette.primary,
                                     fontFamily: 'Pretendard',
@@ -146,7 +146,7 @@ class _OwnerHome extends State<OwnerHome> with SingleTickerProviderStateMixin {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "아티스트: ${viewModel.ownerHomeModelList?[index].artist.groupName} ${viewModel.ownerHomeModelList?[index].artist.name}",
+                                  "아티스트: ${viewModel.ownerHomeModelList?[index].artist.groupName??''} ${viewModel.ownerHomeModelList?[index].artist.name}",
                                   style: const TextStyle(
                                       color: Palette.primary,
                                       fontFamily: 'Pretendard',

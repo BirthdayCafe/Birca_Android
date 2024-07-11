@@ -28,8 +28,6 @@ class _HostRequest extends State<HostRequest> {
 
     int id = widget.cafeID;
 
-    Provider.of<HostHomeViewModel>(context, listen: false)
-        .getSchedule(id,DateTime.now().year, DateTime.now().month);
   }
   TextEditingController artistController = TextEditingController();
   TextEditingController minimumVisitantsController = TextEditingController();
@@ -385,26 +383,32 @@ class _HostRequest extends State<HostRequest> {
                         maximumVisitantsController.text='0';
                       }
 
-                      await Provider.of<HostHomeViewModel>(context,
-                          listen: false)
-                          .postRequest(
-                          HostRequestModel(artistId: artistId, cafeId: widget.cafeID,
-                              startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                  .format(_rangeStart!),
-                              endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
-                                  .format(_rangeEnd!),
-                              minimumVisitant:
-                              int.parse(minimumVisitantsController.text),
-                              maximumVisitant:
-                              int.parse(maximumVisitantsController.text),
-                              twitterAccount: twitterAccountController.text,
-                              hostPhoneNumber: hostPhoneNumberController.text)
-                      )
-                          .then((value) {
+                      try{
+                        await Provider.of<HostHomeViewModel>(context,
+                            listen: false)
+                            .postRequest(
+                            HostRequestModel(artistId: artistId, cafeId: widget.cafeID,
+                                startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                    .format(_rangeStart!),
+                                endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                    .format(_rangeEnd!),
+                                minimumVisitant:
+                                int.parse(minimumVisitantsController.text),
+                                maximumVisitant:
+                                int.parse(maximumVisitantsController.text),
+                                twitterAccount: twitterAccountController.text,
+                                hostPhoneNumber: hostPhoneNumberController.text)
+                        )
+                            .then((value) {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(content: Text('신청 완료')));
+                          Navigator.pop(context);
+                        });
+                      }catch(e){
                         ScaffoldMessenger.of(context)
-                            .showSnackBar(const SnackBar(content: Text('신청 완료')));
-                        Navigator.pop(context);
-                      });
+                            .showSnackBar(const SnackBar(content: Text('이미 대관된 날짜입니다.')));
+                      }
+
                     }
 
                   },
@@ -481,34 +485,10 @@ class _HostRequest extends State<HostRequest> {
                           });
                         },
 
-                        onPageChanged: (focusedDay) {
-                          _focusedDay = focusedDay;
-                          viewModel.getSchedule(
-                              widget.cafeID,focusedDay.year, focusedDay.month);
-                        },
+
                         availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
 
-                        calendarBuilders: CalendarBuilders(
-                            defaultBuilder: (context, day, focusedDay) {
-                              for (var range in viewModel.dateRanges) {
-                                if (day.isAfter(range['start']!) &&
-                                    day.isBefore(range['end']!
-                                        .add(const Duration(days: 1)))) {
-                                  return GestureDetector(
-                                    child: Container(
-                                      margin: const EdgeInsets.all(6.0),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        '${day.day}',
-                                        style: const TextStyle(color: Palette.gray03),
-                                      ),)
-                                    ,onTap: (){},
-                                  );
 
-                                }
-                              }
-                              return null;
-                            }),
                       ),
                     ),
                     BircaFilledButton(

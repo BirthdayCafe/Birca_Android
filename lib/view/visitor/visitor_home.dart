@@ -535,8 +535,18 @@ class _VisitorHome extends State<VisitorHome> {
                                           color: Palette.gray08,
                                           size: 20,
                                         ),
+                                        viewModel.visitorCafeHomeModelList![index].cafe.address.length>=14?
                                         Text(
                                           '${viewModel.visitorCafeHomeModelList![index].cafe.address.substring(0, 14)}...',
+                                          style: const TextStyle(
+                                            color: Palette.gray08,
+                                            fontSize: 12,
+                                            decoration: TextDecoration.underline,
+                                            decorationStyle: TextDecorationStyle
+                                                .solid, // 밑줄의 스타일
+                                          ),
+                                        ):Text(
+                                          '${viewModel.visitorCafeHomeModelList![index].cafe.address}',
                                           style: const TextStyle(
                                             color: Palette.gray08,
                                             fontSize: 12,

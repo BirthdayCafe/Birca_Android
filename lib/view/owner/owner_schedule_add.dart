@@ -43,8 +43,7 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
   @override
   void initState() {
     super.initState();
-    Provider.of<OwnerScheduleViewModel>(context, listen: false)
-        .getSchedule(DateTime.now().year, DateTime.now().month);
+
   }
 
   @override
@@ -88,6 +87,7 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                       fontFamily: 'Pretendard',
                       color: Palette.gray10),
                   decoration: const InputDecoration(
+                    enabled: false,
                     enabledBorder: UnderlineInputBorder(
                       // 활성화된 상태의 밑줄 색상
                       borderSide: BorderSide(color: Palette.gray03),
@@ -352,28 +352,41 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                 ),
               ),
               onTap: () async {
-                await Provider.of<OwnerScheduleViewModel>(context,
-                        listen: false)
-                    .postSchedule(OwnerScheduleAddModel(
-                        artistId: artistId,
-                        startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
-                            .format(_rangeStart!),
-                        endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
-                            .format(_rangeEnd!),
-                        minimumVisitant:
-                            int.parse(minimumVisitantsController.text),
-                        maximumVisitant:
-                            int.parse(maximumVisitantsController.text),
-                        twitterAccount: twitterAccountController.text,
-                        hostPhoneNumber: hostPhoneNumberController.text))
-                    .then((value) {
-                  Provider.of<OwnerScheduleViewModel>(context, listen: false)
-                      .getSchedule(_rangeStart!.year, _rangeStart!.month);
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(const SnackBar(content: Text('추가 완료')));
+                try{
+                  await Provider.of<OwnerScheduleViewModel>(context,
+                      listen: false)
+                      .postSchedule(OwnerScheduleAddModel(
+                      artistId: artistId,
+                      startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                          .format(_rangeStart!),
+                      endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                          .format(_rangeEnd!),
+                      minimumVisitant:
+                      int.parse(minimumVisitantsController.text),
+                      maximumVisitant:
+                      int.parse(maximumVisitantsController.text),
+                      twitterAccount: twitterAccountController.text,
+                      hostPhoneNumber: hostPhoneNumberController.text))
+                      .then((value) {
 
-                  Navigator.pop(context);
-                });
+
+                    Provider.of<OwnerScheduleViewModel>(context, listen: false)
+                        .getSchedule(_rangeStart!.year, _rangeStart!.month);
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(const SnackBar(content: Text('추가 완료')));
+                    Navigator.pop(context);
+
+
+
+
+                  });
+                }catch(e){
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(const SnackBar(content: Text('이미 예약된 날짜입니다.')));
+                }
+
+
+
               },
             )
           ],
@@ -448,34 +461,10 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                           });
                         },
 
-                        onPageChanged: (focusedDay) {
-                          _focusedDay = focusedDay;
-                          viewModel.getSchedule(
-                             focusedDay.year, focusedDay.month);
-                        },
+
                         availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
 
-                        calendarBuilders: CalendarBuilders(
-                            defaultBuilder: (context, day, focusedDay) {
-                              for (var range in viewModel.dateRanges) {
-                                if (day.isAfter(range['start']!) &&
-                                    day.isBefore(range['end']!
-                                        .add(const Duration(days: 1)))) {
-                                  return GestureDetector(
-                                    child: Container(
-                                      margin: const EdgeInsets.all(6.0),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        '${day.day}',
-                                        style: const TextStyle(color: Palette.gray03),
-                                      ),)
-                                    ,onTap: (){},
-                                  );
 
-                                }
-                              }
-                              return null;
-                            }),
                       ),
                     ),
                     BircaFilledButton(

@@ -73,7 +73,7 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
                     Container(
                       margin: const EdgeInsets.only(left: 14),
                       child: Text(
-                          "${viewModel.ownerRequestDetailModel?.artist.groupName} ${viewModel.ownerRequestDetailModel?.artist.name}",
+                          "${viewModel.ownerRequestDetailModel?.artist.groupName??''} ${viewModel.ownerRequestDetailModel?.artist.name}",
                           style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,

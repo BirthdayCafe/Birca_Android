@@ -61,6 +61,7 @@ class OwnerScheduleViewModel extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       api.errorCheck(e);
+
     }
   }
 
@@ -86,6 +87,7 @@ class OwnerScheduleViewModel extends ChangeNotifier {
         _ownerScheduleModel = OwnerScheduleModel.fromJson(response.data);
         _nowBirthdayCafeId = _ownerScheduleModel!.birthdayCafeId;
         _isScheduleExist = true;
+        _memoController.text = _ownerScheduleModel!.memo;
       } else {
         _nowBirthdayCafeId = 0;
         _isScheduleExist = false;
