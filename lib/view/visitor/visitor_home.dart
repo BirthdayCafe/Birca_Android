@@ -502,7 +502,7 @@ class _VisitorHome extends State<VisitorHome> {
                                     ),
                                     BircaText(
                                         text:
-                                        '${viewModel.visitorCafeHomeModelList?[index].artist.groupName.toString()} ${viewModel.visitorCafeHomeModelList?[index].artist.name.toString()}',
+                                        '${viewModel.visitorCafeHomeModelList?[index].artist.groupName??''} ${viewModel.visitorCafeHomeModelList?[index].artist.name.toString()}',
                                         textSize: 12,
                                         textColor: Palette.gray08,
                                         fontFamily: 'Pretendard'),

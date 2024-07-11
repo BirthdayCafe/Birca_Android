@@ -60,7 +60,7 @@ class BirthdayCafeModel {
 }
 
 class Artist {
-  String groupName;
+  String? groupName;
   String name;
 
   Artist({required this.groupName, required this.name});

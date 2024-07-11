@@ -273,7 +273,7 @@ class _HostCafe extends State<HostCafe> {
                                         height: 35,
                                       ),
                                       Text(
-                                        '${viewModel.hostMyCafeModelList?[index].artist.groupName} ${viewModel.hostMyCafeModelList?[index].artist.name}',
+                                        '${viewModel.hostMyCafeModelList?[index].artist.groupName??''} ${viewModel.hostMyCafeModelList?[index].artist.name}',
                                         style: const TextStyle(
                                             fontSize: 12,
                                             color: Palette.primary,
@@ -365,8 +365,14 @@ class _HostCafe extends State<HostCafe> {
                           }
                         },
                         onLongPress: () {
-                          _openCancelDialog(viewModel
-                              .hostMyCafeModelList![index].birthdayCafeId);
+                          if(viewModel.hostMyCafeModelList![index].progressState=='RENTAL_APPROVED'){
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('이미 승인된 카페는 취소할 수 없습니다.')));
+                          } else {
+                            _openCancelDialog(viewModel
+                                .hostMyCafeModelList![index].birthdayCafeId);
+                          }
+
                         },
                       );
                     }

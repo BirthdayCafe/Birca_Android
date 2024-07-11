@@ -457,6 +457,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
         ),
       );
 
+      patchCafeState(cafeId, 'visibility', 'PUBLIC');
       // 서버 응답 출력
       log('postLuckyDraws Response: ${response.data}');
 

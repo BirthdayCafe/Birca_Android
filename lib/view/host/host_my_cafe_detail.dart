@@ -47,7 +47,7 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
           title: Consumer<BirthdayCafeViewModel>(
             builder: (context, viewModel, widget) {
               return Text(
-                viewModel.birthdayCafeModel?.birthdayCafeName ?? '생일 카페 이름',
+                viewModel.birthdayCafeModel?.birthdayCafeName ?? '생일 카페 이름을 입력해주세요',
                 style: const TextStyle(
                     fontSize: 16,
                     color: Palette.gray10,
@@ -94,7 +94,7 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                         height: 2,
                       ),
                       Text(
-                        '${viewModel.birthdayCafeModel?.artist.groupName.toString()} ${viewModel.birthdayCafeModel?.artist.name.toString()}',
+                        '${viewModel.birthdayCafeModel?.artist.groupName??''} ${viewModel.birthdayCafeModel?.artist.name.toString()}',
                         style: const TextStyle(
                             color: Palette.gray10,
                             fontWeight: FontWeight.w500,
@@ -238,44 +238,44 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                               ))
                         ],
                       ),
-                      const SizedBox(
-                        height: 18,
-                      ),
-                      const Text(
-                        '공개/비공개',
-                        style: TextStyle(
-                            color: Palette.gray10,
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Pretendard',
-                            fontSize: 16),
-                      ),
-                      const Text(
-                        '* 공개로 전환하면 팬들이 생일카페를 볼 수 있습니다.',
-                        style: TextStyle(
-                            color: Palette.gray10,
-                            fontWeight: FontWeight.w300,
-                            fontFamily: 'Pretendard',
-                            fontSize: 10),
-                      ),
-                      const SizedBox(
-                        height: 8,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.only(
-                            left: 10, right: 10, top: 2, bottom: 2),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          color: Palette.primary,
-                        ),
-                        child: Text(
-                          visibility,
-                          style: const TextStyle(
-                              fontSize: 12,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontFamily: 'Pretendard'),
-                        ),
-                      ),
+                      // const SizedBox(
+                      //   height: 18,
+                      // ),
+                      // const Text(
+                      //   '공개/비공개',
+                      //   style: TextStyle(
+                      //       color: Palette.gray10,
+                      //       fontWeight: FontWeight.bold,
+                      //       fontFamily: 'Pretendard',
+                      //       fontSize: 16),
+                      // ),
+                      // const Text(
+                      //   '* 공개로 전환하면 팬들이 생일카페를 볼 수 있습니다.',
+                      //   style: TextStyle(
+                      //       color: Palette.gray10,
+                      //       fontWeight: FontWeight.w300,
+                      //       fontFamily: 'Pretendard',
+                      //       fontSize: 10),
+                      // ),
+                      // const SizedBox(
+                      //   height: 8,
+                      // ),
+                      // Container(
+                      //   padding: const EdgeInsets.only(
+                      //       left: 10, right: 10, top: 2, bottom: 2),
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(4),
+                      //     color: Palette.primary,
+                      //   ),
+                      //   child: Text(
+                      //     visibility,
+                      //     style: const TextStyle(
+                      //         fontSize: 12,
+                      //         color: Colors.white,
+                      //         fontWeight: FontWeight.bold,
+                      //         fontFamily: 'Pretendard'),
+                      //   ),
+                      // ),
                       const SizedBox(
                         height: 18,
                       ),
