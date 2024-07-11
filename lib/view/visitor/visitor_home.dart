@@ -379,12 +379,10 @@ class _VisitorHome extends State<VisitorHome> {
                     children: [
                       const BircaText(
                           text: '실시간',
-                          textSize: 15,
+                          textSize: 12,
                           textColor: Palette.gray06,
                           fontFamily: 'Pretendard'),
-                      SizedBox(
-                          height: 10,
-                          child: Transform.scale(
+                       Transform.scale(
                               scale: 0.7,
                               child: CupertinoSwitch(
                                 value: isSwitched,
@@ -430,7 +428,7 @@ class _VisitorHome extends State<VisitorHome> {
                                     }
                                   }
                                 },
-                              )))
+                              ))
                     ],
                   ),
                 ],
