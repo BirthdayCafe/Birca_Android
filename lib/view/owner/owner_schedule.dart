@@ -59,6 +59,7 @@ class _OwnerSchedule extends State<OwnerSchedule> {
         ),
         body: SingleChildScrollView(child: Consumer<OwnerScheduleViewModel>(
             builder: (context, viewModel, widget) {
+
           return Column(
             children: [
               Container(

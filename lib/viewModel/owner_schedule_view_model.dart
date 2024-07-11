@@ -73,7 +73,7 @@ class OwnerScheduleViewModel extends ChangeNotifier {
     try {
       // API 엔드포인트 및 업로드
       Response response = await dio.get(
-          '${baseUrl}api/v1/owners/birthday-cafes/schedules/detail',
+          '${baseUrl}api/v2/owners/birthday-cafes/schedules/detail',
           queryParameters: {'date': dateTime},
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 

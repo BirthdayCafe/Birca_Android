@@ -28,6 +28,7 @@ class OwnerScheduleModel {
   Artist artist;
   String startDate;
   String endDate;
+  String memo;
 
   OwnerScheduleModel({
     required this.birthdayCafeId,
@@ -35,6 +36,8 @@ class OwnerScheduleModel {
     required this.artist,
     required this.startDate,
     required this.endDate,
+    required this.memo,
+
   });
 
   factory OwnerScheduleModel.fromJson(Map<String, dynamic> json) {
@@ -44,6 +47,8 @@ class OwnerScheduleModel {
       artist: Artist.fromJson(json['artist']),
       startDate: json['startDate'],
       endDate: json['endDate'],
+      memo: json['memo'],
+
     );
   }
 
@@ -54,6 +59,7 @@ class OwnerScheduleModel {
       'artist': artist.toJson(),
       'startDate': startDate,
       'endDate': endDate,
+      'memo':memo
     };
   }
 }
