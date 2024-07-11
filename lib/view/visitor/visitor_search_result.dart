@@ -21,7 +21,7 @@ class _VisitorSearchResult extends State<VisitorSearchResult> {
   void initState() {
     super.initState();
     Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
-        .getCafeSearch('IN_PROGRESS', widget.keyword);
+        .getCafeSearch('', widget.keyword);
   }
 
   @override
@@ -71,9 +71,9 @@ class _VisitorSearchResult extends State<VisitorSearchResult> {
                           height: 140,
                           width: 140,
                           child:
-                              Image.network(viewModel.visitorCafeSearchModelList?[index].mainImageUrl??''),
+                              Image.network(viewModel.visitorCafeSearchModelList?[index].mainImageUrl??'',                                fit: BoxFit.cover,
+                              ),
                         ),
-
                         //카페 정보
                         Container(
                           height: 140,
@@ -94,7 +94,7 @@ class _VisitorSearchResult extends State<VisitorSearchResult> {
                               // Text('1월 1일~1월 2일'),
                               BircaText(
                                 text:
-                                    '${viewModel.visitorCafeSearchModelList?[index].startDate.toString().substring(0, viewModel.visitorCafeSearchModelList![index].startDate.toString().length - 9)}~${viewModel.visitorCafeSearchModelList![index].endDate.toString().substring(0, viewModel.visitorCafeSearchModelList![index].endDate.toString().length - 9)}',
+                                    '${viewModel.visitorCafeSearchModelList?[index].startDate.toString().substring(0, viewModel.visitorCafeSearchModelList![index].startDate.toString().length - 9)}~${viewModel.visitorCafeSearchModelList?[index].endDate.toString().substring(0, viewModel.visitorCafeSearchModelList![index].endDate.toString().length - 9)}',
                                 textSize: 12,
                                 textColor: Palette.gray08,
                                 fontFamily: 'Pretendard',
