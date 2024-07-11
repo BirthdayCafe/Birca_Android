@@ -30,17 +30,27 @@ class OnboardingCafeOwnerComplete extends StatelessWidget {
                 height: 70,
               ),
               const BircaText(
-                  text: '계정 생성 요청이 정상적으로 완료되었습니다',
+                  text: '계정 생성 요청이 정상적으로 완료되었습니다.',
                   textSize: 18,
                   textColor: Palette.primary,
                   fontFamily: 'PretendardSemiBold'),
               const BircaText(
-                  text: '빠르게 검토 후 알람으로 알려드릴게요 (최대 1~2일 소요)',
+                  text: '빠르게 검토 후 승인 해드리겠습니다. (최대 1~2일 소요)',
+                  textSize: 14,
+                  textColor: Color(0xff8F9093),
+                  fontFamily: 'PretendardRegular'),
+              const BircaText(
+                  text: '궁금한 사항은 010-6642-8846이나',
+                  textSize: 14,
+                  textColor: Color(0xff8F9093),
+                  fontFamily: 'PretendardRegular'),
+              const BircaText(
+                  text: 'tmdrbs8846@gmail.com으로 연락주세요!',
                   textSize: 14,
                   textColor: Color(0xff8F9093),
                   fontFamily: 'PretendardRegular'),
               const SizedBox(
-                height: 158,
+                height: 120,
               ),
               SizedBox(
                   width: 300,
