@@ -1,4 +1,5 @@
 import 'package:birca/view/host/host_request.dart';
+import 'package:birca/viewModel/host_my_cafe_view_model.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
   Widget build(BuildContext context) {
     DateTime _focusedDay = DateTime.now();
 
+    var cafeId = widget.cafeID;
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
@@ -477,41 +479,118 @@ class _HostHomeDetail extends State<HostHomeDetail> {
         bottomNavigationBar: Padding(
           padding:
               const EdgeInsets.only(left: 18, right: 18, top: 21, bottom: 44),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              BircaOutLinedButton(
-                text: '대관 요청하기',
+          child:
+    Consumer<HostMyCafeViewModel>(builder: (context, viewModel, widget) {
+
+
+      var able = true;
+      viewModel.getHostMyCafe();
+      for(int i=0; i<viewModel.hostMyCafeModelList!.length;i++){
+
+        if(viewModel.hostMyCafeModelList![i].progressState=='RENTAL_PENDING'){
+          able = false;
+        }
+      }
+
+      if(able){
+        return  Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BircaOutLinedButton(
+              text: '대관 요청하기',
+              radiusColor: Palette.primary,
+              backgroundColor: Palette.primary,
+              width: 160,
+              height: 44,
+              radius: 6,
+              textColor: Colors.white,
+              textSize: 14,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HostRequest(
+                          cafeID: id,
+                        )));
+              },
+            ),
+            const SizedBox(
+              width: 14,
+            ),
+            const BircaOutLinedButton(
+                text: '전화하기',
                 radiusColor: Palette.primary,
-                backgroundColor: Palette.primary,
+                backgroundColor: Colors.white,
                 width: 160,
                 height: 44,
                 radius: 6,
-                textColor: Colors.white,
-                textSize: 14,
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => HostRequest(
-                                cafeID: widget.cafeID,
-                              )));
-                },
+                textColor: Palette.primary,
+                textSize: 14)
+          ],
+        );
+      } else {
+        return Stack(
+          children: [
+
+          Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            BircaOutLinedButton(
+              text: '대관 요청하기',
+              radiusColor: Palette.primary,
+              backgroundColor: Palette.primary,
+              width: 160,
+              height: 44,
+              radius: 6,
+              textColor: Colors.white,
+              textSize: 14,
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => HostRequest(
+                          cafeID: id,
+                        )));
+              },
+            ),
+            const SizedBox(
+              width: 14,
+            ),
+            const BircaOutLinedButton(
+                text: '전화하기',
+                radiusColor: Palette.primary,
+                backgroundColor: Colors.white,
+                width: 160,
+                height: 44,
+                radius: 6,
+                textColor: Palette.primary,
+                textSize: 14)
+          ],
+        ),
+            Container(
+              alignment: Alignment.center,
+              height: 140,
+              margin: const EdgeInsets.only(
+                  top: 8, bottom: 8, left: 16, right: 16),
+              decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.7), // 투명도 조절
+                  borderRadius: BorderRadius.circular(6)
               ),
-              const SizedBox(
-                width: 14,
+              child:  const Text(
+                '대관 요청 중인 경우 다른 대관을 요청 할 수 없습니다.',
+                style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.white),
               ),
-              const BircaOutLinedButton(
-                  text: '전화하기',
-                  radiusColor: Palette.primary,
-                  backgroundColor: Colors.white,
-                  width: 160,
-                  height: 44,
-                  radius: 6,
-                  textColor: Palette.primary,
-                  textSize: 14)
-            ],
-          ),
+            )
+          ],
+        ) ;
+
+      }
+
+    }),
+
+
         ));
   }
 }

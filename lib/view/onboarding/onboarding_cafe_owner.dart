@@ -277,11 +277,10 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                                   'address': address.text
                                 });
 
-                                await Provider.of<MypageViewModel>(context,
-                                        listen: false)
-                                    .postRoleChange('OWNER');
-
                                 await postCafeApply(applyData).then((_) {
+                                  Provider.of<MypageViewModel>(context,
+                                      listen: false)
+                                      .postRoleChange('OWNER');
                                   // Navigate on success
                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
