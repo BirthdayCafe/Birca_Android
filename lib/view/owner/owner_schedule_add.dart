@@ -375,13 +375,16 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                 } else if (_rangeEnd == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(content: Text('날짜를 선택해주세요!')));
+                }else if(int.parse(minimumVisitantsController.text)>int.parse(maximumVisitantsController.text)){
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('최대 인원이 최소 인원보다 많거나 같아야 합니다!')));
                 } else {
                   if (minimumVisitantsController.text == '') {
-                    minimumVisitantsController.text = '0';
+                    minimumVisitantsController.text = '1';
                   }
 
                   if (maximumVisitantsController.text == '') {
-                    maximumVisitantsController.text = '0';
+                    maximumVisitantsController.text = '1';
                   }
                   try {
                     await Provider.of<OwnerScheduleViewModel>(context,
