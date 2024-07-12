@@ -26,8 +26,9 @@ class _HostHomeDetail extends State<HostHomeDetail> {
     id = widget.cafeID; // cafeID를 저장할 변수
     Provider.of<HostHomeViewModel>(context, listen: false).getCafeDetail(id);
     Provider.of<HostHomeViewModel>(context, listen: false)
-        .getSchedule(id,DateTime.now().year, DateTime.now().month);
+        .getSchedule(id, DateTime.now().year, DateTime.now().month);
 
+    Provider.of<HostMyCafeViewModel>(context, listen: false).getHostMyCafe();
     super.initState();
   }
 
@@ -39,19 +40,17 @@ class _HostHomeDetail extends State<HostHomeDetail> {
     return Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
-          title:
-        Consumer<HostHomeViewModel>(builder: (builder, viewModel, widget) {
-          return  Text(
-            viewModel.hostCafeHomeDetailModel?.name??'',
-            style: const TextStyle(
-                fontSize: 16,
-                color: Palette.gray10,
-                fontFamily: 'Pretandard',
-                fontWeight: FontWeight.bold),
-          );
-        }),
-
-
+          title: Consumer<HostHomeViewModel>(
+              builder: (builder, viewModel, widget) {
+            return Text(
+              viewModel.hostCafeHomeDetailModel?.name ?? '',
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: Palette.gray10,
+                  fontFamily: 'Pretandard',
+                  fontWeight: FontWeight.bold),
+            );
+          }),
           leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
@@ -147,7 +146,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                         height: 20,
                       ),
                       Text(
-                        viewModel.hostCafeHomeDetailModel?.name??'',
+                        viewModel.hostCafeHomeDetailModel?.name ?? '',
                         style: const TextStyle(
                             fontSize: 18,
                             color: Palette.gray10,
@@ -174,7 +173,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                             fontWeight: FontWeight.w700),
                       ),
                       Text(
-                        viewModel.hostCafeHomeDetailModel?.twitterAccount??'',
+                        viewModel.hostCafeHomeDetailModel?.twitterAccount ?? '',
                         style: const TextStyle(
                             fontSize: 14,
                             color: Palette.gray08,
@@ -270,6 +269,7 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                           //오늘 날짜
                           firstDay: DateTime.now(),
                           lastDay: DateTime.utc(DateTime.now().year + 1),
+                          locale: 'ko_KR', // Set the locale to Korean
 
                           headerStyle: const HeaderStyle(
                               titleTextStyle: TextStyle(
@@ -277,18 +277,19 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
-                              formatButtonVisible: false, titleCentered: false,
+                              formatButtonVisible: false,
+                              titleCentered: false,
                               headerMargin: EdgeInsets.all(5),
                               rightChevronVisible: false,
-                              leftChevronVisible:false
-                          ),
+                              leftChevronVisible: false),
 
                           onPageChanged: (focusedDay) {
                             _focusedDay = focusedDay;
                             viewModel.getSchedule(
-                                id,focusedDay.year, focusedDay.month);
+                                id, focusedDay.year, focusedDay.month);
                           },
-                          availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
+                          availableGestures: AvailableGestures.horizontalSwipe,
+                          // Enable horizontal swipe
 
                           calendarBuilders: CalendarBuilders(
                               defaultBuilder: (context, day, focusedDay) {
@@ -296,14 +297,15 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                               if (day.isAfter(range['start']!) &&
                                   day.isBefore(range['end']!
                                       .add(const Duration(days: 1)))) {
-                                return
-                                  Container(
-                                    margin: const EdgeInsets.all(6.0),
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      '${day.day}',
-                                      style: const TextStyle(color: Palette.gray03),
-                                    ),);
+                                return Container(
+                                  margin: const EdgeInsets.all(6.0),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    '${day.day}',
+                                    style:
+                                        const TextStyle(color: Palette.gray03),
+                                  ),
+                                );
                               }
                             }
                             return null;
@@ -461,14 +463,14 @@ class _HostHomeDetail extends State<HostHomeDetail> {
                       const SizedBox(
                         height: 20,
                       ),
-                      const Text(
-                        '리뷰',
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Palette.gray10,
-                            fontFamily: 'Pretendard',
-                            fontWeight: FontWeight.w700),
-                      ),
+                      // const Text(
+                      //   '리뷰',
+                      //   style: TextStyle(
+                      //       fontSize: 14,
+                      //       color: Palette.gray10,
+                      //       fontFamily: 'Pretendard',
+                      //       fontWeight: FontWeight.w700),
+                      // ),
                     ],
                   ),
                 )
@@ -479,118 +481,107 @@ class _HostHomeDetail extends State<HostHomeDetail> {
         bottomNavigationBar: Padding(
           padding:
               const EdgeInsets.only(left: 18, right: 18, top: 21, bottom: 44),
-          child:
-    Consumer<HostMyCafeViewModel>(builder: (context, viewModel, widget) {
+          child: Consumer<HostMyCafeViewModel>(
+              builder: (context, viewModel, widget) {
+            var able = true;
 
+            for (int i = 0; i < viewModel.hostMyCafeModelList!.length; i++) {
+              if (viewModel.hostMyCafeModelList![i].progressState ==
+                  'RENTAL_PENDING') {
+                able = false;
+                break;
+              }
+            }
 
-      var able = true;
-      viewModel.getHostMyCafe();
-      for(int i=0; i<viewModel.hostMyCafeModelList!.length;i++){
-
-        if(viewModel.hostMyCafeModelList![i].progressState=='RENTAL_PENDING'){
-          able = false;
-        }
-      }
-
-      if(able){
-        return  Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BircaOutLinedButton(
-              text: '대관 요청하기',
-              radiusColor: Palette.primary,
-              backgroundColor: Palette.primary,
-              width: 160,
-              height: 44,
-              radius: 6,
-              textColor: Colors.white,
-              textSize: 14,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HostRequest(
-                          cafeID: id,
-                        )));
-              },
-            ),
-            const SizedBox(
-              width: 14,
-            ),
-            const BircaOutLinedButton(
-                text: '전화하기',
-                radiusColor: Palette.primary,
-                backgroundColor: Colors.white,
-                width: 160,
-                height: 44,
-                radius: 6,
-                textColor: Palette.primary,
-                textSize: 14)
-          ],
-        );
-      } else {
-        return Stack(
-          children: [
-
-          Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BircaOutLinedButton(
-              text: '대관 요청하기',
-              radiusColor: Palette.primary,
-              backgroundColor: Palette.primary,
-              width: 160,
-              height: 44,
-              radius: 6,
-              textColor: Colors.white,
-              textSize: 14,
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => HostRequest(
-                          cafeID: id,
-                        )));
-              },
-            ),
-            const SizedBox(
-              width: 14,
-            ),
-            const BircaOutLinedButton(
-                text: '전화하기',
-                radiusColor: Palette.primary,
-                backgroundColor: Colors.white,
-                width: 160,
-                height: 44,
-                radius: 6,
-                textColor: Palette.primary,
-                textSize: 14)
-          ],
-        ),
-            Container(
-              alignment: Alignment.center,
-              height: 140,
-              margin: const EdgeInsets.only(
-                  top: 8, bottom: 8, left: 16, right: 16),
-              decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.7), // 투명도 조절
-                  borderRadius: BorderRadius.circular(6)
-              ),
-              child:  const Text(
-                '대관 요청 중인 경우 다른 대관을 요청 할 수 없습니다.',
-                style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.white),
-              ),
-            )
-          ],
-        ) ;
-
-      }
-
-    }),
-
-
+            if (able) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BircaOutLinedButton(
+                    text: '대관 요청하기',
+                    radiusColor: Palette.primary,
+                    backgroundColor: Palette.primary,
+                    width: 160,
+                    height: 44,
+                    radius: 6,
+                    textColor: Colors.white,
+                    textSize: 14,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => HostRequest(
+                                    cafeID: id,
+                                  )));
+                    },
+                  ),
+                  const SizedBox(
+                    width: 14,
+                  ),
+                  const BircaOutLinedButton(
+                      text: '전화하기',
+                      radiusColor: Palette.primary,
+                      backgroundColor: Colors.white,
+                      width: 160,
+                      height: 44,
+                      radius: 6,
+                      textColor: Palette.primary,
+                      textSize: 14)
+                ],
+              );
+            } else {
+              return Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      BircaOutLinedButton(
+                        text: '대관 요청하기',
+                        radiusColor: Palette.primary,
+                        backgroundColor: Palette.primary,
+                        width: 160,
+                        height: 44,
+                        radius: 6,
+                        textColor: Colors.white,
+                        textSize: 14,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HostRequest(
+                                        cafeID: id,
+                                      )));
+                        },
+                      ),
+                      const SizedBox(
+                        width: 14,
+                      ),
+                      const BircaOutLinedButton(
+                          text: '전화하기',
+                          radiusColor: Palette.primary,
+                          backgroundColor: Colors.white,
+                          width: 160,
+                          height: 44,
+                          radius: 6,
+                          textColor: Palette.primary,
+                          textSize: 14)
+                    ],
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    height: 44,
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.7), // 투명도 조절
+                        borderRadius: BorderRadius.circular(6)),
+                    child: const Text(
+                      '대관 요청 중인 경우 다른 대관을 요청 할 수 없습니다.',
+                      style: TextStyle(fontSize: 14, color: Colors.white),
+                    ),
+                  )
+                ],
+              );
+            }
+          }),
         ));
   }
 }
