@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../viewmodel/select_favorite_artist_viewmodel.dart';
 import '../../widgets/button.dart';
-import '../../widgets/card.dart';
 
 class OwnerSelectArtist extends StatefulWidget {
   const OwnerSelectArtist({super.key});
@@ -172,8 +171,8 @@ class _OwnerSelectArtist
                     width: double.infinity,
                     height: 126,
                     child: CustomPaint(
-                      painter: BubblePainter(idx: location),
                       child: Container(
+                          color: Palette.gray02,
                           padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Consumer<SelectFavoriteArtistViewModel>(
                               builder: (context, model, _) =>
