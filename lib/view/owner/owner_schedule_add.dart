@@ -43,7 +43,6 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
   @override
   void initState() {
     super.initState();
-
   }
 
   @override
@@ -80,6 +79,9 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                 width: 190,
                 margin: const EdgeInsets.only(left: 14),
                 child: TextField(
+                  onSubmitted: (value) {
+                    FocusScope.of(context).unfocus();
+                  },
                   controller: artistController,
                   style: const TextStyle(
                       fontSize: 16,
@@ -199,11 +201,11 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                     SizedBox(
                       width: 50,
                       child: TextField(
+                        onSubmitted: (value) {
+                          FocusScope.of(context).unfocus();
+                        },
                         controller: maximumVisitantsController,
                         keyboardType: TextInputType.number,
-                        // inputFormatters: <TextInputFormatter>[
-                        //   FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
-                        // ],
                         textAlign: TextAlign.center,
                         style: const TextStyle(
                             fontSize: 14,
@@ -237,6 +239,9 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                     SizedBox(
                       width: 50,
                       child: TextField(
+                        onSubmitted: (value) {
+                          FocusScope.of(context).unfocus();
+                        },
                         controller: minimumVisitantsController,
                         textAlign: TextAlign.center,
                         keyboardType: TextInputType.number,
@@ -285,6 +290,9 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
               margin: const EdgeInsets.only(left: 14),
               child: TextField(
                 controller: twitterAccountController,
+                onSubmitted: (value) {
+                  FocusScope.of(context).unfocus();
+                },
                 style: const TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
@@ -324,6 +332,9 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                     fontWeight: FontWeight.w300,
                     fontFamily: 'Pretendard',
                     color: Palette.gray10),
+                onSubmitted: (value) {
+                  FocusScope.of(context).unfocus();
+                },
                 decoration: const InputDecoration(
                   hintText: "000-0000-0000",
                   enabledBorder: UnderlineInputBorder(
@@ -352,41 +363,54 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                 ),
               ),
               onTap: () async {
-                try{
-                  await Provider.of<OwnerScheduleViewModel>(context,
-                      listen: false)
-                      .postSchedule(OwnerScheduleAddModel(
-                      artistId: artistId,
-                      startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
-                          .format(_rangeStart!),
-                      endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
-                          .format(_rangeEnd!),
-                      minimumVisitant:
-                      int.parse(minimumVisitantsController.text),
-                      maximumVisitant:
-                      int.parse(maximumVisitantsController.text),
-                      twitterAccount: twitterAccountController.text,
-                      hostPhoneNumber: hostPhoneNumberController.text))
-                      .then((value) {
+                if (hostPhoneNumberController.text == ''||hostPhoneNumberController.text.length!=13) {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text('000-0000-0000 형식으로 전화번호를 입력해주세요!')));
+                } else if (artistId == 0) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('아티스트를 선택해주세요!')));
+                } else if (_rangeStart == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('날짜를 선택해주세요!')));
+                } else if (_rangeEnd == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('날짜를 선택해주세요!')));
+                } else {
+                  if (minimumVisitantsController.text == '') {
+                    minimumVisitantsController.text = '0';
+                  }
 
-
-                    Provider.of<OwnerScheduleViewModel>(context, listen: false)
-                        .getSchedule(_rangeStart!.year, _rangeStart!.month);
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(content: Text('추가 완료')));
-                    Navigator.pop(context);
-
-
-
-
-                  });
-                }catch(e){
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(const SnackBar(content: Text('이미 예약된 날짜입니다.')));
+                  if (maximumVisitantsController.text == '') {
+                    maximumVisitantsController.text = '0';
+                  }
+                  try {
+                    await Provider.of<OwnerScheduleViewModel>(context,
+                            listen: false)
+                        .postSchedule(OwnerScheduleAddModel(
+                            artistId: artistId,
+                            startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                .format(_rangeStart!),
+                            endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+                                .format(_rangeEnd!),
+                            minimumVisitant:
+                                int.parse(minimumVisitantsController.text),
+                            maximumVisitant:
+                                int.parse(maximumVisitantsController.text),
+                            twitterAccount: twitterAccountController.text,
+                            hostPhoneNumber: hostPhoneNumberController.text))
+                        .then((value) {
+                      Provider.of<OwnerScheduleViewModel>(context,
+                              listen: false)
+                          .getSchedule(_rangeStart!.year, _rangeStart!.month);
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(content: Text('추가 완료')));
+                      Navigator.pop(context);
+                    });
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('이미 예약된 날짜입니다.')));
+                  }
                 }
-
-
-
               },
             )
           ],
@@ -401,92 +425,92 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
         builder: (context) {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-                //
+            //
 
-                var viewModel =     Provider.of<OwnerScheduleViewModel>(context, listen: false);
+            var viewModel =
+                Provider.of<OwnerScheduleViewModel>(context, listen: false);
 
-                return Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(6),
-                      child: TableCalendar(
-                        focusedDay: _focusedDay,
-                        locale: 'ko_KR', // Set the locale to Korean
+            return Column(
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(6),
+                  child: TableCalendar(
+                    focusedDay: _focusedDay,
+                    locale: 'ko_KR',
+                    // Set the locale to Korean
 
-                        //오늘 날짜
-                        firstDay: DateTime.now(),
-                        lastDay: DateTime.utc(DateTime.now().year + 1),
+                    //오늘 날짜
+                    firstDay: DateTime.now(),
+                    lastDay: DateTime.utc(DateTime.now().year + 1),
 
-                        headerStyle: const HeaderStyle(
-                            titleTextStyle: TextStyle(
-                              fontSize: 17.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                            formatButtonVisible: false, titleCentered: false,
-                            headerMargin: EdgeInsets.all(5),
-                            rightChevronVisible: false,
-                            leftChevronVisible:false
+                    headerStyle: const HeaderStyle(
+                        titleTextStyle: TextStyle(
+                          fontSize: 17.0,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
                         ),
+                        formatButtonVisible: false,
+                        titleCentered: false,
+                        headerMargin: EdgeInsets.all(5),
+                        rightChevronVisible: false,
+                        leftChevronVisible: false),
 
-                        rangeStartDay: _rangeStart,
-                        rangeEndDay: _rangeEnd,
-                        rangeSelectionMode: _rangeSelectionMode,
+                    rangeStartDay: _rangeStart,
+                    rangeEndDay: _rangeEnd,
+                    rangeSelectionMode: _rangeSelectionMode,
 
-                        selectedDayPredicate: (day) {
-                          return isSameDay(_selectedDay, day);
-                        },
+                    selectedDayPredicate: (day) {
+                      return isSameDay(_selectedDay, day);
+                    },
 
-                        onDaySelected: (selectedDay, focusedDay) {
-                          if (!isSameDay(_selectedDay, selectedDay)) {
-                            setState(() {
-                              _selectedDay = selectedDay;
-                              _focusedDay =
-                                  focusedDay; // update `_focusedDay` here as well
-                              _rangeStart = null; // Important to clean those
-                              _rangeEnd = null;
-                              _rangeSelectionMode = RangeSelectionMode.toggledOff;
-                            });
-                          }
-                        },
-                        //달력 날짜 범위 선택
-                        onRangeSelected: (start, end, focusedDay) {
-                          setState(() {
-                            _selectedDay = null;
-                            _focusedDay = focusedDay;
-                            _rangeStart = start;
-                            _rangeEnd = end;
-                            _rangeSelectionMode = RangeSelectionMode.toggledOn;
-                            // print('start : $_rangeStart / end : $_rangeEnd ');
-                          });
-                        },
-
-
-                        availableGestures: AvailableGestures.horizontalSwipe, // Enable horizontal swipe
-
-
-                      ),
-                    ),
-                    BircaFilledButton(
-                      text: '적용하기',
-                      color: Palette.primary,
-                      width: 300,
-                      height: 46,
-                      onPressed: () {
-                        //날짜를 하나만 선택 했을 시
-                        _rangeEnd ??= _rangeStart;
+                    onDaySelected: (selectedDay, focusedDay) {
+                      if (!isSameDay(_selectedDay, selectedDay)) {
                         setState(() {
-                          hostDate =
-                          '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
-                          // print(hostDate);
+                          _selectedDay = selectedDay;
+                          _focusedDay =
+                              focusedDay; // update `_focusedDay` here as well
+                          _rangeStart = null; // Important to clean those
+                          _rangeEnd = null;
+                          _rangeSelectionMode = RangeSelectionMode.toggledOff;
                         });
+                      }
+                    },
+                    //달력 날짜 범위 선택
+                    onRangeSelected: (start, end, focusedDay) {
+                      setState(() {
+                        _selectedDay = null;
+                        _focusedDay = focusedDay;
+                        _rangeStart = start;
+                        _rangeEnd = end;
+                        _rangeSelectionMode = RangeSelectionMode.toggledOn;
+                        // print('start : $_rangeStart / end : $_rangeEnd ');
+                      });
+                    },
 
-                        Navigator.of(context).pop(hostDate);
-                      },
-                    ),
-                  ],
-                );
-              });
+                    availableGestures: AvailableGestures
+                        .horizontalSwipe, // Enable horizontal swipe
+                  ),
+                ),
+                BircaFilledButton(
+                  text: '적용하기',
+                  color: Palette.primary,
+                  width: 300,
+                  height: 46,
+                  onPressed: () {
+                    //날짜를 하나만 선택 했을 시
+                    _rangeEnd ??= _rangeStart;
+                    setState(() {
+                      hostDate =
+                          '${_rangeStart?.year}.${_rangeStart?.month}.${_rangeStart?.day}~${_rangeEnd?.year}.${_rangeEnd?.month}.${_rangeEnd?.day}';
+                      // print(hostDate);
+                    });
+
+                    Navigator.of(context).pop(hostDate);
+                  },
+                ),
+              ],
+            );
+          });
         });
 
     if (hostDate1 != null) {

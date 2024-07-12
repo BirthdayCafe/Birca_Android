@@ -176,6 +176,9 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                 height: 11,
               ),
               TextField(
+                onSubmitted: (value) {
+                  FocusScope.of(context).unfocus();
+                },
                 controller: cafeName,
                 onChanged: (text) {
                   _updateButtonState();
@@ -198,6 +201,9 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                 height: 11,
               ),
               TextField(
+                onSubmitted: (value) {
+                  FocusScope.of(context).unfocus();
+                },
                 controller: owner,
                 onChanged: (text) {
                   _updateButtonState();
@@ -220,6 +226,9 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                 height: 11,
               ),
               TextField(
+                onSubmitted: (value) {
+                  FocusScope.of(context).unfocus();
+                },
                 controller: businessLicenseNumber,
                 onChanged: (text) {
                   _updateButtonState();
@@ -242,6 +251,9 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                 height: 11,
               ),
               TextField(
+                onSubmitted: (value) {
+                  FocusScope.of(context).unfocus();
+                },
                 controller: address,
                 onChanged: (text) {
                   _updateButtonState();

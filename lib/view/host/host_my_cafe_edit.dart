@@ -57,6 +57,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
           viewModel.birthDayCafeNameController.text =
               viewModel.birthdayCafeModel?.birthdayCafeName ?? '';
           return TextField(
+              onSubmitted: (value) {
+                FocusScope.of(context).unfocus();
+              },
               controller: viewModel.birthDayCafeNameController,
               decoration: const InputDecoration(
                   hintText: '생일 카페 이름을 입력해주세요.', border: InputBorder.none),
@@ -315,6 +318,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           fontSize: 16),
                     ),
                     TextField(
+                      onSubmitted: (value) {
+                        FocusScope.of(context).unfocus();
+                      },
                       controller: viewModel.twitterController,
                       decoration: const InputDecoration(
                         hintText: '트위터 계정',
@@ -409,6 +415,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           // height : 35,
                                           // width: 150,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                 .goodsNameController[index],
                                             textAlign: TextAlign.center,
@@ -428,6 +437,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 3,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                 .goodsDetailsController[index],
                                             textAlign: TextAlign.center,
@@ -527,6 +539,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           // height : 35,
                                           // width: 150,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                 .menuNameController[index],
                                             textAlign: TextAlign.center,
@@ -546,6 +561,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 3,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                 .menuDetailsController[index],
                                             textAlign: TextAlign.center,
@@ -565,6 +583,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 3,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                 .menuPriceController[index],
                                             textAlign: TextAlign.center,
@@ -661,6 +682,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 1,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                     .luckyDrawsRankController[
                                                 index],
@@ -681,6 +705,9 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                         Expanded(
                                           flex: 6,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                     .luckyDrawsPrizeController[
                                                 index],

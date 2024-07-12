@@ -144,6 +144,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           fontWeight: FontWeight.w700),
                     ),
                     TextField(
+                      onSubmitted: (value) {
+                        FocusScope.of(context).unfocus();
+                      },
                       controller: viewModel.cafeNameController,
                       style: const TextStyle(
                           fontSize: 14,
@@ -170,6 +173,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           fontWeight: FontWeight.w700),
                     ),
                     TextField(
+                      onSubmitted: (value) {
+                        FocusScope.of(context).unfocus();
+                      },
                       controller: viewModel.twitterAccountController,
                       style: const TextStyle(
                           fontSize: 14,
@@ -209,6 +215,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                         alignment: Alignment.center,
                         child:
                           TextField(
+                            onSubmitted: (value) {
+                              FocusScope.of(context).unfocus();
+                            },
                             textAlign: TextAlign.start,
                             controller: viewModel.cafeAddressController,
                             decoration:
@@ -242,6 +251,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           width: 115,
                           height: 36,
                           child: TextField(
+                            onSubmitted: (value) {
+                              FocusScope.of(context).unfocus();
+                            },
                             controller: viewModel.businessHoursController,
                             textAlign: TextAlign.center,
                             decoration: const InputDecoration(
@@ -441,6 +453,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // height : 35,
                                           // width: 150,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                 .menuNameController[index],
                                             textAlign: TextAlign.center,
@@ -462,6 +477,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // height : 35,
                                           // width: 100,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                 .menuPriceController[index],
                                             textAlign: TextAlign.center,
@@ -563,6 +581,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // height : 35,
                                           // width: 150,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                 .optionNameController[index],
                                             textAlign: TextAlign.center,
@@ -582,6 +603,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                         Expanded(
                                           flex: 2,
                                           child: TextField(
+                                            onSubmitted: (value) {
+                                              FocusScope.of(context).unfocus();
+                                            },
                                             controller: viewModel
                                                 .optionPriceController[index],
                                             textAlign: TextAlign.center,

@@ -207,6 +207,9 @@ class _HostRequest extends State<HostRequest> {
                         SizedBox(
                           width: 50,
                           child: TextField(
+                            onSubmitted: (value) {
+                              FocusScope.of(context).unfocus();
+                            },
                             controller: maximumVisitantsController,
                             keyboardType: TextInputType.number,
                             // inputFormatters: <TextInputFormatter>[
@@ -245,6 +248,9 @@ class _HostRequest extends State<HostRequest> {
                         SizedBox(
                           width: 50,
                           child: TextField(
+                            onSubmitted: (value) {
+                              FocusScope.of(context).unfocus();
+                            },
                             controller: minimumVisitantsController,
                             textAlign: TextAlign.center,
                             keyboardType: TextInputType.number,
@@ -292,6 +298,9 @@ class _HostRequest extends State<HostRequest> {
                   width: 200,
                   margin: const EdgeInsets.only(left: 14),
                   child: TextField(
+                    onSubmitted: (value) {
+                      FocusScope.of(context).unfocus();
+                    },
                     controller: twitterAccountController,
                     style: const TextStyle(
                         fontSize: 14,
@@ -326,6 +335,9 @@ class _HostRequest extends State<HostRequest> {
                   width: 200,
                   margin: const EdgeInsets.only(left: 14),
                   child: TextField(
+                    onSubmitted: (value) {
+                      FocusScope.of(context).unfocus();
+                    },
                     controller: hostPhoneNumberController,
                     style: const TextStyle(
                         fontSize: 14,
