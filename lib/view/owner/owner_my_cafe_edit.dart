@@ -53,6 +53,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
         ),
         leading: IconButton(
             onPressed: () {
+              Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                  .getMyCafe();
               Navigator.pop(context);
             },
             icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),
@@ -203,14 +205,19 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     ),
                     Container(
                         width: 330,
-                        height: 40,
-                        padding: const EdgeInsets.only(bottom: 2, left: 5),
+                        height: 50,
+                        padding: const EdgeInsets.only(left: 5, top: 0),
                         decoration: BoxDecoration(
                           border: Border.all(color: const Color(0xffD7D8DC)),
                           borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
                         ),
                         alignment: Alignment.center,
                         child: TextField(
+                          style: const TextStyle(
+                              fontSize: 14,
+                              color: Palette.gray10,
+                              fontFamily: 'Pretendard',
+                              fontWeight: FontWeight.w400),
                           onSubmitted: (value) {
                             viewModel.update();
 
@@ -248,6 +255,11 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           width: 115,
                           height: 36,
                           child: TextField(
+                            style: const TextStyle(
+                                fontSize: 14,
+                                color: Palette.gray10,
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400),
                             onSubmitted: (value) {
                               viewModel.update();
                               FocusScope.of(context).unfocus();
@@ -450,7 +462,13 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           flex: 3,
                                           // height : 35,
                                           // width: 150,
+
                                           child: TextField(
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Palette.gray10,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w400),
                                             onSubmitted: (value) {
                                               viewModel.update();
                                               FocusScope.of(context).unfocus();
@@ -476,6 +494,11 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // height : 35,
                                           // width: 100,
                                           child: TextField(
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Palette.gray10,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w400),
                                             onSubmitted: (value) {
                                               viewModel.update();
 
@@ -584,6 +607,11 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // height : 35,
                                           // width: 150,
                                           child: TextField(
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Palette.gray10,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w400),
                                             onSubmitted: (value) {
                                               viewModel.update();
                                               FocusScope.of(context).unfocus();
@@ -607,6 +635,11 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                         Expanded(
                                           flex: 2,
                                           child: TextField(
+                                            style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Palette.gray10,
+                                                fontFamily: 'Pretendard',
+                                                fontWeight: FontWeight.w400),
                                             onSubmitted: (value) {
                                               viewModel.update();
 
