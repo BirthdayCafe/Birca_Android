@@ -18,20 +18,18 @@ class OwnerMyCafeEdit extends StatefulWidget {
 }
 
 class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
-
   @override
   void initState() {
     super.initState();
     Provider.of<OwnerMyCafeViewModel>(context, listen: false).getMyCafe();
   }
 
-
-
   List<MenuModel> cafeMenu = [];
   List<OptionModel> cafeOptions = [];
 
   bool isDateChecked = false;
   bool isCountChecked = false;
+
   //
   // DateTime? _selectedDay;
   // DateTime _focusedDay = DateTime.now();
@@ -39,8 +37,6 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
   final List<DateTime> _selectedDates = [];
   final ImagePicker _picker = ImagePicker();
   List<PickedFile> _selectedImages = [];
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -69,14 +65,13 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
           viewModel.cafeAddressController.text =
               '${viewModel.ownerMyCafeDetailModel?.cafeAddress}';
           viewModel.businessHoursController.text =
-              viewModel.ownerMyCafeDetailModel?.businessHours??'00시~00시';
+              viewModel.ownerMyCafeDetailModel?.businessHours ?? '00시~00시';
           viewModel.twitterAccountController.text =
-              viewModel.ownerMyCafeDetailModel?.twitterAccount??'@';
+              viewModel.ownerMyCafeDetailModel?.twitterAccount ?? '@';
 
           cafeMenu.addAll(viewModel.ownerMyCafeDetailModel!.cafeMenus);
 
           cafeOptions.addAll(viewModel.ownerMyCafeDetailModel!.cafeOptions);
-
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,6 +140,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     ),
                     TextField(
                       onSubmitted: (value) {
+                        viewModel.update();
                         FocusScope.of(context).unfocus();
                       },
                       controller: viewModel.cafeNameController,
@@ -174,6 +170,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     ),
                     TextField(
                       onSubmitted: (value) {
+                        viewModel.update();
                         FocusScope.of(context).unfocus();
                       },
                       controller: viewModel.twitterAccountController,
@@ -204,27 +201,27 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                     const SizedBox(
                       height: 16,
                     ),
-                      Container(
+                    Container(
                         width: 330,
                         height: 40,
-                        padding: const EdgeInsets.only(bottom: 2,left: 5),
+                        padding: const EdgeInsets.only(bottom: 2, left: 5),
                         decoration: BoxDecoration(
                           border: Border.all(color: const Color(0xffD7D8DC)),
                           borderRadius: BorderRadius.circular(2), // 테두리 굴곡 설정
                         ),
                         alignment: Alignment.center,
-                        child:
-                          TextField(
-                            onSubmitted: (value) {
-                              FocusScope.of(context).unfocus();
-                            },
-                            textAlign: TextAlign.start,
-                            controller: viewModel.cafeAddressController,
-                            decoration:
-                            const InputDecoration(border: InputBorder.none,
-                            ),
-                        )
-                      ),
+                        child: TextField(
+                          onSubmitted: (value) {
+                            viewModel.update();
+
+                            FocusScope.of(context).unfocus();
+                          },
+                          textAlign: TextAlign.start,
+                          controller: viewModel.cafeAddressController,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                          ),
+                        )),
 
                     const SizedBox(
                       height: 20,
@@ -252,6 +249,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                           height: 36,
                           child: TextField(
                             onSubmitted: (value) {
+                              viewModel.update();
                               FocusScope.of(context).unfocus();
                             },
                             controller: viewModel.businessHoursController,
@@ -454,6 +452,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // width: 150,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -478,6 +477,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // width: 100,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
+
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -504,7 +505,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                       ],
                                     ));
                               }),
-                          const SizedBox(height: 10,),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           BircaOutLinedButton(
                             text: '추가하기',
                             radiusColor: Palette.gray02,
@@ -582,6 +585,7 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           // width: 150,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -604,6 +608,8 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                           flex: 2,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
+
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -630,7 +636,9 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                                       ],
                                     ));
                               }),
-                          const SizedBox(height: 10,),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           BircaOutLinedButton(
                             text: '추가하기',
                             radiusColor: Palette.gray02,
@@ -680,39 +688,40 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
                   //   "datOffDates": dateStrings,
                   // };
 
-                 viewModel.update();
+                  viewModel.update();
 
-                 if(viewModel.ownerMyCafeDetailModel?.cafeImages==[]){
-                   ScaffoldMessenger.of(context).showSnackBar(
-                       const SnackBar(content: Text('사진을 선택해주세요!')));
-                 } else {
-                   // await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
-                   //     .postDayOff(
-                   //     viewModel.ownerMyCafeDetailModel!.cafeId, data);
-                   await Provider.of<OwnerMyCafeViewModel>(context,
-                       listen: false).postMenus();
-                   await Provider.of<OwnerMyCafeViewModel>(context,
-                       listen: false).postOptions();
+                  if (viewModel.ownerMyCafeDetailModel?.cafeImages == []) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('사진을 선택해주세요!')));
+                  } else {
+                    // await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                    //     .postDayOff(
+                    //     viewModel.ownerMyCafeDetailModel!.cafeId, data);
+                    await Provider.of<OwnerMyCafeViewModel>(context,
+                            listen: false)
+                        .postMenus();
+                    await Provider.of<OwnerMyCafeViewModel>(context,
+                            listen: false)
+                        .postOptions();
 
-                   await Provider.of<OwnerMyCafeViewModel>(context,
-                       listen: false)
-                       .patchMyCafe(
-                     viewModel.cafeNameController.text,
-                     viewModel.cafeAddressController.text,
-                     viewModel.twitterAccountController.text,
-                     viewModel.businessHoursController.text,
-                   )
-                       .then((_) {
-                     log(dateStrings.toString());
-                     // Navigate on success
-                     Provider.of<OwnerMyCafeViewModel>(context, listen: false)
-                         .getMyCafe();
-                     Navigator.pop(context);
-                   }).catchError((error) {
-                     log('fail');
-                   });
-                 }
-
+                    await Provider.of<OwnerMyCafeViewModel>(context,
+                            listen: false)
+                        .patchMyCafe(
+                      viewModel.cafeNameController.text,
+                      viewModel.cafeAddressController.text,
+                      viewModel.twitterAccountController.text,
+                      viewModel.businessHoursController.text,
+                    )
+                        .then((_) {
+                      log(dateStrings.toString());
+                      // Navigate on success
+                      Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                          .getMyCafe();
+                      Navigator.pop(context);
+                    }).catchError((error) {
+                      log('fail');
+                    });
+                  }
                 },
               ),
               const SizedBox(
@@ -728,49 +737,36 @@ class _OwnerMyCafeEdit extends State<OwnerMyCafeEdit> {
   Future<void> _pickImages(int cafeId) async {
     // final List<XFile> pickedFiles = await _picker.pickMultiImage();
     List<PickedFile>? images = await _picker.getMultiImage();
-    var viewModel = Provider.of<OwnerMyCafeViewModel>(context,
-        listen: false);
+    var viewModel = Provider.of<OwnerMyCafeViewModel>(context, listen: false);
     if (images != null) {
       _showLoadingDialog(context);
 
       if (images.length > 5) {
-
-
         log('사진은 5장까지 선택할 수 있습니다.');
         _hideLoadingDialog(context);
 
         ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('사진은 5장까지 선택할 수 있습니다.')));
-
       } else {
+        _selectedImages =
+            images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
+        Provider.of<OwnerMyCafeViewModel>(context, listen: false).postMenus();
+        Provider.of<OwnerMyCafeViewModel>(context, listen: false).postOptions();
 
+        Provider.of<OwnerMyCafeViewModel>(context, listen: false).patchMyCafe(
+          viewModel.cafeNameController.text,
+          viewModel.cafeAddressController.text,
+          viewModel.twitterAccountController.text,
+          viewModel.businessHoursController.text,
+        );
 
-
-          _selectedImages =
-              images.map((pickedFile) => PickedFile(pickedFile.path)).toList();
-           Provider.of<OwnerMyCafeViewModel>(context,
-              listen: false).postMenus();
-           Provider.of<OwnerMyCafeViewModel>(context,
-              listen: false).postOptions();
-
-           Provider.of<OwnerMyCafeViewModel>(context,
-              listen: false)
-              .patchMyCafe(
-            viewModel.cafeNameController.text,
-            viewModel.cafeAddressController.text,
-            viewModel.twitterAccountController.text,
-            viewModel.businessHoursController.text,
-          );
-
-          await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
-              .postImage(cafeId, _selectedImages)
-              .then((value) =>
-                  Provider.of<OwnerMyCafeViewModel>(context, listen: false)
-                      .getMyCafe());
-          _hideLoadingDialog(context);
-
+        await Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+            .postImage(cafeId, _selectedImages)
+            .then((value) =>
+                Provider.of<OwnerMyCafeViewModel>(context, listen: false)
+                    .getMyCafe());
+        _hideLoadingDialog(context);
       }
-
     }
   }
 }
@@ -790,4 +786,3 @@ void _showLoadingDialog(BuildContext context) {
 void _hideLoadingDialog(BuildContext context) {
   Navigator.of(context).pop();
 }
-

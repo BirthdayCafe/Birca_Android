@@ -58,6 +58,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
               viewModel.birthdayCafeModel?.birthdayCafeName ?? '';
           return TextField(
               onSubmitted: (value) {
+                viewModel.update();
                 FocusScope.of(context).unfocus();
               },
               controller: viewModel.birthDayCafeNameController,
@@ -229,7 +230,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                               fontFamily: 'Pretendard'),
                         ),
                         onTap: () async {
-                          viewModel.updateInfo();
+                          viewModel.update();
                           if (viewModel.birthdayCafeModel?.progressState ==
                               'IN_PROGRESS') {
                             _selectCongestionState();
@@ -270,7 +271,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                               fontFamily: 'Pretendard'),
                         ),
                         onTap: () async {
-                          viewModel.updateInfo();
+                          viewModel.update();
 
                           if (viewModel.birthdayCafeModel?.progressState ==
                               'IN_PROGRESS') {
@@ -303,7 +304,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                       height: 10,
                     ),
                     Text(
-                      '${viewModel.birthdayCafeModel?.artist.groupName??''} ${viewModel.birthdayCafeModel?.artist.name}',
+                      '${viewModel.birthdayCafeModel?.artist.groupName ?? ''} ${viewModel.birthdayCafeModel?.artist.name}',
                       style: const TextStyle(fontSize: 16),
                     ),
                     const SizedBox(
@@ -319,6 +320,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                     ),
                     TextField(
                       onSubmitted: (value) {
+                        viewModel.update();
+
                         FocusScope.of(context).unfocus();
                       },
                       controller: viewModel.twitterController,
@@ -416,6 +419,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           // width: 150,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
+
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -438,6 +443,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           flex: 3,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
+
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -540,6 +547,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           // width: 150,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
+
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -562,6 +571,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           flex: 3,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
+
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -584,6 +595,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           flex: 3,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
+
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -683,6 +696,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           flex: 1,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
+
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -706,6 +721,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                                           flex: 6,
                                           child: TextField(
                                             onSubmitted: (value) {
+                                              viewModel.update();
+
                                               FocusScope.of(context).unfocus();
                                             },
                                             controller: viewModel
@@ -793,7 +810,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                       textColor: Palette.primary,
                       textSize: 14,
                       onPressed: () async {
-                        viewModel.updateInfo();
+                        viewModel.update();
                         _pickMainImages(id);
                       },
                     ),
@@ -856,7 +873,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                       textColor: Palette.primary,
                       textSize: 14,
                       onPressed: () async {
-                        viewModel.updateInfo();
+                        viewModel.update();
 
                         _pickImages(id);
                       },
@@ -904,11 +921,8 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                   .postMenus(id);
               Provider.of<BirthdayCafeViewModel>(context, listen: false)
                   .postLuckyDraws(id);
-              Provider.of<BirthdayCafeViewModel>(context,
-                  listen: false)
-                  .patchCafeState(
-                  id, 'visibility', 'PUBLIC');
-
+              Provider.of<BirthdayCafeViewModel>(context, listen: false)
+                  .patchCafeState(id, 'visibility', 'PUBLIC');
 
               await Provider.of<BirthdayCafeViewModel>(context, listen: false)
                   .patchInfo(

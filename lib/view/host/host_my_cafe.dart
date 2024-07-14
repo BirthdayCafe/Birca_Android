@@ -87,14 +87,15 @@ class _HostCafe extends State<HostCafe> {
                     }
 
                     if (viewModel.hostMyCafeModelList?[index].progressState ==
-                        'RENTAL_CANCELED'||viewModel.hostMyCafeModelList?[index].progressState ==
-                        'FINISHED') {
-                      String message ='';
-                      if(viewModel.hostMyCafeModelList?[index].progressState=='RENTAL_CANCELED'){
+                            'RENTAL_CANCELED' ||
+                        viewModel.hostMyCafeModelList?[index].progressState ==
+                            'FINISHED') {
+                      String message = '';
+                      if (viewModel.hostMyCafeModelList?[index].progressState ==
+                          'RENTAL_CANCELED') {
                         message = '취소되었습니다.';
                       } else {
                         message = '운영이 종료되었습니다.';
-
                       }
                       return Stack(
                         children: [
@@ -124,7 +125,7 @@ class _HostCafe extends State<HostCafe> {
                                         'https://placehold.co/210x140/F7F7FA/F7F7FA.jpg',
                                     height: 140,
                                     width: 210,
-                                    fit: BoxFit.fill),
+                                    fit: BoxFit.cover),
                                 const SizedBox(
                                   width: 12,
                                 ),
@@ -139,7 +140,7 @@ class _HostCafe extends State<HostCafe> {
                                           height: 35,
                                         ),
                                         Text(
-                                          '${viewModel.hostMyCafeModelList?[index].artist.groupName??''} ${viewModel.hostMyCafeModelList?[index].artist.name}',
+                                          '${viewModel.hostMyCafeModelList?[index].artist.groupName ?? ''} ${viewModel.hostMyCafeModelList?[index].artist.name}',
                                           style: const TextStyle(
                                               fontSize: 12,
                                               color: Palette.primary,
@@ -218,14 +219,13 @@ class _HostCafe extends State<HostCafe> {
                             margin: const EdgeInsets.only(
                                 top: 8, bottom: 8, left: 16, right: 16),
                             decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.7), // 투명도 조절
-                              borderRadius: BorderRadius.circular(6)
-                            ),
-                            child:  Text(
+                                color: Colors.black.withOpacity(0.7),
+                                // 투명도 조절
+                                borderRadius: BorderRadius.circular(6)),
+                            child: Text(
                               message,
                               style: const TextStyle(
-                                  fontSize: 14,
-                              color: Colors.white),
+                                  fontSize: 14, color: Colors.white),
                             ),
                           )
                         ],
@@ -273,7 +273,7 @@ class _HostCafe extends State<HostCafe> {
                                         height: 35,
                                       ),
                                       Text(
-                                        '${viewModel.hostMyCafeModelList?[index].artist.groupName??''} ${viewModel.hostMyCafeModelList?[index].artist.name}',
+                                        '${viewModel.hostMyCafeModelList?[index].artist.groupName ?? ''} ${viewModel.hostMyCafeModelList?[index].artist.name}',
                                         style: const TextStyle(
                                             fontSize: 12,
                                             color: Palette.primary,
@@ -365,14 +365,16 @@ class _HostCafe extends State<HostCafe> {
                           }
                         },
                         onLongPress: () {
-                          if(viewModel.hostMyCafeModelList![index].progressState=='RENTAL_APPROVED'){
+                          if (viewModel
+                                  .hostMyCafeModelList![index].progressState ==
+                              'RENTAL_APPROVED') {
                             ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('이미 승인된 카페는 취소할 수 없습니다.')));
+                                const SnackBar(
+                                    content: Text('이미 승인된 카페는 취소할 수 없습니다.')));
                           } else {
                             _openCancelDialog(viewModel
                                 .hostMyCafeModelList![index].birthdayCafeId);
                           }
-
                         },
                       );
                     }

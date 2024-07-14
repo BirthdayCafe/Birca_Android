@@ -582,10 +582,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateInfo(){
-    birthdayCafeModel?.birthdayCafeName = birthDayCafeNameController.text.toString();
-    birthdayCafeModel?.twitterAccount = twitterController.text.toString();
-  }
+
   void update() {
     for (int i = 0; i < birthdayCafeMenusModel!.length; i++) {
       birthdayCafeMenusModel![i].name = menuNameController[i].text;
@@ -603,6 +600,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       birthdayCafeLuckyDrawsModel![i].prize = luckyDrawsPrizeController[i].text;
       birthdayCafeLuckyDrawsModel![i].rank =
           int.parse(luckyDrawsRankController[i].text);
+
+      birthdayCafeModel?.birthdayCafeName = birthDayCafeNameController.text.toString();
+      birthdayCafeModel?.twitterAccount = twitterController.text.toString();
+
+      notifyListeners();
     }
 
     birthdayCafeModel?.birthdayCafeName = birthDayCafeNameController.text;

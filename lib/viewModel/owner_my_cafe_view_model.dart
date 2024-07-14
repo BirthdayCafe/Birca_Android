@@ -190,8 +190,8 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
 
   //사장님 카페 사진 편집
   Future<void> postImage(int cafeId, List<PickedFile> pickedFiles) async {
-
-    patchMyCafe(cafeNameController.text, cafeAddressController.text, twitterAccountController.text, businessHoursController.text);
+    patchMyCafe(cafeNameController.text, cafeAddressController.text,
+        twitterAccountController.text, businessHoursController.text);
 
     String token = await tokenInstance.getToken();
 
@@ -293,5 +293,12 @@ class OwnerMyCafeViewModel extends ChangeNotifier {
     ownerMyCafeDetailModel?.cafeAddress = cafeAddressController.text;
     ownerMyCafeDetailModel?.twitterAccount = twitterAccountController.text;
     ownerMyCafeDetailModel?.businessHours = businessHoursController.text;
+
+    ownerMyCafeDetailModel?.cafeName = _cafeNameController.text;
+    ownerMyCafeDetailModel?.twitterAccount = _twitterAccountController.text;
+    ownerMyCafeDetailModel?.cafeAddress = _cafeAddressController.text;
+    ownerMyCafeDetailModel?.businessHours = _businessHoursController.text;
+
+    notifyListeners();
   }
 }
