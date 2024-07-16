@@ -10,19 +10,23 @@ class OwnerManual3 extends StatelessWidget{
     return Scaffold(
 
         body:
-        GestureDetector(
-          child: Image.asset('lib/assets/image/3.png',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,),
-          onTap: (){
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const BottomNavOwner()),
-            );
-          },
+            SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: GestureDetector(
+                child: Image.asset('lib/assets/image/3.png',
+                  fit: BoxFit.cover,
+               ),
+                onTap: (){
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BottomNavOwner()),
+                  );
+                },
 
-        )
+              )
+            )
+
 
     );
 

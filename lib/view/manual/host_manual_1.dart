@@ -11,10 +11,13 @@ class HostManual1 extends StatelessWidget{
 
         body:
         GestureDetector(
-          child: Image.asset('lib/assets/image/4.png',
-            fit: BoxFit.cover,
-            width: double.infinity,
-            height: double.infinity,),
+          child:  SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child:   Image.asset('lib/assets/image/4.png',
+              fit: BoxFit.cover,
+             ),
+          ),
           onTap: (){
             Navigator.pushReplacement(
               context,
