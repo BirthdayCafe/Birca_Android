@@ -41,8 +41,6 @@ class _OwnerRequestDetail extends State<OwnerRequestDetail> {
           scrolledUnderElevation: 0,
           leading: IconButton(
               onPressed: () {
-                Provider.of<OwnerHomeViewModel>(context, listen: false)
-                    .getOwnerHome("RENTAL_PENDING");
                 Navigator.pop(context);
               },
               icon: SvgPicture.asset('lib/assets/image/ic_back.svg')),

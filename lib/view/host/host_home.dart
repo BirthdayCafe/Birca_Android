@@ -108,6 +108,7 @@ class _HostHome extends State<HostHome> {
                                       style: TextStyle(
                                         color: Palette.primary,
                                         fontSize: 20,
+                                        fontWeight: FontWeight.w700,
                                         decoration: TextDecoration.none,
                                         fontFamily: 'Pretendard',
                                       ),

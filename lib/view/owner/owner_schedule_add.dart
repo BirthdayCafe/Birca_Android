@@ -194,8 +194,8 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                   children: [
                     const Text("최대",
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
                             fontFamily: 'Pretendard',
                             color: Palette.gray10)),
                     SizedBox(
@@ -223,8 +223,8 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                     ),
                     const Text("명",
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
                             fontFamily: 'Pretendard',
                             color: Palette.gray10)),
                     const SizedBox(
@@ -232,8 +232,8 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                     ),
                     const Text("최소",
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
                             fontFamily: 'Pretendard',
                             color: Palette.gray10)),
                     SizedBox(
@@ -264,8 +264,8 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                     ),
                     const Text("명",
                         style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
                             fontFamily: 'Pretendard',
                             color: Palette.gray10)),
                   ],

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import '../manual/owner_manual_1.dart';
+
 class OwnerHome extends StatefulWidget {
   const OwnerHome({super.key});
 

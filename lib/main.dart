@@ -1,4 +1,5 @@
 import 'package:birca/view/login/login.dart';
+import 'package:birca/view/manual/host_manual_1.dart';
 import 'package:birca/viewModel/birthday_cafe_view_model.dart';
 import 'package:birca/viewModel/host_home_view_model.dart';
 import 'package:birca/viewModel/host_my_cafe_view_model.dart';

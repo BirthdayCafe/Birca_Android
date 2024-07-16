@@ -79,9 +79,9 @@ class _VisitorFavorite extends State<VisitorFavorite> {
                               borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.1), // 그림자 색상
-                                  spreadRadius: 1, // 그림자 확산 정도
-                                  blurRadius: 1, // 그림자의 흐림 정도
+                                  color: Colors.grey.withOpacity(0.3), // 그림자 색상
+                                  spreadRadius: 2, // 그림자 확산 정도
+                                  blurRadius: 2, // 그림자의 흐림 정도
                                   // offset: Offset(0, 3), // 그림자의 위치 조절 (가로, 세로)
                                 ),
                               ],

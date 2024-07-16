@@ -901,7 +901,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                         HostMyCafeDetail(cafeID: widget.cafeID)));
           },
           child: BircaOutLinedButton(
-            text: '편집완료',
+            text: '등록하기',
             radiusColor: Colors.white,
             backgroundColor: Colors.white,
             width: 128,

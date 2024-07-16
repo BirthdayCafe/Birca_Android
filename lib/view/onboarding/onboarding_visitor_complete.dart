@@ -1,11 +1,10 @@
 import 'package:birca/designSystem/palette.dart';
-import 'package:birca/widgets/bottom_nav_visitor.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-
 import '../../viewModel/mypage_view_model.dart';
+import '../manual/visitor_manual_1.dart';
 
 class OnboardingVisitorComplete extends StatelessWidget {
   const OnboardingVisitorComplete({super.key});
@@ -81,16 +80,13 @@ class OnboardingVisitorComplete extends StatelessWidget {
               textColor: Colors.white,
               fontWeight: FontWeight.normal,
               onPressed: () async {
-                await Provider.of<MypageViewModel>(context,
-                    listen: false)
+                await Provider.of<MypageViewModel>(context, listen: false)
                     .postRoleChange('VISITANT')
-                    .then((value) =>
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                            const BottomNavVisitor())));
-
+                    .then((value) => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => VisitorManual1()),
+                        ));
               },
             ),
           )
