@@ -352,9 +352,7 @@ class _HostCafe extends State<HostCafe> {
                               'RENTAL_PENDING') {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(content: Text('승인 대기 중 입니다.')));
-                          } else if (viewModel
-                                  .hostMyCafeModelList![index].progressState ==
-                              'RENTAL_APPROVED') {
+                          } else  {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -367,13 +365,14 @@ class _HostCafe extends State<HostCafe> {
                         onLongPress: () {
                           if (viewModel
                                   .hostMyCafeModelList![index].progressState ==
-                              'RENTAL_APPROVED') {
+                              'RENTAL_PENDING') {
+                            _openCancelDialog(viewModel
+                                .hostMyCafeModelList![index].birthdayCafeId);
+
+                          } else {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
                                     content: Text('이미 승인된 카페는 취소할 수 없습니다.')));
-                          } else {
-                            _openCancelDialog(viewModel
-                                .hostMyCafeModelList![index].birthdayCafeId);
                           }
                         },
                       );
