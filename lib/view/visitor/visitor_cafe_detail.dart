@@ -3,6 +3,7 @@ import 'package:birca/designSystem/text.dart';
 import 'package:birca/viewModel/birthday_cafe_view_model.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
@@ -269,7 +270,12 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                             width: 34,
                             height: 18,
                             child: ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Clipboard.setData(ClipboardData(text:  viewModel.birthdayCafeModel!.twitterAccount
+                                    .toString()));
+
+                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('복사 완료')));
+                              },
                               style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
                                   backgroundColor: Palette.gray06,
@@ -292,11 +298,6 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                     ),
                     const SizedBox(
                       height: 9,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      height: 1,
-                      color: Palette.gray03,
                     ),
                     const SizedBox(
                       height: 9,
