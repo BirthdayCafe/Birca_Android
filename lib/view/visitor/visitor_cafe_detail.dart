@@ -438,7 +438,6 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemCount:
                                 viewModel.birthdayCafeSpecialGoodsModel?.length,
-                            // goods.length,
                             itemBuilder: (context, index) {
                               return Row(
                                 children: [
@@ -446,18 +445,19 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                                       width: 90,
                                       child: Text(
                                         '${viewModel.birthdayCafeSpecialGoodsModel?[index].name}',
-                                        // goods[index],
                                         style: const TextStyle(
                                             color: Palette.primary,
                                             fontSize: 14,
+                                            fontFamily: 'Pretendard',
                                             fontWeight: FontWeight.w600),
                                       )),
                                   Text(
                                     '${viewModel.birthdayCafeSpecialGoodsModel?[index].details}',
-                                    // goods[index],
                                     style: const TextStyle(
                                       color: Palette.gray10,
                                       fontSize: 14,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400
                                     ),
                                   )
                                 ],
@@ -466,7 +466,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                       }
                     }),
                     const SizedBox(
-                      height: 42.5,
+                      height: 20,
                     ),
                     const Text(
                       '럭키 드로우',
@@ -502,6 +502,8 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                                         style: const TextStyle(
                                             color: Palette.primary,
                                             fontSize: 14,
+                                            fontFamily: 'Pretendard',
+
                                             fontWeight: FontWeight.w600),
                                       )),
                                   Text(
@@ -509,15 +511,18 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                                     style: const TextStyle(
                                       color: Palette.gray10,
                                       fontSize: 14,
+                                        fontFamily: 'Pretendard',
+                                        fontWeight: FontWeight.w400
                                     ),
                                   ),
+
                                 ],
                               );
                             });
                       }
                     }),
                     const SizedBox(
-                      height: 42.5,
+                      height: 20,
                     ),
                     const Text(
                       '생일 카페 메뉴',

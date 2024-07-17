@@ -464,7 +464,7 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                         }
                       }),
                       const SizedBox(
-                        height: 42.5,
+                        height: 20,
                       ),
                       const Text(
                         '럭키 드로우',
@@ -515,7 +515,7 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                         }
                       }),
                       const SizedBox(
-                        height: 42.5,
+                        height: 20,
                       ),
                       const Text(
                         '생일 카페 메뉴',
