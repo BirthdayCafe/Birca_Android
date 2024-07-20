@@ -76,7 +76,6 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                           viewModel.changeIcon(id, context);
                         },
                       ),
-
                     ],
                   ),
                 );
@@ -271,10 +270,13 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                             height: 18,
                             child: ElevatedButton(
                               onPressed: () {
-                                Clipboard.setData(ClipboardData(text:  viewModel.birthdayCafeModel!.twitterAccount
-                                    .toString()));
+                                Clipboard.setData(ClipboardData(
+                                    text: viewModel
+                                        .birthdayCafeModel!.twitterAccount
+                                        .toString()));
 
-                                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('복사 완료')));
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('복사 완료')));
                               },
                               style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
@@ -454,15 +456,83 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                                   Text(
                                     '${viewModel.birthdayCafeSpecialGoodsModel?[index].details}',
                                     style: const TextStyle(
-                                      color: Palette.gray10,
-                                      fontSize: 14,
+                                        color: Palette.gray10,
+                                        fontSize: 14,
                                         fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w400
-                                    ),
+                                        fontWeight: FontWeight.w400),
                                   )
                                 ],
                               );
                             });
+                      }
+                    }),
+                    const Text(
+                      '생일 카페 메뉴',
+                      style: TextStyle(
+                          color: Palette.gray10,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'Pretendard',
+                          fontSize: 16),
+                    ),
+                    const SizedBox(
+                      height: 16,
+                    ),
+                    Consumer<BirthdayCafeViewModel>(
+                        builder: (context, viewModel, widget) {
+                      if (viewModel.birthdayCafeMenusModel == null) {
+                        return const CircularProgressIndicator();
+                      } else {
+                        return Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xffF7F7FA),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: ListView.builder(
+                              shrinkWrap: true, // shrinkWrap을 true로 설정
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemCount:
+                                  viewModel.birthdayCafeMenusModel?.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          '${viewModel.birthdayCafeMenusModel?[index].name}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 14,
+                                              fontFamily: 'Pretendard',
+                                              color: Palette.gray10),
+                                        ),
+                                        Text(
+                                          '${viewModel.birthdayCafeMenusModel?[index].price}',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14,
+                                              fontFamily: 'Pretendard',
+                                              color: Palette.primary),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      '${viewModel.birthdayCafeMenusModel?[index].details}',
+                                      style: const TextStyle(
+                                          fontFamily: 'Pretendard',
+                                          fontSize: 12,
+                                          color: Palette.gray06),
+                                    ),
+                                    const SizedBox(
+                                      height: 24,
+                                    )
+                                  ],
+                                );
+                              }),
+                        );
                       }
                     }),
                     const SizedBox(
@@ -472,7 +542,7 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                       '럭키 드로우',
                       style: TextStyle(
                           color: Palette.gray10,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w700,
                           fontFamily: 'Pretendard',
                           fontSize: 16),
                     ),
@@ -503,19 +573,16 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                                             color: Palette.primary,
                                             fontSize: 14,
                                             fontFamily: 'Pretendard',
-
                                             fontWeight: FontWeight.w600),
                                       )),
                                   Text(
                                     '${viewModel.birthdayCafeLuckyDrawsModel?[index].prize}',
                                     style: const TextStyle(
-                                      color: Palette.gray10,
-                                      fontSize: 14,
+                                        color: Palette.gray10,
+                                        fontSize: 14,
                                         fontFamily: 'Pretendard',
-                                        fontWeight: FontWeight.w400
-                                    ),
+                                        fontWeight: FontWeight.w400),
                                   ),
-
                                 ],
                               );
                             });
@@ -524,76 +591,6 @@ class _VisitorCafeDetail extends State<VisitorCafeDetail> {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Text(
-                      '생일 카페 메뉴',
-                      style: TextStyle(
-                          color: Palette.gray10,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Pretendard',
-                          fontSize: 16),
-                    ),
-                    const SizedBox(
-                      height: 6,
-                    ),
-                    Consumer<BirthdayCafeViewModel>(
-                        builder: (context, viewModel, widget) {
-                      if (viewModel.birthdayCafeMenusModel == null) {
-                        return const CircularProgressIndicator();
-                      } else {
-                        return Container(
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: const Color(0xffF7F7FA),
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: ListView.builder(
-                              shrinkWrap: true, // shrinkWrap을 true로 설정
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount:
-                                  viewModel.birthdayCafeMenusModel?.length,
-                              // cafeMenu.length,
-                              itemBuilder: (context, index) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          '${viewModel.birthdayCafeMenusModel?[index].name}',
-                                          // cafeMenu[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w400,
-                                              fontSize: 14,
-                                              color: Palette.gray10),
-                                        ),
-                                        Text(
-                                          '${viewModel.birthdayCafeMenusModel?[index].price}',
-                                          // cafeMenu[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: 14,
-                                              color: Palette.primary),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      '${viewModel.birthdayCafeMenusModel?[index].details}',
-
-                                      // cafeMenu[index],
-                                      style: const TextStyle(
-                                          fontSize: 12, color: Palette.gray06),
-                                    ),
-                                    const SizedBox(
-                                      height: 24,
-                                    )
-                                  ],
-                                );
-                              }),
-                        );
-                      }
-                    }),
                   ],
                 ),
               ),
