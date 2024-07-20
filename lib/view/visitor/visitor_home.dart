@@ -47,12 +47,6 @@ class _VisitorHome extends State<VisitorHome> {
     viewModel.updateCafeHome(lastCafeId, 10, name, progressState);
   }
 
-  // String selectedRegion1 = '전체';
-  // List<String> optionsRegion1 = ['전체', '서울'];
-  //
-  // String selectedRegion2 = '시/군/구';
-  // List<String> optionsRegion2 = ['시/군/구', '강남', '건대', '성수', '홍대'];
-
   int? nowArtist;
   String nowArtistName = '';
 
@@ -62,6 +56,7 @@ class _VisitorHome extends State<VisitorHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false, // 자동으로 leading 버튼 생성 방지
         title: SvgPicture.asset('lib/assets/image/birca.svg'),
@@ -76,7 +71,11 @@ class _VisitorHome extends State<VisitorHome> {
       ),
       body: SingleChildScrollView(
         controller: _scrollController,
-        child: Column(
+        child:Container(
+          color: Colors.white,
+          child:
+
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
@@ -647,6 +646,6 @@ class _VisitorHome extends State<VisitorHome> {
       //   ),
       // ),
       // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat
-    );
+    ));
   }
 }
