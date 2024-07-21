@@ -4,7 +4,6 @@ import 'package:birca/view/host/host_my_cafe_edit.dart';
 import 'package:birca/viewModel/birthday_cafe_view_model.dart';
 import 'package:birca/widgets/button.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -36,8 +35,6 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
 
   bool isTab = false;
 
-  bool isSwitched = false;
-  String visibility = '';
 
   @override
   Widget build(BuildContext context) {
@@ -67,13 +64,7 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
           if (viewModel.birthdayCafeModel == null) {
             return const CircularProgressIndicator();
           } else {
-            if (viewModel.birthdayCafeModel!.visibility == 'PUBLIC') {
-              isSwitched = true;
-              visibility = '공개';
-            } else {
-              isSwitched = false;
-              visibility = '비공개';
-            }
+
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -177,7 +168,7 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                         return Image.network(
                           viewModel.birthdayCafeModel!.cafe.images[index]
                               .toString(),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.contain,
                         );
                       },
                     )),
@@ -238,44 +229,63 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                               ))
                         ],
                       ),
-                      // const SizedBox(
-                      //   height: 18,
-                      // ),
-                      // const Text(
-                      //   '공개/비공개',
-                      //   style: TextStyle(
-                      //       color: Palette.gray10,
-                      //       fontWeight: FontWeight.bold,
-                      //       fontFamily: 'Pretendard',
-                      //       fontSize: 16),
-                      // ),
-                      // const Text(
-                      //   '* 공개로 전환하면 팬들이 생일카페를 볼 수 있습니다.',
-                      //   style: TextStyle(
-                      //       color: Palette.gray10,
-                      //       fontWeight: FontWeight.w300,
-                      //       fontFamily: 'Pretendard',
-                      //       fontSize: 10),
-                      // ),
-                      // const SizedBox(
-                      //   height: 8,
-                      // ),
-                      // Container(
-                      //   padding: const EdgeInsets.only(
-                      //       left: 10, right: 10, top: 2, bottom: 2),
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(4),
-                      //     color: Palette.primary,
-                      //   ),
-                      //   child: Text(
-                      //     visibility,
-                      //     style: const TextStyle(
-                      //         fontSize: 12,
-                      //         color: Colors.white,
-                      //         fontWeight: FontWeight.bold,
-                      //         fontFamily: 'Pretendard'),
-                      //   ),
-                      // ),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      const Text(
+                        '공개/비공개',
+                        style: TextStyle(
+                            color: Palette.gray10,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Pretendard',
+                            fontSize: 16),
+                      ),
+                      const Text(
+                        '* 공개로 전환하면 팬들이 생일카페를 볼 수 있습니다.',
+                        style: TextStyle(
+                            color: Palette.gray10,
+                            fontWeight: FontWeight.w300,
+                            fontFamily: 'Pretendard',
+                            fontSize: 10),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      viewModel.visibility== '공개' ?
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, top: 2, bottom: 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Palette.primary,
+                        ),
+                        child:
+                        Text(
+                          viewModel.visibility,
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Pretendard'),
+                        ),
+                      ):
+                      Container(
+                        padding: const EdgeInsets.only(
+                            left: 10, right: 10, top: 2, bottom: 2),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Palette.gray06,
+                        ),
+                        child:
+                        Text(
+                          viewModel.visibility,
+                          style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Pretendard'),
+                        ),
+                      ),
                       const SizedBox(
                         height: 18,
                       ),
@@ -436,7 +446,6 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: viewModel
                                   .birthdayCafeSpecialGoodsModel?.length,
-                              // goods.length,
                               itemBuilder: (context, index) {
                                 return Row(
                                   children: [
@@ -444,7 +453,6 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                                         width: 90,
                                         child: Text(
                                           '${viewModel.birthdayCafeSpecialGoodsModel?[index].name}',
-                                          // goods[index],
                                           style: const TextStyle(
                                               color: Palette.primary,
                                               fontSize: 14,
@@ -452,7 +460,6 @@ class _HostMyCafeDetail extends State<HostMyCafeDetail> {
                                         )),
                                     Text(
                                       '${viewModel.birthdayCafeSpecialGoodsModel?[index].details}',
-                                      // goods[index],
                                       style: const TextStyle(
                                         color: Palette.gray10,
                                         fontSize: 14,

@@ -1,6 +1,4 @@
 import 'dart:developer';
-
-import 'package:birca/model/birthday_cafe_model.dart';
 import 'package:birca/view/host/host_my_cafe_detail.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,11 +80,11 @@ class _HostCafeEdit extends State<HostCafeEdit> {
           viewModel.twitterController.text =
               viewModel.birthdayCafeModel!.twitterAccount;
 
-          // if (viewModel.birthdayCafeModel!.visibility == 'PUBLIC') {
-          //   isSwitched = true;
-          // } else {
-          //   isSwitched = false;
-          // }
+          if (viewModel.birthdayCafeModel!.visibility == 'PUBLIC') {
+            isSwitched = true;
+          } else {
+            isSwitched = false;
+          }
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +107,7 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                       return Image.network(
                         viewModel.birthdayCafeModel!.cafe.images[index]
                             .toString(),
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                       );
                     },
                   )),
@@ -130,41 +128,26 @@ class _HostCafeEdit extends State<HostCafeEdit> {
                           ),
                         ),
                       ),
-                      // SizedBox(
-                      //     child: Row(
-                      //   children: [
-                      //     Text(
-                      //       viewModel.visibility,
-                      //       textAlign: TextAlign.center,
-                      //       style: const TextStyle(fontSize: 12),
-                      //     ),
-                      //     Transform.scale(
-                      //         scale: 0.7,
-                      //         child: CupertinoSwitch(
-                      //           value: isSwitched,
-                      //           activeColor: Palette.primary,
-                      //           onChanged: (value) async {
-                      //             viewModel.updateInfo();
-                      //
-                      //             if (isSwitched) {
-                      //               Provider.of<BirthdayCafeViewModel>(context,
-                      //                       listen: false)
-                      //                   .patchCafeState(
-                      //                       id, 'visibility', 'PRIVATE');
-                      //               viewModel.birthdayCafeModel!.visibility =
-                      //                   'PRIVATE';
-                      //             } else {
-                      //               Provider.of<BirthdayCafeViewModel>(context,
-                      //                       listen: false)
-                      //                   .patchCafeState(
-                      //                       id, 'visibility', 'PUBLIC');
-                      //               viewModel.birthdayCafeModel!.visibility =
-                      //                   'PUBLIC';
-                      //             }
-                      //           },
-                      //         ))
-                      //   ],
-                      // )),
+                      SizedBox(
+                          child: Row(
+                        children: [
+                          Text(
+                            viewModel.visibility,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(fontSize: 12),
+                          ),
+                          Transform.scale(
+                              scale: 0.7,
+                              child: CupertinoSwitch(
+                                value: isSwitched,
+                                activeColor: Palette.primary,
+                                onChanged: (value) async {
+                                  viewModel.update();
+                                  viewModel.changeVisibility(id);
+                                },
+                              ))
+                        ],
+                      )),
                     ],
                   )),
               const SizedBox(
@@ -915,38 +898,12 @@ class _HostCafeEdit extends State<HostCafeEdit> {
 
               viewModel.update();
 
-              Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                  .postSpecialGoods(id);
-              Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                  .postMenus(id);
-              Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                  .postLuckyDraws(id);
-              Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                  .patchCafeState(id, 'visibility', 'PUBLIC');
+              viewModel.postSpecialGoods(id);
+              viewModel.postMenus(id);
+              viewModel.postLuckyDraws(id);
 
-              await Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                  .patchInfo(
-                      id,
-                      BirthdayCafeInfoModel(
-                          birthdayCafeName:
-                              viewModel.birthDayCafeNameController.text,
-                          birthdayCafeTwitterAccount:
-                              viewModel.twitterController.text))
-                  .then((value) {
-                Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                    .fetchData(id);
-
-                Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                    .getBirthdayCafes(id);
-                Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                    .getLuckDraws(id);
-                Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                    .getMenus(id);
-                Provider.of<BirthdayCafeViewModel>(context, listen: false)
-                    .getSpecialGoods(id);
-
-                Navigator.pop(context);
-              });
+              Navigator.pop(context);
+              // });
             },
           ),
         ),

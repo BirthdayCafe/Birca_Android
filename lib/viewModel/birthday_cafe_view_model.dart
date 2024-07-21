@@ -85,8 +85,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   TextEditingController get cafeAddressController => _cafeAddressController;
 
   String _visibility = '';
-  String get visibility => _visibility;
 
+  String get visibility => _visibility;
 
   //현재 상태를 저장하는 변수
   final String _congestionState = 'UNKNOWN';
@@ -122,6 +122,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //로딩 상태 관리
   bool _isLoading = false;
+
   bool get isLoading => _isLoading;
 
   void setLoading(bool value) {
@@ -162,7 +163,7 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
       _birthdayCafeModel = BirthdayCafeModel.fromJson(response.data);
 
-      if(_birthdayCafeModel!.visibility=='PUBLIC'){
+      if (_birthdayCafeModel!.visibility == 'PUBLIC') {
         _visibility = '공개';
       } else {
         _visibility = '비공개';
@@ -280,8 +281,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 사진 편집
   Future<void> postImage(int cafeId, List<PickedFile> pickedFiles) async {
-
-    patchInfo(cafeId, BirthdayCafeInfoModel(birthdayCafeName: birthDayCafeNameController.text,birthdayCafeTwitterAccount: twitterController.text));
+    patchInfo(
+        cafeId,
+        BirthdayCafeInfoModel(
+            birthdayCafeName: birthDayCafeNameController.text,
+            birthdayCafeTwitterAccount: twitterController.text));
     String token = await tokenInstance.getToken();
 
     // PickedFile 리스트를 File 리스트로 변환
@@ -321,7 +325,11 @@ class BirthdayCafeViewModel extends ChangeNotifier {
 
   //생일 카페 대표 사진 편집
   Future<void> postMainImage(int cafeId, PickedFile pickedFile) async {
-    patchInfo(cafeId, BirthdayCafeInfoModel(birthdayCafeName: birthDayCafeNameController.text,birthdayCafeTwitterAccount: twitterController.text));
+    patchInfo(
+        cafeId,
+        BirthdayCafeInfoModel(
+            birthdayCafeName: birthDayCafeNameController.text,
+            birthdayCafeTwitterAccount: twitterController.text));
 
     String token = await tokenInstance.getToken();
 
@@ -457,7 +465,6 @@ class BirthdayCafeViewModel extends ChangeNotifier {
         ),
       );
 
-      patchCafeState(cafeId, 'visibility', 'PUBLIC');
       // 서버 응답 출력
       log('postLuckyDraws Response: ${response.data}');
 
@@ -470,15 +477,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
   //생일카페 상태 수정
   Future<void> patchCafeState(
       int cafeId, String stateName, String state) async {
-
-    patchInfo(cafeId, BirthdayCafeInfoModel(birthdayCafeName: birthDayCafeNameController.text,birthdayCafeTwitterAccount: twitterController.text));
-
     String token = await tokenInstance.getToken();
-    if(_birthdayCafeModel!.visibility=='PUBLIC'){
-      _visibility = '공개';
-    } else {
-      _visibility = '비공개';
-    }
+
     api.logInterceptor();
 
     try {
@@ -582,7 +582,6 @@ class BirthdayCafeViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-
   void update() {
     for (int i = 0; i < birthdayCafeMenusModel!.length; i++) {
       birthdayCafeMenusModel![i].name = menuNameController[i].text;
@@ -601,7 +600,8 @@ class BirthdayCafeViewModel extends ChangeNotifier {
       birthdayCafeLuckyDrawsModel![i].rank =
           int.parse(luckyDrawsRankController[i].text);
 
-      birthdayCafeModel?.birthdayCafeName = birthDayCafeNameController.text.toString();
+      birthdayCafeModel?.birthdayCafeName =
+          birthDayCafeNameController.text.toString();
       birthdayCafeModel?.twitterAccount = twitterController.text.toString();
 
       notifyListeners();
@@ -626,5 +626,20 @@ class BirthdayCafeViewModel extends ChangeNotifier {
         notifyListeners();
       }
     }
+  }
+
+  void changeVisibility(int id) {
+    if (_birthdayCafeModel?.visibility == 'PUBLIC') {
+      _birthdayCafeModel?.visibility = 'PRIVATE';
+      _visibility = '비공개';
+    } else {
+      _birthdayCafeModel?.visibility = 'PUBLIC';
+      _visibility = '공개';
+    }
+    log(birthdayCafeModel!.visibility);
+    patchCafeState(id, 'visibility', _birthdayCafeModel!.visibility);
+    log('change');
+
+    notifyListeners();
   }
 }
