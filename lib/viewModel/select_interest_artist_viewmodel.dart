@@ -77,7 +77,7 @@ class SelectInterestArtistViewModel extends ChangeNotifier {
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
     try {
-      Response response = await dio.get('${baseUrl}api/v1/artists/solo',
+      Response response = await dio.get('${baseUrl}api/v2/artists/solo',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
       _soloArtist = (response.data as List)
           .map((item) => SoloArtistModel.fromJson(item))
@@ -95,7 +95,7 @@ class SelectInterestArtistViewModel extends ChangeNotifier {
     dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
     try {
-      Response response = await dio.get('${baseUrl}api/v1/artist-groups',
+      Response response = await dio.get('${baseUrl}api/v2/artist-groups',
           options: Options(headers: {'Authorization': 'Bearer $token'}));
       _groupArtist = (response.data as List)
           .map((item) => GroupArtistModel.fromJson(item))

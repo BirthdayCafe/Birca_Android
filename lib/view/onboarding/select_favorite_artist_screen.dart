@@ -23,7 +23,11 @@ class SelectFavoriteArtistScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: bircaAppBar(() {Navigator.pop(context);}), body: _content());
+    return Scaffold(
+        appBar: bircaAppBar(() {
+          Navigator.pop(context);
+        }),
+        body: _content());
   }
 
   _content() =>
@@ -134,9 +138,7 @@ class SelectFavoriteArtistScreenState
               Consumer<SelectFavoriteArtistViewModel>(
                   builder: (context, model, _) => Visibility(
                         visible: model.isSelectGroupArtist,
-                        replacement: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 14),
-                            child: _soloArtistBuilder()),
+                        replacement: Expanded(child: _soloArtistBuilder()),
                         child: Expanded(child: _groupArtistBuilder(model)),
                       )),
             ],
@@ -153,7 +155,8 @@ class SelectFavoriteArtistScreenState
                   offset: const Offset(0, 3), // changes position of shadow
                 ),
               ],
-            ))      ]);
+            ))
+      ]);
 
   _groupArtistBuilder(SelectFavoriteArtistViewModel model) => ListView.builder(
         physics: const ClampingScrollPhysics(),
@@ -174,7 +177,7 @@ class SelectFavoriteArtistScreenState
                 ),
               if (index == model.groupArtistCount ~/ 4)
                 Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: _groupArtistRow(index, model.groupArtistCount % 4)),
               if (expandedIndex == index)
                 AnimatedContainer(
@@ -189,7 +192,7 @@ class SelectFavoriteArtistScreenState
                     height: 126,
                     child: CustomPaint(
                       child: Container(
-                        color: Palette.gray02,
+                          color: Palette.gray02,
                           padding: const EdgeInsets.only(left: 20, right: 20),
                           child: Consumer<SelectFavoriteArtistViewModel>(
                               builder: (context, model, _) =>
@@ -224,17 +227,13 @@ class SelectFavoriteArtistScreenState
       );
 
   _groupArtistRow(int index, int itemCount) => Row(
-      mainAxisAlignment: (itemCount == 4)
-          ? MainAxisAlignment.spaceBetween
-          : MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(
-          itemCount,
-          (itemIndex) => (itemCount == 4)
-              ? _groupArtistItem(index, itemIndex + 1)
-              : Padding(
-                  padding: const EdgeInsets.only(right: 31), // 오른쪽 간격 지정
-                  child: _groupArtistItem(index, itemIndex + 1),
-                )));
+        itemCount,
+        (itemIndex) => (itemCount == 4)
+            ? _groupArtistItem(index, itemIndex + 1)
+            : _groupArtistItem(index, itemIndex + 1),
+      ));
 
   _groupArtistItem(int index, int location) =>
       Consumer<SelectFavoriteArtistViewModel>(
@@ -257,40 +256,41 @@ class SelectFavoriteArtistScreenState
               ));
 
   _soloArtistBuilder() => Consumer<SelectFavoriteArtistViewModel>(
-    builder: (context, model, _) => ListView.builder(
-      physics: const ClampingScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: (model.soloArtistCount / 4).ceil(),
-      itemBuilder: (context, index) {
-        return Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(4, (i) {
-                int actualIndex = index * 4 + i;
-                if (actualIndex < model.soloArtistCount) {
-                  return Expanded(
-                    child: GestureDetector(
-                      onTap: () {
-                        model.updateSelectedArtist(model.soloArtist![actualIndex]);
-                      },
-                      child: artistItem(
-                        model.soloArtist![actualIndex].groupImage,
-                        model.soloArtist![actualIndex].groupName,
-                      ),
-                    ),
-                  );
-                } else {
-                  return Expanded(child: Container()); // 빈 공간 채우기
-                }
-              }),
-            ),
-            const SizedBox(height: 30), // 각 행 사이의 간격
-          ],
-        );
-      },
-    ),
-  );
+        builder: (context, model, _) => ListView.builder(
+          physics: const ClampingScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: (model.soloArtistCount / 4).ceil(),
+          itemBuilder: (context, index) {
+            return Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: List.generate(4, (i) {
+                    int actualIndex = index * 4 + i;
+                    if (actualIndex < model.soloArtistCount) {
+                      return Expanded(
+                        child: GestureDetector(
+                          onTap: () {
+                            model.updateSelectedArtist(
+                                model.soloArtist![actualIndex]);
+                          },
+                          child: artistItem(
+                            model.soloArtist![actualIndex].groupImage,
+                            model.soloArtist![actualIndex].groupName,
+                          ),
+                        ),
+                      );
+                    } else {
+                      return Expanded(child: Container()); // 빈 공간 채우기
+                    }
+                  }),
+                ),
+                const SizedBox(height: 30), // 각 행 사이의 간격
+              ],
+            );
+          },
+        ),
+      );
 
   _bottomBar() => Consumer<SelectFavoriteArtistViewModel>(
       builder: (context, model, _) => Container(
