@@ -346,9 +346,13 @@ class _OwnerSchedule extends State<OwnerSchedule> {
               children: [
                 TextButton(
                     onPressed: () async {
-                      Provider.of<OwnerScheduleViewModel>(context,
+                      await Provider.of<OwnerScheduleViewModel>(context,
                               listen: false)
-                          .postCancel(cafeId);
+                          .postCancel(cafeId).then((value) {
+                        Provider.of<OwnerScheduleViewModel>(context,
+                            listen: false)
+                            .getSchedule(_focusedDay.year, _focusedDay.month);
+                      });
 
                       ScaffoldMessenger.of(context)
                           .showSnackBar(const SnackBar(content: Text('취소 완료')));
