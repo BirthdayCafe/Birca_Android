@@ -9,6 +9,8 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../model/api.dart';
+
 class OwnerScheduleAdd extends StatefulWidget {
   const OwnerScheduleAdd({super.key});
 
@@ -47,6 +49,9 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
 
   @override
   Widget build(BuildContext context) {
+
+    Api api = Api();
+
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0,
@@ -363,6 +368,8 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                 ),
               ),
               onTap: () async {
+
+
                 if (hostPhoneNumberController.text == ''||hostPhoneNumberController.text.length!=13) {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                       content: Text('000-0000-0000 형식으로 전화번호를 입력해주세요!')));
@@ -387,6 +394,8 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                     maximumVisitantsController.text = '1';
                   }
                   try {
+
+
                     await Provider.of<OwnerScheduleViewModel>(context,
                             listen: false)
                         .postSchedule(OwnerScheduleAddModel(
@@ -410,6 +419,7 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
                       Navigator.pop(context);
                     });
                   } catch (e) {
+                    api.errorCheck(e);
                     ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text('이미 예약된 날짜입니다.')));
                   }

@@ -59,14 +59,14 @@ class _OwnerSchedule extends State<OwnerSchedule> {
         ),
         body: SingleChildScrollView(child: Consumer<OwnerScheduleViewModel>(
             builder: (context, viewModel, widget) {
-
           return Column(
             children: [
               Container(
                 padding: const EdgeInsets.only(
                     left: 25, right: 25, top: 10, bottom: 13),
                 child: TableCalendar(
-                  locale: 'ko_KR', // Set the locale to Korean
+                  locale: 'ko_KR',
+                  // Set the locale to Korean
 
                   //오늘 날짜
                   focusedDay: _focusedDay,
@@ -197,86 +197,113 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                       width: double.infinity,
                       margin:
                           const EdgeInsets.only(left: 14, right: 14, top: 19),
-                      padding: const EdgeInsets.only(top: 63,bottom: 63),
+                      padding: const EdgeInsets.only(top: 63, bottom: 63),
                       decoration: BoxDecoration(
                         color: Palette.gray02, // Container의 배경색
                         borderRadius: BorderRadius.circular(6),
                       ),
                       alignment: Alignment.center,
-                      child: const Text("예약 정보가 없습니다.",style: TextStyle(
-                        fontFamily: 'Pretendard',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 14
-                      ),)
-                    ),
+                      child: const Text(
+                        "예약 정보가 없습니다.",
+                        style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14),
+                      )),
               const SizedBox(
                 height: 5,
               ),
-              viewModel.isScheduleExist?Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(left: 14, right: 14, top: 19),
-                  padding: const EdgeInsets.only(
-                      left: 26, top: 15, bottom: 15, right: 26),
-                  decoration: BoxDecoration(
-                    color: Palette.gray02, // Container의 배경색
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Text(
-                            '메모',
-                            style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: 'Pretendard'),
-                          ),
-                          BircaOutLinedButton(
-                            text: '저장하기',
-                            radiusColor: Palette.primary,
-                            backgroundColor: Palette.primary,
-                            width: 60,
-                            height: 30,
-                            radius: 5,
-                            textColor: Colors.white,
-                            textSize: 12,
-                            onPressed: () {
-                              if (viewModel.nowBirthdayCafeId == 0) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('카페가 있어야 메모할 수 있습니다.')));
-                              } else {
-                                viewModel.postMemo();
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(content: Text('저장 완료')));
-                              }
-                            },
-                          )
-                        ],
+              viewModel.isScheduleExist
+                  ? Container(
+                      width: double.infinity,
+                      margin:
+                          const EdgeInsets.only(left: 14, right: 14, top: 19),
+                      padding: const EdgeInsets.only(
+                          left: 26, top: 15, bottom: 15, right: 26),
+                      decoration: BoxDecoration(
+                        color: Palette.gray02, // Container의 배경색
+                        borderRadius: BorderRadius.circular(6),
                       ),
-                      TextField(
-                        controller: viewModel.memoController,
-                        maxLength: 500,
-                        maxLines: 10,
-                        onChanged: (text) {
-                          viewModel.updateMemo();
-                          log(text);
-                        },
-                        decoration: InputDecoration(
-                            hintText: '메모를 입력해주세요.',
-                            hintStyle: const TextStyle(
-                                fontSize: 14, fontFamily: 'Pretendard'),
-                            counterText:
-                                '${viewModel.memoController.text.length}/500',
-                            border: const UnderlineInputBorder(
-                              borderSide: BorderSide.none,
-                            )),
-                      )
-                    ],
-                  )): Container()
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const Text(
+                                '메모',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Pretendard'),
+                              ),
+                              BircaOutLinedButton(
+                                text: '저장하기',
+                                radiusColor: Palette.primary,
+                                backgroundColor: Palette.primary,
+                                width: 60,
+                                height: 30,
+                                radius: 5,
+                                textColor: Colors.white,
+                                textSize: 12,
+                                onPressed: () {
+                                  if (viewModel.nowBirthdayCafeId == 0) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content:
+                                                Text('카페가 있어야 메모할 수 있습니다.')));
+                                  } else {
+                                    viewModel.postMemo();
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(content: Text('저장 완료')));
+                                  }
+                                },
+                              )
+                            ],
+                          ),
+                          TextField(
+                            controller: viewModel.memoController,
+                            maxLength: 500,
+                            maxLines: 10,
+                            onChanged: (text) {
+                              viewModel.updateMemo();
+                              log(text);
+                            },
+                            decoration: InputDecoration(
+                                hintText: '메모를 입력해주세요.',
+                                hintStyle: const TextStyle(
+                                    fontSize: 14, fontFamily: 'Pretendard'),
+                                counterText:
+                                    '${viewModel.memoController.text.length}/500',
+                                border: const UnderlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                )),
+                          ),
+                        ],
+                      ))
+                  : Container(),
+              const SizedBox(
+                height: 10,
+              ),
+              viewModel.isScheduleExist
+                  ? BircaOutLinedButton(
+                      text: '대관 취소',
+                      radiusColor: Palette.gray06,
+                      backgroundColor: Palette.gray06,
+                      width: 60,
+                      height: 30,
+                      radius: 6,
+                      textColor: Colors.white,
+                      textSize: 12,
+                      onPressed: () {
+                        _openCancelDialog(
+                            viewModel.ownerScheduleModel!.birthdayCafeId);
+                      },
+                    )
+                  : Container(),
+              const SizedBox(
+                height: 10,
+              ),
             ],
           );
         })),
@@ -298,5 +325,56 @@ class _OwnerSchedule extends State<OwnerSchedule> {
                 size: 35,
               )),
         ));
+  }
+
+  void _openCancelDialog(int cafeId) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            '카페 대관을 취소하시겠습니까?',
+            style: TextStyle(
+                fontSize: 16,
+                color: Palette.gray10,
+                fontFamily: 'Pretendard',
+                fontWeight: FontWeight.w500),
+          ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                TextButton(
+                    onPressed: () async {
+                      Provider.of<OwnerScheduleViewModel>(context,
+                              listen: false)
+                          .postCancel(cafeId);
+
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(content: Text('취소 완료')));
+                      Navigator.pop(context);
+                    },
+                    child: const Text("네",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Palette.gray10,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w500))),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("아니요",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Palette.gray10,
+                            fontFamily: 'Pretendard',
+                            fontWeight: FontWeight.w500))),
+              ],
+            )
+          ],
+        );
+      },
+    );
   }
 }

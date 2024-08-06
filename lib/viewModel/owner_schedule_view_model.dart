@@ -99,6 +99,30 @@ class OwnerScheduleViewModel extends ChangeNotifier {
     }
   }
 
+  //대관 취소
+  Future<void> postCancel(int cafeId) async {
+    String token = await tokenInstance.getToken();
+
+    api.logInterceptor();
+
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.post(
+          '${baseUrl}api/v1/birthday-cafes/$cafeId/cancel',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      _ownerScheduleModel = null;
+      _memoController.text = '';
+      // 서버 응답 출력
+      log('Response: ${response.data}');
+
+      notifyListeners();
+    } catch (e) {
+      api.errorCheck(e);
+    }
+  }
+
+  //memo 작성
   Future<void> postMemo() async {
     String token = await tokenInstance.getToken();
     api.logInterceptor();
