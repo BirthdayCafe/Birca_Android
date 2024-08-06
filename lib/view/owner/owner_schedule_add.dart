@@ -438,11 +438,6 @@ class _OwnerScheduleAdd extends State<OwnerScheduleAdd> {
         builder: (context) {
           return StatefulBuilder(
               builder: (BuildContext context, StateSetter setState) {
-            //
-
-            var viewModel =
-                Provider.of<OwnerScheduleViewModel>(context, listen: false);
-
             return Column(
               children: [
                 Container(
