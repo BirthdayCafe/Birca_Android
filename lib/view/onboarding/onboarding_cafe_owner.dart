@@ -299,7 +299,7 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                                           const OnboardingCafeOwnerComplete()));
                                 }).catchError((error) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                       SnackBar(content: Text('국세청에 등록되지 않은 사업자등록번호입니다.')));
+                                       SnackBar(content: Text('국세청에 등록되지 않았거나 중복된 사업자등록번호입니다.')));
                                 });
                               }
                             : null,
