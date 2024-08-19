@@ -67,12 +67,6 @@ class _HostMyPage extends State<HostMyPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Palette.gray03),
-                ),
                 const SizedBox(
                   height: 13,
                 ),
@@ -87,9 +81,7 @@ class _HostMyPage extends State<HostMyPage> {
                         color: Colors.black),
                   );
                 }),
-                const SizedBox(
-                  height: 11,
-                ),
+
                 // const BircaOutLinedButton(
                 //     text: '프로필 편집',
                 //     radiusColor: Palette.primary,
@@ -141,31 +133,33 @@ class _HostMyPage extends State<HostMyPage> {
 
                                       isSwitched = value;
 
-                                      Provider.of<VisitorCafeHomeViewModel>(context, listen: false)
+                                      Provider.of<VisitorCafeHomeViewModel>(
+                                              context,
+                                              listen: false)
                                           .getFavoriteArtist()
                                           .then((value) async {
-                                        await Provider.of<VisitorCafeHomeViewModel>(context, listen: false).getInterestArtist();
+                                        await Provider.of<
+                                                    VisitorCafeHomeViewModel>(
+                                                context,
+                                                listen: false)
+                                            .getInterestArtist();
 
                                         if (viewModel
-                                            .homeArtistsList?[0].artistId ==
+                                                .homeArtistsList?[0].artistId ==
                                             null) {
                                           Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                  const SelectFavoriteArtistScreen()));
+                                                      const SelectFavoriteArtistScreen()));
                                         } else {
                                           Navigator.pushReplacement(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                  const BottomNavVisitor()));
+                                                      const BottomNavVisitor()));
                                         }
-
-                                      }
-                                      );
-
-
+                                      });
                                     });
                                   },
                                 )));
@@ -173,7 +167,6 @@ class _HostMyPage extends State<HostMyPage> {
                     ],
                   ),
                 ),
-
                 GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -191,7 +184,8 @@ class _HostMyPage extends State<HostMyPage> {
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const HostManual1()),
+                      MaterialPageRoute(
+                          builder: (context) => const HostManual1()),
                     );
                   },
                 ),
@@ -201,7 +195,6 @@ class _HostMyPage extends State<HostMyPage> {
                   width: double.infinity,
                   color: Palette.gray03,
                 ),
-
                 GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -275,6 +268,31 @@ class _HostMyPage extends State<HostMyPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const AppVersion()));
+                  },
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  height: 1,
+                  width: double.infinity,
+                  color: Palette.gray03,
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 16, left: 26, right: 26),
+                    width: double.infinity,
+                    child: const Text(
+                      '회원 탈퇴',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Pretendard',
+                          color: Colors.black),
+                    ),
+                  ),
+                  onTap: () {
+                    Provider.of<MypageViewModel>(context, listen: false)
+                        .openDeleteDialog('DELETED', context);
                   },
                 ),
                 Container(

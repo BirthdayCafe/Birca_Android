@@ -65,12 +65,6 @@ class _VisitorMyPage extends State<VisitorMyPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                  width: 100,
-                  height: 100,
-                  decoration: const BoxDecoration(
-                      shape: BoxShape.circle, color: Palette.gray03),
-                ),
                 const SizedBox(
                   height: 13,
                 ),
@@ -85,9 +79,7 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                         color: Colors.black),
                   );
                 }),
-                const SizedBox(
-                  height: 11,
-                ),
+
                 // const BircaOutLinedButton(
                 //     text: '프로필 편집',
                 //     radiusColor: Palette.primary,
@@ -147,7 +139,6 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                     ],
                   ),
                 ),
-
                 GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -165,7 +156,8 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                   onTap: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const VisitorManual1()),
+                      MaterialPageRoute(
+                          builder: (context) => const VisitorManual1()),
                     );
                   },
                 ),
@@ -175,7 +167,6 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                   width: double.infinity,
                   color: Palette.gray03,
                 ),
-
                 GestureDetector(
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -249,6 +240,31 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const AppVersion()));
+                  },
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  height: 1,
+                  width: double.infinity,
+                  color: Palette.gray03,
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 16, left: 26, right: 26),
+                    width: double.infinity,
+                    child: const Text(
+                      '회원 탈퇴',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Pretendard',
+                          color: Colors.black),
+                    ),
+                  ),
+                  onTap: () {
+                    Provider.of<MypageViewModel>(context, listen: false)
+                        .openDeleteDialog('DELETED', context);
                   },
                 ),
                 Container(
