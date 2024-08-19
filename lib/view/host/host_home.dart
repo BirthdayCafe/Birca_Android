@@ -311,16 +311,19 @@ class _HostHome extends State<HostHome> {
                                           const SizedBox(
                                             height: 21,
                                           ),
-                                          Text(
-                                            viewModel
-                                                    .hostCafeHomeModelList?[
-                                                        index]
-                                                    .twitterAccount ??
-                                                '',
-                                            style: const TextStyle(
-                                                fontSize: 12,
-                                                color: Palette.gray08,
-                                                fontWeight: FontWeight.w400),
+                                          SizedBox(
+                                            width: 100,
+                                            child: Text(
+                                              viewModel
+                                                      .hostCafeHomeModelList?[
+                                                          index]
+                                                      .twitterAccount ??
+                                                  '',
+                                              style: const TextStyle(
+                                                  fontSize: 12,
+                                                  color: Palette.gray08,
+                                                  fontWeight: FontWeight.w400),
+                                            ),
                                           ),
                                           const SizedBox(
                                             height: 5,
