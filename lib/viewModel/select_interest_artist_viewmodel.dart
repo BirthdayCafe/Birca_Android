@@ -53,6 +53,13 @@ class SelectInterestArtistViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+
+  void clearData() {
+    _selectedArtist.clear();
+    notifyListeners();
+  }
+
+
   void updateSelectedArtist(SoloArtistModel artist) {
     if (!_selectedArtist.contains(artist) && _selectedArtist.length < 10) {
       _selectedArtist.add(artist);

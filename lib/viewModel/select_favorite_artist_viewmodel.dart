@@ -52,6 +52,11 @@ class SelectFavoriteArtistViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearData() {
+   _selectedArtist.clear();
+    notifyListeners();
+  }
+
   void updateSelectedArtist(SoloArtistModel artist) {
     if (!_selectedArtist.contains(artist) && _selectedArtist.isEmpty) {
       _selectedArtist.add(artist);
