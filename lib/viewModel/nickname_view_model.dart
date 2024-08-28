@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/designSystem/palette.dart';
+import 'package:birca/viewModel/mypage_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:provider/provider.dart';
 
 class NickNameViewModel extends ChangeNotifier {
   Dio dio = Dio();
@@ -74,6 +76,8 @@ class NickNameViewModel extends ChangeNotifier {
           '${baseUrl}api/v1/join/register-nickname',
           data: {'nickname': nickname},
           options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+
 
       log(response.toString());
 

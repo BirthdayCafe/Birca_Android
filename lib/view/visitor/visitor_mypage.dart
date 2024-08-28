@@ -1,4 +1,5 @@
 import 'package:birca/designSystem/palette.dart';
+import 'package:birca/view/onboarding/nickname_change.dart';
 import 'package:birca/widgets/app_version.dart';
 import 'package:birca/widgets/bottom_nav_host.dart';
 import 'package:birca/widgets/button.dart';
@@ -79,16 +80,20 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                         color: Colors.black),
                   );
                 }),
-
-                // const BircaOutLinedButton(
-                //     text: '프로필 편집',
-                //     radiusColor: Palette.primary,
-                //     backgroundColor: Colors.white,
-                //     width: 100,
-                //     height: 33,
-                //     radius: 15,
-                //     textColor: Palette.primary,
-                //     textSize: 15)
+                BircaOutLinedButton(
+                  text: '닉네임 수정',
+                  radiusColor: Palette.primary,
+                  backgroundColor: Colors.white,
+                  width: 100,
+                  height: 33,
+                  radius: 15,
+                  textColor: Palette.primary,
+                  textSize: 15,
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const NickNameChangeScreen()));
+                  },
+                )
               ],
             ),
           ),
@@ -264,7 +269,7 @@ class _VisitorMyPage extends State<VisitorMyPage> {
                   ),
                   onTap: () {
                     Provider.of<MypageViewModel>(context, listen: false)
-                        .openDeleteDialog('DELETED', context);
+                        .openDeleteDialog(context);
                   },
                 ),
                 Container(

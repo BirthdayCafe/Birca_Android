@@ -48,6 +48,10 @@ class HostHomeViewModel extends ChangeNotifier {
     log(startDate);
     log(endDate);
 
+
+    // 시작 시간 기록
+    final startTime = DateTime.now();
+
     try {
       Response? response;
       if (liked) {
@@ -74,6 +78,13 @@ class HostHomeViewModel extends ChangeNotifier {
             },
             options: Options(headers: {'Authorization': 'Bearer $token'}));
       }
+
+      // 응답 시간 기록
+      final endTime = DateTime.now();
+      // 통신에 걸린 시간 계산
+      final duration = endTime.difference(startTime);
+      log('API 호출 시간: ${duration.inMilliseconds}ms');
+
       // 서버 응답 출력
       log('Response: ${response.data}');
 
@@ -104,7 +115,8 @@ class HostHomeViewModel extends ChangeNotifier {
     String token = await tokenInstance.getToken();
 
     api.logInterceptor();
-
+// 시작 시간 기록
+    final startTime = DateTime.now();
     try {
       Response? response;
       if (liked) {
@@ -131,6 +143,13 @@ class HostHomeViewModel extends ChangeNotifier {
             },
             options: Options(headers: {'Authorization': 'Bearer $token'}));
       }
+
+
+      // 응답 시간 기록
+      final endTime = DateTime.now();
+      // 통신에 걸린 시간 계산
+      final duration = endTime.difference(startTime);
+      log('API 호출 시간: ${duration.inMilliseconds}ms');
       // 서버 응답 출력
       log('Response: ${response.data}');
 

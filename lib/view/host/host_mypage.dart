@@ -11,6 +11,7 @@ import '../../widgets/app_version.dart';
 import '../../widgets/button.dart';
 import '../../widgets/privacy_policy.dart';
 import '../../widgets/service_policy.dart';
+import '../onboarding/nickname_change.dart';
 
 class HostMyPage extends StatefulWidget {
   const HostMyPage({super.key});
@@ -81,16 +82,20 @@ class _HostMyPage extends State<HostMyPage> {
                         color: Colors.black),
                   );
                 }),
-
-                // const BircaOutLinedButton(
-                //     text: '프로필 편집',
-                //     radiusColor: Palette.primary,
-                //     backgroundColor: Colors.white,
-                //     width: 100,
-                //     height: 33,
-                //     radius: 15,
-                //     textColor: Palette.primary,
-                //     textSize: 15),
+                BircaOutLinedButton(
+                  text: '프로필 편집',
+                  radiusColor: Palette.primary,
+                  backgroundColor: Colors.white,
+                  width: 100,
+                  height: 33,
+                  radius: 15,
+                  textColor: Palette.primary,
+                  textSize: 15,
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const NickNameChangeScreen()));
+                  },
+                ),
               ],
             ),
           ),
@@ -292,7 +297,7 @@ class _HostMyPage extends State<HostMyPage> {
                   ),
                   onTap: () {
                     Provider.of<MypageViewModel>(context, listen: false)
-                        .openDeleteDialog('DELETED', context);
+                        .openDeleteDialog(context);
                   },
                 ),
                 Container(

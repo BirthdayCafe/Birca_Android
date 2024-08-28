@@ -89,7 +89,31 @@ class MypageViewModel extends ChangeNotifier {
     }
   }
 
-  void openDeleteDialog(String role, BuildContext context) async {
+  void changeNickName(String newNickName){
+    _nickname?.nickname = newNickName;
+    notifyListeners();
+  }
+
+  //회원 탈퇴
+  Future<void> withdraw() async {
+    String token = await tokenInstance.getToken();
+
+    api.logInterceptor();
+
+    try {
+      // API 엔드포인트 및 업로드
+      Response response = await dio.post('${baseUrl}api/v1/members/withdraw',
+          options: Options(headers: {'Authorization': 'Bearer $token'}));
+
+      // 서버 응답 출력
+      log('---------Response: ${response.data}');
+    } catch (e) {
+      api.errorCheck(e);
+      throw Exception('Failed to withdraw.');
+    }
+  }
+
+  void openDeleteDialog(BuildContext context) async {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -108,12 +132,16 @@ class MypageViewModel extends ChangeNotifier {
               children: [
                 TextButton(
                     onPressed: () async {
-                      await postRoleChange(role).then((value) {
+                      await withdraw().then((value) {
                         ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(content: Text('탈퇴 완료')));
 
-                        Provider.of<SelectFavoriteArtistViewModel>(context, listen: false).clearData();
-                        Provider.of<SelectInterestArtistViewModel>(context, listen: false).clearData();
+                        Provider.of<SelectFavoriteArtistViewModel>(context,
+                                listen: false)
+                            .clearData();
+                        Provider.of<SelectInterestArtistViewModel>(context,
+                                listen: false)
+                            .clearData();
 
                         Navigator.pop(context);
 

@@ -363,7 +363,7 @@ class _OwnerMypage extends State<OwnerMypage> {
                   ),
                   onTap: () {
                     Provider.of<MypageViewModel>(context, listen: false)
-                        .openDeleteDialog('DELETED', context);
+                        .openDeleteDialog(context);
                   },
                 ),
                 Container(
