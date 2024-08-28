@@ -89,11 +89,9 @@ class NickNameViewModel extends ChangeNotifier {
       btnColor = Palette.primary;
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('사용 가능한 닉네임입니다.')));
-    } else {
-      btnColor = Palette.gray04;
-      ScaffoldMessenger.of(context)
-          .showSnackBar(const SnackBar(content: Text('사용 불가능한 닉네임입니다.')));
     }
+
+
     notifyListeners();
   }
 
