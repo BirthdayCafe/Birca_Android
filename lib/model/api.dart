@@ -22,6 +22,8 @@ class Api{
         } else {
           // Handle other HTTP status codes
           log('Server error - Status code: ${e.response!.statusCode}');
+          log('Dio error: ${e.message}');
+
           throw Exception('Failed 2');
           // Additional error handling logic here if needed
         }
