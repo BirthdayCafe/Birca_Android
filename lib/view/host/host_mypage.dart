@@ -83,7 +83,7 @@ class _HostMyPage extends State<HostMyPage> {
                   );
                 }),
                 BircaOutLinedButton(
-                  text: '프로필 편집',
+                  text: '닉네임 편집',
                   radiusColor: Palette.primary,
                   backgroundColor: Colors.white,
                   width: 100,

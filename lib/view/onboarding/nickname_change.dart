@@ -18,6 +18,12 @@ class _NickNameChangeScreen extends State<NickNameChangeScreen> {
   final TextEditingController nickNameController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    Provider.of<NickNameViewModel>(context, listen: false).resetViewModel();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
@@ -63,56 +69,60 @@ class _NickNameChangeScreen extends State<NickNameChangeScreen> {
                       Expanded(
                           child: Container(
                               margin:
-                              const EdgeInsets.only(left: 30, right: 11),
+                                  const EdgeInsets.only(left: 30, right: 11),
                               height: 36,
                               child: Consumer<NickNameViewModel>(
                                   builder: (context, viewModel, child) {
-                                    return TextField(
-                                      controller: nickNameController,
-                                      onChanged: (text) {
-                                        viewModel.isNickNameCheckOk = false;
-                                        log(viewModel.isNickNameCheckOk.toString());
-                                        viewModel.isBtnOk(
-                                            viewModel.isNickNameCheckOk, context);
-                                      },
-                                      decoration: const InputDecoration(
-                                        hintText: '최대 10자',
-                                        hintStyle: TextStyle(color: Colors.grey),
-                                        labelStyle: TextStyle(color: Colors.grey),
-                                        enabledBorder: UnderlineInputBorder(
-                                          borderSide:
-                                          BorderSide(color: Palette.gray03),
-                                        ),
-                                        focusedBorder: UnderlineInputBorder(
-                                          borderSide:
-                                          BorderSide(color: Palette.primary),
-                                        ),
-                                      ),
-                                    );
-                                  }))),
-                      Consumer<NickNameViewModel>(
-                          builder: (context, viewModel, widget) {
-                            return Container(
-                              margin: const EdgeInsets.only(right: 30),
-                              child: BircaOutLinedButton(
-                                  text: "중복 검사",
-                                  radiusColor: Palette.primary,
-                                  width: 86,
-                                  height: 36,
-                                  radius: 6,
-                                  textColor: Palette.primary,
-                                  textSize: 14,
-                                  backgroundColor: Palette.white,
-                                  onPressed: () async {
-                                    await Provider.of<NickNameViewModel>(context,
-                                        listen: false)
-                                        .nickNameCheck(nickNameController.text);
-
+                                return TextField(
+                                  controller: nickNameController,
+                                  onChanged: (text) {
+                                    viewModel.isNickNameCheckOk = false;
+                                    log(viewModel.isNickNameCheckOk.toString());
                                     viewModel.isBtnOk(
                                         viewModel.isNickNameCheckOk, context);
-                                  }),
-                            );
-                          })
+                                  },
+                                  decoration: const InputDecoration(
+                                    hintText: '최대 10자',
+                                    hintStyle: TextStyle(color: Colors.grey),
+                                    labelStyle: TextStyle(color: Colors.grey),
+                                    enabledBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Palette.gray03),
+                                    ),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Palette.primary),
+                                    ),
+                                  ),
+                                );
+                              }))),
+                      Consumer<NickNameViewModel>(
+                          builder: (context, viewModel, widget) {
+                        return Container(
+                          margin: const EdgeInsets.only(right: 30),
+                          child: BircaOutLinedButton(
+                              text: "중복 검사",
+                              radiusColor: Palette.primary,
+                              width: 86,
+                              height: 36,
+                              radius: 6,
+                              textColor: Palette.primary,
+                              textSize: 14,
+                              backgroundColor: Palette.white,
+                              onPressed: () async {
+                                if (nickNameController.text.length > 10) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                          content: Text('10글자 이내로 작성해주세요.')));
+                                } else {
+                                  await Provider.of<NickNameViewModel>(context,
+                                          listen: false)
+                                      .nickNameCheck(
+                                          nickNameController.text, context);
+                                }
+                              }),
+                        );
+                      }),
                     ],
                   ),
                   const Expanded(child: SizedBox()),
@@ -123,30 +133,32 @@ class _NickNameChangeScreen extends State<NickNameChangeScreen> {
                       height: 46,
                       child: Consumer<NickNameViewModel>(
                           builder: (context, viewModel, child) {
-                            return BircaElevatedButton(
-                              text: "수정 완료",
-                              color: viewModel.btnColor,
-                              fontSize: 18,
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              onPressed: () {
-                                log('isNickNameCheckOk : ${viewModel.isNickNameCheckOk.toString()}');
+                        return BircaElevatedButton(
+                          text: "수정 완료",
+                          color: viewModel.btnColor,
+                          fontSize: 18,
+                          textColor: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          onPressed: () {
+                            log('isNickNameCheckOk : ${viewModel.isNickNameCheckOk.toString()}');
 
-                                if (viewModel.isNickNameCheckOk == true) {
-                                  Provider.of<NickNameViewModel>(context,
+                            if (viewModel.isNickNameCheckOk == true) {
+                              Provider.of<NickNameViewModel>(context,
                                       listen: false)
-                                      .registerNickName(nickNameController.text)
-                                      .then((_) {
-                                        Provider.of<MypageViewModel>(context,listen: false).changeNickName(nickNameController.text);
-                                    Navigator.pop(context);
-                                    log('registerNickName success');
-                                  }).catchError((error) {
-                                    log('registerNickName fail');
-                                  });
-                                }
-                              },
-                            );
-                          }))
+                                  .registerNickName(nickNameController.text)
+                                  .then((_) {
+                                Provider.of<MypageViewModel>(context,
+                                        listen: false)
+                                    .changeNickName(nickNameController.text);
+                                Navigator.pop(context);
+                                log('registerNickName success');
+                              }).catchError((error) {
+                                log('registerNickName fail');
+                              });
+                            }
+                          },
+                        );
+                      }))
                 ])));
   }
 }

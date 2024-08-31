@@ -1,12 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:birca/designSystem/palette.dart';
-import 'package:birca/viewModel/mypage_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:provider/provider.dart';
 
 class NickNameViewModel extends ChangeNotifier {
   Dio dio = Dio();
@@ -16,10 +14,13 @@ class NickNameViewModel extends ChangeNotifier {
   //닉네임 중복 확인
   bool isNickNameCheckOk = false;
 
+  String? _nowStatus = '사용 불가능한 닉네임입니다.';
+
+  String? get nowStatus => _nowStatus;
   Color btnColor = Palette.gray04;
 
   //닉네임 중복 확인 api
-  Future<void> nickNameCheck(String nickname) async {
+  Future<void> nickNameCheck(String nickname, BuildContext context) async {
     var token = '';
     var loginToken = await storage.read(key: 'loginToken');
 
@@ -41,11 +42,17 @@ class NickNameViewModel extends ChangeNotifier {
 
       if (response.data['success'] == false) {
         isNickNameCheckOk = true;
+        btnColor = Palette.primary;
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('사용 가능한 닉네임입니다.')));
 
         log('response.data = ${response.data['success']}');
         log('isNickNameCheckOk : $isNickNameCheckOk');
       } else {
         isNickNameCheckOk = false;
+        btnColor = Palette.gray04;
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text('사용 불가능한 닉네임입니다.')));
         log('response.data = ${response.data}');
 
         log('isNickNameCheckOk : $isNickNameCheckOk');
@@ -58,7 +65,9 @@ class NickNameViewModel extends ChangeNotifier {
   }
 
 //닉네임 등록 api
-  Future<void> registerNickName(String nickname) async {
+  Future<void> registerNickName(
+    String nickname,
+  ) async {
     var token = '';
     var loginToken = await storage.read(key: 'loginToken');
 
@@ -77,8 +86,6 @@ class NickNameViewModel extends ChangeNotifier {
           data: {'nickname': nickname},
           options: Options(headers: {'Authorization': 'Bearer $token'}));
 
-
-
       log(response.toString());
 
       notifyListeners();
@@ -93,9 +100,11 @@ class NickNameViewModel extends ChangeNotifier {
       btnColor = Palette.primary;
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text('사용 가능한 닉네임입니다.')));
+      // _nowStatus = '사용 가능한 닉네임입니다.';
+    } else {
+      btnColor = Palette.gray04;
+      // _nowStatus = '사용 불가능한 닉네임입니다.';
     }
-
-
     notifyListeners();
   }
 
@@ -135,5 +144,11 @@ class NickNameViewModel extends ChangeNotifier {
       requestBody: true,
       responseBody: true,
     ));
+  }
+
+  void resetViewModel() {
+    isNickNameCheckOk = false;
+    btnColor = Palette.gray04;
+    _nowStatus = '사용 불가능한 닉네임입니다.';
   }
 }
