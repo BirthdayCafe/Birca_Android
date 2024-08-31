@@ -75,6 +75,9 @@ dependencies:
   #imagepicker
   image_picker: ^0.8.8
 
+  #web_view
+  webview_flutter: ^4.8.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
