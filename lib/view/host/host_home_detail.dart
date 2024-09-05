@@ -497,36 +497,39 @@ class _HostHomeDetail extends State<HostHomeDetail> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  BircaOutLinedButton(
-                    text: '대관 요청하기',
-                    radiusColor: Palette.primary,
-                    backgroundColor: Palette.primary,
-                    width: 160,
-                    height: 44,
-                    radius: 6,
-                    textColor: Colors.white,
-                    textSize: 14,
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => HostRequest(
-                                    cafeID: id,
-                                  )));
-                    },
-                  ),
-                  const SizedBox(
-                    width: 14,
-                  ),
-                  const BircaOutLinedButton(
-                      text: '전화하기',
+                  Container(
+                    child: BircaOutLinedButton(
+                      text: '대관 요청하기',
                       radiusColor: Palette.primary,
-                      backgroundColor: Colors.white,
-                      width: 160,
+                      backgroundColor: Palette.primary,
+                      width: 300,
                       height: 44,
                       radius: 6,
-                      textColor: Palette.primary,
-                      textSize: 14)
+                      textColor: Colors.white,
+                      textSize: 14,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => HostRequest(
+                                  cafeID: id,
+                                )));
+                      },
+                    ),
+                  )
+
+                  // const SizedBox(
+                  //   width: 14,
+                  // ),
+                  // const BircaOutLinedButton(
+                  //     text: '전화하기',
+                  //     radiusColor: Palette.primary,
+                  //     backgroundColor: Colors.white,
+                  //     width: 160,
+                  //     height: 44,
+                  //     radius: 6,
+                  //     textColor: Palette.primary,
+                  //     textSize: 14)
                 ],
               );
             } else {
