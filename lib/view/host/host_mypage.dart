@@ -1,6 +1,7 @@
 import 'package:birca/view/manual/host_manual_1.dart';
 import 'package:birca/view/onboarding/select_favorite_artist_screen.dart';
 import 'package:birca/viewModel/mypage_view_model.dart';
+import 'package:birca/widgets/artist_add.dart';
 import 'package:birca/widgets/bottom_nav_visitor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -246,6 +247,33 @@ class _HostMyPage extends State<HostMyPage> {
                         context,
                         MaterialPageRoute(
                             builder: (context) => const PrivacyPolicy()));
+                  },
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  height: 1,
+                  width: double.infinity,
+                  color: Palette.gray03,
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 16, left: 26, right: 26),
+                    width: double.infinity,
+                    child: const Text(
+                      '아티스트 요청하기',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Pretendard',
+                          color: Colors.black),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ArtistAdd()));
                   },
                 ),
                 Container(

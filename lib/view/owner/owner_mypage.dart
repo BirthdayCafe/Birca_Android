@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import '../../designSystem/palette.dart';
 import '../../viewModel/mypage_view_model.dart';
 import '../../widgets/app_version.dart';
+import '../../widgets/artist_add.dart';
 import '../manual/owner_manual_1.dart';
 
 class OwnerMypage extends StatefulWidget {
@@ -244,76 +245,33 @@ class _OwnerMypage extends State<OwnerMypage> {
                             builder: (context) => const PrivacyPolicy()));
                   },
                 ),
-                // Container(
-                //   margin: const EdgeInsets.only(left: 10, right: 10),
-                //   height: 1,
-                //   width: double.infinity,
-                //   color: Palette.gray03,
-                // ),
-                // Container(
-                //   padding: const EdgeInsets.only(
-                //       top: 16, bottom: 16, left: 26, right: 26),
-                //   width: double.infinity,
-                //   child: GestureDetector(
-                //     child: const Text(
-                //       '로그아웃',
-                //       style: TextStyle(
-                //           fontSize: 16,
-                //           fontWeight: FontWeight.w500,
-                //           fontFamily: 'Pretendard',
-                //           color: Colors.black),
-                //     ),
-                //     onTap: (){
-                //       showDialog(
-                //           context: context, builder: (BuildContext context) {
-                //         return AlertDialog(
-                //           title: SvgPicture.asset('lib/assets/image/birca.svg'),
-                //           contentPadding: const EdgeInsets.all(14,),
-                //           backgroundColor: Colors.white,
-                //           alignment: Alignment.center,
-                //           content:
-                //           const Text('로그아웃 하시겠습니까?', style: TextStyle(
-                //             fontWeight: FontWeight.w500,
-                //             fontFamily: 'Pretendard',
-                //             fontSize: 20,
-                //             color: Colors.black,
-                //           ),
-                //
-                //           ),
-                //           actions: [
-                //             Row(
-                //               children: [
-                //                 BircaOutLinedButton(
-                //                   text: '아니요',
-                //                   radiusColor: Palette.gray03,
-                //                   backgroundColor: Colors.white,
-                //                   width: 120,
-                //                   height: 30,
-                //                   radius: 6,
-                //                   textColor: Colors.black,
-                //                   textSize: 20,
-                //                   onPressed: () {
-                //                     Navigator.of(context).pop();
-                //                   },),
-                //                 const SizedBox(width: 10,),
-                //                 BircaOutLinedButton(text: '로그아웃',
-                //                   radiusColor: Palette.primary,
-                //                   backgroundColor: Palette.primary,
-                //                   width: 120,
-                //                   height: 30,
-                //                   radius: 6,
-                //                   textColor: Colors.white,
-                //                   textSize: 20,
-                //                   onPressed: (){},)
-                //
-                //               ],
-                //             )
-                //           ],
-                //         );
-                //       });
-                //     },
-                //   )
-                // ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  height: 1,
+                  width: double.infinity,
+                  color: Palette.gray03,
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 16, left: 26, right: 26),
+                    width: double.infinity,
+                    child: const Text(
+                      '아티스트 요청하기',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Pretendard',
+                          color: Colors.black),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const ArtistAdd()));
+                  },
+                ),
                 Container(
                   margin: const EdgeInsets.only(left: 10, right: 10),
                   height: 1,
