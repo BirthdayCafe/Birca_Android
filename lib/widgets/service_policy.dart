@@ -34,7 +34,7 @@ class _ServicePolicy extends State<ServicePolicy> {
           },
         ),
       )
-      ..loadRequest(Uri.parse('http://54.180.145.199:8080/service_terms.html'));
+      ..loadRequest(Uri.parse('https://www.birca.co.kr/service_terms.html'));
   }
 
   @override

@@ -36,7 +36,7 @@ class _PrivacyPolicy extends State<PrivacyPolicy> {
         ),
       )
       ..loadRequest(
-          Uri.parse('http://54.180.145.199:8080/privacy_policy.html'));
+          Uri.parse('https://www.birca.co.kr/privacy_policy.html'));
   }
 
   @override

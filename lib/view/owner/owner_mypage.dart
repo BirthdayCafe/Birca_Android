@@ -7,6 +7,7 @@ import '../../designSystem/palette.dart';
 import '../../viewModel/mypage_view_model.dart';
 import '../../widgets/app_version.dart';
 import '../../widgets/artist_add.dart';
+import '../../widgets/contact.dart';
 import '../manual/owner_manual_1.dart';
 
 class OwnerMypage extends StatefulWidget {
@@ -322,6 +323,33 @@ class _OwnerMypage extends State<OwnerMypage> {
                   onTap: () {
                     Provider.of<MypageViewModel>(context, listen: false)
                         .openDeleteDialog(context);
+                  },
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 10, right: 10),
+                  height: 1,
+                  width: double.infinity,
+                  color: Palette.gray03,
+                ),
+                GestureDetector(
+                  child: Container(
+                    padding: const EdgeInsets.only(
+                        top: 16, bottom: 16, left: 26, right: 26),
+                    width: double.infinity,
+                    child: const Text(
+                      '문의하기',
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          fontFamily: 'Pretendard',
+                          color: Colors.black),
+                    ),
+                  ),
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Contact()));
                   },
                 ),
                 Container(
