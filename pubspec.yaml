@@ -46,13 +46,13 @@ dependencies:
   sign_in_with_apple: ^3.3.0
 
   #file picker
-  file_picker: ^6.1.1
+  file_picker: ^8.1.1
 
   #tavle calendar
   table_calendar: ^3.0.9
 
   #locale
-  intl: ^0.18.0
+  intl: ^0.19.0
 
   #경로 숨기기
   flutter_dotenv: ^5.0.2
