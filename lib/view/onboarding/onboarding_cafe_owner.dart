@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'package:birca/designSystem/text.dart';
 import 'package:birca/viewModel/business_license_view_model.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
@@ -129,8 +128,21 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                       width: 96,
                       height: 36,
                       child: OutlinedButton(
-                        onPressed: () {
-                          _pickFile();
+                        onPressed: () async {
+                          // _pickFile();
+
+                          FilePickerResult? result =
+                              await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: ['jpg', 'png', 'pdf'],
+                          );
+
+                          if (result != null) {
+                            _filePath = result?.files.single.path;
+                            _fileName = result?.files.single.name;
+                            isFileUpload = true;
+                            _updateButtonState();
+                          }
                         },
                         style: OutlinedButton.styleFrom(
                             padding: EdgeInsets.zero,
@@ -159,14 +171,14 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                       : const Text("파일을 선택해주세요."),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              BircaText(
-                  text: '파일을 $upload회 업로드 하셨습니다. ($upload/5) ',
-                  textSize: 12,
-                  textColor: const Color(0xffFE2E2E),
-                  fontFamily: 'PretendardRegular'),
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              // BircaText(
+              //     text: '파일을 $upload회 업로드 하셨습니다. ($upload/5) ',
+              //     textSize: 12,
+              //     textColor: const Color(0xffFE2E2E),
+              //     fontFamily: 'PretendardRegular'),
               const SizedBox(height: 40),
               const Text(
                 '카페 이름',
@@ -278,29 +290,53 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
                       child: FilledButton(
                         onPressed: isButtonOk
                             ? () async {
-                                FormData applyData = FormData.fromMap({
-                                  'businessLicense':
-                                      await MultipartFile.fromFile(_filePath!,
-                                          filename: _fileName),
-                                  'cafeName': cafeName.text,
-                                  'businessLicenseNumber':
-                                      businessLicenseNumber.text,
-                                  'owner': owner.text,
-                                  'address': address.text
-                                });
-
-                                await postCafeApply(applyData).then((_) {
-                                  Provider.of<MypageViewModel>(context,
-                                      listen: false)
-                                      .postRoleChange('OWNER');
-                                  // Navigate on success
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          const OnboardingCafeOwnerComplete()));
-                                }).catchError((error) {
+                                if (_filePath == null) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                       SnackBar(content: Text('국세청에 등록되지 않았거나 중복된 사업자등록번호입니다.')));
-                                });
+                                      SnackBar(
+                                          content: Text('사업자등록증을 입력해주세요.')));
+                                } else if (cafeName.text == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text('카페 이름을 입력해주세요.')));
+                                } else if (businessLicenseNumber.text == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text('사업자등록증 번호를 입력해주세요.')));
+                                } else if (owner.text == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text('카페 사장님 이름을 입력해주세요.')));
+                                } else if (address.text == null) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text('카페 주소를 입력해주세요.')));
+                                } else {
+                                  FormData applyData = FormData.fromMap({
+                                    'businessLicense':
+                                        await MultipartFile.fromFile(_filePath!,
+                                            filename: _fileName),
+                                    'cafeName': cafeName.text,
+                                    'businessLicenseNumber':
+                                        businessLicenseNumber.text,
+                                    'owner': owner.text,
+                                    'address': address.text
+                                  });
+
+                                  await postCafeApply(applyData).then((_) {
+                                    Provider.of<MypageViewModel>(context,
+                                            listen: false)
+                                        .postRoleChange('OWNER');
+                                    // Navigate on success
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            const OnboardingCafeOwnerComplete()));
+                                  }).catchError((error) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text(
+                                                '국세청에 등록되지 않았거나 중복된 사업자등록번호입니다.')));
+                                  });
+                                }
                               }
                             : null,
                         style: FilledButton.styleFrom(
@@ -328,61 +364,10 @@ class _OnboardingCafeOwner extends State<OnboardingCafeOwner> {
     if (result != null) {
       _showLoadingDialog(context);
 
-      //post business license
-      const storage = FlutterSecureStorage();
-      var baseUrl = dotenv.env['BASE_URL'];
-
-      var token = '';
-      var loginToken = await storage.read(key: 'loginToken');
-
-      //토큰 가져오기
-      if (loginToken != null) {
-        Map<String, dynamic> loginData = json.decode(loginToken);
-        token = loginData['accessToken'].toString();
-      }
-
-      Dio dio = Dio();
-
-      _filePath = result.files.single.path;
-      _fileName = result.files.single.name;
-
-      // FormData 생성
-      FormData businessLicense = FormData.fromMap({
-        'businessLicense':
-            await MultipartFile.fromFile(_filePath!, filename: _fileName),
-      });
-
       //파일 전송 api
       try {
-        // API 엔드포인트 및 업로드
-        Response response = await dio.post(
-            '${baseUrl}api/v1/cafes/license-read',
-            data: businessLicense,
-            options: Options(headers: {'Authorization': 'Bearer $token'}));
-
-        // 서버 응답 출력
-        log('Response: ${response.data}');
-
-        if (response.data['businessLicenseNumber'] == null) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(const SnackBar(content: Text('유효한 사업자등록증이 아닙니다.')));
-        } else if (response.data['uploadCount'] > 5) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('업로드 제한 횟수를 초과하셨습니다.')));
-        } else {
-          setState(() {
-            isFileUpload = true;
-            cafeName.text = response.data['cafeName'];
-            businessLicenseNumber.text = response.data['businessLicenseNumber'];
-            owner.text = response.data['owner'];
-            address.text = response.data['address'];
-            upload = response.data['uploadCount'];
-            _updateButtonState();
-          });
-
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('잘못 스캔된 정보는 수정할 수 있습니다.')));
-        }
+        _filePath = result.files.single.path;
+        _fileName = result.files.single.name;
       } catch (e) {
         if (e is DioException) {
           // Dio exception handling
